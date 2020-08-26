@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "987318076947",
+    "firebase_url": "https://krosskomics-af15e.firebaseio.com",
+    "project_id": "krosskomics-af15e",
+    "storage_bucket": "krosskomics-af15e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987318076947:android:a2caaef4b7951fb0bf21e6",
+        "android_client_info": {
+          "package_name": "com.krosskomics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987318076947-2kn95lth8faugmto7bhdu0vufr9gu7ua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.krosskomics",
+            "certificate_hash": "fd7fce1ddcc902356a46f6f57d8efd1277e4292b"
+          }
+        },
+        {
+          "client_id": "987318076947-lj5a5p8lvv5nip5h3ltg09ktmh6vsbmg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.krosskomics",
+            "certificate_hash": "349935c98bf0b037e7c19805408d58cd51a837f2"
+          }
+        },
+        {
+          "client_id": "987318076947-3d8a8nnpepdlr545eqnn7d8budin3td2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.krosskomics",
+            "certificate_hash": "4e88a8f92722642eff7c651791e57144c32cdf1f"
+          }
+        },
+        {
+          "client_id": "987318076947-qu69318510d7fmqh85mv2eimg2it4lak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.krosskomics",
+            "certificate_hash": "114878b99246905e11ba1698e8316f3c2ad2de3e"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3VjNG1FW7iAR1x4WxgU3F-4dnuGjue4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987318076947-o6kmac9pvfeik4stutf9sf6p58an5o8l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
