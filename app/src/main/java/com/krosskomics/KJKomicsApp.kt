@@ -6,8 +6,6 @@ import android.content.Context
 import android.os.Environment
 import android.util.DisplayMetrics
 import android.view.WindowManager
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
 import com.facebook.FacebookSdk
 import com.facebook.LoggingBehavior
 import com.facebook.cache.disk.DiskCacheConfig
@@ -25,7 +23,6 @@ import com.krosskomics.common.data.DataLogin
 import com.krosskomics.common.model.InitSet
 import com.krosskomics.util.CODE
 import com.krosskomics.util.ServerUtil.setRetrofitServer
-import io.fabric.sdk.android.Fabric
 import java.io.File
 import java.util.*
 
@@ -115,36 +112,36 @@ class KJKomicsApp : Application() {
         super.onCreate()
         instance = this
         FirebaseApp.initializeApp(this)
-        FacebookSdk.sdkInitialize(applicationContext)
-        try {
-            val diskCacheConfig: DiskCacheConfig = DiskCacheConfig.newBuilder(this)
-                .setBaseDirectoryPath(File(FILE_ROOT_PATH, "cache"))
-                .setBaseDirectoryName("cache")
-                .setMaxCacheSize(200 * 1024 * 1024) //200MB
-                .build()
+//            FacebookSdk.sdkInitialize(applicationContext)
+            try {
+                val diskCacheConfig: DiskCacheConfig = DiskCacheConfig.newBuilder(this)
+                    .setBaseDirectoryPath(File(FILE_ROOT_PATH, "cache"))
+                    .setBaseDirectoryName("cache")
+                    .setMaxCacheSize(200 * 1024 * 1024) //200MB
+                    .build()
 
-            //fresco log
-            val requestListeners: MutableSet<RequestListener> =
-                HashSet<RequestListener>()
-            requestListeners.add(RequestLoggingListener())
-            val wm =
-                getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            val dm = DisplayMetrics()
-            wm.defaultDisplay.getMetrics(dm)
-            val builder: ImagePipelineConfig.Builder = ImagePipelineConfig.newBuilder(this)
-            builder.setMainDiskCacheConfig(diskCacheConfig)
-            if (dm.widthPixels < 720) {
-                builder.setDownsampleEnabled(true)
-            }
-            val imagePipelineConfig: ImagePipelineConfig = builder.build()
-            Fresco.initialize(this, imagePipelineConfig)
-            setRetrofitServer(this)
-            if (BuildConfig.DEBUG) {
-                Stetho.initializeWithDefaults(this)
-                FacebookSdk.setIsDebugEnabled(true)
-                FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS)
-            }
-            setCrashlytics()
+                //fresco log
+                val requestListeners: MutableSet<RequestListener> =
+                    HashSet<RequestListener>()
+                requestListeners.add(RequestLoggingListener())
+                val wm =
+                    getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                val dm = DisplayMetrics()
+                wm.defaultDisplay.getMetrics(dm)
+                val builder: ImagePipelineConfig.Builder = ImagePipelineConfig.newBuilder(this)
+                builder.setMainDiskCacheConfig(diskCacheConfig)
+                if (dm.widthPixels < 720) {
+                    builder.setDownsampleEnabled(true)
+                }
+                val imagePipelineConfig: ImagePipelineConfig = builder.build()
+                Fresco.initialize(this, imagePipelineConfig)
+                setRetrofitServer(this)
+                if (BuildConfig.DEBUG) {
+                    Stetho.initializeWithDefaults(this)
+                    FacebookSdk.setIsDebugEnabled(true)
+                    FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS)
+                }
+//            setCrashlytics()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -166,10 +163,10 @@ class KJKomicsApp : Application() {
 
 
 
-    private fun setCrashlytics() {
-        val crashlyticsKit: Crashlytics =Crashlytics.Builder()
-            .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-            .build()
-        Fabric.with(this, crashlyticsKit)
-    }
+//    private fun setCrashlytics() {
+//        val crashlyticsKit: Crashlytics = Crashlytics.Builder()
+//            .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+//            .build()
+//        Fabric.with(this, crashlyticsKit)
+//    }
 }
