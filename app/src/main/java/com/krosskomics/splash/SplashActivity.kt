@@ -23,7 +23,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.NonNull
 import bolts.AppLinks
-import com.facebook.appevents.AppEventsLogger
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
@@ -33,7 +32,6 @@ import com.gun0912.tedpermission.TedPermission
 import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
-import com.krosskomics.common.inteface.BaseDataCallBack
 import com.krosskomics.common.model.AppToken
 import com.krosskomics.common.model.Cookie
 import com.krosskomics.common.model.Login
@@ -48,6 +46,9 @@ import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil
 import com.krosskomics.util.ServerUtil.setRetrofitServer
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,7 +59,6 @@ class SplashActivity : Activity() {
     private lateinit var context: Context
     private val PLAY_SERVICES_RESOLUTION_REQUEST = 9000
 
-    private lateinit var splashRequest: SplashRequest
     private var uid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +70,6 @@ class SplashActivity : Activity() {
             goMain()
             return
         }
-        splashRequest = SplashRequest(context)
         val bundle = intent.extras
         if (bundle != null) {
             KJKomicsApp.ATYPE = bundle.getString("atype")
@@ -194,10 +193,10 @@ class SplashActivity : Activity() {
      * 구글 플레이 서비스 체크
      */
     private fun checkGoogleService() {
-//        if (checkPlayServices()) {
+        if (checkPlayServices()) {
 //            val intent = Intent(context, RegistrationIntentService::class.java)
 //            startService(intent)
-//        }
+        }
 
 //        requestAppVersion();
         loginCheck()
@@ -231,20 +230,35 @@ class SplashActivity : Activity() {
     private fun goMain() {
         val permissionListener: PermissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
-                val handler = Handler()
-                handler.postDelayed({
-                    val intentMain: Intent
-                    intentMain = Intent(this@SplashActivity, MainActivity::class.java)
-                    intentMain.putExtra("atype", KJKomicsApp.ATYPE)
-                    intentMain.putExtra("sid", KJKomicsApp.SID)
-                    intentMain.addFlags(
-                        Intent.FLAG_ACTIVITY_NEW_TASK
-                                or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                                or Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    )
-                    startActivity(intentMain)
-                    finish()
-                }, 500)
+                runBlocking {
+                    launch {
+                        delay(500)
+                        val intentMain = Intent(this@SplashActivity, MainActivity::class.java)
+                        intentMain.putExtra("atype", KJKomicsApp.ATYPE)
+                        intentMain.putExtra("sid", KJKomicsApp.SID)
+//                        intentMain.addFlags(
+//                            Intent.FLAG_ACTIVITY_NEW_TASK
+//                                    or Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                                    or Intent.FLAG_ACTIVITY_SINGLE_TOP
+//                        )
+                        startActivity(intentMain)
+                        finish()
+                    }
+                }
+//                val handler = Handler()
+//                handler.postDelayed({
+//                    val intentMain: Intent
+//                    intentMain = Intent(this@SplashActivity, MainActivity::class.java)
+//                    intentMain.putExtra("atype", KJKomicsApp.ATYPE)
+//                    intentMain.putExtra("sid", KJKomicsApp.SID)
+//                    intentMain.addFlags(
+//                        Intent.FLAG_ACTIVITY_NEW_TASK
+//                                or Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                                or Intent.FLAG_ACTIVITY_SINGLE_TOP
+//                    )
+//                    startActivity(intentMain)
+//                    finish()
+//                }, 500)
             }
 
             override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {
@@ -266,9 +280,66 @@ class SplashActivity : Activity() {
      */
     private fun requestLoginId(loginType: String) {
         if (!this@SplashActivity.isFinishing) {
-            splashRequest.requestLoginId(loginType, object : BaseDataCallBack<Login?> {
-                override fun onResultForData(data: Login?) {
-                    goMain()
+            val api: Call<Login?> = ServerUtil.service.setAutoLogin(
+                read(context, CODE.CURRENT_LANGUAGE, "en"),
+                loginType,
+                read(context, CODE.LOCAL_token, "")
+            )
+            api.enqueue(object : Callback<Login?> {
+                override fun onResponse(
+                    @NonNull call: Call<Login?>,
+                    @NonNull response: Response<Login?>
+                ) {
+                    try {
+                        if (response.isSuccessful) {
+                            val loginData: Login? = response.body()
+                            loginData?.let {
+                                val retcode: String = loginData.retcode ?: "00"
+                                if ("00".equals(retcode, ignoreCase = true) || "104".equals(
+                                        retcode,
+                                        ignoreCase = true
+                                    )
+                                ) {
+                                    //내부 저장소에 정보를 기록
+//                                CommonUtil.write(context, CODE.LOCAL_loginType, loginType);
+                                    write(context, CODE.LOCAL_loginYn, "Y")
+                                    write(context, CODE.LOCAL_user_no, loginData.user?.u_token)
+                                    write(context, CODE.LOCAL_coin, loginData.user?.user_coin)
+                                    write(context, CODE.LOCAL_Nickname, loginData.user?.nick)
+                                    write(context, CODE.LOCAL_email, loginData.user?.email)
+                                    if (!TextUtils.isEmpty(loginData.user?.u_token)) {
+                                        write(
+                                            context,
+                                            CODE.LOCAL_ENC_USER_NO,
+                                            loginData.user?.u_token
+                                        )
+                                        setRetrofitServer(context)
+                                    }
+                                    KJKomicsApp.LOGIN_SEQ = loginData.user?.login_seq!!
+                                    if (null != loginData.user?.new_gift) {
+                                        if ("1" == loginData.user?.new_gift) {
+                                            KJKomicsApp.IS_GET_NEW_GIFT = true
+                                        }
+                                    }
+                                    KJKomicsApp.PROFILE_PICTURE = loginData.user?.profile_picture.toString()
+                                    goMain()
+                                } else {
+                                    write(context, CODE.LOCAL_ENC_USER_NO, "")
+                                }
+                            }
+                        } else {
+                            showToast(context.getString(R.string.msg_fail_login), context)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    @NonNull call: Call<Login?>,
+                    @NonNull t: Throwable
+                ) {
+                    showToast(context.getString(R.string.msg_error_server), context)
                 }
             })
         }
@@ -276,12 +347,12 @@ class SplashActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
-        AppEventsLogger.activateApp(application)
+//        AppEventsLogger.activateApp(application)
     }
 
     override fun onPause() {
         super.onPause()
-        AppEventsLogger.deactivateApp(application)
+//        AppEventsLogger.deactivateApp(application)
     }
 
     private fun checkPlayServices(): Boolean {
@@ -308,7 +379,34 @@ class SplashActivity : Activity() {
      */
     private fun requestAppVersion() {
         if (!this@SplashActivity.isFinishing) {
-            splashRequest.requestAppVersion(BaseDataCallBack<Version?> { })
+            val version: Call<Version?> = ServerUtil.service.getVersion
+            version.enqueue(object : Callback<Version?> {
+                override fun onResponse(
+                    @NonNull call: Call<Version?>,
+                    @NonNull response: Response<Version?>
+                ) {
+                    try {
+                        if (response.isSuccessful) {
+                            requestAppVersionResult(response.body())
+                        } else {
+                            showToast(
+                                context.getString(R.string.msg_fail_dataloading),
+                                context
+                            )
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    @NonNull call: Call<Version?>,
+                    @NonNull t: Throwable
+                ) {
+                    t.printStackTrace()
+                    showToast(context.getString(R.string.msg_error_server), context)
+                }
+            })
         }
     }
 
@@ -316,27 +414,28 @@ class SplashActivity : Activity() {
      * 버전 정보 결과 처리
      * @param data
      */
-    private fun requestAppVersionResult(data: Version) {
+    private fun requestAppVersionResult(data: Version?) {
         //action F: 강제 업데이트
         //action M: 서비스 점검
         //action U: 업데이트 유도
         try {
-            if ("F" == data.action) {       // 강제 업데이트
-                if (data.app_version > getVersionCode(context!!)) {
-                    showUpdateAlert(data)
+            data?.let {
+                if ("F" == it.action) {       // 강제 업데이트
+                    if (it.app_version > getVersionCode(context)) {
+                        showUpdateAlert(it)
+                        return
+                    }
+                } else if ("M" == it.action) {    // 서비스 점검
+                    showMaintenanceAlert(it)
                     return
+                } else if ("U" == data.action) {    // 업데이트 유도
+                    if (data.app_version > getVersionCode(context)) {
+                        showUpdateAlert(it)
+                        return
+                    }
                 }
-            } else if ("M" == data.action) {    // 서비스 점검
-                showMaintenanceAlert(data)
-                return
-            } else if ("U" == data.action) {    // 업데이트 유도
-                if (data.app_version > getVersionCode(context!!)) {
-                    showUpdateAlert(data)
-                    return
-                }
+                requestAppToken()
             }
-            //            loginCheck();
-            requestAppToken()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -352,7 +451,7 @@ class SplashActivity : Activity() {
                     @NonNull response: Response<AppToken>
                 ) {
                     try {
-                        if (response.isSuccessful()) {
+                        if (response.isSuccessful) {
                             if (!TextUtils.isEmpty(response.body()?.app_token) &&
                                 "0" != response.body()?.app_token
                             ) {

@@ -9,6 +9,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(getLayoutId())
+//        initLayoutInflate()
+        initModel()
+        initLayout()
+        requestServer()
     }
 
     // fragment 추가
@@ -19,4 +24,10 @@ abstract class BaseActivity : AppCompatActivity() {
         fragmentTransaction.add(R.id.fragment_container, fragment)
         fragmentTransaction.commitAllowingStateLoss()
     }
+
+    abstract fun getLayoutId(): Int
+//    abstract fun initLayoutInflate()
+    abstract fun initModel()
+    abstract fun initLayout()
+    abstract fun requestServer()
 }

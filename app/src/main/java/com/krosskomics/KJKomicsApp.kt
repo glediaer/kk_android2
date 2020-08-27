@@ -8,6 +8,7 @@ import android.util.DisplayMetrics
 import android.view.WindowManager
 import com.facebook.FacebookSdk
 import com.facebook.LoggingBehavior
+import com.facebook.appevents.AppEventsLogger
 import com.facebook.cache.disk.DiskCacheConfig
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
@@ -111,8 +112,7 @@ class KJKomicsApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        FirebaseApp.initializeApp(this)
-//            FacebookSdk.sdkInitialize(applicationContext)
+//            FacebookSdk.fullyInitialize();
             try {
                 val diskCacheConfig: DiskCacheConfig = DiskCacheConfig.newBuilder(this)
                     .setBaseDirectoryPath(File(FILE_ROOT_PATH, "cache"))

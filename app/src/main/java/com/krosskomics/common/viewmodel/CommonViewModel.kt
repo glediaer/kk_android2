@@ -10,6 +10,7 @@ open class CommonViewModel: ViewModel() {
 
     private val _updateActivityCount = MutableLiveData<Int>()
     val updateActivityCount: LiveData<Int> get() = _updateActivityCount
+    val updateActivityCount2: LiveData<Int> get() = _updateActivityCount
 
     fun insertCountTwo() {
         _updateActivityCount.value = (updateActivityCount.value ?: 0) + 2

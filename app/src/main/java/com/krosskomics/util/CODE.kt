@@ -5,10 +5,9 @@ object CODE {
     var WEB_URL = "https://krosskomics.com/app/"
 
     //API 서버
-    //    public static String SERVER_URL = "http://106.247.229.91:8089/";        // local
-    //    public static String SERVER_URL = "http://dev-xdc5bmt3.krosskomics.com/";        // dev
-    //    public static String SERVER_URL = "https://app-1204.krosskomics.com/";    // aws
-    var SERVER_URL = "http://dev-eociem5902-app.krosskomics.com/" // aws
+//    var SERVER_URL = "http://106.247.229.91:8089/" // local
+//    var SERVER_URL = "http://dev-eociem5902-app.krosskomics.com/" // dev
+    var SERVER_URL = "https://app-1204.krosskomics.com/" // aws
     var ENCODE_KEY = "1234567890123456"
 
     //로그인 파라미터
