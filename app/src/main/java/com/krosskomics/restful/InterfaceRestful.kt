@@ -97,12 +97,12 @@ interface InterfaceRestful {
         @Field("app_version") app_version: String?,
         @Field("rid") rid: String?,
         @Field("ref_source") ref_source: String?
-    ): Call<InitSet?>?
+    ): Call<InitSet>
 
     // kr main
     @FormUrlEncoded
     @POST("app/google/39/main")
-    fun getMain(@Field("lang") lang: String?): Call<Main?>?
+    fun getMain(@Field("lang") lang: String?): Call<Main>
 
     // more 리스트
     @FormUrlEncoded

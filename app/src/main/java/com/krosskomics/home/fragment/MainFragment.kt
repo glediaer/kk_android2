@@ -16,13 +16,13 @@ import com.krosskomics.home.viewmodel.MainViewModel
 class MainFragment : BaseFragment(), Observer<Any> {
 
 //    lateinit var viewModel: MainViewModel
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MainViewModel() as T
-            }
-        }).get(MainViewModel::class.java)
-    }
+//    private val viewModel: MainViewModel by lazy {
+//        ViewModelProvider(this, object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return MainViewModel() as T
+//            }
+//        }).get(MainViewModel::class.java)
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
@@ -35,7 +35,7 @@ class MainFragment : BaseFragment(), Observer<Any> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.updateActivityCount.observe(this, this)
+//        viewModel.updateActivityCount.observe(this, this)
     }
 
     override fun onChanged(t: Any?) {

@@ -1,11 +1,31 @@
 package com.krosskomics.home.viewmodel
 
 import android.app.Application
-import android.content.Context
-import androidx.lifecycle.*
-import com.krosskomics.common.viewmodel.CommonViewModel
+import androidx.lifecycle.LiveData
+import com.krosskomics.common.model.InitSet
+import com.krosskomics.common.model.Main
+import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.home.repository.MainRepository
 
-class MainViewModel : CommonViewModel() {
 
+class MainViewModel(application: Application): BaseViewModel(application) {
+    private val repository = MainRepository()
+    private val initSetResponseLiveData = repository.getVolumesResponseLiveData()
+    private val mainResponseLiveData = repository.getMainResponseLiveData()
+
+    fun requestInitSet() {
+        repository.requestInitSet(getApplication())
+    }
+
+    fun requestMain() {
+        repository.requestMain(getApplication())
+    }
+
+    fun getInitSetResponseLiveData(): LiveData<InitSet> {
+        return initSetResponseLiveData
+    }
+
+    fun getMainResponseLiveData(): LiveData<Main> {
+        return mainResponseLiveData
+    }
 }

@@ -18,6 +18,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ServerUtil {
@@ -55,6 +56,7 @@ object ServerUtil {
         val retrofit: Retrofit = Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(KJKomicsApp.getServerUrl(context))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create()).build()
         service = retrofit.create(InterfaceRestful::class.java)
     }
