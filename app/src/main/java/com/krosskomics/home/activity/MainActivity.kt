@@ -1,14 +1,17 @@
 package com.krosskomics.home.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.analytics.GoogleAnalytics
 import com.google.android.gms.analytics.HitBuilders
 import com.krosskomics.BuildConfig
@@ -17,15 +20,23 @@ import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
 import com.krosskomics.common.model.InitSet
 import com.krosskomics.common.model.Main
+import com.krosskomics.data.DataLanguage
+import com.krosskomics.genre.activity.GenreActivity
+import com.krosskomics.home.adapter.ChangeLanguageAdapter
 import com.krosskomics.home.viewmodel.MainViewModel
+import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.search.activity.SearchActivity
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
+import com.krosskomics.wait.activity.WaitActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.view_toolbar.*
+import kotlinx.android.synthetic.main.activity_main_content.*
+import kotlinx.android.synthetic.main.view_toolbar.toolbar
 
-class MainActivity : BaseActivity(), Observer<Any> {
+class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private val TAG = "MainActivity"
 
     private val viewModel: MainViewModel by lazy {
@@ -87,6 +98,7 @@ class MainActivity : BaseActivity(), Observer<Any> {
 
     override fun initLayout() {
         initHeaderView()
+        initMainView()
     }
 
     override fun requestServer() {
@@ -174,11 +186,32 @@ class MainActivity : BaseActivity(), Observer<Any> {
     private fun initHeaderView() {
         initToolbar()
         initDrawerView()
-        initRecyclerView()
+        initLanguageRecyclerView()
+        btn_gift_box.setOnClickListener(this)
     }
 
-    private fun initRecyclerView() {
-//        recyclerView.adapter
+    private fun initMainView() {
+        searchButton.setOnClickListener(this)
+        homeButton.setOnClickListener(this)
+        seriesButton.setOnClickListener(this)
+        waitButton.setOnClickListener(this)
+        rankingButton.setOnClickListener(this)
+        jenreButton.setOnClickListener(this)
+    }
+
+    private fun initLanguageRecyclerView() {
+        var items = arrayListOf(DataLanguage("English", "en", true),
+            DataLanguage("Hindi", "hi", false),
+            DataLanguage("Talua", "ta", false))
+
+        recyclerView_language.adapter = ChangeLanguageAdapter(items)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView_language.layoutManager = layoutManager
+        (recyclerView_language.adapter as ChangeLanguageAdapter).setOnItemClickListener(object : ChangeLanguageAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                Log.e(TAG, "onItemClick")
+            }
+        })
     }
 
     private fun initDrawerView() {
@@ -192,11 +225,30 @@ class MainActivity : BaseActivity(), Observer<Any> {
         dl_main_drawer_root.addDrawerListener(drawerToggle)
     }
 
-    private fun initToolbar() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.mipmap.ic_launcher)
+    private fun changeLanguageView() {
+
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            R.id.searchButton -> startActivity(Intent(context, SearchActivity::class.java))
+            R.id.btn_chnage_language -> {
+                changeLanguageView()
+            }
+            R.id.btn_gift_box -> {
+                if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
+//                    intent = Intent(context, GiftBoxActivity::class.java)
+//                    startActivity(intent)
+                } else {
+                    goLoginAlert(this@MainActivity)
+                }
+            }
+
+            // tabview
+            R.id.seriesButton -> startActivity(Intent(context, SeriesActivity::class.java))
+            R.id.waitButton -> startActivity(Intent(context, WaitActivity::class.java))
+            R.id.rankingButton -> startActivity(Intent(context, RankingActivity::class.java))
+            R.id.jenreButton -> startActivity(Intent(context, GenreActivity::class.java))
         }
     }
 }

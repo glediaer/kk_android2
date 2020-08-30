@@ -38,7 +38,29 @@
             android:launchMode="singleTask">
 
         </activity>
-        <activity android:name=".login.activity.LoginActivity"/>
+        <activity android:name=".login.activity.LoginActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"/>
+
+        <activity android:name=".series.activity.SeriesActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"/>
+
+        <activity android:name=".wait.activity.WaitActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"/>
+
+        <activity android:name=".ranking.activity.RankingActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"/>
+
+        <activity android:name=".genre.activity.GenreActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"/>
+
+        <activity android:name=".search.activity.SearchActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"/>
 
 
         <!-- 3rd party -->

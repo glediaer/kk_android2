@@ -3,40 +3,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".home.activity.LoginActivity">
 
-<!--    <data>-->
-<!--        <variable-->
-<!--            name="viewmodel"-->
-<!--            type="com.krosskomics.home.viewmodel.MainViewModel" />-->
-<!--    </data>-->
-
     <LinearLayout
-        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
+
+        <include
+            layout="@layout/view_toolbar"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"/>
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Hey, Hi!
+Start Your Joyful Journey!"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/btn_signin"
+            android:id="@+id/btn_signup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="SIGN UP"/>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="LOGIN"/>
 
-        <TextView
-            android:id="@+id/tv_invite"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/link_accept1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:textColor="#fea246"
+                android:text="@string/str_terms_of_service"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textSize="13dp"
+                android:textColor="#939598"
+                android:text="@string/str_and"/>
+
+            <TextView
+                android:id="@+id/link_accept2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:textColor="#fea246"
+                android:text="@string/str_privacy_policy"/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_invite"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Invite"/>
 
     </LinearLayout>
 
