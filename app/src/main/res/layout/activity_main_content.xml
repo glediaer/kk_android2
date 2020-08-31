@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+<!--        android:id="@+id/swipe_layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/btn_serch"
+                        android:layout_toLeftOf="@+id/searchButton"
                         android:text="언어변경"/>
 
                 </RelativeLayout>
@@ -73,11 +73,11 @@
                 android:layout_height="300dp"
                 android:fitsSystemWindows="true">
 
-                <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
-                    android:id="@+id/pager_banner"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/bannerPager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@android:color/transparent"/>
+                    android:orientation="horizontal" />
 
             </FrameLayout>
 
@@ -130,6 +130,6 @@
 
         </LinearLayout>
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

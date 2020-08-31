@@ -18,11 +18,15 @@ import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
+import com.krosskomics.common.data.DataBanner
+import com.krosskomics.common.data.DataMainContents
 import com.krosskomics.common.model.InitSet
 import com.krosskomics.common.model.Main
 import com.krosskomics.data.DataLanguage
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.home.adapter.ChangeLanguageAdapter
+import com.krosskomics.home.adapter.HomeAdapter
+import com.krosskomics.home.adapter.HomeBannerAdapter
 import com.krosskomics.home.viewmodel.MainViewModel
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.search.activity.SearchActivity
@@ -35,6 +39,7 @@ import com.krosskomics.wait.activity.WaitActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
+import java.util.ArrayList
 
 class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private val TAG = "MainActivity"
@@ -160,8 +165,8 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         } else if (t is Main) {
             if ("00" == t.retcode) {
 //                mBannerLolling = t.banner_rolling
-//                setMainBannerView(t.main_banner)
-//                setMainContentView(t)
+                setMainBannerView(t.main_banner)
+                setMainContentView(t.layout_contents)
             } else if ("201" == t.retcode) {
 //                goLoginAlert(context)
             } else if ("908" == t.retcode) {
@@ -197,6 +202,18 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         waitButton.setOnClickListener(this)
         rankingButton.setOnClickListener(this)
         jenreButton.setOnClickListener(this)
+    }
+
+    private fun setMainBannerView(items: ArrayList<DataBanner>?) {
+        items?.let {
+            bannerPager.adapter = HomeBannerAdapter(items)
+        }
+    }
+
+    private fun setMainContentView(items: ArrayList<DataMainContents>?) {
+        items?.let {
+            recyclerView.adapter = HomeAdapter(items)
+        }
     }
 
     private fun initLanguageRecyclerView() {
