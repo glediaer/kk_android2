@@ -212,6 +212,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
     private fun setMainContentView(items: ArrayList<DataMainContents>?) {
         items?.let {
+            recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = HomeAdapter(items)
         }
     }

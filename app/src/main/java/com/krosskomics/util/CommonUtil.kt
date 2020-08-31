@@ -19,7 +19,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
 import android.net.wifi.WifiManager
-import android.os.Build
 import android.preference.PreferenceManager
 import android.telephony.TelephonyManager
 import android.view.*
@@ -29,6 +28,11 @@ import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import com.facebook.AccessToken
+import com.facebook.drawee.backends.pipeline.Fresco
+import com.facebook.drawee.interfaces.DraweeController
+import com.facebook.imagepipeline.common.Priority
+import com.facebook.imagepipeline.common.ResizeOptions
+import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -715,5 +719,24 @@ object CommonUtil {
             buffer.append(chars[random.nextInt(chars.size)])
         }
         return buffer.toString()
+    }
+
+    fun getDraweeController(
+        context: Context?,
+        url: String?,
+        width: Int,
+        height: Int
+    ): DraweeController? {
+        val requestBuilder =
+            ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
+        if (getDeviceWidth(context!!) < 720) {
+            requestBuilder.resizeOptions = ResizeOptions(width, height)
+        }
+        requestBuilder.setRequestPriority(Priority.HIGH).isProgressiveRenderingEnabled = true
+        val request = requestBuilder.build()
+        return Fresco.newDraweeControllerBuilder()
+            .setUri(Uri.parse(url))
+            .setImageRequest(request)
+            .build()
     }
 }

@@ -62,6 +62,17 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="fullSensor"/>
 
+        <activity android:name=".book.activity.BookActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"/>
+
+        <activity android:name=".coin.activity.CoinActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"/>
+
+        <activity android:name=".webview.WebViewActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"/>
 
         <!-- 3rd party -->
         <provider android:authorities="com.facebook.app.FacebookContentProvider1234"

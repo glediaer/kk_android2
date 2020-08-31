@@ -4,14 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
 import com.krosskomics.common.fragment.BaseFragment
-import com.krosskomics.databinding.FragmentMainBinding
-import com.krosskomics.home.viewmodel.MainViewModel
 
 class MainFragment : BaseFragment(), Observer<Any> {
 
@@ -26,10 +23,13 @@ class MainFragment : BaseFragment(), Observer<Any> {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
-        val binding: FragmentMainBinding = DataBindingUtil.
-        inflate(inflater,R.layout.fragment_main, container, false)
+//        val binding: FragmentMainBinding = DataBindingUtil.
+//        inflate(inflater,R.layout.fragment_main, container, false)
 
-        return binding.root
+        val view = inflater.inflate(R.layout.fragment_main, container, false)
+
+//        return binding.root
+        return view
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
