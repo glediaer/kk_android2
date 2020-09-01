@@ -17,7 +17,7 @@ class MainViewModel(application: Application): BaseViewModel(application) {
         repository.requestInitSet(getApplication())
     }
 
-    fun requestMain() {
+    override fun requestMain() {
         repository.requestMain(getApplication())
     }
 
@@ -25,7 +25,7 @@ class MainViewModel(application: Application): BaseViewModel(application) {
         return initSetResponseLiveData
     }
 
-    fun getMainResponseLiveData(): LiveData<Main> {
+    override fun getMainResponseLiveData(): LiveData<Any> {
         return mainResponseLiveData
     }
 }

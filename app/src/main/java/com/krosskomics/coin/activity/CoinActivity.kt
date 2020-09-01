@@ -1,8 +1,6 @@
 package com.krosskomics.coin.activity
 
-import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,7 +8,6 @@ import com.google.android.gms.analytics.GoogleAnalytics
 import com.krosskomics.R
 import com.krosskomics.coin.viewmodel.CoinViewModel
 import com.krosskomics.common.activity.BaseActivity
-import com.krosskomics.series.viewmodel.SeriesViewModel
 
 class CoinActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private val TAG = "CoinActivity"
@@ -34,11 +31,10 @@ class CoinActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_series
+        return R.layout.activity_ongoing
     }
 
     override fun initModel() {
-        viewModel.getInitSetResponseLiveData().observe(this, this)
         viewModel.getMainResponseLiveData().observe(this, this)
     }
 

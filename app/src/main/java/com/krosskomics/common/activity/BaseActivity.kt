@@ -3,8 +3,10 @@ package com.krosskomics.common.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.krosskomics.R
 import com.krosskomics.login.activity.LoginActivity
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -21,6 +23,13 @@ abstract class BaseActivity : AppCompatActivity() {
         initLayout()
         requestServer()
         initTracker()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     // fragment 추가
@@ -43,11 +52,18 @@ abstract class BaseActivity : AppCompatActivity() {
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.mipmap.ic_launcher)
+            setDisplayShowTitleEnabled(false)
+            setHomeAsUpIndicator(R.drawable.icon_back)
         }
     }
 
     open fun goLoginAlert(context: Context?) {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+    }
+
+    open fun getCurrentItem(recyclerView: RecyclerView): Int {
+        return (recyclerView.layoutManager as LinearLayoutManager)
+            .findFirstVisibleItemPosition()
     }
 }

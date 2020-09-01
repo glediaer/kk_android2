@@ -26,43 +26,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                android:background="?attr/colorPrimary">
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher"/>
-
-                    <Button
-                        android:id="@+id/btn_gift_box"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:text="선물함"/>
-
-                    <Button
-                        android:id="@+id/searchButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/btn_gift_box"
-                        android:text="검색"/>
-
-                    <Button
-                        android:id="@+id/btn_chnage_language"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/searchButton"
-                        android:text="언어변경"/>
-
-                </RelativeLayout>
+                <include
+                    layout="@layout/view_main_action_item"/>
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -85,46 +52,8 @@
 
             </FrameLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-                <Button
-                    android:id="@+id/homeButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Home"/>
-
-                <Button
-                    android:id="@+id/seriesButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="yonjae"/>
-
-                <Button
-                    android:id="@+id/waitButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="wait"/>
-
-                <Button
-                    android:id="@+id/rankingButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="ranking"/>
-
-                <Button
-                    android:id="@+id/jenreButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="jenre"/>
-
-            </LinearLayout>
+            <include
+                layout="@layout/view_main_tab"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

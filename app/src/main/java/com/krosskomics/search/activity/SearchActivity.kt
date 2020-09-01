@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
 import com.krosskomics.search.viewmodel.SearchViewModel
-import com.krosskomics.wait.viewmodel.WaitViewModel
 
 class SearchActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private val TAG = "SearchActivity"
@@ -21,11 +20,10 @@ class SearchActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_series
+        return R.layout.activity_ongoing
     }
 
     override fun initModel() {
-        viewModel.getInitSetResponseLiveData().observe(this, this)
         viewModel.getMainResponseLiveData().observe(this, this)
     }
 

@@ -17,7 +17,6 @@ import retrofit2.Response
 
 class MainRepository : CommonRepository(){
     private lateinit var initSetLiveData: MutableLiveData<InitSet>
-    private lateinit var mainLiveData: MutableLiveData<Main>
 
     fun requestInitSet(context: Context) {
         val api: Call<InitSet> = ServerUtil.service.getInitSet(
@@ -60,10 +59,5 @@ class MainRepository : CommonRepository(){
     fun getVolumesResponseLiveData(): LiveData<InitSet> {
         initSetLiveData = MutableLiveData()
         return initSetLiveData
-    }
-
-    fun getMainResponseLiveData(): LiveData<Main> {
-        mainLiveData = MutableLiveData()
-        return mainLiveData
     }
 }

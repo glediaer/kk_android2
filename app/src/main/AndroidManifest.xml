@@ -35,6 +35,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.krosskomics.home.activity.MainActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="fullSensor"
             android:launchMode="singleTask">
 
         </activity>
@@ -42,20 +44,24 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="fullSensor"/>
 
-        <activity android:name=".series.activity.SeriesActivity"
+        <activity android:name=".ongoing.activity.OnGoingActivity"
             android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"
             android:screenOrientation="fullSensor"/>
 
-        <activity android:name=".wait.activity.WaitActivity"
+        <activity android:name=".waitfree.activity.WaitFreeActivity"
             android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"
             android:screenOrientation="fullSensor"/>
 
         <activity android:name=".ranking.activity.RankingActivity"
             android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"
             android:screenOrientation="fullSensor"/>
 
         <activity android:name=".genre.activity.GenreActivity"
             android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"
             android:screenOrientation="fullSensor"/>
 
         <activity android:name=".search.activity.SearchActivity"

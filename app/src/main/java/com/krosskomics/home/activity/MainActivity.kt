@@ -30,14 +30,16 @@ import com.krosskomics.home.adapter.HomeBannerAdapter
 import com.krosskomics.home.viewmodel.MainViewModel
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.search.activity.SearchActivity
-import com.krosskomics.series.activity.SeriesActivity
+import com.krosskomics.ongoing.activity.OnGoingActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
-import com.krosskomics.wait.activity.WaitActivity
+import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_content.*
+import kotlinx.android.synthetic.main.view_main_action_item.*
+import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
 import java.util.ArrayList
 
@@ -192,13 +194,14 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         initToolbar()
         initDrawerView()
         initLanguageRecyclerView()
-        btn_gift_box.setOnClickListener(this)
+        changeLangImageView.setOnClickListener(this)
+        giftboxImageView.setOnClickListener(this)
+        searchImageView.setOnClickListener(this)
     }
 
     private fun initMainView() {
-        searchButton.setOnClickListener(this)
         homeButton.setOnClickListener(this)
-        seriesButton.setOnClickListener(this)
+        onGoingButton.setOnClickListener(this)
         waitButton.setOnClickListener(this)
         rankingButton.setOnClickListener(this)
         jenreButton.setOnClickListener(this)
@@ -249,11 +252,11 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.searchButton -> startActivity(Intent(context, SearchActivity::class.java))
-            R.id.btn_chnage_language -> {
+            R.id.searchImageView -> startActivity(Intent(context, SearchActivity::class.java))
+            R.id.changeLangImageView -> {
                 changeLanguageView()
             }
-            R.id.btn_gift_box -> {
+            R.id.giftboxImageView -> {
                 if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
 //                    intent = Intent(context, GiftBoxActivity::class.java)
 //                    startActivity(intent)
@@ -263,8 +266,8 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             }
 
             // tabview
-            R.id.seriesButton -> startActivity(Intent(context, SeriesActivity::class.java))
-            R.id.waitButton -> startActivity(Intent(context, WaitActivity::class.java))
+            R.id.onGoingButton -> startActivity(Intent(context, OnGoingActivity::class.java))
+            R.id.waitButton -> startActivity(Intent(context, WaitFreeActivity::class.java))
             R.id.rankingButton -> startActivity(Intent(context, RankingActivity::class.java))
             R.id.jenreButton -> startActivity(Intent(context, GenreActivity::class.java))
         }

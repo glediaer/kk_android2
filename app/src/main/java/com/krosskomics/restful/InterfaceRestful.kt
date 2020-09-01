@@ -111,7 +111,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("param") param: String?,
         @Field("page") page: Int
-    ): Call<More?>?
+    ): Call<More>
 
     // 에피소드 목록 호출
     @FormUrlEncoded

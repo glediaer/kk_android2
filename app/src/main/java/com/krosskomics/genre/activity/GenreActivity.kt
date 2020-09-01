@@ -1,54 +1,60 @@
 package com.krosskomics.genre.activity
 
+import android.content.Intent
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.analytics.HitBuilders
+import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
+import com.krosskomics.common.activity.RecyclerViewBaseActivity
 import com.krosskomics.genre.viewmodel.GenreViewModel
+import com.krosskomics.ongoing.activity.OnGoingActivity
+import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.waitfree.activity.WaitFreeActivity
 
-class GenreActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
+class GenreActivity : RecyclerViewBaseActivity() {
     private val TAG = "GenreActivity"
 
-    private val viewModel: GenreViewModel by lazy {
-        ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return GenreViewModel(application) as T
-            }
-        }).get(GenreViewModel::class.java)
-    }
+//    private val viewModel: GenreViewModel by lazy {
+//        ViewModelProvider(this, object : ViewModelProvider.Factory {
+//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//                return GenreViewModel(application) as T
+//            }
+//        }).get(GenreViewModel::class.java)
+//    }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_series
-    }
-
-    override fun initModel() {
-        viewModel.getInitSetResponseLiveData().observe(this, this)
-        viewModel.getMainResponseLiveData().observe(this, this)
-    }
-
-    override fun initLayout() {
-        initToolbar()
-        initMainView()
-    }
-
-    override fun requestServer() {
-        viewModel.requestMain()
+        return R.layout.activity_ranking
     }
 
     override fun initTracker() {
-    }
-
-    override fun onChanged(t: Any?) {
-    }
-
-    private fun initMainView() {
+        // Get tracker.
+        val tracker = (application as KJKomicsApp).getTracker(KJKomicsApp.TrackerName.APP_TRACKER)
+        tracker?.setScreenName(getString(R.string.str_genre))
+        tracker?.send(HitBuilders.ScreenViewBuilder().build())
     }
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.btn_signup -> {
+            // tabview
+            R.id.homeButton -> finish()
+            R.id.onGoingButton -> {
+                startActivity(Intent(context, OnGoingActivity::class.java))
+                finish()
+            }
+            R.id.waitButton -> {
+                startActivity(Intent(context, WaitFreeActivity::class.java))
+                finish()
+            }
+            R.id.rankingButton -> {
+                startActivity(Intent(context, RankingActivity::class.java))
+                finish()
+            }
+            R.id.jenreButton -> {
+                startActivity(Intent(context, GenreActivity::class.java))
             }
         }
     }
