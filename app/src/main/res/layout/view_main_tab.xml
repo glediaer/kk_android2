@@ -34,7 +34,7 @@
         android:text="@string/str_top"/>
 
     <Button
-        android:id="@+id/jenreButton"
+        android:id="@+id/genreButton"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

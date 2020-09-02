@@ -47,7 +47,7 @@ class WaitFreeActivity : RecyclerViewBaseActivity() {
                 startActivity(Intent(context, RankingActivity::class.java))
                 finish()
             }
-            R.id.jenreButton -> {
+            R.id.genreButton -> {
                 startActivity(Intent(context, GenreActivity::class.java))
                 finish()
             }

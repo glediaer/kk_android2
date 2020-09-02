@@ -4,11 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.analytics.HitBuilders
+import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
-import com.krosskomics.login.activity.LoginActivity
+import com.krosskomics.login.activity.LoginIntroActivity
+import com.krosskomics.util.CommonUtil.getNetworkInfo
+import com.krosskomics.util.CommonUtil.showErrorView
+import com.krosskomics.util.CommonUtil.showToast
 import kotlinx.android.synthetic.main.view_toolbar.*
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -58,12 +65,47 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     open fun goLoginAlert(context: Context?) {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, LoginIntroActivity::class.java)
         startActivity(intent)
     }
 
     open fun getCurrentItem(recyclerView: RecyclerView): Int {
         return (recyclerView.layoutManager as LinearLayoutManager)
             .findFirstVisibleItemPosition()
+    }
+
+    open fun setTracker(screenName: String) {
+        // Get tracker.
+        val tracker = (application as KJKomicsApp).getTracker(KJKomicsApp.TrackerName.APP_TRACKER)
+        tracker?.setScreenName(screenName)
+        tracker?.send(HitBuilders.ScreenViewBuilder().build())
+    }
+
+    open fun shareUrl(shareUrl: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, shareUrl)
+        startActivity(Intent.createChooser(intent, "Share"))
+    }
+
+    open fun checkNetworkConnection(
+        context: Context?,
+        @Nullable throwable: Throwable?,
+        errorView: View?
+    ) {
+        if (errorView != null) {
+            if (getNetworkInfo(context!!) == null) {   // 네트워크 연결 안된상태
+                showErrorView(errorView)
+            }
+        } else {
+            if (null != throwable) {
+                showToast(
+                    getString(R.string.msg_error_server) + " : " + throwable.message,
+                    context
+                )
+            } else {
+                showToast(getString(R.string.msg_error_server), context)
+            }
+        }
     }
 }

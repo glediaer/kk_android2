@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".login.activity.LoginActivity">
+
+    <include
+        layout="@layout/view_base_toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/default_screen_margin"
+
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="28dp"
+                android:textColor="#000000"
+                android:lineSpacingExtra="7sp"
+                android:textStyle="bold"
+                android:text="@string/str_welcome_login" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textSize="18dp"
+                android:textColor="#000000"
+                tools:text="@string/str_welcome_login2" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="233dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/kk_login_main_img"/>
+
+            <Button
+                android:id="@+id/signupButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="47dp"
+                android:background="@drawable/kk_gradient_signup_rect"
+                android:textSize="21dp"
+                android:textColor="#ffffff"
+                android:textAllCaps="false"
+                android:text="@string/str_signup"/>
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/kk_login_rect"
+                android:textSize="21dp"
+                android:textColor="#000000"
+                android:textAllCaps="false"
+                android:text="@string/str_login"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="#828282"
+                    android:text="@string/str_login_invite" />
+
+                <TextView
+                    android:id="@+id/inviteTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="14dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:text="@string/str_invite" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -34,7 +34,7 @@ interface InterfaceRestful {
         @Field("login_type") login_type: String?,
         @Field("firebase_token") firebase_token: String?,
         @Field("sns_token") sns_token: String?
-    ): Call<Login?>?
+    ): Call<Login>
 
     @FormUrlEncoded
     @POST("app/google/41/login")
@@ -61,7 +61,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("email") email: String?,
         @Field("atype") atype: String?
-    ): Call<Login?>?
+    ): Call<Default>
 
     // 계정삭제
     @FormUrlEncoded

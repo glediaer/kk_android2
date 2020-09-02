@@ -6,6 +6,7 @@ import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Observer
@@ -14,30 +15,42 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.analytics.GoogleAnalytics
 import com.google.android.gms.analytics.HitBuilders
+import com.google.android.material.navigation.NavigationView
 import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
+import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.activity.BaseActivity
 import com.krosskomics.common.data.DataBanner
 import com.krosskomics.common.data.DataMainContents
 import com.krosskomics.common.model.InitSet
 import com.krosskomics.common.model.Main
 import com.krosskomics.data.DataLanguage
+import com.krosskomics.event.activity.EventActivity
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.home.adapter.ChangeLanguageAdapter
 import com.krosskomics.home.adapter.HomeAdapter
 import com.krosskomics.home.adapter.HomeBannerAdapter
 import com.krosskomics.home.viewmodel.MainViewModel
+import com.krosskomics.library.activity.LibraryActivity
+import com.krosskomics.notice.activity.NoticeActivity
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.ongoing.activity.OnGoingActivity
+import com.krosskomics.settings.activity.SettingsActivity
 import com.krosskomics.util.CODE
+import com.krosskomics.util.CODE.LOCAL_Nickname
+import com.krosskomics.util.CODE.LOCAL_coin
+import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.waitfree.activity.WaitFreeActivity
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_content.*
+import kotlinx.android.synthetic.main.nav_header_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.view_main_action_item.*
 import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
@@ -114,13 +127,14 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     override fun initTracker() {
-        // Get tracker.
-        val tracker = (application as KJKomicsApp).getTracker(KJKomicsApp.TrackerName.APP_TRACKER)
-        tracker?.setScreenName(getString(R.string.str_home))
-        tracker?.send(HitBuilders.ScreenViewBuilder().build())
+        setTracker(getString(R.string.str_home))
     }
 
-    override fun onChanged(t: Any) {
+    override fun onChanged(t: Any?) {
+        if (t == null) {
+//            checkNetworkConnection(context, t, errorView)
+            return
+        }
         if (t is InitSet) {
             KJKomicsApp.INIT_SET = t
             KJKomicsApp.RUN_SEQ = KJKomicsApp.INIT_SET.run_seq
@@ -204,7 +218,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         onGoingButton.setOnClickListener(this)
         waitButton.setOnClickListener(this)
         rankingButton.setOnClickListener(this)
-        jenreButton.setOnClickListener(this)
+        genreButton.setOnClickListener(this)
     }
 
     private fun setMainBannerView(items: ArrayList<DataBanner>?) {
@@ -244,6 +258,24 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             R.string.str_close
         )
         dl_main_drawer_root.addDrawerListener(drawerToggle)
+        nv_main_navigation_root.getHeaderView(0)?.apply {
+            // header
+            closeImageView.setOnClickListener { dl_main_drawer_root.closeDrawers() }
+            alarmImageView.setOnClickListener {  }
+            profileImageView.setImageResource(R.drawable.kk_logo_symbol)
+            nicknameTextView.text = read(context, LOCAL_Nickname, "Guest")
+            editImageView.setOnClickListener {  }
+            coinTextView.text = read(context, LOCAL_coin, "0")
+            chargeTextView.setOnClickListener {
+                startActivity(Intent(context, CoinActivity::class.java))
+            }
+            // content
+            shopView.setOnClickListener { startActivity(Intent(context, CoinActivity::class.java)) }
+            libraryView.setOnClickListener { startActivity(Intent(context, LibraryActivity::class.java)) }
+            eventView.setOnClickListener { startActivity(Intent(context, EventActivity::class.java)) }
+            noticeView.setOnClickListener { startActivity(Intent(context, NoticeActivity::class.java)) }
+            settingsView.setOnClickListener { startActivity(Intent(context, SettingsActivity::class.java)) }
+        }
     }
 
     private fun changeLanguageView() {
@@ -269,7 +301,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             R.id.onGoingButton -> startActivity(Intent(context, OnGoingActivity::class.java))
             R.id.waitButton -> startActivity(Intent(context, WaitFreeActivity::class.java))
             R.id.rankingButton -> startActivity(Intent(context, RankingActivity::class.java))
-            R.id.jenreButton -> startActivity(Intent(context, GenreActivity::class.java))
+            R.id.genreButton -> startActivity(Intent(context, GenreActivity::class.java))
         }
     }
 }

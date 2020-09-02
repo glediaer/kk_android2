@@ -52,7 +52,7 @@ class RankingActivity : RecyclerViewBaseActivity() {
             R.id.rankingButton -> {
                 startActivity(Intent(context, RankingActivity::class.java))
             }
-            R.id.jenreButton -> {
+            R.id.genreButton -> {
                 startActivity(Intent(context, GenreActivity::class.java))
                 finish()
             }

@@ -1,6 +1,7 @@
 package com.krosskomics.util
 
 object CODE {
+    val APP_DOWNLOAD_URL = "https://play.google.com/store/apps/details?id=com.krosskomics"
     //    public static String WEB_URL = "http://106.247.229.91:8089/web/";
     var WEB_URL = "https://krosskomics.com/app/"
 
@@ -92,4 +93,11 @@ object CODE {
     var WHATSAPP_PACKAGE_NAME = "com.whatsapp"
     var MEDIA_TYPE = "image/*"
     var REF_SOURCE = ""
+
+    // api response
+    val SUCCESS = "00"
+
+    // login mode
+    val LOGIN_MODE = "0"
+    val SIGNUP_MODE = "1"
 }

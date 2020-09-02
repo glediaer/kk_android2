@@ -1,79 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:background="#ffd900"
     tools:context=".login.activity.LoginActivity">
 
-        <include
-            layout="@layout/view_toolbar"/>
+    <include
+        layout="@layout/view_base_toolbar"/>
+    
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="402dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginLeft="@dimen/default_screen_margin"
+        android:layout_marginRight="@dimen/default_screen_margin"
+        android:src="@drawable/kk_login_bg"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"/>
+    <include
+        android:id="@+id/errorView"
+        layout="@layout/view_network_error"
+        android:visibility="gone"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hey, Hi!
-Start Your Joyful Journey!"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btn_signup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SIGN UP"/>
-
-        <Button
-            android:id="@+id/btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="LOGIN"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:id="@+id/link_accept1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13dp"
-                android:textColor="#fea246"
-                android:text="@string/str_terms_of_service"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:textSize="13dp"
-                android:textColor="#939598"
-                android:text="@string/str_and"/>
-
-            <TextView
-                android:id="@+id/link_accept2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13dp"
-                android:textColor="#fea246"
-                android:text="@string/str_privacy_policy"/>
-
-        </LinearLayout>
-
-
-        <Button
-            android:id="@+id/btn_invite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Invite"/>
-
-</LinearLayout>
+</FrameLayout>

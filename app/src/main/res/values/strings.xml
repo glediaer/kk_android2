@@ -15,9 +15,8 @@
     <string name="str_input_email">Email</string>
     <string name="str_input_password">Password</string>
     <string name="str_new_password">New Password</string>
-    <string name="str_login">Log in</string>
 
-    <string name="str_signup">Sign up</string>
+
     <string name="str_find_password">Forgot password</string>
     <string name="str_hindi">Hindi</string>
     <string name="str_eng">English</string>
@@ -44,7 +43,6 @@
     <string name="str_promotion_code">Promotion Code</string>
     <string name="str_gift_shop">Gift Shop</string>
     <string name="str_history">History</string>
-    <string name="str_invite">Invite</string>
     <string name="str_help">Help</string>
     <string name="str_buy_coins">Buy Coins</string>
     <string name="str_coin_transactions">Coins Transactions</string>
@@ -69,7 +67,7 @@
     <string name="str_episode_seq_format3">Ep.%d</string>
     <string name="str_episodes_seq_format1">%d Episodes</string>
     <string name="str_send">Send</string>
-    <string name="str_forgot_password">Forgot password?</string>
+
     <string name="str_male">Male</string>
     <string name="str_female">Female</string>
     <string name="str_select_genre">Please choose 3 genres you like!</string>
@@ -144,12 +142,10 @@
     <string name="str_no_wifi_title">Connection Is unstable.</string>
     <string name="str_no_wifi_msg">Please check your network again.</string>
     <string name="str_share_popup_title">Share series with your friends</string>
-    <string name="str_facebook">Facebook</string>
     <string name="str_instagram">Instagram</string>
     <string name="str_url_copy">url copy</string>
     <string name="str_maintenance"><u>      Maintenance     </u></string>
-    <string name="str_facebook_login">Continue with Facebook</string>
-    <string name="str_google_login">Continue with Google</string>
+
 
     <string name="msg_error_server">No any response from server yet. Please try again.</string>
     <string name="msg_fail_login">Failed to log in. Please check your ID or password.</string>
@@ -223,5 +219,25 @@
     <string name="str_charge">Charge</string>
     <string name="str_terms_policies">Terms &amp; Polices</string>
     <string name="str_logout">Logout</string>
+
+    <string name="str_welcome_login">Welcome to the\nKross Komics!</string>
+    <string name="str_welcome_login2">Start Your Joyful Journey!</string>
+    <string name="str_signup">Sign Up</string>
+    <string name="str_login">Login</string>
+    <string name="str_login_invite">With friends, Get benefits!</string>
+    <string name="str_invite"><u>Invite</u></string>
+
+    <string name="str_welcome_back">Welcome back!</string>
+    <string name="str_email_hint">E-mail</string>
+    <string name="str_password_hint">Password</string>
+    <string name="str_forgot_password">Forgot password?</string>
+    <string name="str_or_login_with">or Login with</string>
+    <string name="str_facebook_login">Continue with Facebook</string>
+    <string name="str_google_login">Continue with Google</string>
+    <string name="str_facebook">Facebook</string>
+    <string name="str_reset_password">Please enter your email to get a reset link</string>
+    <string name="str_send_link">Send link</string>
+    <string name="str_reset_link">Reset Link has been sent to</string>
+    <string name="str_ok">OK</string>
 
 </resources>

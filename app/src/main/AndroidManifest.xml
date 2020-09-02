@@ -36,49 +36,70 @@
         </activity>
         <activity android:name="com.krosskomics.home.activity.MainActivity"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:launchMode="singleTask">
 
         </activity>
+
+        <activity android:name=".login.activity.LoginIntroActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".login.activity.LoginActivity"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".ongoing.activity.OnGoingActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".waitfree.activity.WaitFreeActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".ranking.activity.RankingActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".genre.activity.GenreActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".search.activity.SearchActivity"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".book.activity.BookActivity"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".coin.activity.CoinActivity"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".library.activity.LibraryActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".event.activity.EventActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".notice.activity.NoticeActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".settings.activity.SettingsActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".webview.WebViewActivity"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
 
         <!-- 3rd party -->
         <provider android:authorities="com.facebook.app.FacebookContentProvider1234"

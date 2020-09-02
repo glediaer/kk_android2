@@ -90,11 +90,11 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
     }
 
     private fun initMainView() {
-        homeButton.setOnClickListener(this)
-        onGoingButton.setOnClickListener(this)
-        waitButton.setOnClickListener(this)
-        rankingButton.setOnClickListener(this)
-        jenreButton.setOnClickListener(this)
+        homeButton?.setOnClickListener(this)
+        onGoingButton?.setOnClickListener(this)
+        waitButton?.setOnClickListener(this)
+        rankingButton?.setOnClickListener(this)
+        genreButton?.setOnClickListener(this)
 
         initRecyclerView()
     }
@@ -147,7 +147,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
                 startActivity(Intent(context, RankingActivity::class.java))
                 finish()
             }
-            R.id.jenreButton -> {
+            R.id.genreButton -> {
                 startActivity(Intent(context, GenreActivity::class.java))
                 finish()
             }
