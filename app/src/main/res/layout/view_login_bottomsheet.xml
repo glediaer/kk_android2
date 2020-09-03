@@ -16,9 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textSize="12sp"
-            android:textColor="#c6c6c6"
-            android:textStyle="bold"
+            android:textSize="12dp"
+            android:textColor="@color/kk_selector_color_login"
             android:text="@string/str_signup" />
 
         <View
@@ -35,13 +34,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="12sp"
-            android:textColor="#000000"
-            android:textStyle="bold"
+            android:textColor="@color/kk_selector_color_login"
             android:text="@string/str_login" />
 
     </LinearLayout>
 
     <TextView
+        android:id="@+id/welcomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -70,6 +69,58 @@
         android:inputType="textPassword"
         android:hint="@string/str_password_hint"/>
 
+    <LinearLayout
+        android:id="@+id/termsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/termsImageView"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:duplicateParentState="true"
+            android:src="@drawable/kk_selector_bottomsheet_check_terms"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="7dp"
+            android:textSize="9dp"
+            android:textColor="#828282"
+            android:text="@string/str_join_policy_noti1" />
+
+        <TextView
+            android:id="@+id/termsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="9dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:text="@string/str_terms_of_service" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="9dp"
+            android:textColor="#828282"
+            android:text="@string/str_and" />
+
+        <TextView
+            android:id="@+id/privacyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="9dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:text="@string/str_privacy_policy" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/goLoginButton"
         android:layout_width="match_parent"
@@ -81,6 +132,18 @@
         android:textColor="#ffffff"
         android:textAllCaps="false"
         android:text="@string/str_login"/>
+
+    <Button
+        android:id="@+id/goNextButton"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:enabled="false"
+        android:background="@drawable/kk_selector_bottomsheet_login_btn"
+        android:textSize="18dp"
+        android:textColor="#ffffff"
+        android:textAllCaps="false"
+        android:text="@string/str_next"/>
 
     <TextView
         android:id="@+id/forgotPwTextView"
@@ -105,6 +168,7 @@
             android:background="#c6c6c6"/>
 
         <TextView
+            android:id="@+id/orViewtypeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"

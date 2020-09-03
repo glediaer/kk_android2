@@ -114,10 +114,8 @@
     <string name="str_expires_format">Expires in %d days</string>
     <string name="str_cancel">Cancel</string>
     <string name="str_findpassword_noti">Please enter your email to get a reset link.</string>
-    <string name="str_join_policy_noti1">By continuing, you agree to our</string>
-    <string name="str_terms_of_service">Terms of Service</string>
-    <string name="str_privacy_policy">Privacy policy</string>
-    <string name="str_and">and</string>
+
+
     <string name="str_delete_account_notice">Deleting your account will permanently remove all coins and series you purchased.</string>
     <string name="str_home">Home</string>
     <string name="str_profile">My Profile</string>
@@ -232,6 +230,7 @@
     <string name="str_password_hint">Password</string>
     <string name="str_forgot_password">Forgot password?</string>
     <string name="str_or_login_with">or Login with</string>
+    <string name="str_or_signup_with">or Sign up with</string>
     <string name="str_facebook_login">Continue with Facebook</string>
     <string name="str_google_login">Continue with Google</string>
     <string name="str_facebook">Facebook</string>
@@ -239,5 +238,14 @@
     <string name="str_send_link">Send link</string>
     <string name="str_reset_link">Reset Link has been sent to</string>
     <string name="str_ok">OK</string>
+    <string name="str_lets_started">Let’s Get Started!</string>
+    <string name="str_join_policy_noti1">By continuing, you agree to our</string>
+    <string name="str_terms_of_service"><u>Terms of Service</u></string>
+    <string name="str_privacy_policy"><u>Privacy policy</u></string>
+    <string name="str_and">and</string>
+    <string name="str_next">NEXT</string>
+
+    <string name="str_nickname_title">Display name</string>
+    <string name="str_minimum_nickname">*Minimum 6 digits.</string>
 
 </resources>

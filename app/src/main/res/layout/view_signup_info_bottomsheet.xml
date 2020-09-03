@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#fafafa"
+    android:layout_marginTop="15dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="40dp">
+
+    <TextView
+        android:id="@+id/infoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:textColor="#828282"
+        tools:text="(1/5)  Enter your information." />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginTop="5dp"
+        android:max="5"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="493dp"
+        android:layout_marginTop="15dp"
+        android:padding="20dp"
+        android:background="@drawable/kk_bottomsheet_info_rect">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:textColor="#000000"
+                tools:text="@string/str_nickname_title" />
+
+            <EditText
+                android:id="@+id/emailEditTextView"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="25dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="14dp"
+                android:textColor="#c6c6c6"
+                android:background="@drawable/kk_bottomsheet_info_edittext_rect"
+                android:hint="@string/str_minimum_nickname"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/nextImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="right|bottom"
+            android:src="@drawable/kk_check_on"/>
+
+    </FrameLayout>
+
+</LinearLayout>

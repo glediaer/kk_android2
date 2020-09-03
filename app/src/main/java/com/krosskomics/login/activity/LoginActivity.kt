@@ -1,10 +1,12 @@
 package com.krosskomics.login.activity
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -20,15 +22,14 @@ import com.krosskomics.common.model.Login
 import com.krosskomics.home.activity.MainActivity
 import com.krosskomics.login.viewmodel.LoginViewModel
 import com.krosskomics.util.CODE
-import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.emailCheck
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil.setRetrofitServer
+import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.view_forgot_password_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_login_bottomsheet.view.*
-import kotlinx.android.synthetic.main.view_signup_bottomsheet.view.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -174,6 +175,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
     }
 
     private fun showBottomSheet(view: Int) {
+//        if (datePicker.getParent() != null)
+//    ((ViewGroup) datePicker.getParent()).removeView(datePicker);
+//builder.setView(datePicker);
+        if (::dialogView.isInitialized) {
+            (dialogView.parent as ViewGroup).removeView(dialogView)
+
+        }
+
         dialogView = layoutInflater.inflate(view, null)
         bottomSheetDialog = BottomSheetDialog(this)
         bottomSheetDialog.setContentView(dialogView)
@@ -182,6 +191,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
         when(view) {
             R.layout.view_login_bottomsheet -> {
                 dialogView.apply {
+                    setLoginViewType()
+
                     emailEditTextView.addTextChangedListener(object : TextWatcher {
                         override fun beforeTextChanged(
                             s: CharSequence,
@@ -200,8 +211,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         }
 
                         override fun afterTextChanged(s: Editable) {
-                            goLoginButton.isEnabled =
-                                !("" == passwordEditTextView.text.toString() || !emailCheck(s.toString()))
+                            if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
+                                goLoginButton.isEnabled =
+                                    !("" == passwordEditTextView.text.toString() || !emailCheck(s.toString()))
+                            } else {
+                                goNextButton.isEnabled =
+                                    !("" == passwordEditTextView.text.toString() || !emailCheck(s.toString()))
+                            }
                         }
                     })
                     passwordEditTextView.addTextChangedListener(object : TextWatcher {
@@ -222,37 +238,41 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         }
 
                         override fun afterTextChanged(s: Editable) {
-                            goLoginButton.isEnabled =
-                                !("" == passwordEditTextView.text.toString() ||
-                                        !emailCheck(emailEditTextView.text.toString()))
+                            if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
+                                goLoginButton.isEnabled =
+                                    !("" == passwordEditTextView.text.toString() ||
+                                            !emailCheck(emailEditTextView.text.toString()))
+                            } else {
+                                goNextButton.isEnabled =
+                                    !("" == passwordEditTextView.text.toString() ||
+                                            !emailCheck(emailEditTextView.text.toString()))
+                                            && termsImageView.isSelected
+                            }
                         }
                     })
-                    goLoginButton.setOnClickListener {
-                        // 로그인 요청
-                        if (passwordEditTextView.text.length < 6) {
-                            showToast(
-                                getString(R.string.msg_fail_password_length),
-                                this@LoginActivity
-                            )
-                            return@setOnClickListener
-                        }
-                        viewModel.repository.apply {
-                            id = emailEditTextView.text.toString().trim()
-                            password = passwordEditTextView.text.toString().trim()
-                            loginType = CODE.LOGIN_TYPE_KROSS
-                            oprofile = ""
-                        }
-                        viewModel.requestLogin()
-                    }
+
                     forgotPwTextView.setOnClickListener {
                         bottomSheetDialog.dismiss()
                         showBottomSheet(R.layout.view_forgot_password_bottomsheet)
                     }
-                }
-            }
-            R.layout.view_signup_bottomsheet -> {
-                dialogView.btn_forgot_password.setOnClickListener {
-                    showBottomSheet(R.layout.view_forgot_password_bottomsheet)
+
+                    facebookView.setOnClickListener {
+                        // facebook login
+                        if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
+
+                        } else {
+
+                        }
+                    }
+
+                    googleView.setOnClickListener {
+                        // google login
+                        if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
+
+                        } else {
+
+                        }
+                    }
                 }
             }
             R.layout.view_forgot_password_bottomsheet -> {
@@ -286,14 +306,141 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                     }
                 }
             }
+            R.layout.view_signup_info_bottomsheet -> {
+                dialogView.apply {
+                    backImageView.setOnClickListener { bottomSheetDialog.dismiss() }
+                    forgotEmailEditTextView.addTextChangedListener(object : TextWatcher {
+                        override fun beforeTextChanged(
+                            s: CharSequence,
+                            start: Int,
+                            count: Int,
+                            after: Int
+                        ) {
+                        }
+
+                        override fun onTextChanged(
+                            s: CharSequence,
+                            start: Int,
+                            before: Int,
+                            count: Int
+                        ) {
+                        }
+
+                        override fun afterTextChanged(s: Editable) {
+                            sendLinkButton.isEnabled = !emailCheck(s.toString())
+                        }
+                    })
+                    sendLinkButton.setOnClickListener {
+                        // 비밀번호 찾기 요청
+                        viewModel.repository.id = forgotEmailEditTextView.text.toString().trim()
+                        viewModel.requestFindPassword()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setLoginViewType() {
+        // login, signup 구분
+        dialogView.apply {
+            if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
+                signupTextView.isSelected = false
+                loginTextView.isSelected = true
+                signupTextView.setTypeface(null, Typeface.NORMAL)
+                loginTextView.setTypeface(null, Typeface.BOLD)
+                signupTextView.setOnClickListener {
+                    viewModel.repository.pageType = CODE.SIGNUP_MODE
+                    setLoginViewType()
+                }
+
+                welcomeTextView.text = getString(R.string.str_welcome_back)
+
+                termsView.visibility = View.GONE
+                termsView.isSelected = false
+
+                goLoginButton.visibility = View.VISIBLE
+                goNextButton.visibility = View.GONE
+                goLoginButton.setOnClickListener {
+                    // 로그인 요청
+                    if (passwordEditTextView.text.length < 6) {
+                        showToast(
+                            getString(R.string.msg_fail_password_length),
+                            this@LoginActivity
+                        )
+                        return@setOnClickListener
+                    }
+                    viewModel.repository.apply {
+                        id = emailEditTextView.text.toString().trim()
+                        password = passwordEditTextView.text.toString().trim()
+                        loginType = CODE.LOGIN_TYPE_KROSS
+                        oprofile = ""
+                    }
+                    viewModel.requestLogin()
+                }
+
+                forgotPwTextView.visibility = View.VISIBLE
+
+                orViewtypeTextView.text = getString(R.string.str_or_login_with)
+
+            } else {
+                signupTextView.isSelected = true
+                loginTextView.isSelected = false
+                signupTextView.setTypeface(null, Typeface.BOLD)
+                loginTextView.setTypeface(null, Typeface.NORMAL)
+                loginTextView.setOnClickListener {
+                    viewModel.repository.pageType = CODE.LOGIN_MODE
+                    setLoginViewType()
+                }
+
+                welcomeTextView.text = getString(R.string.str_lets_started)
+
+                termsView.visibility = View.VISIBLE
+                termsView.isSelected = true
+                termsView.setOnClickListener {
+                    it.isSelected = !it.isSelected
+                    goNextButton.isEnabled = it.isSelected
+                }
+                termsTextView.setOnClickListener {
+                    val intent =
+                        Intent(this@LoginActivity, WebViewActivity::class.java).apply {
+                            putExtra("title", termsTextView.text.toString())
+                            putExtra(
+                                "url", KJKomicsApp.getWebUrl().toString() + "terms/terms"
+                            )
+                        }
+                    startActivity(intent)
+                    bottomSheetDialog.dismiss()
+                }
+                privacyTextView.setOnClickListener {
+                    val intent =
+                        Intent(this@LoginActivity, WebViewActivity::class.java).apply {
+                            putExtra("title", privacyTextView.text.toString())
+                            putExtra(
+                                "url", KJKomicsApp.getWebUrl().toString() + "terms/privacy"
+                            )
+                        }
+                    startActivity(intent)
+                    bottomSheetDialog.dismiss()
+                }
+
+                goLoginButton.visibility = View.GONE
+                goNextButton.visibility = View.VISIBLE
+                goNextButton.setOnClickListener {
+                    // 개인정보 요청
+                    bottomSheetDialog.dismiss()
+                    showBottomSheet(R.layout.view_signup_info_bottomsheet)
+                }
+
+                forgotPwTextView.visibility = View.GONE
+
+                orViewtypeTextView.text = getString(R.string.str_or_signup_with)
+            }
         }
     }
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.btn_signup -> {
-                showBottomSheet(R.layout.view_signup_bottomsheet)
-            }
+
         }
     }
 }

@@ -58,8 +58,6 @@ class CoinActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.btn_signup -> {
-            }
         }
     }
 }
