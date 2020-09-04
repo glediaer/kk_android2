@@ -20,6 +20,10 @@ class LoginViewModel(application: Application): BaseViewModel(application) {
         repository.requestLogin()
     }
 
+    fun requestSignUp() {
+        repository.requestSignUp()
+    }
+
     fun requestFindPassword() {
         repository.requestFindPassword()
     }

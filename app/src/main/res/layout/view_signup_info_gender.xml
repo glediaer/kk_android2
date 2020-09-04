@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/maleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:tag="M"
+        android:orientation="vertical">
+        
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="73dp"
+            android:duplicateParentState="true"
+            android:src="@drawable/kk_selector_gender_male"/>
+
+        <TextView
+            android:id="@+id/mailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:duplicateParentState="true"
+            android:textSize="16dp"
+            android:textColor="@color/kk_selector_color_gray_black"
+            android:gravity="center_horizontal"
+            android:text="@string/str_male" />
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/femaleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="102dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:tag="F"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="73dp"
+            android:duplicateParentState="true"
+            android:src="@drawable/kk_selector_gender_female"/>
+
+        <TextView
+            android:id="@+id/femailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:duplicateParentState="true"
+            android:textSize="16dp"
+            android:textColor="@color/kk_selector_color_gray_black"
+            android:gravity="center_horizontal"
+            android:text="@string/str_female" />
+
+    </LinearLayout>
+
+</LinearLayout>

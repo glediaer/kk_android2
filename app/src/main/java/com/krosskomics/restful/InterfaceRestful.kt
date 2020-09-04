@@ -80,12 +80,12 @@ interface InterfaceRestful {
         @Field("passwd") passwd: String?,
         @Field("login_type") login_type: String?,
         @Field("gender") gender: String?,
-        @Field("age") age: Int,
+        @Field("age") age: Int?,
         @Field("genre") genre: String?,
         @Field("firebase_token") firebase_token: String?,
         @Field("rid") rid: String?,
         @Field("sns_token") sns_token: String?
-    ): Call<Login?>?
+    ): Call<Login>
 
     // 초기화 데이터
     @FormUrlEncoded

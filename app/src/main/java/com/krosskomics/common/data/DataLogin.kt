@@ -7,5 +7,6 @@ class DataLogin {
             : String? = null
     var age = 0
     var genres: ArrayList<String>? = null
-    var genreString: String? = null
+    var genreString = ""
+    var nickname: String? = null
 }

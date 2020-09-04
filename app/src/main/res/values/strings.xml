@@ -22,11 +22,9 @@
     <string name="str_eng">English</string>
     <string name="str_language_question">Language?</string>
     <string name="str_done">Done</string>
-    <string name="str_gender">Gender?</string>
+
     <string name="str_gender_title">Gender</string>
-    <string name="str_age">Age?</string>
     <string name="str_age_title">Age</string>
-    <string name="str_genre_title">Genre</string>
     <string name="str_language_noti1">* Features and available series  may differ for\n   the language you have selected.</string>
     <string name="str_language_noti2">* Anytime you can change the language on Settings</string>
     <string name="str_recent">Recent</string>
@@ -58,7 +56,6 @@
     <string name="str_edit_profile">Change email address</string>
     <string name="str_notification">Notification</string>
 
-    <string name="str_language">Language</string>
     <string name="msg_permission_denied1">If you want to use Kross Komics app, please configure the settings.</string>
     <string name="msg_permission_denied2">No configured any necessary permission for Kross Komics app.\n\n Please configure [Settings] &gt; [Apps] &gt; [Storage] permission.</string>
     <string name="str_search">Search</string>
@@ -68,8 +65,7 @@
     <string name="str_episodes_seq_format1">%d Episodes</string>
     <string name="str_send">Send</string>
 
-    <string name="str_male">Male</string>
-    <string name="str_female">Female</string>
+
     <string name="str_select_genre">Please choose 3 genres you like!</string>
     <string name="str_empty_recent1">No viewed series yet.</string>
     <string name="str_empty_recent2">The series you read recently will show up here, so you can continue to read them.</string>
@@ -247,5 +243,13 @@
 
     <string name="str_nickname_title">Display name</string>
     <string name="str_minimum_nickname">*Minimum 6 digits.</string>
+    <string name="str_sign_info_step_noti">Enter your information.</string>
+    <string name="str_gender">Gender</string>
+    <string name="str_male">Male</string>
+    <string name="str_female">Female</string>
+    <string name="str_age">Age</string>
+    <string name="str_genre_title">Genre</string>
+    <string name="str_language">Language</string>
+
 
 </resources>

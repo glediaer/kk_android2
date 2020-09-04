@@ -1,12 +1,10 @@
 package com.krosskomics.common.holder
 
-import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.krosskomics.common.data.BaseItem
 
 open class BaseItemViewHolderImpl(itemView: View) : BaseItemViewHolder(itemView) {
-    override fun setData(item: Any?) {
+    override fun setData(item: Any?, position: Int) {
 
     }
     /**

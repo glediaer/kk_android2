@@ -24,11 +24,11 @@ class HomeBannerAdapter(private val items: ArrayList<*>) :
     }
 
     override fun onBindViewHolder(holder: HomeBannerItemHolder, position: Int) {
-        holder.setData(items[position])
+        holder.setData(items[position], position)
     }
 
     inner class HomeBannerItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
-        override fun setData(item: Any?) {
+        override fun setData(item: Any?, position: Int) {
             if (item is DataBanner) {
                 Glide.with(itemView.context)
                     .load(item.image)

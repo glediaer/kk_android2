@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#fafafa"
-    android:layout_marginTop="15dp"
+    android:paddingTop="15dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingBottom="40dp">
@@ -39,25 +39,66 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/infoTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24dp"
                 android:textColor="#000000"
-                tools:text="@string/str_nickname_title" />
+                android:textStyle="bold"
+                android:text="@string/str_nickname_title" />
 
+            <!-- nickname -->
             <EditText
-                android:id="@+id/emailEditTextView"
+                android:id="@+id/infoEmailEditTextView"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="25dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
+                android:singleLine="true"
+                android:maxLength="20"
                 android:textSize="14dp"
                 android:textColor="#c6c6c6"
                 android:background="@drawable/kk_bottomsheet_info_edittext_rect"
                 android:hint="@string/str_minimum_nickname"/>
 
+            <!-- genre -->
+            <include
+                android:id="@+id/genreView"
+                layout="@layout/view_signup_info_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:visibility="gone"
+                android:layout_gravity="center" />
+
         </LinearLayout>
+
+        <!-- gender -->
+        <include
+            android:id="@+id/genderView"
+            layout="@layout/view_signup_info_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center" />
+
+        <!-- age -->
+        <include
+            android:id="@+id/ageView"
+            layout="@layout/view_signup_info_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center" />
+
+        <include
+            android:id="@+id/languageView"
+            layout="@layout/view_signup_info_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center" />
 
         <ImageView
             android:id="@+id/nextImageView"
@@ -65,7 +106,7 @@
             android:layout_height="50dp"
             android:layout_marginBottom="10dp"
             android:layout_gravity="right|bottom"
-            android:src="@drawable/kk_check_on"/>
+            android:src="@drawable/kk_selector_bottomsheet_info_next"/>
 
     </FrameLayout>
 

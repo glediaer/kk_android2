@@ -1,33 +1,26 @@
 package com.krosskomics.settings.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
-import com.krosskomics.common.data.DataBook
-import com.krosskomics.common.holder.BaseItemViewHolder
-import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
-import kotlinx.android.synthetic.main.item_ongoing.view.*
 
 class SettingsAdapter(private val items: ArrayList<*>) :
     RecyclerViewBaseAdapter(items) {
 
     private var onClickListener: OnItemClickListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewBaseAdapter.CustomItemHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewBaseAdapter.BaseItemHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ongoing, parent, false)
-        return CustomItemHolder(view)
+        return BaseItemHolder(view)
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewBaseAdapter.CustomItemHolder, position: Int) {
-        holder.setData(items[position])
+    override fun onBindViewHolder(holder: RecyclerViewBaseAdapter.BaseItemHolder, position: Int) {
+        holder.setData(items[position], position)
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {

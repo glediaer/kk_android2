@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -65,7 +64,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        holder.setData(items[position])
+        holder.setData(items[position], position)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -237,7 +236,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
         val rankingPager = itemView.findViewById<ViewPager>(R.id.rank_pager)
         val eventLayout = itemView.findViewById<LinearLayout>(R.id.lay_event)
 
-        override fun setData(item: Any?) {
+        override fun setData(item: Any?, position: Int) {
             if (item is DataMainContents) {
                 titleTextView?.text = item.layout_title
                 if ("1".equals(item.show_more)) {

@@ -12,29 +12,29 @@ import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.*
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
-    RecyclerView.Adapter<RecyclerViewBaseAdapter.CustomItemHolder>() {
+    RecyclerView.Adapter<RecyclerViewBaseAdapter.BaseItemHolder>() {
 
     private var onClickListener: OnItemClickListener? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomItemHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ongoing, parent, false)
-        return CustomItemHolder(view)
+        return BaseItemHolder(view)
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    override fun onBindViewHolder(holder: CustomItemHolder, position: Int) {
-        holder.setData(items[position])
+    override fun onBindViewHolder(holder: BaseItemHolder, position: Int) {
+        holder.setData(items[position], position)
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.onClickListener = onItemClickListener
     }
 
-    inner class CustomItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
-        override fun setData(item: Any?) {
+    inner class BaseItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
+        override fun setData(item: Any?, position: Int) {
             if (item is DataBook) {
                 itemView.apply {
                     Glide.with(itemView.context)

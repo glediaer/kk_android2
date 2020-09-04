@@ -16,6 +16,6 @@ open class BaseRecyclerAdapter(private val items: ArrayList<*>) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: BaseItemViewHolderImpl, position: Int) {
-        holder.setData(items[position])
+        holder.setData(items[position], position)
     }
 }

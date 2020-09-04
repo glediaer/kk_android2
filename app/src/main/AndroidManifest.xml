@@ -43,6 +43,7 @@
 
         <activity android:name=".login.activity.LoginIntroActivity"
             android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".login.activity.LoginActivity"

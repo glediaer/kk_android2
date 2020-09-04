@@ -26,7 +26,7 @@ class WaitFreeAdapter(private val items: ArrayList<*>) :
     }
 
     override fun onBindViewHolder(holder: CustomItemHolder, position: Int) {
-        holder.setData(items[position])
+        holder.setData(items[position], position)
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
@@ -34,7 +34,7 @@ class WaitFreeAdapter(private val items: ArrayList<*>) :
     }
 
     inner class CustomItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
-        override fun setData(item: Any?) {
+        override fun setData(item: Any?, position: Int) {
             if (item is DataBook) {
                 itemView.apply {
                     Glide.with(itemView.context)

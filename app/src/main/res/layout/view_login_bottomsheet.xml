@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="12dp"
-            android:textColor="@color/kk_selector_color_login"
+            android:textColor="@color/kk_selector_color_gray_black"
             android:text="@string/str_signup" />
 
         <View
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="12sp"
-            android:textColor="@color/kk_selector_color_login"
+            android:textColor="@color/kk_selector_color_gray_black"
             android:text="@string/str_login" />
 
     </LinearLayout>

@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.common.model.Default
-import com.krosskomics.common.model.InitSet
 import com.krosskomics.common.model.Login
-import com.krosskomics.common.model.Main
 import com.krosskomics.common.repository.CommonRepository
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -26,6 +24,9 @@ class LoginRepository(val context: Context) : CommonRepository(){
     var password = ""
     var loginType = ""
     var oprofile = ""
+    var snsToken = ""
+    var language = "en"
+    var signOutInfoStep = 1
 
     fun requestLogin() {
         val api: Call<Login> = ServerUtil.service.setLoginKross(
@@ -38,6 +39,33 @@ class LoginRepository(val context: Context) : CommonRepository(){
         )
         api.enqueue(object : Callback<Login> {
             override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                if (response.body() != null) {
+                    loginLiveData.postValue(response.body());
+                }
+            }
+
+            override fun onFailure(call: Call<Login>, t: Throwable) {
+                loginLiveData.postValue(null)
+            }
+        })
+    }
+
+    fun requestSignUp() {
+        val api: Call<Login> = ServerUtil.service.setJoinKross(
+            CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+            id,
+            password,
+            loginType,
+            KJKomicsApp.LOGIN_DATA?.gender,
+            KJKomicsApp.LOGIN_DATA?.age,
+            KJKomicsApp.LOGIN_DATA?.genreString,
+            CommonUtil.read(context, CODE.LOCAL_token, ""),
+            KJKomicsApp.DEEPLINK_RID,
+            snsToken
+        )
+        api.enqueue(object : Callback<Login> {
+            override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                KJKomicsApp.DEEPLINK_RID = ""
                 if (response.body() != null) {
                     loginLiveData.postValue(response.body());
                 }

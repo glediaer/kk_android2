@@ -7,21 +7,29 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
+import com.krosskomics.common.data.DataGenre
 import com.krosskomics.common.data.DataLogin
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Login
 import com.krosskomics.home.activity.MainActivity
+import com.krosskomics.login.adapter.GenreDecoration
+import com.krosskomics.login.adapter.InfoGenreAdapter
+import com.krosskomics.login.adapter.InfoLanguageAdapter
 import com.krosskomics.login.viewmodel.LoginViewModel
 import com.krosskomics.util.CODE
+import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.emailCheck
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
@@ -30,6 +38,10 @@ import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.view_forgot_password_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_login_bottomsheet.view.*
+import kotlinx.android.synthetic.main.view_signup_info_bottomsheet.view.*
+import kotlinx.android.synthetic.main.view_signup_info_gender.view.*
+import kotlinx.android.synthetic.main.view_signup_info_genre.view.*
+import kotlinx.android.synthetic.main.view_signup_info_language.view.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -74,44 +86,73 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
             return
         }
         if (t is Login) {
-            when(t.retcode) {
-                CODE.SUCCESS, "104" -> {
-                    t.user?.let { user ->
-                        //내부 저장소에 정보를 기록
-                        write(context, CODE.LOCAL_id, viewModel.repository.id)
-                        write(context, CODE.LOCAL_loginType, viewModel.repository.loginType)
-                        write(context, CODE.LOCAL_loginYn, "Y")
-                        write(context, CODE.LOCAL_user_no, user.u_token)
-                        write(context, CODE.LOCAL_coin, user.user_coin)
-                        write(context, CODE.Local_oprofile, viewModel.repository.oprofile)
-                        write(context, CODE.LOCAL_Nickname, user.nick)
-                        write(context, CODE.LOCAL_email, user.email)
+            if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
+                when(t.retcode) {
+                    CODE.SUCCESS, "104" -> {
+                        t.user?.let { user ->
+                            //내부 저장소에 정보를 기록
+                            write(context, CODE.LOCAL_id, viewModel.repository.id)
+                            write(context, CODE.LOCAL_loginType, viewModel.repository.loginType)
+                            write(context, CODE.LOCAL_loginYn, "Y")
+                            write(context, CODE.LOCAL_user_no, user.u_token)
+                            write(context, CODE.LOCAL_coin, user.user_coin)
+                            write(context, CODE.Local_oprofile, viewModel.repository.oprofile)
+                            write(context, CODE.LOCAL_Nickname, user.nick)
+                            write(context, CODE.LOCAL_email, user.email)
 
-                        user.u_token?.let {
-                            write(context, CODE.LOCAL_ENC_USER_NO, it)
-                            setRetrofitServer(context)
-                        }
-                        KJKomicsApp.LOGIN_SEQ = user.login_seq
-                        user.new_gift?.let {
-                            if ("1" == it) {
-                                KJKomicsApp.IS_GET_NEW_GIFT = true
+                            user.u_token?.let {
+                                write(context, CODE.LOCAL_ENC_USER_NO, it)
+                                setRetrofitServer(context)
+                            }
+                            KJKomicsApp.LOGIN_SEQ = user.login_seq
+                            user.new_gift?.let {
+                                if ("1" == it) {
+                                    KJKomicsApp.IS_GET_NEW_GIFT = true
+                                }
+                            }
+                            KJKomicsApp.PROFILE_PICTURE = user.profile_picture.toString()
+
+                            showToast(
+                                getString(R.string.msg_success_login),
+                                this@LoginActivity
+                            )
+                            //메인에 로그인되었다고 알린다.
+                            val intent = Intent(CODE.LB_MAIN)
+                            intent.putExtra("message", CODE.MSG_NAV_REFRESH)
+                            LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+
+                            FirebaseAnalytics.getInstance(context)
+                                .logEvent(FirebaseAnalytics.Event.LOGIN, Bundle())
+
+                            // 메인으로 이동
+                            runBlocking {
+                                launch {
+                                    delay(400)
+                                    startActivity(Intent(context, MainActivity::class.java))
+                                    finish()
+                                }
                             }
                         }
-                        KJKomicsApp.PROFILE_PICTURE = user.profile_picture.toString()
-
-                        showToast(
-                            getString(R.string.msg_success_login),
-                            this@LoginActivity
-                        )
-                        //메인에 로그인되었다고 알린다.
-                        val intent = Intent(CODE.LB_MAIN)
-                        intent.putExtra("message", CODE.MSG_NAV_REFRESH)
-                        LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
-
-                        FirebaseAnalytics.getInstance(context)
-                            .logEvent(FirebaseAnalytics.Event.LOGIN, Bundle())
-
-                        // 메인으로 이동
+                    }
+                    "102" -> {
+                        // 소셜로그인으로 로그인 추가 데이터 입력 처리
+                        //                // 추가 데이터 수집
+                        if (CODE.LOGIN_TYPE_FACEBOOK == viewModel.repository.loginType
+                            || CODE.LOGIN_TYPE_GOOGLE == viewModel.repository.loginType) {
+                            KJKomicsApp.LOGIN_DATA = DataLogin()
+                            val intent =
+//                            Intent(this@LoginActivity, SelectGenderActivity::class.java)
+                                startActivity(intent)
+                        } else {
+                            if (!t.msg.isNullOrEmpty()) {
+                                showToast(t.msg, this@LoginActivity)
+                            }
+                        }
+                    }
+                    else -> {
+                        if (!t.msg.isNullOrEmpty()) {
+                            showToast(t.msg, this@LoginActivity)
+                        }
                         runBlocking {
                             launch {
                                 delay(400)
@@ -121,30 +162,28 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         }
                     }
                 }
-                "102" -> {
-                    // 소셜로그인으로 로그인 추가 데이터 입력 처리
-                    //                // 추가 데이터 수집
-                    if (CODE.LOGIN_TYPE_FACEBOOK == viewModel.repository.loginType
-                        || CODE.LOGIN_TYPE_GOOGLE == viewModel.repository.loginType) {
-                        KJKomicsApp.LOGIN_DATA = DataLogin()
-                        val intent =
-//                            Intent(this@LoginActivity, SelectGenderActivity::class.java)
-                        startActivity(intent)
-                    } else {
+            } else {
+                when(t.retcode) {
+                    CODE.SUCCESS -> {
+                        viewModel.repository.pageType = CODE.SIGNUP_MODE
+                        viewModel.requestLogin()
+                        var gaLogMethod = ""
+                        if (viewModel.repository.loginType == CODE.LOGIN_TYPE_KROSS) {
+                            gaLogMethod = "email"
+                        } else {
+                            if (viewModel.repository.loginType == CODE.LOGIN_TYPE_FACEBOOK) {
+                                gaLogMethod = "facebook"
+                            } else if (viewModel.repository.loginType == CODE.LOGIN_TYPE_GOOGLE) {
+                                gaLogMethod = "google"
+                            }
+                        }
+                        val bundle = Bundle()
+                        bundle.putString(FirebaseAnalytics.Param.SIGN_UP_METHOD, gaLogMethod)
+                        FirebaseAnalytics.getInstance(context)
+                            .logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
+                    } else -> {
                         if (!t.msg.isNullOrEmpty()) {
                             showToast(t.msg, this@LoginActivity)
-                        }
-                    }
-                }
-                else -> {
-                    if (!t.msg.isNullOrEmpty()) {
-                        showToast(t.msg, this@LoginActivity)
-                    }
-                    runBlocking {
-                        launch {
-                            delay(400)
-                            startActivity(Intent(context, MainActivity::class.java))
-                            finish()
                         }
                     }
                 }
@@ -180,7 +219,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
 //builder.setView(datePicker);
         if (::dialogView.isInitialized) {
             (dialogView.parent as ViewGroup).removeView(dialogView)
-
         }
 
         dialogView = layoutInflater.inflate(view, null)
@@ -307,36 +345,198 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                 }
             }
             R.layout.view_signup_info_bottomsheet -> {
+                KJKomicsApp.LOGIN_DATA = DataLogin()
+                setNickNameView()
                 dialogView.apply {
-                    backImageView.setOnClickListener { bottomSheetDialog.dismiss() }
-                    forgotEmailEditTextView.addTextChangedListener(object : TextWatcher {
-                        override fun beforeTextChanged(
-                            s: CharSequence,
-                            start: Int,
-                            count: Int,
-                            after: Int
-                        ) {
-                        }
+                    nextImageView.setOnClickListener {
+                        when(viewModel.repository.signOutInfoStep) {
+                            1 -> {
+                                KJKomicsApp.LOGIN_DATA?.nickname = infoEmailEditTextView.text.toString()
+                                viewModel.repository.signOutInfoStep = 2
+                                setGenderView()
+                            }
+                            2 -> {
+                                KJKomicsApp.LOGIN_DATA?.gender = if (genderView.maleView.isSelected) {
+                                    genderView.maleView.tag.toString()
+                                } else {
+                                    genderView.femaleView.tag.toString()
+                                }
+                                viewModel.repository.signOutInfoStep = 3
+                                setAgeView()
+                            }
+                            3 -> {
+                                KJKomicsApp.LOGIN_DATA?.age = 30
+                                viewModel.repository.signOutInfoStep = 4
+                                nextImageView.isEnabled = false
+                                setGenreView()
+                            }
+                            4 -> {
+                                var genreList = KJKomicsApp.LOGIN_DATA?.genres.toString()
+                                genreList = genreList.trim { it <= ' ' }.replace(" ", "")
+                                genreList = genreList.substring(1, genreList.length - 1)
+                                KJKomicsApp.LOGIN_DATA?.genreString = genreList
+                                viewModel.repository.signOutInfoStep = 5
+                                setLanguageView()
+                            }
+                            5 -> {
+                                write(context, CODE.CURRENT_LANGUAGE, viewModel.repository.language);
+                                CommonUtil.setLocale(context, CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"))
 
-                        override fun onTextChanged(
-                            s: CharSequence,
-                            start: Int,
-                            before: Int,
-                            count: Int
-                        ) {
-                        }
+                                val intent = Intent(CODE.LB_JOIN)
+                                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+                                bottomSheetDialog.dismiss()
 
-                        override fun afterTextChanged(s: Editable) {
-                            sendLinkButton.isEnabled = !emailCheck(s.toString())
+                                viewModel.requestSignUp()
+                            }
                         }
-                    })
-                    sendLinkButton.setOnClickListener {
-                        // 비밀번호 찾기 요청
-                        viewModel.repository.id = forgotEmailEditTextView.text.toString().trim()
-                        viewModel.requestFindPassword()
                     }
                 }
             }
+        }
+    }
+
+    private fun setLanguageView() {
+        dialogView.run {
+            infoTextView.text =
+                "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
+            seekBar.progress = 5
+            infoTitleTextView.text = getString(R.string.str_language)
+
+            genreView.visibility = View.GONE
+            languageView.apply {
+                visibility = View.VISIBLE
+                languageRecyclerView.layoutManager = LinearLayoutManager(context)
+                KJKomicsApp.INIT_SET.lang_list?.let {
+                    languageRecyclerView.adapter = InfoLanguageAdapter(it)
+                    (languageRecyclerView.adapter as InfoLanguageAdapter).setOnItemClickListener(object :
+                        InfoLanguageAdapter.OnItemClickListener {
+                        override fun onItemClick(item: Any?, position: Int) {
+                            it.forEachIndexed { index, item ->
+                                if (index == position) {
+                                    item.isSelect = true
+                                    viewModel.repository.language = item.lang
+                                } else {
+                                    item.isSelect = false
+                                }
+                            }
+                            (languageRecyclerView.adapter as InfoLanguageAdapter).notifyDataSetChanged()
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    private fun setGenreView() {
+        dialogView.run {
+            infoTextView.text =
+                "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
+            seekBar.progress = 4
+            infoTitleTextView.text = getString(R.string.str_genre_title)
+
+            ageView.visibility = View.GONE
+
+            genreView.apply {
+                visibility = View.VISIBLE
+                recyclerView.layoutManager = GridLayoutManager(context, 3)
+                if (KJKomicsApp.LOGIN_DATA?.genres == null) {
+                    KJKomicsApp.LOGIN_DATA?.genres = arrayListOf()
+                }
+                dialogView.nextImageView.isEnabled = KJKomicsApp.LOGIN_DATA?.genres?.size!! >= 3
+                KJKomicsApp.INIT_SET.genre_img_list?.let {
+                    recyclerView.adapter = InfoGenreAdapter(it)
+                    recyclerView.addItemDecoration(GenreDecoration(context))
+                    (recyclerView.adapter as InfoGenreAdapter).setOnItemClickListener(object : InfoGenreAdapter.OnItemClickListener {
+                        override fun onItemClick(item: Any?) {
+                            if (item is DataGenre) {
+                                if (KJKomicsApp.LOGIN_DATA?.genres == null) {
+                                    KJKomicsApp.LOGIN_DATA?.genres = arrayListOf()
+                                }
+
+                                item.isSelect = !item.isSelect
+
+                                if (item.isSelect) {
+                                    if (KJKomicsApp.LOGIN_DATA?.genres?.size!! >= 3) return
+                                    KJKomicsApp.LOGIN_DATA?.genres?.add(item.genre.toString())
+                                } else {
+                                    KJKomicsApp.LOGIN_DATA?.genres?.remove(item.genre.toString())
+                                }
+                                (recyclerView.adapter as InfoGenreAdapter).notifyDataSetChanged()
+                                dialogView.nextImageView.isEnabled = KJKomicsApp.LOGIN_DATA?.genres?.size!! >= 3
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    private fun setAgeView() {
+        dialogView.run {
+            infoTextView.text =
+                "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
+            seekBar.progress = 3
+            infoTitleTextView.text = getString(R.string.str_age)
+
+            genderView.visibility = View.GONE
+
+        }
+    }
+
+    private fun setGenderView() {
+        dialogView.run {
+            infoTextView.text = "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
+            seekBar.progress = 2
+            infoTitleTextView.text = getString(R.string.str_gender)
+
+            infoEmailEditTextView.visibility = View.GONE
+            genderView.apply {
+                visibility = View.VISIBLE
+                maleView.isSelected = true
+                maleView.setOnClickListener {
+                    it.isSelected = !isSelected
+                    if (it.isSelected) {
+                        maleView.mailTextView.setTypeface(null, Typeface.BOLD)
+                        femaleView.femailTextView.setTypeface(null, Typeface.NORMAL)
+                    }
+                }
+                femaleView.setOnClickListener {
+                    it.isSelected = !isSelected
+                    if (it.isSelected) {
+                        maleView.mailTextView.setTypeface(null, Typeface.NORMAL)
+                        femaleView.femailTextView.setTypeface(null, Typeface.BOLD)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setNickNameView() {
+        dialogView.apply {
+            nextImageView.isEnabled = false
+            infoTextView.text = "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
+            seekBar.progress = 1
+            infoEmailEditTextView.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                }
+
+                override fun afterTextChanged(s: Editable) {
+                    nextImageView.isEnabled = !emailCheck(s.toString()) && s.length >= 6
+                }
+            })
         }
     }
 
@@ -427,6 +627,20 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                 goNextButton.visibility = View.VISIBLE
                 goNextButton.setOnClickListener {
                     // 개인정보 요청
+                    // 회원가입 요청
+                    if (passwordEditTextView.text.length < 6) {
+                        showToast(
+                            getString(R.string.msg_fail_password_length),
+                            this@LoginActivity
+                        )
+                        return@setOnClickListener
+                    }
+                    viewModel.repository.apply {
+                        id = emailEditTextView.text.toString().trim()
+                        password = passwordEditTextView.text.toString().trim()
+                        loginType = CODE.LOGIN_TYPE_KROSS
+                        oprofile = ""
+                    }
                     bottomSheetDialog.dismiss()
                     showBottomSheet(R.layout.view_signup_info_bottomsheet)
                 }
