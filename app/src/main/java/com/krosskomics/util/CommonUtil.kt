@@ -35,6 +35,7 @@ import com.facebook.imagepipeline.common.ResizeOptions
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.GoogleApiClient
 import com.krosskomics.KJKomicsApp
@@ -214,23 +215,22 @@ object CommonUtil {
                 }
             }
             if (CODE.LOGIN_TYPE_GOOGLE.equals(read(context, CODE.LOCAL_loginType, ""))) {
-                val gso =
-                    GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestEmail()
-                        .build()
-                val mGoogleApiClient = GoogleApiClient.Builder(context!!)
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                    .build()
-                mGoogleApiClient.disconnect()
-                //                mGoogleApiClient.clearDefaultAccountAndReconnect();
-            }
-            //            Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
-//                @Override
-//                public void onResult(@NonNull Status status) {
-//                    Log.d(TAG, "Sign Out using Google Api.");
-//                    mGoogleApiClient.disconnect();
+//                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                    .requestIdToken(context?.getString(R.string.google_account_webclient_id))
+//                    .requestEmail()
+//                    .build()
+//                // [END config_signin]
+//
+//                googleSignInClient = GoogleSignIn.getClient(this, gso)
+                // Google sign out
+//                googleSignInClient.signOut().addOnCompleteListener(this) {
+//                    updateUI(null)
 //                }
-//            });
+                // Google revoke access
+//                googleSignInClient.revokeAccess().addOnCompleteListener(this) {
+//                    updateUI(null)
+//                }
+            }
             //로그인때 기록한 정보를 제거한다.
             if (!CODE.LOGIN_TYPE_KROSS.equals(read(context, CODE.LOCAL_loginType, ""))) {
                 write(context, CODE.LOCAL_id, "")
@@ -247,12 +247,6 @@ object CommonUtil {
             KJKomicsApp.IS_GET_NEW_GIFT = false
             KJKomicsApp.PROFILE_PICTURE = ""
 
-//            Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(new ResultCallback<Status>() {
-//                @Override
-//                public void onResult(@NonNull Status status) {
-//                    Log.d(TAG, "Revoke access using Google Api.");
-//                }
-//            });
             KJKomicsApp.LOGIN_SEQ = 0
         } catch (e: Exception) {
             e.printStackTrace()

@@ -24,7 +24,7 @@ import androidx.annotation.NonNull
 import bolts.AppLinks
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
+//import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.iid.FirebaseInstanceId
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
@@ -89,7 +89,7 @@ class SplashActivity : Activity() {
         }
         initPreference()
         checkFCMToken()
-        setDynamicLink()
+//        setDynamicLink()
         setFacebookLink()
         if ("0" == read(context, CODE.IS_RUN_FIRST_APP, "0")) {
             write(context, CODE.IS_RUN_FIRST_APP, "1")
@@ -130,23 +130,23 @@ class SplashActivity : Activity() {
 //        );
     }
 
-    private fun setDynamicLink() {
-        FirebaseDynamicLinks.getInstance()
-            .getDynamicLink(intent)
-            .addOnSuccessListener(
-                this
-            ) { pendingDynamicLinkData -> // Get deep link from result (may be null if no link is found)
-                var deepLink: Uri? = null
-                if (pendingDynamicLinkData != null) {
-                    deepLink = pendingDynamicLinkData.link
-                    KJKomicsApp.DEEPLINK_DATA = deepLink.toString()
-                }
-                Log.e(TAG, "deepLink : $deepLink")
-            }
-            .addOnFailureListener(
-                this
-            ) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
-    }
+//    private fun setDynamicLinksetDynamicLink() {
+//        FirebaseDynamicLinks.getInstance()
+//            .getDynamicLink(intent)
+//            .addOnSuccessListener(
+//                this
+//            ) { pendingDynamicLinkData -> // Get deep link from result (may be null if no link is found)
+//                var deepLink: Uri? = null
+//                if (pendingDynamicLinkData != null) {
+//                    deepLink = pendingDynamicLinkData.link
+//                    KJKomicsApp.DEEPLINK_DATA = deepLink.toString()
+//                }
+//                Log.e(TAG, "deepLink : $deepLink")
+//            }
+//            .addOnFailureListener(
+//                this
+//            ) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
+//    }
 
     private fun initPreference() {
         setRetrofitServer(context)
@@ -182,7 +182,7 @@ class SplashActivity : Activity() {
     }
 
     private fun checkFCMToken() {
-        val FCMToken = FirebaseInstanceId.getInstance().token
+        val FCMToken = FirebaseInstanceId.getInstance().id
         if (FCMToken != null) {
             write(this@SplashActivity, CODE.LOCAL_token, FCMToken)
         }

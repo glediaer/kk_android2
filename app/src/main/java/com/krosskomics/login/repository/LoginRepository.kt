@@ -25,6 +25,10 @@ class LoginRepository(val context: Context) : CommonRepository(){
     var loginType = ""
     var oprofile = ""
     var snsToken = ""
+    var fbEmail = ""
+    var fbName = ""
+
+
     var language = "en"
     var signOutInfoStep = 1
 
@@ -36,6 +40,26 @@ class LoginRepository(val context: Context) : CommonRepository(){
             loginType,
             CommonUtil.read(context, CODE.LOCAL_token, ""),
             ""
+        )
+        api.enqueue(object : Callback<Login> {
+            override fun onResponse(call: Call<Login>, response: Response<Login>) {
+                if (response.body() != null) {
+                    loginLiveData.postValue(response.body());
+                }
+            }
+
+            override fun onFailure(call: Call<Login>, t: Throwable) {
+                loginLiveData.postValue(null)
+            }
+        })
+    }
+
+    fun requestSNSLogin() {
+        val api: Call<Login> = ServerUtil.service.setLoginSNS(
+            CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+            loginType,
+            CommonUtil.read(context, CODE.LOCAL_token, ""),
+            snsToken
         )
         api.enqueue(object : Callback<Login> {
             override fun onResponse(call: Call<Login>, response: Response<Login>) {

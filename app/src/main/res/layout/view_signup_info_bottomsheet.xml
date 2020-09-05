@@ -84,13 +84,13 @@
             android:layout_gravity="center" />
 
         <!-- age -->
-        <include
-            android:id="@+id/ageView"
-            layout="@layout/view_signup_info_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/kk_age_spinner_rect"
             android:visibility="gone"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"/>
 
         <include
             android:id="@+id/languageView"

@@ -113,6 +113,8 @@ class KJKomicsApp : Application() {
         super.onCreate()
         instance = this
 //            FacebookSdk.fullyInitialize();
+        FacebookSdk.setApplicationId(getString(R.string.facebook_app_id))
+        FacebookSdk.sdkInitialize(applicationContext)
             try {
                 val diskCacheConfig: DiskCacheConfig = DiskCacheConfig.newBuilder(this)
                     .setBaseDirectoryPath(File(FILE_ROOT_PATH, "cache"))

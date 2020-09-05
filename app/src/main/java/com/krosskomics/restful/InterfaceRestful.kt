@@ -26,7 +26,7 @@ interface InterfaceRestful {
 
     // 크로스 코믹스 가입 회원
     @FormUrlEncoded
-    @POST("app/google/41/login")
+    @POST("app/google/43/login")
     fun setLoginKross(
         @Field("lang") lang: String?,
         @Field("email") email: String?,
@@ -37,13 +37,13 @@ interface InterfaceRestful {
     ): Call<Login>
 
     @FormUrlEncoded
-    @POST("app/google/41/login")
+    @POST("app/google/43/login")
     fun setLoginSNS(
         @Field("lang") lang: String?,
         @Field("login_type") login_type: String?,
         @Field("firebase_token") firebase_token: String?,
         @Field("sns_token") sns_token: String?
-    ): Call<Login?>?
+    ): Call<Login>
 
     // 자동로그인
     @FormUrlEncoded

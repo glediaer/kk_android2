@@ -5,17 +5,28 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.AdapterView
+import android.widget.Spinner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.facebook.*
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
@@ -24,6 +35,7 @@ import com.krosskomics.common.data.DataLogin
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Login
 import com.krosskomics.home.activity.MainActivity
+import com.krosskomics.login.adapter.AgeSpinnerAdapter
 import com.krosskomics.login.adapter.GenreDecoration
 import com.krosskomics.login.adapter.InfoGenreAdapter
 import com.krosskomics.login.adapter.InfoLanguageAdapter
@@ -38,6 +50,7 @@ import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.view_forgot_password_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_login_bottomsheet.view.*
+import kotlinx.android.synthetic.main.view_signup_info_age.view.*
 import kotlinx.android.synthetic.main.view_signup_info_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_signup_info_gender.view.*
 import kotlinx.android.synthetic.main.view_signup_info_genre.view.*
@@ -46,15 +59,70 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+
 class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
+    private val TAG = "LoginActivity"
     lateinit var dialogView: View
     lateinit var bottomSheetDialog: BottomSheetDialog
+
+    // facebook
+    lateinit var callbackManager: CallbackManager
+
+    // 구글로그인
+    private lateinit var googleSignInClient: GoogleSignInClient
+    private val RC_SIGN_IN = 9001
+
     private val viewModel: LoginViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return LoginViewModel(application) as T
             }
         }).get(LoginViewModel::class.java)
+    }
+
+
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (::callbackManager.isInitialized) callbackManager.onActivityResult(requestCode, resultCode, data)
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)
+                Log.d(TAG, "firebaseAuthWithGoogle:" + account?.id)
+                handleGoogleSignIn(account)
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                if (BuildConfig.DEBUG) Log.w(TAG, "Google sign in failed", e)
+            }
+        }
+    }
+
+    private fun handleGoogleSignIn(account: GoogleSignInAccount?) {
+        account?.let {
+            viewModel.repository.apply {
+                loginType = CODE.LOGIN_TYPE_GOOGLE
+                snsToken = it.idToken
+                id = it.id
+                oprofile = it.email
+
+                if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
+                    requestSNSLogin()
+                } else {
+                    // 회원 정보 요청
+                    bottomSheetDialog.dismiss()
+                    showBottomSheet(R.layout.view_signup_info_bottomsheet)
+                }
+            }
+        }
     }
 
     override fun getLayoutId(): Int {
@@ -140,9 +208,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         if (CODE.LOGIN_TYPE_FACEBOOK == viewModel.repository.loginType
                             || CODE.LOGIN_TYPE_GOOGLE == viewModel.repository.loginType) {
                             KJKomicsApp.LOGIN_DATA = DataLogin()
-                            val intent =
-//                            Intent(this@LoginActivity, SelectGenderActivity::class.java)
-                                startActivity(intent)
+                            viewModel.repository.pageType = CODE.SIGNUP_MODE
+                            // 회원 정보 요청
+                            bottomSheetDialog.dismiss()
+                            showBottomSheet(R.layout.view_signup_info_bottomsheet)
                         } else {
                             if (!t.msg.isNullOrEmpty()) {
                                 showToast(t.msg, this@LoginActivity)
@@ -153,20 +222,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         if (!t.msg.isNullOrEmpty()) {
                             showToast(t.msg, this@LoginActivity)
                         }
-                        runBlocking {
-                            launch {
-                                delay(400)
-                                startActivity(Intent(context, MainActivity::class.java))
-                                finish()
-                            }
-                        }
                     }
                 }
             } else {
                 when(t.retcode) {
                     CODE.SUCCESS -> {
                         viewModel.repository.pageType = CODE.SIGNUP_MODE
-                        viewModel.requestLogin()
+                        requestLogin()
                         var gaLogMethod = ""
                         if (viewModel.repository.loginType == CODE.LOGIN_TYPE_KROSS) {
                             gaLogMethod = "email"
@@ -207,6 +269,18 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                 }
             }
         }
+    }
+
+    private fun requestLogin() {
+        viewModel.requestLogin()
+    }
+
+    private fun requestSNSLogin() {
+        viewModel.requestSNSLogin()
+    }
+
+    private fun requestSignUp() {
+        viewModel.requestSignUp()
     }
 
     private fun initMainView() {
@@ -296,20 +370,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
 
                     facebookView.setOnClickListener {
                         // facebook login
-                        if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
-
-                        } else {
-
-                        }
+                        callbackManager = CallbackManager.Factory.create();
+                        requestFacebookLogin()
                     }
 
                     googleView.setOnClickListener {
                         // google login
-                        if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
-
-                        } else {
-
-                        }
+                        requestGoogleLogin()
                     }
                 }
             }
@@ -386,13 +453,88 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
                                 bottomSheetDialog.dismiss()
 
-                                viewModel.requestSignUp()
+                                requestSignUp()
                             }
                         }
                     }
                 }
             }
         }
+    }
+
+    private fun requestGoogleLogin() {
+        // [START config_signin]
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.google_account_webclient_id))
+            .requestEmail()
+            .build()
+        // [END config_signin]
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        signIn()
+    }
+
+    // [START signin]
+    private fun signIn() {
+        val signInIntent = googleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+    // [END signin]
+
+    private fun requestFacebookLogin() {
+        LoginManager.getInstance().logInWithReadPermissions(this,
+            listOf("public_profile", "email")
+        )
+        LoginManager.getInstance().registerCallback(callbackManager,
+            object : FacebookCallback<LoginResult?> {
+                override fun onSuccess(loginResult: LoginResult?) {
+                    val request =
+                        GraphRequest.newMeRequest(
+                            AccessToken.getCurrentAccessToken()
+                        ) { resultObject, response ->
+                            try {
+                                loginResult?.let {
+                                    if (BuildConfig.DEBUG) {
+                                        Log.e(TAG, "loginResult.getAccessToken() : " +it.accessToken.token)
+                                    }
+                                    viewModel.repository.loginType = CODE.LOGIN_TYPE_FACEBOOK
+                                    viewModel.repository.snsToken = it.accessToken.token
+                                    viewModel.repository.id = resultObject.getString("id")
+                                    if (!resultObject.isNull("email")) {
+                                        viewModel.repository.fbEmail = resultObject.getString("email")
+                                    }
+                                    viewModel.repository.fbName = resultObject.getString("name")
+                                    if (viewModel.repository.fbEmail.isEmpty()) {
+                                        viewModel.repository.oprofile = viewModel.repository.fbName
+                                    } else {
+                                        viewModel.repository.oprofile = viewModel.repository.fbEmail
+                                    }
+                                    if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
+                                        requestSNSLogin()
+                                    } else {
+                                        // 회원 정보 요청
+                                        bottomSheetDialog.dismiss()
+                                        showBottomSheet(R.layout.view_signup_info_bottomsheet)
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace()
+                            }
+                        }
+                    val parameters = Bundle()
+                    parameters.putString("fields", "id,name,email")
+                    request.parameters = parameters
+                    request.executeAsync()
+                }
+
+                override fun onCancel() {}
+
+                override fun onError(exception: FacebookException) {
+                    showToast(getString(R.string.msg_fail_facebook), this@LoginActivity)
+                }
+            })
     }
 
     private fun setLanguageView() {
@@ -434,7 +576,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
             seekBar.progress = 4
             infoTitleTextView.text = getString(R.string.str_genre_title)
 
-            ageView.visibility = View.GONE
+            spinner.visibility = View.GONE
 
             genreView.apply {
                 visibility = View.VISIBLE
@@ -479,7 +621,42 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
             infoTitleTextView.text = getString(R.string.str_age)
 
             genderView.visibility = View.GONE
+            KJKomicsApp.INIT_SET.age_list?.let {
+                spinner.apply {
+                    it.forEachIndexed { index, dataAge ->
+                        dataAge.isUpSelect = index == 0
+                    }
+                    visibility = View.VISIBLE
+                    spinner.adapter = AgeSpinnerAdapter(it)
+                    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(
+                            parent: AdapterView<*>?,
+                            view: View?,
+                            position: Int,
+                            id: Long
+                        ) {
+                            val item = it[position]
+                            it.forEachIndexed { index, dataAge ->
+                                when (position) {
+                                    0 -> {
+                                        dataAge.isUpSelect = true
+                                    }
+                                    it.size - 1 -> {
+                                        dataAge.isDownSelect = true
+                                    }
+                                    else -> {
+                                        dataAge.isUpSelect = false
+                                        dataAge.isDownSelect = false
+                                    }
+                                }
+                            }
+                            KJKomicsApp.LOGIN_DATA?.age = item.age
+                        }
 
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    }
+                }
+            }
         }
     }
 
@@ -575,7 +752,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         loginType = CODE.LOGIN_TYPE_KROSS
                         oprofile = ""
                     }
-                    viewModel.requestLogin()
+                    requestLogin()
                 }
 
                 forgotPwTextView.visibility = View.VISIBLE

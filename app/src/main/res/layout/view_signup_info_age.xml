@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:gravity="center_horizontal"
+<Spinner xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ageSpinner"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="나이 선택"/>
-
-</LinearLayout>
+    android:layout_height="50dp"/>
