@@ -7,9 +7,10 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_event"
-        android:layout_width="263dp"
-        android:layout_height="99dp"
-        android:layout_marginRight="7dp"
+        android:layout_width="240dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         fresco:actualImageScaleType="fitXY"
         fresco:placeholderImage="@drawable/kross_placeholder"/>
 

@@ -54,11 +54,10 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun requestServer()
     abstract fun initTracker()
 
-    fun initToolbar() {
+    open fun initToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.mipmap.ic_launcher)
             setDisplayShowTitleEnabled(false)
             setHomeAsUpIndicator(R.drawable.icon_back)
         }

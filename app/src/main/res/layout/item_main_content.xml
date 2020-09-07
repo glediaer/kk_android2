@@ -7,38 +7,16 @@
     android:paddingBottom="25dp"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="30dp"
-        android:paddingBottom="20dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="9dp">
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="23dp"
-            android:textColor="#444444"
-            tools:text="Top featured" />
-
-        <Button
-            android:id="@+id/btn_more"
-            android:layout_width="72dp"
-            android:layout_height="25dp"
-            android:layout_gravity="right|center_vertical"
-            android:background="@mipmap/ic_launcher"
-            android:textAllCaps="false"
-            android:textSize="17dp"
-            android:textColor="#ffffff"
-            android:text="@string/str_more"/>
-
-    </FrameLayout>
+    <include
+        layout="@layout/view_title_section"
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:overScrollMode="never"
         android:scrollbars="none">
 

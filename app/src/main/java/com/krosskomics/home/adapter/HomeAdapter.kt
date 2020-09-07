@@ -115,12 +115,12 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                 layout.addView(view)
 
                 view.setOnClickListener {
-//                    val intent = Intent(context, BookActivity::class.java)
-//                    val b = Bundle()
-//                    b.putString("cid", item.sid)
-//                    b.putString("title", item.title)
-//                    intent.putExtras(b)
-//                    context.startActivity(intent)
+                    val intent = Intent(context, BookActivity::class.java)
+                    val b = Bundle()
+                    b.putString("cid", item.sid)
+                    b.putString("title", item.title)
+                    intent.putExtras(b)
+                    context.startActivity(intent)
                 }
             }
         }

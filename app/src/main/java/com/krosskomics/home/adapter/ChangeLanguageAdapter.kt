@@ -24,7 +24,9 @@ class ChangeLanguageAdapter(val items: MutableList<DataLanguage>) :
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         items.let {
-            holder.languageTextView.text = it[position].lang_text
+            val item = it[position]
+            holder.languageTextView.text = item.lang_text
+            holder.languageTextView.isSelected = item.isSelect
             holder.languageTextView.setOnClickListener { view ->
                 this.onClickListener?.onItemClick(view, position)
             }
@@ -36,7 +38,7 @@ class ChangeLanguageAdapter(val items: MutableList<DataLanguage>) :
     }
 
     inner class MainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val languageTextView = itemView.findViewById<TextView>(R.id.tv_language)
+        val languageTextView = itemView.findViewById<TextView>(R.id.languageTextView)
     }
 
     interface OnItemClickListener {

@@ -8,6 +8,7 @@
     <ImageView
         android:id="@+id/mainImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="@dimen/big_banner_height"
+        android:scaleType="fitXY"/>
 
 </RelativeLayout>

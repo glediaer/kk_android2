@@ -1,86 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="100dp"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="vertical">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginLeft="7dp">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/iv_main"
-                android:layout_width="@dimen/thumb_type1_width"
-                android:layout_height="@dimen/thumb_type1_height"
+                android:layout_width="208dp"
+                android:layout_height="297dp"
+                android:background="@drawable/kk_content_image_rect"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="fitXY"
                 fresco:actualImageScaleType="fitXY"
                 fresco:placeholderImage="@drawable/kross_placeholder"/>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:includeFontPadding="false"
-            android:layout_marginTop="9dp"
-            android:textSize="13dp"
-            android:textColor="#484847"
-            tools:text="King&apos;s Daughter"/>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp">
+                android:layout_marginTop="10dp"
+                android:textSize="16dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                tools:text="House of Angel" />
 
             <TextView
                 android:id="@+id/tv_genre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:singleLine="true"
-                android:textSize="11dp"
-                android:textColor="#999999"
-                tools:text="Romance"/>
+                android:layout_marginTop="2dp"
+                android:textSize="12dp"
+                android:textColor="#828282"
+                android:gravity="center_horizontal"
+                tools:text="Mystery" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_gravity="right|center_vertical">
+        </LinearLayout>
 
-                <ImageView
-                    android:layout_width="11dp"
-                    android:layout_height="11dp"
-                    android:src="@drawable/kross_like_small_on"/>
+        <include
+            layout="@layout/view_content_tag"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
 
-                <TextView
-                    android:id="@+id/tv_like_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:textSize="11dp"
-                    android:textColor="#999999"
-                    tools:text="521m" />
 
-            </LinearLayout>
+    </RelativeLayout>
 
-        </FrameLayout>
-
-    </LinearLayout>
 </LinearLayout>

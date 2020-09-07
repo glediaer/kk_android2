@@ -251,5 +251,7 @@
     <string name="str_genre_title">Genre</string>
     <string name="str_language">Language</string>
 
+    <string name="str_new_release">NEW release</string>
+
 
 </resources>

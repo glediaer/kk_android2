@@ -25,6 +25,7 @@ import com.krosskomics.common.data.DataBanner
 import com.krosskomics.common.data.DataMainContents
 import com.krosskomics.common.model.InitSet
 import com.krosskomics.common.model.Main
+import com.krosskomics.common.view.SpanningLinearLayoutManager
 import com.krosskomics.data.DataLanguage
 import com.krosskomics.event.activity.EventActivity
 import com.krosskomics.genre.activity.GenreActivity
@@ -207,10 +208,30 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private fun initHeaderView() {
         initToolbar()
         initDrawerView()
-        initLanguageRecyclerView()
+        initBottomView()
         changeLangImageView.setOnClickListener(this)
         giftboxImageView.setOnClickListener(this)
         searchImageView.setOnClickListener(this)
+    }
+
+    private fun initBottomView() {
+        floattingEp.visibility = View.VISIBLE
+        floattingEpTextView.text = "Epi.\n05"
+        floattingLibrary.visibility = View.VISIBLE
+        floattingEp.setOnClickListener {
+
+        }
+        floattingLibrary.setOnClickListener {
+
+        }
+        bottomViewClose.setOnClickListener {
+            bottomBannerView.visibility = View.GONE
+        }
+    }
+
+    override fun initToolbar() {
+        super.initToolbar()
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.kk_ic_drawer)
     }
 
     private fun initMainView() {
@@ -239,14 +260,21 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             DataLanguage("Hindi", "hi", false),
             DataLanguage("Talua", "ta", false))
 
-        recyclerView_language.adapter = ChangeLanguageAdapter(items)
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView_language.layoutManager = layoutManager
-        (recyclerView_language.adapter as ChangeLanguageAdapter).setOnItemClickListener(object : ChangeLanguageAdapter.OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                Log.e(TAG, "onItemClick")
-            }
-        })
+        languageRecyclerView?.apply {
+            visibility = View.VISIBLE
+            adapter = ChangeLanguageAdapter(items)
+            layoutManager = SpanningLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            (adapter as ChangeLanguageAdapter).setOnItemClickListener(object : ChangeLanguageAdapter.OnItemClickListener {
+                override fun onItemClick(view: View, position: Int) {
+                    items.forEachIndexed { index, dataLanguage ->
+                        dataLanguage.isSelect = position == index
+                        write(context, CODE.CURRENT_LANGUAGE, dataLanguage.lang)
+                        requestServer()
+                    }
+                    adapter?.notifyDataSetChanged()
+                }
+            })
+        }
     }
 
     private fun initDrawerView() {
@@ -279,7 +307,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     private fun changeLanguageView() {
-
+        initLanguageRecyclerView()
     }
 
     override fun onClick(v: View?) {

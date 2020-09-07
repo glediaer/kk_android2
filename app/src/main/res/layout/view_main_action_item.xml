@@ -1,12 +1,13 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="45dp"
+    android:paddingRight="16dp">
 
     <ImageView
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/kk_logo_symbol"/>
 
     <ImageView
@@ -21,6 +22,7 @@
         android:id="@+id/searchImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:layout_marginRight="25dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/giftboxImageView"
         android:src="@drawable/kk_ic_search"/>
@@ -29,6 +31,7 @@
         android:id="@+id/changeLangImageView"
         android:layout_width="25dp"
         android:layout_height="28dp"
+        android:layout_marginRight="25dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/searchImageView"
         android:src="@drawable/kk_ic_eng"/>

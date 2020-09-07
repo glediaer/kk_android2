@@ -3,7 +3,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
 
     <dimen name="default_screen_margin">20dp</dimen>
-    <dimen name="toolbar_height">48dp</dimen>
+    <dimen name="toolbar_height">57dp</dimen>
     <dimen name="app_bar_height">230dp</dimen>
     <dimen name="bottom_tab_height">58dp</dimen>
     <dimen name="episode_list_padding_height">187dp</dimen>
@@ -13,8 +13,8 @@
     <dimen name="common_edit_text_size">17dp</dimen>
     <dimen name="common_setting_text_size">21dp</dimen>
 
-    <dimen name="thumb_type1_width">100dp</dimen>
-    <dimen name="thumb_type1_height">141dp</dimen>
+    <dimen name="thumb_type1_width">208dp</dimen>
+    <dimen name="thumb_type1_height">297dp</dimen>
     <dimen name="thumb_square_size">100dp</dimen>
     <dimen name="thumb_comics_square_width">75dp</dimen>
     <dimen name="thumb_comics_square_height">70dp</dimen>
@@ -23,7 +23,7 @@
     <!-- sliding menu -->
 
     <dimen name="header_height">230dp</dimen>
-    <dimen name="big_banner_height">196dp</dimen>
+    <dimen name="big_banner_height">370dp</dimen>
 
     <!-- sea -->
 </resources>

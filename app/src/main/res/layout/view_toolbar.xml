@@ -9,6 +9,6 @@
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
     <include
-        layout="@layout/view_main_action_item"/>
+        layout="@layout/view_action_item"/>
 
 </androidx.appcompat.widget.Toolbar>
