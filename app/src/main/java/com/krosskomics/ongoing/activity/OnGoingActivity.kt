@@ -2,8 +2,6 @@ package com.krosskomics.ongoing.activity
 
 import android.content.Intent
 import android.view.View
-import com.google.android.gms.analytics.HitBuilders
-import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.RecyclerViewBaseActivity
 import com.krosskomics.genre.activity.GenreActivity
@@ -19,10 +17,7 @@ class OnGoingActivity : RecyclerViewBaseActivity() {
     }
 
     override fun initTracker() {
-        // Get tracker.
-        val tracker = (application as KJKomicsApp).getTracker(KJKomicsApp.TrackerName.APP_TRACKER)
-        tracker?.setScreenName(getString(R.string.str_ongoing))
-        tracker?.send(HitBuilders.ScreenViewBuilder().build())
+        setTracker(getString(R.string.str_ongoing))
     }
 
     override fun initLayout() {
@@ -43,7 +38,6 @@ class OnGoingActivity : RecyclerViewBaseActivity() {
     override fun onClick(v: View?) {
         when(v?.id) {
             // tabview
-            R.id.homeButton -> finish()
             R.id.onGoingButton -> startActivity(Intent(context, OnGoingActivity::class.java))
             R.id.waitButton -> {
                 startActivity(Intent(context, WaitFreeActivity::class.java))

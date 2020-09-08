@@ -10,6 +10,7 @@ import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.holder.BaseItemViewHolder
 import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.*
+import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
     RecyclerView.Adapter<RecyclerViewBaseAdapter.BaseItemHolder>() {

@@ -18,7 +18,6 @@ import com.krosskomics.common.model.More
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.ongoing.adapter.OnGoingAdapter
-import com.krosskomics.ongoing.viewmodel.OnGoingViewModel
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.activity_main_content.*
