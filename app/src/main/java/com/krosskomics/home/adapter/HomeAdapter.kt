@@ -53,7 +53,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
             }
             VIEW_TYPE.VIEW_TYPE_LINE.ordinal -> {
                 view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_underline, parent, false)
+                    .inflate(R.layout.item_underbar, parent, false)
             }
         }
         return HomeViewHolder(view)

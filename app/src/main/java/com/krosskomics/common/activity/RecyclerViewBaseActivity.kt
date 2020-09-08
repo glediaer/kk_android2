@@ -17,8 +17,13 @@ import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.model.More
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.activity.GenreActivity
+import com.krosskomics.library.activity.LibraryActivity
+import com.krosskomics.login.activity.LoginIntroActivity
 import com.krosskomics.ongoing.adapter.OnGoingAdapter
 import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.search.activity.SearchActivity
+import com.krosskomics.util.CODE
+import com.krosskomics.util.CommonUtil
 import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_main_tab.*
@@ -26,6 +31,8 @@ import kotlinx.android.synthetic.main.view_topbutton.*
 
 open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private val TAG = "RecyclerViewBaseActivity"
+
+    open var tabIndex = 0    // 홈 ~ 장르순으로
 
     private val viewModel: BaseViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -55,6 +62,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
 
     override fun initLayout() {
         initToolbar()
+        initTabView()
         initMainView()
     }
 
@@ -89,18 +97,12 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
     }
 
     private fun initMainView() {
-        homeButton?.setOnClickListener(this)
-        onGoingButton?.setOnClickListener(this)
-        waitButton?.setOnClickListener(this)
-        rankingButton?.setOnClickListener(this)
-        genreButton?.setOnClickListener(this)
-
         initRecyclerView()
     }
 
     private fun initRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = OnGoingAdapter(viewModel.items)
+        recyclerView.adapter = OnGoingAdapter(viewModel.items, recyclerViewItemLayoutId)
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (getCurrentItem(recyclerView) > 3) {
@@ -133,8 +135,39 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         })
     }
 
+    private fun initTabView() {
+        resetTabState()
+        when(tabIndex) {
+            1 -> onGoingButton?.isSelected = true
+            2 -> waitButton?.isSelected = true
+            3 -> rankingButton?.isSelected = true
+            4 -> genreButton?.isSelected = true
+        }
+        homeButton?.setOnClickListener(this)
+        onGoingButton?.setOnClickListener(this)
+        waitButton?.setOnClickListener(this)
+        rankingButton?.setOnClickListener(this)
+        genreButton?.setOnClickListener(this)
+    }
+
+    private fun resetTabState() {
+        onGoingButton.isSelected = false
+        waitButton.isSelected = false
+        rankingButton.isSelected = false
+        genreButton.isSelected = false
+    }
+
     override fun onClick(v: View?) {
         when(v?.id) {
+            R.id.searchImageView -> startActivity(Intent(context, SearchActivity::class.java))
+            R.id.giftboxImageView -> {
+                if (CommonUtil.read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
+                    intent = Intent(context, LibraryActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    goLoginAlert(context)
+                }
+            }
             // tabview
             R.id.homeButton -> finish()
             R.id.onGoingButton -> startActivity(Intent(context, RecyclerViewBaseActivity::class.java))

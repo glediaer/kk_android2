@@ -5,7 +5,7 @@
     android:layout_height="45dp"
     android:background="@drawable/kk_gradient_tabmenu_rect"
     android:gravity="center"
-    android:layout_marginLeft="16dp">
+    android:layout_marginLeft="@dimen/tab_left_margin">
 
     <RelativeLayout
         android:id="@+id/homeButton"

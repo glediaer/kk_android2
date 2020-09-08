@@ -25,5 +25,8 @@
     <dimen name="header_height">230dp</dimen>
     <dimen name="big_banner_height">370dp</dimen>
 
-    <!-- sea -->
+    <dimen name="tab_right_margin">20dp</dimen>
+    <dimen name="tab_left_margin">16dp</dimen>
+    <dimen name="tab_left_padding">25dp</dimen>
+
 </resources>

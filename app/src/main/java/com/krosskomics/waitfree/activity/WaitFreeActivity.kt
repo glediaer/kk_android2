@@ -22,14 +22,17 @@ class WaitFreeActivity : RecyclerViewBaseActivity() {
 //    }
 
     override fun getLayoutId(): Int {
+        recyclerViewItemLayoutId = R.layout.item_waitfree
         return R.layout.activity_waitfree
     }
 
     override fun initTracker() {
-        // Get tracker.
-        val tracker = (application as KJKomicsApp).getTracker(KJKomicsApp.TrackerName.APP_TRACKER)
-        tracker?.setScreenName(getString(R.string.str_waitforfree))
-        tracker?.send(HitBuilders.ScreenViewBuilder().build())
+        setTracker(getString(R.string.str_waitforfree))
+    }
+
+    override fun initLayout() {
+        tabIndex = 2
+        super.initLayout()
     }
 
     override fun onClick(v: View?) {

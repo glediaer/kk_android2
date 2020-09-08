@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.view_toolbar.*
 abstract class BaseActivity : AppCompatActivity() {
 
     protected lateinit var context: Context
+    protected var recyclerViewItemLayoutId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

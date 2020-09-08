@@ -13,6 +13,7 @@ class OnGoingActivity : RecyclerViewBaseActivity() {
     private val TAG = "OnGoingActivity"
 
     override fun getLayoutId(): Int {
+        recyclerViewItemLayoutId = R.layout.item_ongoing
         return R.layout.activity_ongoing
     }
 
@@ -21,6 +22,7 @@ class OnGoingActivity : RecyclerViewBaseActivity() {
     }
 
     override fun initLayout() {
+        tabIndex = 1
         super.initLayout()
         initDateView()
     }

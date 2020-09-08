@@ -318,10 +318,10 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             }
             R.id.giftboxImageView -> {
                 if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
-//                    intent = Intent(context, GiftBoxActivity::class.java)
-//                    startActivity(intent)
+                    intent = Intent(context, LibraryActivity::class.java)
+                    startActivity(intent)
                 } else {
-                    goLoginAlert(this@MainActivity)
+                    goLoginAlert(context)
                 }
             }
 

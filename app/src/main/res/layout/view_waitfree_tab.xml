@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/kk_gradient_tabmenu_waitfree_rect"
+    android:gravity="center"
+    android:layout_marginLeft="@dimen/tab_left_margin"
+    android:paddingLeft="@dimen/tab_left_padding">
+
+    <RelativeLayout
+        android:id="@+id/onGoingButton"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/ongoingImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/kk_selector_tabmenu_ongoing"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/waitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/tab_right_margin"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/waitImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/kk_selector_tabmenu_wait_for_free"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/waitImageView"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:textColor="#ffffff"
+            android:text="@string/str_waitforfree" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rankingButton"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/kk_selector_tabmenu_top"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/genreButton"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/kk_selector_tabmenu_genre"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

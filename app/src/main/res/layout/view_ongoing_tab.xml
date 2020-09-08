@@ -5,14 +5,14 @@
     android:layout_height="45dp"
     android:background="@drawable/kk_gradient_tabmenu_ongoing_rect"
     android:gravity="center"
-    android:layout_marginLeft="16dp"
-    android:paddingLeft="25dp">
+    android:layout_marginLeft="@dimen/tab_left_margin"
+    android:paddingLeft="@dimen/tab_left_padding">
 
     <RelativeLayout
         android:id="@+id/onGoingButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="@dimen/tab_right_margin"
         android:gravity="center_vertical">
 
         <ImageView
