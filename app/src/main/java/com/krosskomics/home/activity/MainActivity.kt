@@ -48,9 +48,12 @@ import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.waitfree.activity.WaitFreeActivity
+import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import kotlinx.android.synthetic.main.nav_header_main.view.termsTextView
+import kotlinx.android.synthetic.main.view_login_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_main_action_item.*
 import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
@@ -299,6 +302,12 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             closeImageView.setOnClickListener { dl_main_drawer_root.closeDrawers() }
             alarmImageView.setOnClickListener { dl_main_drawer_root.closeDrawers() }
             if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
+                alarmImageView.visibility = View.VISIBLE
+                loginView.visibility = View.VISIBLE
+                keysView.visibility = View.VISIBLE
+                logoutView.visibility = View.GONE
+                logoutTextView.visibility = View.VISIBLE
+
                 if (TextUtils.isEmpty(KJKomicsApp.PROFILE_PICTURE)) {
                     when (read(context, CODE.LOCAL_loginType, "")) {
                         CODE.LOGIN_TYPE_FACEBOOK -> profileImageView.setImageResource(R.drawable.kk_icon_facebook)
@@ -319,10 +328,17 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
                 logoutTextView.text = getString(R.string.str_logout)
             } else {
-                nicknameTextView.text = getString(R.string.str_top_guest)
-                coinTextView.text = "0"
+                alarmImageView.visibility = View.GONE
+                loginView.visibility = View.GONE
+                keysView.visibility = View.GONE
+                logoutView.visibility = View.VISIBLE
+                logoutTextView.visibility = View.GONE
 
                 logoutTextView.text = getString(R.string.str_login)
+                logoutView.setOnClickListener {
+                    goLoginAlert(context)
+                    dl_main_drawer_root.closeDrawers()
+                }
             }
             editImageView.setOnClickListener {
                 dl_main_drawer_root.closeDrawers()
@@ -353,7 +369,16 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                 dl_main_drawer_root.closeDrawers()
             }
 
-            termsTextView.setOnClickListener {  }
+            termsTextView.setOnClickListener {
+                val intent =
+                    Intent(context, WebViewActivity::class.java).apply {
+                        putExtra("title", termsTextView.text.toString())
+                        putExtra(
+                            "url", KJKomicsApp.getWebUrl().toString() + "terms/terms"
+                        )
+                    }
+                startActivity(intent)
+            }
             logoutTextView.setOnClickListener {
                 if (read(context, CODE.LOCAL_loginYn, "N") == "Y") {
                     CommonUtil.logout(context)

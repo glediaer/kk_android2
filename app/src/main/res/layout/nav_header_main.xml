@@ -34,9 +34,12 @@
 
         </FrameLayout>
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/loginView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:visibility="gone"
             android:layout_marginTop="20dp">
 
             <FrameLayout
@@ -56,10 +59,13 @@
 
             <TextView
                 android:id="@+id/nicknameTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:maxLines="2"
                 android:layout_toRightOf="@+id/profileView"
                 android:textSize="16dp"
                 android:textColor="#ffffff"
@@ -74,11 +80,41 @@
                 android:layout_alignParentRight="true"
                 android:src="@drawable/kk_ic_edit"/>
 
-        </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/logoutView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="168dp"
+                android:layout_height="33dp"
+                android:background="@drawable/kk_drawer_login_rect"
+                android:gravity="center"
+                android:textSize="14dp"
+                android:textColor="#828282"
+                android:text="@string/str_login"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="12dp"
+                android:textColor="#ffffff"
+                android:gravity="center_horizontal"
+                android:text="@string/str_login_required" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <FrameLayout
+        android:id="@+id/keysView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
@@ -305,11 +341,12 @@
 
     </LinearLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
+        android:gravity="center_horizontal"
         android:layout_alignParentBottom="true">
 
         <TextView
@@ -332,6 +369,7 @@
             android:layout_height="35dp"
             android:background="@drawable/kk_drawer_terms_rect"
             android:layout_gravity="right"
+            android:layout_marginLeft="20dp"
             android:paddingTop="9dp"
             android:paddingBottom="9dp"
             android:paddingLeft="13dp"
@@ -341,6 +379,6 @@
             android:gravity="center_horizontal"
             android:text="@string/str_logout" />
 
-    </FrameLayout>
+    </LinearLayout>
 
 </RelativeLayout>

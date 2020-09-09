@@ -256,6 +256,7 @@
     <string name="str_top_ranking">Top Ranking</string>
 
     <string name="str_top_guest">Guest</string>
+    <string name="str_login_required">Login is required.</string>
 
 
 </resources>
