@@ -255,5 +255,7 @@
     <string name="str_new_release">NEW release</string>
     <string name="str_top_ranking">Top Ranking</string>
 
+    <string name="str_top_guest">Guest</string>
+
 
 </resources>

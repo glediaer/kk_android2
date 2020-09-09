@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:paddingBottom="20dp">
 
     <LinearLayout
+        android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="156dp"
-        android:background="#ff2e39"
+        android:paddingTop="20dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:background="@drawable/kk_gradient_drawer_rect"
         android:orientation="vertical">
 
         <FrameLayout
@@ -33,27 +36,41 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
-            <ImageView
-                android:id="@+id/profileImageView"
+            <FrameLayout
+                android:id="@+id/profileView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:srcCompat="@drawable/kk_logo_symbol" />
+                android:background="@drawable/kk_drawer_circle_profile">
+
+                <ImageView
+                    android:id="@+id/profileImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/kk_logo_symbol" />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/nicknameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/profileImageView"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/profileView"
                 android:textSize="16dp"
                 android:textColor="#ffffff"
+                android:textStyle="bold"
                 tools:text="Forky Toy" />
 
             <ImageView
                 android:id="@+id/editImageView"
                 android:layout_width="47dp"
                 android:layout_height="15dp"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/kk_ic_edit"/>
 
@@ -61,51 +78,89 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="9dp"
+        android:paddingLeft="14dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="8dp"
+        android:background="@drawable/kk_drawer_info_rect"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:textColor="#828282"
-            android:text="@string/str_my_keys" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/coinTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="28dp"
-                android:textColor="#2e2e2e"
-                tools:text="500" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16dp"
+                android:textSize="10dp"
                 android:textColor="#828282"
-                android:text="@string/str_keys" />
+                android:text="@string/str_my_keys" />
 
-            <TextView
-                android:id="@+id/chargeTextView"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:textColor="#ffd900"
-                tools:text="@string/str_charge" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/coinTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="28dp"
+                    android:textColor="#2e2e2e"
+                    tools:text="500" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16dp"
+                    android:textColor="#828282"
+                    android:text="@string/str_keys" />
+
+            </LinearLayout>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/chargeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:background="@drawable/kk_drawer_charge_rect"
+            android:layout_gravity="right|bottom"
+            android:textSize="12dp"
+            android:textColor="#ffd900"
+            android:textStyle="bold"
+            android:text="@string/str_charge" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/headerView"
+        android:paddingTop="75dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:visibility="visible"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/shopView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
 
             <ImageView
                 android:layout_width="30dp"
@@ -116,6 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginLeft="33dp"
                 android:textSize="14dp"
                 android:textColor="#828282"
                 android:text="@string/str_keyshop" />
@@ -131,7 +187,9 @@
         <LinearLayout
             android:id="@+id/libraryView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="34dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -141,6 +199,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="33dp"
                 android:layout_weight="1"
                 android:textSize="14dp"
                 android:textColor="#828282"
@@ -156,7 +215,9 @@
         <LinearLayout
             android:id="@+id/eventView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="34dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -167,6 +228,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginLeft="33dp"
                 android:textSize="14dp"
                 android:textColor="#828282"
                 android:text="@string/str_event" />
@@ -181,7 +243,9 @@
         <LinearLayout
             android:id="@+id/noticeView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="34dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -192,6 +256,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginLeft="33dp"
                 android:textSize="14dp"
                 android:textColor="#828282"
                 android:text="@string/str_notice" />
@@ -206,7 +271,9 @@
         <LinearLayout
             android:id="@+id/settingsView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="34dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -217,6 +284,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginLeft="33dp"
                 android:textSize="14dp"
                 android:textColor="#828282"
                 android:text="@string/str_settings" />
@@ -228,30 +296,51 @@
 
         </LinearLayout>
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="230dp"
+            android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/termsTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:textColor="#c6c6c6"
-                android:gravity="center_horizontal"
-                tools:text="@string/str_terms_policies" />
-
-            <TextView
-                android:id="@+id/logoutTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:textColor="#c6c6c6"
-                tools:text="@string/str_logout"
-                />
-
-        </FrameLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/termsTextView"
+            android:layout_width="116dp"
+            android:layout_height="35dp"
+            android:background="@drawable/kk_drawer_terms_rect"
+            android:paddingTop="9dp"
+            android:paddingBottom="9dp"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp"
+            android:textSize="12dp"
+            android:textColor="#c6c6c6"
+            android:gravity="center_horizontal"
+            android:text="@string/str_terms_policies" />
+
+        <TextView
+            android:id="@+id/logoutTextView"
+            android:layout_width="116dp"
+            android:layout_height="35dp"
+            android:background="@drawable/kk_drawer_terms_rect"
+            android:layout_gravity="right"
+            android:paddingTop="9dp"
+            android:paddingBottom="9dp"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp"
+            android:textSize="12dp"
+            android:textColor="#c6c6c6"
+            android:gravity="center_horizontal"
+            android:text="@string/str_logout" />
+
+    </FrameLayout>
+
+</RelativeLayout>

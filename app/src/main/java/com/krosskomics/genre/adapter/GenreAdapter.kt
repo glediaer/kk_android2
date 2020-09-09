@@ -23,7 +23,7 @@ import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.webview.WebViewActivity
 
-class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<GenreAdapter.HomeViewHolder>() {
+class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<GenreAdapter.RankingViewHolder>() {
 
     lateinit var context: Context
 
@@ -31,7 +31,7 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
         VIEW_TYPE_A, VIEW_TYPE_B, VIEW_TYPE_C, VIEW_TYPE_D, VIEW_TYPE_LINE, VIEW_TYPE_FOOTER
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingViewHolder {
         context = parent.context
         var view = LayoutInflater.from(parent.context).inflate(R.layout.item_main_content, parent, false)
         when (viewType) {
@@ -44,14 +44,14 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
                     .inflate(R.layout.item_underbar, parent, false)
             }
         }
-        return HomeViewHolder(view)
+        return RankingViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RankingViewHolder, position: Int) {
         holder.setData(items[position], position)
     }
 
@@ -110,12 +110,10 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
         }
     }
 
-    inner class HomeViewHolder(itemView: View) : BaseItemViewHolder(itemView) {
+    inner class RankingViewHolder(itemView: View) : BaseItemViewHolder(itemView) {
         val titleTextView = itemView.findViewById<TextView>(R.id.tv_title)
         val moreButton = itemView.findViewById<Button>(R.id.btn_more)
         val contentLayout = itemView.findViewById<LinearLayout>(R.id.lay_user_update)
-        val rankingPager = itemView.findViewById<ViewPager>(R.id.rank_pager)
-        val eventLayout = itemView.findViewById<LinearLayout>(R.id.lay_event)
 
         override fun setData(item: Any?, position: Int) {
             if (item is DataMainContents) {
