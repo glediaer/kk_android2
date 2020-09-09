@@ -25,16 +25,17 @@ class GenreActivity : RecyclerViewBaseActivity() {
 //            }
 //        }).get(GenreViewModel::class.java)
 //    }
-
     override fun getLayoutId(): Int {
-        return R.layout.activity_ranking
+        return R.layout.activity_genre
     }
 
     override fun initTracker() {
-        // Get tracker.
-        val tracker = (application as KJKomicsApp).getTracker(KJKomicsApp.TrackerName.APP_TRACKER)
-        tracker?.setScreenName(getString(R.string.str_genre))
-        tracker?.send(HitBuilders.ScreenViewBuilder().build())
+        setTracker(getString(R.string.str_genre))
+    }
+
+    override fun initLayout() {
+        viewModel.tabIndex = 4
+        super.initLayout()
     }
 
     override fun onClick(v: View?) {

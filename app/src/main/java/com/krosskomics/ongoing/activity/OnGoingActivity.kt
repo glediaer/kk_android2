@@ -22,7 +22,7 @@ class OnGoingActivity : RecyclerViewBaseActivity() {
     }
 
     override fun initLayout() {
-        tabIndex = 1
+        viewModel.tabIndex = 1
         super.initLayout()
         initDateView()
     }

@@ -10,6 +10,9 @@ import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.holder.BaseItemViewHolder
 import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.*
+import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
+import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
+import kotlinx.android.synthetic.main.item_ranking.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
@@ -42,10 +45,13 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
                         .load(item.image)
                         .into(mainImageView)
 
-                    titleTextView.text = item.title
-                    writerTextView.text = item.writer1
-                    genreTextView.text = item.genre1
-                    likeCountTextView.text = item.like_cnt
+                    titleTextView?.text = item.title
+                    writerTextView?.text = item.writer1
+                    genreTextView?.text = item.genre1
+                    likeCountTextView?.text = item.like_cnt
+
+                    // ranking
+                    rankingTextView?.text = (position + 1).toString()
 
                     setOnClickListener {
                         onClickListener?.onItemClick(item)

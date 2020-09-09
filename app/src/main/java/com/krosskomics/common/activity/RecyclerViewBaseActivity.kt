@@ -17,10 +17,12 @@ import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.model.More
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.activity.GenreActivity
+import com.krosskomics.genre.adapter.GenreAdapter
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.login.activity.LoginIntroActivity
 import com.krosskomics.ongoing.adapter.OnGoingAdapter
 import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.ranking.adapter.RankingAdapter
 import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -32,9 +34,7 @@ import kotlinx.android.synthetic.main.view_topbutton.*
 open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private val TAG = "RecyclerViewBaseActivity"
 
-    open var tabIndex = 0    // 홈 ~ 장르순으로
-
-    private val viewModel: BaseViewModel by lazy {
+    protected val viewModel: BaseViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return BaseViewModel(application) as T
@@ -98,11 +98,13 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
 
     private fun initMainView() {
         initRecyclerView()
+        topButton.setOnClickListener {
+            recyclerView?.smoothScrollToPosition(0)
+        }
     }
 
     private fun initRecyclerView() {
         recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = OnGoingAdapter(viewModel.items, recyclerViewItemLayoutId)
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (getCurrentItem(recyclerView) > 3) {
@@ -122,22 +124,31 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
                 }
             }
         })
-        (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-            override fun onItemClick(item: Any?) {
-                if (item is DataBook) {
-                    val intent = Intent(context, BookActivity::class.java).apply {
-                        putExtra("sid", item.sid)
-                        putExtra("title", item.title)
-                    }
-                    startActivity(intent)
-                }
+        recyclerView.adapter =
+            when(viewModel.tabIndex) {
+                3 -> RankingAdapter(viewModel.items, recyclerViewItemLayoutId)
+                4 -> GenreAdapter(KJKomicsApp.MAIN_CONTENTS)
+                else -> OnGoingAdapter(viewModel.items, recyclerViewItemLayoutId)
             }
-        })
+
+        if (viewModel.tabIndex != 4) {
+            (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
+                override fun onItemClick(item: Any?) {
+                    if (item is DataBook) {
+                        val intent = Intent(context, BookActivity::class.java).apply {
+                            putExtra("sid", item.sid)
+                            putExtra("title", item.title)
+                        }
+                        startActivity(intent)
+                    }
+                }
+            })
+        }
     }
 
     private fun initTabView() {
         resetTabState()
-        when(tabIndex) {
+        when(viewModel.tabIndex) {
             1 -> onGoingButton?.isSelected = true
             2 -> waitButton?.isSelected = true
             3 -> rankingButton?.isSelected = true

@@ -27,14 +27,17 @@ class RankingActivity : RecyclerViewBaseActivity() {
 //    }
 
     override fun getLayoutId(): Int {
+        recyclerViewItemLayoutId = R.layout.item_ranking
         return R.layout.activity_ranking
     }
 
     override fun initTracker() {
-        // Get tracker.
-        val tracker = (application as KJKomicsApp).getTracker(KJKomicsApp.TrackerName.APP_TRACKER)
-        tracker?.setScreenName(getString(R.string.str_top))
-        tracker?.send(HitBuilders.ScreenViewBuilder().build())
+        setTracker(getString(R.string.str_top))
+    }
+
+    override fun initLayout() {
+        viewModel.tabIndex = 3
+        super.initLayout()
     }
 
     override fun onClick(v: View?) {

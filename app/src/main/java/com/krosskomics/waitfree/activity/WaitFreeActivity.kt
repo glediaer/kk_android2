@@ -31,7 +31,7 @@ class WaitFreeActivity : RecyclerViewBaseActivity() {
     }
 
     override fun initLayout() {
-        tabIndex = 2
+        viewModel.tabIndex = 2
         super.initLayout()
     }
 

@@ -4,6 +4,4 @@
     android:id="@+id/topButton"
     android:layout_width="50dp"
     android:layout_height="50dp"
-    android:background="@drawable/kk_logo_symbol">
-
-</Button>
+    android:background="@drawable/kk_floating_button_top"/>

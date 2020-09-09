@@ -11,6 +11,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     var page = 1
     var totalPage = 1
     var isRefresh = false
+    var tabIndex = 0
 
     private val repository = OnGoingRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()

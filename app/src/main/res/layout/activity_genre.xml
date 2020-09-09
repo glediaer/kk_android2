@@ -16,7 +16,7 @@
             layout="@layout/view_toolbar"/>
 
         <include
-            layout="@layout/view_main_tab"/>
+            layout="@layout/view_genre_tab"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

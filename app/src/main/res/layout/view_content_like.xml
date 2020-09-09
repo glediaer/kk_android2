@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+    
+    <ImageView
+        android:layout_width="9dp"
+        android:layout_height="8dp"
+        android:src="@drawable/kk_ic_like"/>
+
+    <TextView
+        android:id="@+id/tv_like_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:textSize="9dp"
+        android:textColor="#828282"
+        tools:text="144" />
+
+</LinearLayout>

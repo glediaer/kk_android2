@@ -21,6 +21,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.FirebaseApp
 import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.data.DataLogin
+import com.krosskomics.common.data.DataMainContents
 import com.krosskomics.common.model.InitSet
 import com.krosskomics.util.CODE
 import com.krosskomics.util.ServerUtil.setRetrofitServer
@@ -88,6 +89,8 @@ class KJKomicsApp : Application() {
         fun getWebUrl(): String? {
             return CODE.WEB_URL
         }
+
+        lateinit var MAIN_CONTENTS: ArrayList<DataMainContents>
     }
 
     enum class TrackerName {

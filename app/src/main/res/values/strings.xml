@@ -193,6 +193,7 @@
     <string name="str_ongoing">ONGOING</string>
     <string name="str_waitforfree">WAIT FOR FREE</string>
     <string name="str_top">TOP</string>
+    <string name="str_ranking">RANKING</string>
     <string name="str_genre">GENRE</string>
 
     <string name="str_mon">MON</string>
@@ -252,6 +253,7 @@
     <string name="str_language">Language</string>
 
     <string name="str_new_release">NEW release</string>
+    <string name="str_top_ranking">Top Ranking</string>
 
 
 </resources>

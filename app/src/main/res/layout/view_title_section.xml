@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
@@ -16,21 +18,18 @@
         android:text="@string/str_new_release" />
 
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:background="#cccccc"/>
+        android:layout_marginRight="10dp"
+        android:background="#c8c8c8"/>
 
-    <Button
-        android:id="@+id/btn_more"
-        android:layout_width="72dp"
-        android:layout_height="25dp"
+    <ImageView
+        android:id="@+id/moreImageView"
+        android:layout_width="41dp"
+        android:layout_height="9dp"
         android:layout_gravity="right|center_vertical"
-        android:background="@mipmap/ic_launcher"
-        android:textAllCaps="false"
-        android:visibility="gone"
-        android:textSize="17dp"
-        android:textColor="#ffffff"
-        android:text="@string/str_more"/>
+        android:src="@drawable/kk_ic_more" />
 
 </LinearLayout>

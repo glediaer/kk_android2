@@ -18,6 +18,7 @@ import com.google.android.gms.analytics.HitBuilders
 import com.google.android.material.navigation.NavigationView
 import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
+import com.krosskomics.KJKomicsApp.Companion.MAIN_CONTENTS
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.activity.BaseActivity
@@ -250,6 +251,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
     private fun setMainContentView(items: ArrayList<DataMainContents>?) {
         items?.let {
+            MAIN_CONTENTS = items
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = HomeAdapter(items)
         }
