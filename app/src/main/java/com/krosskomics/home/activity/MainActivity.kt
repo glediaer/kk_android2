@@ -37,6 +37,7 @@ import com.krosskomics.home.adapter.HomeAdapter
 import com.krosskomics.home.adapter.HomeBannerAdapter
 import com.krosskomics.home.viewmodel.MainViewModel
 import com.krosskomics.library.activity.LibraryActivity
+import com.krosskomics.mynews.activity.MyNewsActivity
 import com.krosskomics.notice.activity.NoticeActivity
 import com.krosskomics.ongoing.activity.OnGoingActivity
 import com.krosskomics.ranking.activity.RankingActivity
@@ -300,7 +301,9 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         nv_main_navigation_root.getHeaderView(0)?.apply {
             // header
             closeImageView.setOnClickListener { dl_main_drawer_root.closeDrawers() }
-            alarmImageView.setOnClickListener { dl_main_drawer_root.closeDrawers() }
+            alarmImageView.setOnClickListener {
+                startActivity(Intent(context, MyNewsActivity::class.java))
+                dl_main_drawer_root.closeDrawers() }
             if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
                 alarmImageView.visibility = View.VISIBLE
                 loginView.visibility = View.VISIBLE

@@ -8,11 +8,15 @@ import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.holder.BaseItemViewHolder
+import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.ranking.activity.RankingDetailActivity
 import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.*
 import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
+import kotlinx.android.synthetic.main.item_ongoing.view.writerTextView
 import kotlinx.android.synthetic.main.item_ranking.view.*
+import kotlinx.android.synthetic.main.item_ranking_detail.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
@@ -51,7 +55,15 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
                     likeCountTextView?.text = item.like_cnt
 
                     // ranking
-                    rankingTextView?.text = (position + 1).toString()
+                    if (context is RankingDetailActivity) {
+                        when(position) {
+                            0 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_1)
+                            1 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_2)
+                            2 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_3)
+                        }
+                    } else {
+                        rankingTextView?.text = (position + 1).toString()
+                    }
 
                     setOnClickListener {
                         onClickListener?.onItemClick(item)

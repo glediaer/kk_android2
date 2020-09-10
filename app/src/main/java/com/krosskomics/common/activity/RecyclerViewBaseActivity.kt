@@ -124,9 +124,13 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
                 }
             }
         })
+        initRecyclerViewAdapter()
+    }
+
+    open fun initRecyclerViewAdapter() {
         recyclerView.adapter =
             when(viewModel.tabIndex) {
-                3 -> RankingAdapter(viewModel.items, recyclerViewItemLayoutId)
+                3 -> RankingAdapter(viewModel.items, recyclerViewItemLayoutId, context)
                 4 -> GenreAdapter(KJKomicsApp.MAIN_CONTENTS)
                 else -> OnGoingAdapter(viewModel.items, recyclerViewItemLayoutId)
             }
@@ -162,10 +166,10 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
     }
 
     private fun resetTabState() {
-        onGoingButton.isSelected = false
-        waitButton.isSelected = false
-        rankingButton.isSelected = false
-        genreButton.isSelected = false
+        onGoingButton?.isSelected = false
+        waitButton?.isSelected = false
+        rankingButton?.isSelected = false
+        genreButton?.isSelected = false
     }
 
     override fun onClick(v: View?) {

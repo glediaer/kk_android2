@@ -14,6 +14,7 @@ import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.ongoing.activity.OnGoingActivity
 import com.krosskomics.ranking.viewmodel.RankingViewModel
 import com.krosskomics.waitfree.activity.WaitFreeActivity
+import kotlinx.android.synthetic.main.view_title_section_ranking.*
 
 class RankingActivity : RecyclerViewBaseActivity() {
     private val TAG = "RankingActivity"
@@ -38,6 +39,10 @@ class RankingActivity : RecyclerViewBaseActivity() {
     override fun initLayout() {
         viewModel.tabIndex = 3
         super.initLayout()
+
+        moreImageView.setOnClickListener {
+            startActivity(Intent(context, RankingDetailActivity::class.java))
+        }
     }
 
     override fun onClick(v: View?) {

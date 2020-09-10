@@ -22,6 +22,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     protected lateinit var context: Context
     protected var recyclerViewItemLayoutId = 0
+    lateinit var toolbarTitleString: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

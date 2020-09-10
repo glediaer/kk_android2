@@ -1,15 +1,18 @@
 package com.krosskomics.ranking.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
+import com.krosskomics.home.activity.MainActivity
+import com.krosskomics.ranking.activity.RankingActivity
 
-class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
+class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int, private val context: Context) :
     RecyclerViewBaseAdapter(items) {
 
     enum class VIEW_TYPE {
-        VIEW_TYPE_A, VIEW_TYPE_B
+        VIEW_TYPE_A, VIEW_TYPE_B, VIEW_TYPE_C
     }
 
     private var onClickListener: OnItemClickListener? = null
@@ -18,6 +21,8 @@ class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int
         return when(viewType) {
             VIEW_TYPE.VIEW_TYPE_A.ordinal ->
                 BaseItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_ranking_first, parent, false))
+            VIEW_TYPE.VIEW_TYPE_C.ordinal ->
+                BaseItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_ranking_detail, parent, false))
             else ->
                 BaseItemHolder(LayoutInflater.from(parent.context).inflate(layoutRes, parent, false))
         }
@@ -32,10 +37,16 @@ class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(position) {
-            0 -> VIEW_TYPE.VIEW_TYPE_A.ordinal
-            else -> VIEW_TYPE.VIEW_TYPE_B.ordinal
+        if (context is RankingActivity) {
+            if (position == 0) {
+                return VIEW_TYPE.VIEW_TYPE_A.ordinal
+            }
+        } else {
+            if (position < 3) {
+                return VIEW_TYPE.VIEW_TYPE_C.ordinal
+            }
         }
+        return VIEW_TYPE.VIEW_TYPE_B.ordinal
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {

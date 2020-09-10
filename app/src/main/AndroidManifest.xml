@@ -67,6 +67,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".ranking.activity.RankingDetailActivity"
+            android:configChanges="screenSize|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
+
         <activity android:name=".genre.activity.GenreActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
@@ -103,6 +109,11 @@
         <activity android:name=".webview.WebViewActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".mynews.activity.MyNewsActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
 
         <!-- 3rd party -->
         <activity android:name="com.facebook.FacebookActivity"

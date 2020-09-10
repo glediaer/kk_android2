@@ -258,5 +258,8 @@
     <string name="str_top_guest">Guest</string>
     <string name="str_login_required">Login is required.</string>
 
+    <string name="str_my_news">My News</string>
+    <string name="str_receive_benefit_noti">Receive benefit notifications!</string>
+    <string name="str_no_msg_news">Oops..\nNo message at news</string>
 
 </resources>

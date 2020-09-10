@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f7f8fa">
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36.5dp"
+        android:background="#e5e5e5"/>
+    
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginLeft="21dp"
+        android:src="@drawable/kk_selector_news_icon"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:layout_marginLeft="78dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/newsTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            tools:text="A Chance for Romance Sale!Check it out!" />
+
+        <TextView
+            android:id="@+id/remainTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="12dp"
+            android:textColor="#828282"
+            tools:text="2 days ago" />
+
+    </LinearLayout>
+
+</RelativeLayout>
