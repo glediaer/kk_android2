@@ -100,4 +100,6 @@ object CODE {
     // login mode
     val LOGIN_MODE = "0"
     val SIGNUP_MODE = "1"
+
+    val VISIBLE_LIST_TOPBUTTON_CNT = 3
 }

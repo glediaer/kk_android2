@@ -3,11 +3,8 @@ package com.krosskomics.login.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import com.krosskomics.common.model.Default
-import com.krosskomics.common.model.InitSet
 import com.krosskomics.common.model.Login
-import com.krosskomics.common.model.Main
 import com.krosskomics.common.viewmodel.BaseViewModel
-import com.krosskomics.home.repository.MainRepository
 import com.krosskomics.login.repository.LoginRepository
 
 

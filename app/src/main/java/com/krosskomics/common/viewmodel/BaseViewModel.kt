@@ -3,7 +3,6 @@ package com.krosskomics.common.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.krosskomics.common.model.More
 import com.krosskomics.ongoing.repository.OnGoingRepository
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {

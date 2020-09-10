@@ -19,7 +19,6 @@ import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.genre.adapter.GenreAdapter
 import com.krosskomics.library.activity.LibraryActivity
-import com.krosskomics.login.activity.LoginIntroActivity
 import com.krosskomics.ongoing.adapter.OnGoingAdapter
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.ranking.adapter.RankingAdapter
@@ -98,7 +97,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
 
     private fun initMainView() {
         initRecyclerView()
-        topButton.setOnClickListener {
+        topButton?.setOnClickListener {
             recyclerView?.smoothScrollToPosition(0)
         }
     }
@@ -107,10 +106,10 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (getCurrentItem(recyclerView) > 3) {
-                    topButton.visibility = View.VISIBLE
+                if (getCurrentItem(recyclerView) > CODE.VISIBLE_LIST_TOPBUTTON_CNT) {
+                    topButton?.visibility = View.VISIBLE
                 } else {
-                    topButton.visibility = View.GONE
+                    topButton?.visibility = View.GONE
                 }
             }
 

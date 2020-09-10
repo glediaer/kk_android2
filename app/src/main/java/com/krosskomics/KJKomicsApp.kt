@@ -90,7 +90,7 @@ class KJKomicsApp : Application() {
             return CODE.WEB_URL
         }
 
-        lateinit var MAIN_CONTENTS: ArrayList<DataMainContents>
+        var MAIN_CONTENTS: ArrayList<DataMainContents> = arrayListOf()
     }
 
     enum class TrackerName {

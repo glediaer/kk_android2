@@ -69,13 +69,16 @@
 
         <activity android:name=".ranking.activity.RankingDetailActivity"
             android:configChanges="screenSize|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
 
         <activity android:name=".genre.activity.GenreActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".genre.activity.GenreDetailActivity"
+            android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".search.activity.SearchActivity"

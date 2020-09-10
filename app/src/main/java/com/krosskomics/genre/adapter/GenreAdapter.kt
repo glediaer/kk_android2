@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataMainContents
 import com.krosskomics.common.holder.BaseItemViewHolder
+import com.krosskomics.genre.activity.GenreDetailActivity
 import com.krosskomics.home.activity.MainActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -112,7 +114,7 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
 
     inner class RankingViewHolder(itemView: View) : BaseItemViewHolder(itemView) {
         val titleTextView = itemView.findViewById<TextView>(R.id.tv_title)
-        val moreButton = itemView.findViewById<Button>(R.id.btn_more)
+        val moreButton = itemView.findViewById<ImageView>(R.id.moreImageView)
         val contentLayout = itemView.findViewById<LinearLayout>(R.id.lay_user_update)
 
         override fun setData(item: Any?, position: Int) {
@@ -121,9 +123,9 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
                 if ("1".equals(item.show_more)) {
                     moreButton?.visibility = View.VISIBLE
                     moreButton?.setOnClickListener {
-//                        val intent = Intent(itemView.context, MoreActivity::class.java)
-//                        intent.putExtra("more_param", item.more_param)
-//                        context.startActivity(intent)
+                        val intent = Intent(itemView.context, GenreDetailActivity::class.java)
+                        intent.putExtra("more_param", item.more_param)
+                        context.startActivity(intent)
                     }
                 } else {
                     moreButton?.visibility = View.GONE

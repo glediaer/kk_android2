@@ -6,9 +6,9 @@
     android:gravity="center">
     
     <ImageView
-        android:layout_width="9dp"
-        android:layout_height="8dp"
-        android:src="@drawable/kk_ic_like"/>
+        android:layout_width="8dp"
+        android:layout_height="7dp"
+        android:src="@drawable/kk_ic_like_black"/>
 
     <TextView
         android:id="@+id/tv_like_count"

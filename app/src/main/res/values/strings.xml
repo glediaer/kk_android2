@@ -99,7 +99,6 @@
     <string name="str_current_password">Current Password</string>
     <string name="str_top_featured">Top featured</string>
     <string name="str_buy_select">Unlock in bulk</string>
-    <string name="str_total">Total</string>
     <string name="str_episode">Episode</string>
     <string name="str_episode2">episode</string>
     <string name="str_my_balance">My balance</string>
@@ -261,5 +260,8 @@
     <string name="str_my_news">My News</string>
     <string name="str_receive_benefit_noti">Receive benefit notifications!</string>
     <string name="str_no_msg_news">Oops..\nNo message at news</string>
+
+    <string name="str_total">Total</string>
+
 
 </resources>
