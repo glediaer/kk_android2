@@ -48,7 +48,6 @@
     <string name="str_invite_notice">* Everyone who has a KrossKomics account also has a unique Invite link.\n* You can invite up to 20 friends in total.\n* You will receive bonus coins immediately when someone new signs up through your invite link.\n* You will both receive extra 3 bonus coins when one of your friends purchases coins for the first time.</string>
     <string name="str_language_notice">* Features and available series may differ for the language you have selected.\n* You can change the language by going on My Profile.\n* You can change the language even offline to read the downloaded series.\n* New languages will be updated soon.</string>
     <string name="str_email_address">help@krosskomics.com</string>
-    <string name="str_promotion_hint">Enter your promotion code</string>
     <string name="str_confirm">Confirm</string>
     <string name="str_my_gift">My Gift</string>
     <string name="str_edit_profile">Change email address</string>
@@ -270,6 +269,9 @@
     <string name="str_done">Done</string>
     <string name="str_go_to_series">Go to Series</string>
     <string name="str_go_to_download">Download series</string>
+
+    <string name="str_promotion_hint">Enter your promotion code</string>
+    <string name="str_register">Register</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

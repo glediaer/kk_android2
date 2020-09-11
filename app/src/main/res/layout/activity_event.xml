@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".ongoing.activity.OnGoingActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,10 +11,56 @@
         <include
             layout="@layout/view_toolbar"/>
 
+        <LinearLayout
+            android:id="@+id/promotionCodeView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:paddingLeft="9dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/kk_event_promotion_rect">
+
+            <ImageView
+                android:id="@+id/validImageView"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:src="@drawable/kk_selector_procode_reg"
+                android:duplicateParentState="true"/>
+
+            <EditText
+                android:id="@+id/procodeEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:singleLine="true"
+                android:hint="@string/str_promotion_hint"
+                android:background="@null"/>
+            
+            <TextView
+                android:id="@+id/registerTextView"
+                android:layout_width="87dp"
+                android:layout_height="30dp"
+                android:background="@drawable/kk_event_register_rect"
+                android:gravity="center"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:textColor="#ffffff"
+                android:text="@string/str_register" />
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/item_underbar"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"/>
 
     </LinearLayout>
 
