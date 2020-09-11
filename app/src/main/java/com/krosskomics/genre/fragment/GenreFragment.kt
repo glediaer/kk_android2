@@ -20,14 +20,6 @@ import kotlinx.android.synthetic.main.view_topbutton.*
 
 class GenreFragment : BaseFragment() {
 
-    protected val viewModel: FragmentBaseViewModel by lazy {
-        ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return FragmentBaseViewModel(requireContext()) as T
-            }
-        }).get(FragmentBaseViewModel::class.java)
-    }
-
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_genre_detail
         return R.layout.fragment_genre

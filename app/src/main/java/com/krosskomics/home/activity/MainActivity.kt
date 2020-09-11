@@ -222,14 +222,14 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     private fun initBottomView() {
-        floattingEp.visibility = View.VISIBLE
-        floattingEpTextView.text = "Epi.\n05"
-        floattingLibrary.visibility = View.VISIBLE
-        floattingEp.setOnClickListener {
+        floatingEp.visibility = View.VISIBLE
+        floatingEpTextView.text = "Epi.\n05"
+        floatingLibrary.visibility = View.VISIBLE
+        floatingEp.setOnClickListener {
 
         }
-        floattingLibrary.setOnClickListener {
-
+        floatingLibrary.setOnClickListener {
+            startActivity(Intent(context, LibraryActivity::class.java))
         }
         bottomViewClose.setOnClickListener {
             bottomBannerView.visibility = View.GONE

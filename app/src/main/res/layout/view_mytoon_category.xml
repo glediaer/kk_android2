@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:background="@drawable/kk_mytoon_category_rect">
+
+    <TextView
+        android:id="@+id/allTextView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/kk_selector_mytoon_category"
+        android:textSize="14dp"
+        android:textColor="@color/kk_selector_color_gray_white"
+        android:gravity="center"
+        android:text="@string/str_all" />
+
+    <TextView
+        android:id="@+id/unlockTextView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/kk_selector_mytoon_category"
+        android:textSize="14dp"
+        android:textColor="@color/kk_selector_color_gray_white"
+        android:gravity="center"
+        android:text="@string/str_unlock" />
+
+    <TextView
+        android:id="@+id/downloadTextView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/kk_selector_mytoon_category"
+        android:textSize="14dp"
+        android:textColor="@color/kk_selector_color_gray_white"
+        android:gravity="center"
+        android:text="@string/str_download" />
+
+</LinearLayout>

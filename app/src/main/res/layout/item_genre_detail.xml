@@ -15,6 +15,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="7dp">
+        
+        <FrameLayout
+            android:id="@+id/deleteView"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:duplicateParentState="true"
+                android:src="@drawable/kk_selector_delete"/>
+
+        </FrameLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="75dp"

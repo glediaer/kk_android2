@@ -3,6 +3,7 @@ package com.krosskomics.common.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.krosskomics.R
@@ -25,6 +26,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
     RecyclerView.Adapter<RecyclerViewBaseAdapter.BaseItemHolder>() {
 
     private var onClickListener: OnItemClickListener? = null
+    private var onDeleteClickListener: OnDeleteItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ongoing, parent, false)
@@ -41,6 +43,10 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.onClickListener = onItemClickListener
+    }
+
+    fun setOnDelteItemClickListener(onItemClickListener: OnDeleteItemClickListener) {
+        this.onDeleteClickListener = onItemClickListener
     }
 
     inner class BaseItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
@@ -72,8 +78,19 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
                     }
 
                     // genre
-                    subscribeImageView.setOnClickListener {
+                    subscribeImageView?.setOnClickListener {
                         subscribeImageView.isSelected = !it.isSelected
+                    }
+
+                    // library
+                    if (item.isCheckVisible) {
+                        deleteView?.visibility = View.VISIBLE
+                        deleteView?.isEnabled = item.isChecked
+                        deleteView.setOnClickListener {
+                            onDeleteClickListener?.onItemClick(item)
+                        }
+                    } else {
+                        deleteView?.visibility = View.GONE
                     }
                 }
             }
@@ -82,5 +99,9 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
 
     interface OnItemClickListener {
         fun onItemClick(item: Any?)
+    }
+
+    interface OnDeleteItemClickListener {
+        fun onItemClick(item: Any)
     }
 }

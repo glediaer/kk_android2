@@ -56,8 +56,6 @@
 
     </LinearLayout>
 
-
-
     <include
         layout="@layout/view_topbutton"
         android:layout_width="50dp"

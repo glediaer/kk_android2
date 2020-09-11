@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="60dp"
+    android:paddingRight="60dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="165dp"
+        android:layout_height="78dp"
+        android:src="@drawable/kk_library_empty"/>
+
+    <TextView
+        android:id="@+id/errorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:textSize="20dp"
+        android:textColor="#828282"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:text="@string/msg_empty_series" />
+
+    <TextView
+        android:id="@+id/errorMsg"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="14dp"
+        android:textColor="#828282"
+        android:gravity="center_horizontal"
+        android:text="@string/msg_empty_unlock_ep2" />
+    
+    <Button
+        android:id="@+id/goSeriesButton"
+        android:layout_width="208dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="66dp"
+        android:background="@drawable/kk_go_series_rect"
+        android:textSize="14dp"
+        android:textColor="#ffffff"
+        android:textAllCaps="false"
+        android:text="@string/str_go_to_series"/>
+
+</LinearLayout>

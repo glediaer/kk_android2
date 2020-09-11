@@ -9,7 +9,6 @@
     <string name="str_description">Description</string>
     <string name="str_close">Close</string>
     <string name="str_free_episode_count_format">%d more previews</string>
-    <string name="str_episode_unlock">Unlock</string>
     <string name="str_first_view">First Episode</string>
     <string name="str_continue">Continue</string>
     <string name="str_input_email">Email</string>
@@ -21,14 +20,13 @@
     <string name="str_hindi">Hindi</string>
     <string name="str_eng">English</string>
     <string name="str_language_question">Language?</string>
-    <string name="str_done">Done</string>
+
 
     <string name="str_gender_title">Gender</string>
     <string name="str_age_title">Age</string>
     <string name="str_language_noti1">* Features and available series  may differ for\n   the language you have selected.</string>
     <string name="str_language_noti2">* Anytime you can change the language on Settings</string>
     <string name="str_recent">Recent</string>
-    <string name="str_subscribed">Subscribed</string>
     <string name="str_downloaded">Downloaded</string>
     <string name="str_unlocked_series">Unlocked Series</string>
     <string name="str_updated">Updated</string>
@@ -104,7 +102,7 @@
     <string name="str_my_balance">My balance</string>
     <string name="str_save">Save</string>
     <string name="str_buy">Buy</string>
-    <string name="str_unlock">Unlock</string>
+
     <string name="str_permanent_access">Permanent Access</string>
     <string name="str_expires_format">Expires in %d days</string>
     <string name="str_cancel">Cancel</string>
@@ -259,9 +257,27 @@
 
     <string name="str_my_news">My News</string>
     <string name="str_receive_benefit_noti">Receive benefit notifications!</string>
-    <string name="str_no_msg_news">Oops..\nNo message at news</string>
 
     <string name="str_total">Total</string>
 
+    <string name="str_my_comic">My Komic</string>
+    <string name="str_gift_box">Gift box</string>
+    <string name="str_all">All</string>
+    <string name="str_unlock">Unlock</string>
+    <string name="str_download">Download</string>
+    <string name="str_recently_viewed">Recently viewed</string>
+    <string name="str_subscribed">Subscribed</string>
+    <string name="str_done">Done</string>
+    <string name="str_go_to_series">Go to Series</string>
+    <string name="str_go_to_download">Download series</string>
+
+    <!-- msg -->
+    <string name="msg_empty_news_msg">Oops..\nNo message at news</string>
+    <string name="msg_empty_series">Oops..\nNo series</string>
+    <string name="msg_empty_unlock_ep">Oops..\nNo unlock episodes</string>
+    <string name="msg_empty_unlock_ep2">Your unlocked episodes will appear here.</string>
+    <string name="msg_empty_download">Oops..\nNo Downloaded episodes</string>
+    <string name="msg_empty_download2">Episodes you’ve downloaded will appear here.</string>
+    <string name="msg_empty_gift">Oops..\nNo message in gifts</string>
 
 </resources>

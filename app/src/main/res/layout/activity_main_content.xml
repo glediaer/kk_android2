@@ -109,7 +109,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/floattingEp"
+            android:id="@+id/floatingEp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginBottom="15dp"
@@ -119,7 +119,7 @@
             android:background="@drawable/kk_floatting_circle_ep">
 
             <TextView
-                android:id="@+id/floattingEpTextView"
+                android:id="@+id/floatingEpTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10dp"
@@ -131,7 +131,7 @@
         </LinearLayout>
 
         <FrameLayout
-            android:id="@+id/floattingLibrary"
+            android:id="@+id/floatingLibrary"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginBottom="15dp"

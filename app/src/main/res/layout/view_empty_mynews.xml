@@ -19,7 +19,7 @@
         android:textColor="#828282"
         android:textStyle="bold"
         android:gravity="center_horizontal"
-        android:text="@string/str_no_msg_news"
+        android:text="@string/msg_empty_news_msg"
         />
 
 </LinearLayout>

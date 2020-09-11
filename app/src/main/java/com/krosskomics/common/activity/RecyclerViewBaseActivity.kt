@@ -96,15 +96,15 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
     }
 
     private fun initMainView() {
-        initRecyclerView()
+        recyclerView?.let { initRecyclerView() }
         topButton?.setOnClickListener {
             recyclerView?.smoothScrollToPosition(0)
         }
     }
 
     private fun initRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        recyclerView?.layoutManager = LinearLayoutManager(context)
+        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (getCurrentItem(recyclerView) > CODE.VISIBLE_LIST_TOPBUTTON_CNT) {
                     topButton?.visibility = View.VISIBLE
@@ -114,7 +114,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!recyclerView.canScrollVertically(1)) {
+                if (!recyclerView?.canScrollVertically(1)) {
                     //TODO 화면이 바닥에 닿을때 처리
                     if (viewModel.page < viewModel.totalPage) {
                         viewModel.page++
@@ -127,7 +127,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
     }
 
     open fun initRecyclerViewAdapter() {
-        recyclerView.adapter =
+        recyclerView?.adapter =
             when(viewModel.tabIndex) {
                 3 -> RankingAdapter(viewModel.items, recyclerViewItemLayoutId, context)
                 4 -> GenreAdapter(KJKomicsApp.MAIN_CONTENTS)
@@ -135,7 +135,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             }
 
         if (viewModel.tabIndex != 4) {
-            (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
+            (recyclerView?.adapter as RecyclerViewBaseAdapter)?.setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {
                     if (item is DataBook) {
                         val intent = Intent(context, BookActivity::class.java).apply {
