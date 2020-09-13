@@ -8,20 +8,27 @@
     android:minHeight="?attr/actionBarSize"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-    <include
-        android:id="@+id/actionItem"
-        layout="@layout/view_action_item"/>
-
-    <TextView
-        android:id="@+id/toolbarTitle"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="70dp"
-        android:visibility="gone"
-        android:textSize="18dp"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"
-        tools:text="My News" />
+        android:layout_height="match_parent"
+        android:paddingRight="16dp">
+
+        <include
+            android:id="@+id/actionItem"
+            layout="@layout/view_action_item"/>
+
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="70dp"
+            android:visibility="gone"
+            android:textSize="18dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            tools:text="My News" />
+
+    </FrameLayout>
 
 </androidx.appcompat.widget.Toolbar>

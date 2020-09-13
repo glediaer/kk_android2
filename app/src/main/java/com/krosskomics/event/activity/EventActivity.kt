@@ -9,9 +9,7 @@ import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.event.adapter.EventAdapter
-import com.krosskomics.ranking.adapter.RankingAdapter
 import kotlinx.android.synthetic.main.activity_event.*
-import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 
 class EventActivity : ToolbarTitleActivity() {

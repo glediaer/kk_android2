@@ -10,6 +10,7 @@
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:visibility="visible"
         android:src="@drawable/kk_ic_gift"/>
 
     <ImageView
@@ -18,7 +19,17 @@
         android:layout_height="25dp"
         android:layout_marginRight="25dp"
         android:layout_centerVertical="true"
+        android:visibility="visible"
         android:layout_toLeftOf="@+id/giftboxImageView"
         android:src="@drawable/kk_ic_search"/>
+    
+    <ImageView
+        android:id="@+id/contactImageView"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:visibility="visible"
+        android:src="@drawable/kk_ic_contact"/>
 
 </RelativeLayout>

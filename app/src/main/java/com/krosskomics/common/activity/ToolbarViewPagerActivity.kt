@@ -17,7 +17,7 @@ abstract class ToolbarViewPagerActivity : ToolbarTitleActivity() {
 //        }).get(RankingViewModel::class.java)
 //    }
 
-    var adapterType = 0     // 0: 장르상세, 1: 라이브러리
+    var adapterType = 0     // 0: 장르상세, 1: 라이브러리, 3: notice
     lateinit var tabItems: List<String>
 
     override fun getLayoutId(): Int {

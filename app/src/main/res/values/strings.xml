@@ -185,6 +185,8 @@
     <string name="msg_fail_file_download">Download failed.</string>
 
     // ver2
+    <string name="str_kk_email">help@krosskomics.com</string>
+
     <string name="str_home_uppper">HOME</string>
     <string name="str_ongoing">ONGOING</string>
     <string name="str_waitforfree">WAIT FOR FREE</string>
@@ -272,6 +274,8 @@
 
     <string name="str_promotion_hint">Enter your promotion code</string>
     <string name="str_register">Register</string>
+
+    <string name="str_faq">FAQ</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

@@ -6,6 +6,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.krosskomics.genre.fragment.GenreFragment
 import com.krosskomics.library.fragment.GiftBoxFragment
 import com.krosskomics.library.fragment.LibraryFragment
+import com.krosskomics.notice.fragment.FAQFragment
+import com.krosskomics.notice.fragment.NoticeFragment
 
 class GenrePagerAdapter(
     fa: FragmentActivity,
@@ -19,11 +21,18 @@ class GenrePagerAdapter(
     override fun createFragment(position: Int): Fragment {
         return when(adapterType) {
             0 -> GenreFragment()
-            else -> {
+            1 -> {
                 if (position == 0) {
                     LibraryFragment()
                 } else {
                     GiftBoxFragment()
+                }
+            }
+            else -> {
+                if (position == 0) {
+                    NoticeFragment()
+                } else {
+                    FAQFragment()
                 }
             }
         }
