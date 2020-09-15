@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/view_toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/accountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="30dp"
+                    android:background="@drawable/kk_setting_title_rect"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
+                    android:text="@string/str_account"/>
+
+                <LinearLayout
+                    android:id="@+id/accountLoginView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:id="@+id/changeNicknameView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="22dp"
+                        android:paddingBottom="22dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#2e2e2e"
+                            android:text="@string/str_change_nickname" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:src="@drawable/kk_ic_next"/>
+
+                    </FrameLayout>
+
+                    <include
+                        layout="@layout/item_underline_1dp"/>
+
+                    <FrameLayout
+                        android:id="@+id/changeEmailView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="22dp"
+                        android:paddingBottom="22dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#2e2e2e"
+                            android:text="@string/str_change_email" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:src="@drawable/kk_ic_next"/>
+
+                    </FrameLayout>
+
+                    <include
+                        layout="@layout/item_underline_1dp"/>
+
+                    <FrameLayout
+                        android:id="@+id/changePwView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="22dp"
+                        android:paddingBottom="22dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#2e2e2e"
+                            android:text="@string/str_change_pw" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:src="@drawable/kk_ic_next"/>
+
+                    </FrameLayout>
+
+                    <include
+                        layout="@layout/item_underline_1dp"/>
+
+                    <FrameLayout
+                        android:id="@+id/deleteAccountView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="22dp"
+                        android:paddingBottom="22dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#2e2e2e"
+                            android:text="@string/str_delete_account" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:src="@drawable/kk_ic_next"/>
+
+                    </FrameLayout>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/loginSignupView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="#2e2e2e"
+                        android:text="@string/str_login_signup" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:src="@drawable/kk_ic_next"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+            <include
+                layout="@layout/item_underbar"/>
+
+            <LinearLayout
+                android:id="@+id/notificationView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/notificationTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="30dp"
+                    android:background="@drawable/kk_setting_title_rect"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
+                    android:text="@string/str_notifications"/>
+
+                <FrameLayout
+                    android:id="@+id/pushNotificationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="#2e2e2e"
+                        android:text="@string/str_push_notification" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/pushNotiSwitch"
+                        android:layout_width="50dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="right|center_vertical"/>
+
+                </FrameLayout>
+
+                <include
+                    layout="@layout/item_underline_1dp"/>
+
+                <FrameLayout
+                    android:id="@+id/subscribeEpView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="#2e2e2e"
+                        android:text="@string/str_subscribe_ep" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/subscribeSwitch"
+                        android:layout_width="50dp"
+                        android:layout_height="26dp"
+                        android:layout_gravity="right|center_vertical"/>
+
+                </FrameLayout>
+
+            </LinearLayout>
+            <include
+                android:id="@+id/notificationUnderbar"
+                layout="@layout/item_underbar"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/infoTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="30dp"
+                    android:background="@drawable/kk_setting_title_rect"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff"
+                    android:text="@string/str_info"/>
+
+                <FrameLayout
+                    android:id="@+id/faqView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="22dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="#2e2e2e"
+                        android:text="@string/str_faq" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:src="@drawable/kk_ic_next"/>
+
+                </FrameLayout>
+
+                <include
+                    layout="@layout/item_underline_1dp"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="22dp"
+                    android:paddingBottom="11dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="#2e2e2e"
+                        android:text="@string/str_latest_version" />
+
+                    <TextView
+                        android:id="@+id/latestVerTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="#c6c6c6"
+                        android:layout_gravity="right|center_vertical"
+                        tools:text="2.0.0" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="11dp"
+                    android:paddingBottom="22dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="#2e2e2e"
+                        android:text="@string/str_current_version" />
+
+                    <TextView
+                        android:id="@+id/currentVerTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="#c6c6c6"
+                        android:layout_gravity="right|center_vertical"
+                        tools:text="2.0.0" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include
+        layout="@layout/view_topbutton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>

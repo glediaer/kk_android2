@@ -91,6 +91,8 @@ class KJKomicsApp : Application() {
         }
 
         var MAIN_CONTENTS: ArrayList<DataMainContents> = arrayListOf()
+        var LATEST_APP_VERSION: String = ""
+        var LATEST_APP_VERSION_CODE: Int = 0
     }
 
     enum class TrackerName {

@@ -1,10 +1,12 @@
 package com.krosskomics.common.activity
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -108,5 +110,18 @@ abstract class BaseActivity : AppCompatActivity() {
                 showToast(getString(R.string.msg_error_server), context)
             }
         }
+    }
+
+    protected fun initDialog(view: View): Dialog {
+        val dialog = Dialog(context)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setContentView(view)
+        val params: ViewGroup.LayoutParams = dialog.window!!.attributes
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        dialog.window!!.attributes = params as WindowManager.LayoutParams
+        dialog.show()
+        return dialog
     }
 }

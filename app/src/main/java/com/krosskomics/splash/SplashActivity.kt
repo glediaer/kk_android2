@@ -30,6 +30,7 @@ import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
 import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
+import com.krosskomics.KJKomicsApp.Companion.LATEST_APP_VERSION_CODE
 import com.krosskomics.R
 import com.krosskomics.common.model.AppToken
 import com.krosskomics.common.model.Cookie
@@ -419,20 +420,21 @@ class SplashActivity : Activity() {
         //action U: 업데이트 유도
         try {
             data?.let {
-                if ("F" == it.action) {       // 강제 업데이트
-                    if (it.app_version > getVersionCode(context)) {
-                        showUpdateAlert(it)
-                        return
-                    }
-                } else if ("M" == it.action) {    // 서비스 점검
-                    showMaintenanceAlert(it)
-                    return
-                } else if ("U" == data.action) {    // 업데이트 유도
-                    if (data.app_version > getVersionCode(context)) {
-                        showUpdateAlert(it)
-                        return
-                    }
-                }
+//                if ("F" == it.action) {       // 강제 업데이트
+//                    if (it.app_version > getVersionCode(context)) {
+//                        showUpdateAlert(it)
+//                        return
+//                    }
+//                } else if ("M" == it.action) {    // 서비스 점검
+//                    showMaintenanceAlert(it)
+//                    return
+//                } else if ("U" == data.action) {    // 업데이트 유도
+//                    if (it.app_version > getVersionCode(context)) {
+//                        showUpdateAlert(it)
+//                        return
+//                    }
+//                }
+                LATEST_APP_VERSION_CODE = it.app_version
                 requestAppToken()
             }
         } catch (e: Exception) {

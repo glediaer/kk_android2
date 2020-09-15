@@ -85,7 +85,6 @@
     <string name="str_notify_push">Notify me via push</string>
     <string name="str_new_episode">New episodes</string>
     <string name="str_languge_notice">* Features and available series may differ for\n   the language you have selected.</string>
-    <string name="str_delete_account">Delete account</string>
     <string name="str_delete_account_question">Delete account?</string>
     <string name="str_setting">Settings</string>
     <string name="str_name">Name</string>
@@ -276,6 +275,21 @@
     <string name="str_register">Register</string>
 
     <string name="str_faq">FAQ</string>
+
+    <string name="str_account">Account</string>
+    <string name="str_change_nickname">Change Nickname</string>
+    <string name="str_change_email">Change E-mail address</string>
+    <string name="str_change_pw">Change Password</string>
+    <string name="str_delete_account">Delete account</string>
+    <string name="str_notifications">Notifications</string>
+    <string name="str_push_notification">Push Notification</string>
+    <string name="str_subscribe_ep">Subscribed New episodes</string>
+    <string name="str_info">Info</string>
+    <string name="str_latest_version">App Latest version</string>
+    <string name="str_current_version">App Current version</string>
+    <string name="str_current_version_popup">Current ver.</string>
+    <string name="str_latest_version_popup">Latest ver.</string>
+    <string name="str_login_signup">Login / Sign up</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

@@ -91,7 +91,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         viewModel.totalPage = body.tot_pages
         body.list?.let {
             viewModel.items.addAll(it)
-            recyclerView.adapter?.notifyDataSetChanged()
+            recyclerView?.adapter?.notifyDataSetChanged()
         }
     }
 

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="312dp"
+        android:layout_height="183dp"
+        android:paddingTop="39dp"
+        android:background="@drawable/kk_dialog_version_rect"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="#c6c6c6"
+                    android:text="Current ver." />
+
+                <TextView
+                    android:id="@+id/currentVerTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:textSize="30dp"
+                    android:textColor="#c6c6c6"
+                    tools:text="0.4.2" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="13dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="32dp"
+                android:src="@drawable/kk_appversion_arrow"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="#ff2e39"
+                    android:text="@string/str_latest_version_popup" />
+
+                <TextView
+                    android:id="@+id/latestVerTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:textSize="30dp"
+                    android:textColor="#ff2e39"
+                    tools:text="2.0.0" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/item_underline_1dp"
+            android:layout_marginTop="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp" />
+
+        <TextView
+            android:id="@+id/downloadTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="16dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="@string/str_download" />
+
+    </LinearLayout>
+</LinearLayout>
