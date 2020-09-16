@@ -291,7 +291,10 @@
     <string name="str_latest_version_popup">Latest ver.</string>
     <string name="str_login_signup">Login / Sign up</string>
     <string name="str_enter_nickname">Please enter your new Nickname.</string>
+    <string name="str_current_nickname">Current Nickname</string>
     <string name="str_new_nickname">New Nickname</string>
+    <string name="str_enter_email">Please enter your new E-mail.</string>
+    <string name="str_new_email">New E-mail</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

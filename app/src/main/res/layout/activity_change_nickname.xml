@@ -43,7 +43,7 @@
                 android:textSize="14dp"
                 android:textStyle="bold"
                 android:textColor="#828282"
-                android:text="Current Nickname" />
+                android:text="@string/str_current_nickname" />
 
             <EditText
                 android:id="@+id/currentNickNameEditText"

@@ -119,6 +119,7 @@ class SettingsActivity : ToolbarTitleActivity() {
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.changeNicknameView -> startActivity(Intent(context, ChangeNickNameActivity::class.java))
+            R.id.changeEmailView -> startActivity(Intent(context, ChangeEmailActivity::class.java))
         }
     }
 }
