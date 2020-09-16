@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
@@ -45,7 +46,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
             }
             VIEW_TYPE.VIEW_TYPE_C.ordinal -> {
                 view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_main_content_ranking, parent, false)
+                    .inflate(R.layout.item_main_content, parent, false)
             }
             VIEW_TYPE.VIEW_TYPE_D.ordinal -> {
                 view = LayoutInflater.from(parent.context)
@@ -97,7 +98,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
 
                 titleTextView.setText(item.title)
                 genreTextView.setText(item.genre1)
-                likeCountTextView.setText(item.like_cnt)
+                likeCountTextView.text = CommonUtil.likeCountFormat(context, item.like_cnt)
 
                 mainImageView.setController(CommonUtil.getDraweeController(context, item.image, 200, 200))
 
@@ -117,7 +118,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                 view.setOnClickListener {
                     val intent = Intent(context, BookActivity::class.java)
                     val b = Bundle()
-                    b.putString("cid", item.sid)
+                    b.putString("sid", item.sid)
                     b.putString("title", item.title)
                     intent.putExtras(b)
                     context.startActivity(intent)
@@ -142,7 +143,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
 
                 titleTextView.setText(item.title)
                 genreTextView.setText(item.genre1)
-                likeCountTextView.setText(item.like_cnt)
+                likeCountTextView.text = CommonUtil.likeCountFormat(context, item.like_cnt)
 
                 mainImageView.setController(CommonUtil.getDraweeController(context, item.image, 200, 200))
 
@@ -160,12 +161,53 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                 layout.addView(view)
 
                 view.setOnClickListener {
-//                    val intent = Intent(context, BookActivity::class.java)
-//                    val b = Bundle()
-//                    b.putString("cid", item.sid)
-//                    b.putString("title", item.title)
-//                    intent.putExtras(b)
-//                    context.startActivity(intent)
+                    val intent = Intent(context, BookActivity::class.java)
+                    val b = Bundle()
+                    b.putString("sid", item.sid)
+                    b.putString("title", item.title)
+                    intent.putExtras(b)
+                    context.startActivity(intent)
+                }
+            }
+        }
+    }
+
+    private fun setType3View(list: ArrayList<DataBook>?, layout: LinearLayout) {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        if (null != list && 0 < list.size) {
+            for (i in list.indices) {
+                val item = list[i]
+                val view = inflater.inflate(R.layout.item_main_type3, null)
+
+                val mainImageView = view.findViewById<SimpleDraweeView>(R.id.iv_main)
+
+                val titleTextView = view.findViewById<TextView>(R.id.tv_title)
+
+                titleTextView.text = item.title
+
+                mainImageView.controller =
+                    CommonUtil.getDraweeController(context, item.image, 200, 200)
+
+                if (item.isupdate == "1") {
+//                    upImaegeView.setVisibility(View.VISIBLE)
+                } else {
+//                    upImaegeView.setVisibility(View.GONE)
+                }
+//                if (item.isnew.equals("1")) {
+//                    newImaegView.setVisibility(View.VISIBLE)
+//                } else {
+//                    newImaegView.setVisibility(View.GONE)
+//                }
+
+                layout.addView(view)
+
+                view.setOnClickListener {
+                    val intent = Intent(context, BookActivity::class.java)
+                    val b = Bundle()
+                    b.putString("sid", item.sid)
+                    b.putString("title", item.title)
+                    intent.putExtras(b)
+                    context.startActivity(intent)
                 }
             }
         }
@@ -257,7 +299,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                         setType2View(item.list, contentLayout)
                     }
                     VIEW_TYPE.VIEW_TYPE_C.ordinal -> {
-//                        setRankingView(item.list, rankingPager)
+                        setType3View(item.list, contentLayout)
                     }
                     VIEW_TYPE.VIEW_TYPE_D.ordinal -> {
                         setEventView(item.list, eventLayout)

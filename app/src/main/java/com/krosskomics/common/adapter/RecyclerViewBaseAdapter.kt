@@ -11,6 +11,7 @@ import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.ranking.activity.RankingDetailActivity
+import com.krosskomics.util.CommonUtil
 import kotlinx.android.synthetic.main.item_genre_detail.view.*
 import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.*
@@ -60,7 +61,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
                     titleTextView?.text = item.title
                     writerTextView?.text = item.writer1
                     genreTextView?.text = item.genre1
-                    likeCountTextView?.text = item.like_cnt
+                    likeCountTextView?.text = CommonUtil.likeCountFormat(itemView.context, item.like_cnt)
 
                     // ranking
                     if (context is RankingDetailActivity) {

@@ -1,86 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:gravity="left|center_vertical"
-    android:orientation="horizontal">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="100dp"
+    <RelativeLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="vertical">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="135dp"
+            android:layout_height="193dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginLeft="7dp">
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/iv_main"
-                android:layout_width="@dimen/thumb_square_size"
-                android:layout_height="@dimen/thumb_square_size"
+                android:layout_width="135dp"
+                android:layout_height="193dp"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="fitXY"
                 fresco:actualImageScaleType="fitXY"
                 fresco:placeholderImage="@drawable/kross_placeholder"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:includeFontPadding="false"
-            android:textSize="13dp"
-            android:textColor="#484847"
-            tools:text="King&apos;s Daughter"/>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_genre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:singleLine="true"
-                android:textSize="11dp"
-                android:textColor="#999999"
-                tools:text="Romance"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_alignParentBottom="true"
                 android:gravity="center_vertical"
-                android:layout_gravity="right|center_vertical">
-
-                <ImageView
-                    android:layout_width="12dp"
-                    android:layout_height="10dp"
-                    android:src="@drawable/kross_like_small_on"/>
+                android:paddingLeft="7dp"
+                android:background="@drawable/kk_genre_item_bottom_rect"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_like_count"
+                    android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:textSize="11dp"
-                    android:textColor="#999999"
-                    tools:text="521m" />
+                    android:textSize="12dp"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    tools:text="Miss Unfit" />
+
+                <TextView
+                    android:id="@+id/tv_writer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="9dp"
+                    android:textColor="#ffffff"
+                    tools:text="Aaasssdt" />
 
             </LinearLayout>
 
-        </FrameLayout>
+        </RelativeLayout>
 
-    </LinearLayout>
+        <include
+            layout="@layout/view_content_tag"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+
+    </RelativeLayout>
+
 </LinearLayout>

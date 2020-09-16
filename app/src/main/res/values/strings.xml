@@ -296,6 +296,7 @@
     <string name="str_enter_password">Please enter your new Password.</string>
     <string name="str_new_password">New Password</string>
     <string name="str_verify_password">Verify Password</string>
+    <string name="str_like_count_max">999+</string>
 
 
     <!-- msg -->

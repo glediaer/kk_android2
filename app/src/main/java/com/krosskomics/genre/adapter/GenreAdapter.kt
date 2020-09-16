@@ -73,7 +73,7 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
         if (null != list && 0 < list.size) {
             for (i in list.indices) {
                 val item = list[i]
-                val view = inflater.inflate(R.layout.item_genre_type1, null) as LinearLayout
+                val view = inflater.inflate(R.layout.item_main_type2, null) as LinearLayout
 
                 val mainImageView = view.findViewById<SimpleDraweeView>(R.id.iv_main)
 
