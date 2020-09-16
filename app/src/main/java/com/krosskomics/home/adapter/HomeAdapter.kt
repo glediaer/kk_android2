@@ -8,13 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.facebook.drawee.view.SimpleDraweeView
 import com.krosskomics.R
-import com.krosskomics.book.activity.BookActivity
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataMainContents
@@ -116,7 +115,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                 layout.addView(view)
 
                 view.setOnClickListener {
-                    val intent = Intent(context, BookActivity::class.java)
+                    val intent = Intent(context, SeriesActivity::class.java)
                     val b = Bundle()
                     b.putString("sid", item.sid)
                     b.putString("title", item.title)
@@ -161,7 +160,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                 layout.addView(view)
 
                 view.setOnClickListener {
-                    val intent = Intent(context, BookActivity::class.java)
+                    val intent = Intent(context, SeriesActivity::class.java)
                     val b = Bundle()
                     b.putString("sid", item.sid)
                     b.putString("title", item.title)
@@ -202,7 +201,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                 layout.addView(view)
 
                 view.setOnClickListener {
-                    val intent = Intent(context, BookActivity::class.java)
+                    val intent = Intent(context, SeriesActivity::class.java)
                     val b = Bundle()
                     b.putString("sid", item.sid)
                     b.putString("title", item.title)
@@ -238,7 +237,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                             "M" -> {
                             }
                             "H" -> {
-                                intent = Intent(context, BookActivity::class.java)
+                                intent = Intent(context, SeriesActivity::class.java)
                                 val b = Bundle()
                                 b.putString("cid", item.sid)
                                 b.putString("title", item.title)

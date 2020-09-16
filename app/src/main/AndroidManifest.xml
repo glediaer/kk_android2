@@ -85,7 +85,7 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".book.activity.BookActivity"
+        <activity android:name=".series.activity.SeriesActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 

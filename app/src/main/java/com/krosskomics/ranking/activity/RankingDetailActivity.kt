@@ -2,7 +2,7 @@ package com.krosskomics.ranking.activity
 
 import android.content.Intent
 import com.krosskomics.R
-import com.krosskomics.book.activity.BookActivity
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
@@ -39,7 +39,7 @@ class RankingDetailActivity : ToolbarTitleActivity() {
         (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
             override fun onItemClick(item: Any?) {
                 if (item is DataBook) {
-                    val intent = Intent(context, BookActivity::class.java).apply {
+                    val intent = Intent(context, SeriesActivity::class.java).apply {
                         putExtra("sid", item.sid)
                         putExtra("title", item.title)
                     }

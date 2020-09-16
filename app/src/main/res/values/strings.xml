@@ -298,6 +298,8 @@
     <string name="str_verify_password">Verify Password</string>
     <string name="str_like_count_max">999+</string>
 
+    <string name="str_series">Series</string>
+
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

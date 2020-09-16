@@ -11,10 +11,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.krosskomics.R
-import com.krosskomics.book.activity.BookActivity
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
-import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.fragment_genre.recyclerView
 import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.view_empty_library.*
@@ -63,7 +61,7 @@ abstract class BaseFragment : Fragment(), Observer<Any> {
         recyclerView?.visibility = View.GONE
         emptyView?.visibility = View.VISIBLE
         goSeriesButton?.setOnClickListener {
-            val intent = Intent(context, BookActivity::class.java)
+            val intent = Intent(context, SeriesActivity::class.java)
             val b = Bundle()
 //            b.putString("cid", item.sid)
 //            b.putString("title", item.title)

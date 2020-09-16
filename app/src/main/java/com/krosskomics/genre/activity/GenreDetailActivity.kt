@@ -1,17 +1,7 @@
 package com.krosskomics.genre.activity
 
-import android.content.Intent
-import com.google.android.material.tabs.TabLayoutMediator
 import com.krosskomics.R
-import com.krosskomics.book.activity.BookActivity
-import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.activity.ToolbarViewPagerActivity
-import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
-import com.krosskomics.common.data.DataBook
-import com.krosskomics.genre.adapter.GenrePagerAdapter
-import com.krosskomics.ranking.adapter.RankingAdapter
-import kotlinx.android.synthetic.main.activity_genre_detail.*
-import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 
 class GenreDetailActivity : ToolbarViewPagerActivity() {
     private val TAG = "GenreDetailActivity"

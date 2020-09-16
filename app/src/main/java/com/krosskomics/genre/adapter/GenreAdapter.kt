@@ -6,24 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.facebook.drawee.view.SimpleDraweeView
 import com.krosskomics.R
-import com.krosskomics.book.activity.BookActivity
-import com.krosskomics.coin.activity.CoinActivity
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataMainContents
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.genre.activity.GenreDetailActivity
-import com.krosskomics.home.activity.MainActivity
-import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
-import com.krosskomics.webview.WebViewActivity
 
 class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<GenreAdapter.RankingViewHolder>() {
 
@@ -101,7 +95,7 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
                 layout.addView(view)
 
                 view.setOnClickListener {
-                    val intent = Intent(context, BookActivity::class.java)
+                    val intent = Intent(context, SeriesActivity::class.java)
                     val b = Bundle()
                     b.putString("sid", item.sid)
                     b.putString("title", item.title)
