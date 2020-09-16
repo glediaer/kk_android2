@@ -13,7 +13,6 @@
     <string name="str_continue">Continue</string>
     <string name="str_input_email">Email</string>
     <string name="str_input_password">Password</string>
-    <string name="str_new_password">New Password</string>
 
 
     <string name="str_find_password">Forgot password</string>
@@ -91,7 +90,6 @@
     <string name="str_email">Email</string>
     <string name="str_change_password_notice">Please enter your new password below.</string>
     <string name="str_min_password">* It should have 6 characters or more</string>
-    <string name="str_verify_password">Verify Password</string>
     <string name="str_current_password">Current Password</string>
     <string name="str_top_featured">Top featured</string>
     <string name="str_buy_select">Unlock in bulk</string>
@@ -295,6 +293,10 @@
     <string name="str_new_nickname">New Nickname</string>
     <string name="str_enter_email">Please enter your new E-mail.</string>
     <string name="str_new_email">New E-mail</string>
+    <string name="str_enter_password">Please enter your new Password.</string>
+    <string name="str_new_password">New Password</string>
+    <string name="str_verify_password">Verify Password</string>
+
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>
@@ -304,5 +306,6 @@
     <string name="msg_empty_download">Oops..\nNo Downloaded episodes</string>
     <string name="msg_empty_download2">Episodes you’ve downloaded will appear here.</string>
     <string name="msg_empty_gift">Oops..\nNo message in gifts</string>
+    <string name="msg_not_available_sns">This option is not available when signed in with a Facebook account</string>
 
 </resources>

@@ -117,6 +117,9 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".settings.activity.ChangePwActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".webview.WebViewActivity"
             android:configChanges="screenSize|orientation"

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/view_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="85dp"
+            android:background="@drawable/kk_setting_title_rect"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:text="@string/str_enter_password"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="14dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:text="@string/str_new_password" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/newPwEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="@string/str_minimum_nickname"
+                    android:paddingLeft="20dp"
+                    android:textSize="16dp"
+                    android:inputType="textPassword"
+                    android:paddingRight="20dp"
+                    android:background="@drawable/kk_bottomsheet_edittext_rect" />
+
+                <ImageView
+                    android:id="@+id/hideImageView"
+                    android:layout_width="26dp"
+                    android:layout_height="18dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:src="@drawable/kk_selector_pw_edit"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textSize="14dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:text="@string/str_verify_password" />
+
+            <EditText
+                android:id="@+id/verifyPwEditText"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                android:textSize="16dp"
+                android:paddingRight="20dp"
+                android:background="@drawable/kk_bottomsheet_edittext_rect" />
+
+
+            <Button
+                android:id="@+id/confirmButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:enabled="false"
+                android:background="@drawable/kk_selector_bottomsheet_login_btn"
+                android:textSize="16dp"
+                android:textColor="#ffffff"
+                android:textAllCaps="false"
+                android:text="@string/str_confirm"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

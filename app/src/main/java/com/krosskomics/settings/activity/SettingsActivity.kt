@@ -119,7 +119,20 @@ class SettingsActivity : ToolbarTitleActivity() {
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.changeNicknameView -> startActivity(Intent(context, ChangeNickNameActivity::class.java))
-            R.id.changeEmailView -> startActivity(Intent(context, ChangeEmailActivity::class.java))
+            R.id.changeEmailView -> {
+                if (CommonUtil.read(context, CODE.LOCAL_loginType, "") == CODE.LOGIN_TYPE_KROSS) {
+                    startActivity(Intent(context, ChangeEmailActivity::class.java))
+                } else {
+                    CommonUtil.showToast(getString(R.string.msg_not_available_sns), context)
+                }
+            }
+            R.id.changePwView -> {
+                if (CommonUtil.read(context, CODE.LOCAL_loginType, "") == CODE.LOGIN_TYPE_KROSS) {
+                    startActivity(Intent(context, ChangePwActivity::class.java))
+                } else {
+                    CommonUtil.showToast(getString(R.string.msg_not_available_sns), context)
+                }
+            }
         }
     }
 }
