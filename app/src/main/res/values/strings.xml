@@ -290,6 +290,8 @@
     <string name="str_current_version_popup">Current ver.</string>
     <string name="str_latest_version_popup">Latest ver.</string>
     <string name="str_login_signup">Login / Sign up</string>
+    <string name="str_enter_nickname">Please enter your new Nickname.</string>
+    <string name="str_new_nickname">New Nickname</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>
