@@ -3,13 +3,12 @@ package com.krosskomics.common.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.DataBook
+import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.holder.BaseItemViewHolder
-import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.ranking.activity.RankingDetailActivity
 import com.krosskomics.util.CommonUtil
 import kotlinx.android.synthetic.main.item_genre_detail.view.*
@@ -19,8 +18,8 @@ import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.writerTextView
 import kotlinx.android.synthetic.main.item_ranking.view.*
-import kotlinx.android.synthetic.main.item_ranking.view.rankingTextView
 import kotlinx.android.synthetic.main.item_ranking_detail.view.*
+import kotlinx.android.synthetic.main.item_series.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
@@ -30,7 +29,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
     private var onDeleteClickListener: OnDeleteItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ongoing, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_series, parent, false)
         return BaseItemHolder(view)
     }
 
@@ -52,8 +51,11 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
 
     inner class BaseItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
         override fun setData(item: Any?, position: Int) {
-            if (item is DataBook) {
-                itemView.apply {
+            itemView.apply {
+                setOnClickListener {
+                    onClickListener?.onItemClick(item)
+                }
+                if (item is DataBook) {
                     Glide.with(itemView.context)
                         .load(item.image)
                         .into(mainImageView)
@@ -74,10 +76,6 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
                         rankingTextView?.text = (position + 1).toString()
                     }
 
-                    setOnClickListener {
-                        onClickListener?.onItemClick(item)
-                    }
-
                     // genre
                     subscribeImageView?.setOnClickListener {
                         subscribeImageView.isSelected = !it.isSelected
@@ -93,6 +91,12 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
                     } else {
                         deleteView?.visibility = View.GONE
                     }
+                } else if (item is DataEpisode) {
+                    img_ep_title.controller = CommonUtil.getDraweeController(context, item.image,
+                        200, 200)
+                    txt_ep_title.text = item.ep_title
+                    txt_update.text = item.ep_show_date
+                    txt_showDate.text = item.show_str
                 }
             }
         }

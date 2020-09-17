@@ -14,6 +14,7 @@ import com.krosskomics.R
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
+import com.krosskomics.common.model.Episode
 import com.krosskomics.common.model.More
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.activity.GenreActivity
@@ -33,7 +34,7 @@ import kotlinx.android.synthetic.main.view_topbutton.*
 open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private val TAG = "RecyclerViewBaseActivity"
 
-    protected val viewModel: BaseViewModel by lazy {
+    protected open val viewModel: BaseViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return BaseViewModel(application) as T
@@ -84,14 +85,21 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         }
     }
 
-    private fun setMainContentView(body: More) {
+    open fun setMainContentView(body: Any) {
         if (viewModel.isRefresh) {
             viewModel.items.clear()
         }
-        viewModel.totalPage = body.tot_pages
-        body.list?.let {
-            viewModel.items.addAll(it)
-            recyclerView?.adapter?.notifyDataSetChanged()
+        if (body is More) {
+            viewModel.totalPage = body.tot_pages
+            body.list?.let {
+                viewModel.items.addAll(it)
+                recyclerView?.adapter?.notifyDataSetChanged()
+            }
+        } else if (body is Episode) {
+            body.list?.let {
+                viewModel.items.addAll(it)
+                recyclerView?.adapter?.notifyDataSetChanged()
+            }
         }
     }
 

@@ -17,14 +17,7 @@ class SeriesAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
     private var onClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewBaseAdapter.BaseItemHolder {
-        return when(viewType) {
-            VIEW_TYPE.VIEW_TYPE_A.ordinal ->
-                BaseItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_ranking_first, parent, false))
-            VIEW_TYPE.VIEW_TYPE_C.ordinal ->
-                BaseItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_ranking_detail, parent, false))
-            else ->
-                BaseItemHolder(LayoutInflater.from(parent.context).inflate(layoutRes, parent, false))
-        }
+        return BaseItemHolder(LayoutInflater.from(parent.context).inflate(layoutRes, parent, false))
     }
 
     override fun getItemCount(): Int {
@@ -33,19 +26,6 @@ class SeriesAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
 
     override fun onBindViewHolder(holder: RecyclerViewBaseAdapter.BaseItemHolder, position: Int) {
         holder.setData(items[position], position)
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        if (context is RankingActivity) {
-            if (position == 0) {
-                return VIEW_TYPE.VIEW_TYPE_A.ordinal
-            }
-        } else {
-            if (position < 3) {
-                return VIEW_TYPE.VIEW_TYPE_C.ordinal
-            }
-        }
-        return VIEW_TYPE.VIEW_TYPE_B.ordinal
     }
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {

@@ -119,7 +119,7 @@ interface InterfaceRestful {
     fun getEpisodeList(
         @Field("lang") lang: String?,
         @Field("sid") sid: String?
-    ): Call<Episode?>?
+    ): Call<Episode>
 
     // 에피소드 소장체크
     @FormUrlEncoded

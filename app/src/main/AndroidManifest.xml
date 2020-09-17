@@ -89,6 +89,11 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".viewer.activity.ViewerActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
+
         <activity android:name=".coin.activity.CoinActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
