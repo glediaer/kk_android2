@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.analytics.HitBuilders
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
+import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.login.activity.LoginIntroActivity
 import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.showErrorView
@@ -69,6 +70,11 @@ abstract class BaseActivity : AppCompatActivity() {
 
     open fun goLoginAlert(context: Context?) {
         val intent = Intent(this, LoginIntroActivity::class.java)
+        startActivity(intent)
+    }
+
+    open fun goCoinAlert(context: Context?) {
+        val intent = Intent(this, CoinActivity::class.java)
         startActivity(intent)
     }
 

@@ -128,7 +128,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("eid") eid: String?,
         @Field("deviceid") deviceid: String?
-    ): Call<Episode?>?
+    ): Call<Episode>
 
     //에피소드 소장,대여
     @FormUrlEncoded
@@ -155,7 +155,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("eid") eid: String?,
         @Field("deviceid") deviceid: String?
-    ): Call<Episode?>?
+    ): Call<Episode>
 
     // library list
     @FormUrlEncoded

@@ -97,6 +97,9 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
                     txt_ep_title.text = item.ep_title
                     txt_update.text = item.ep_show_date
                     txt_showDate.text = item.show_str
+                } else if (item is String) { // viewer
+                    img_ep_title.controller = CommonUtil.getDraweeController(context, item,
+                        200, 200)
                 }
             }
         }

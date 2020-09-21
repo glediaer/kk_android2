@@ -4,41 +4,39 @@ import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
-import com.krosskomics.series.adapter.SeriesAdapter
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
-import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.model.Episode
-import com.krosskomics.common.model.More
-import com.krosskomics.common.viewmodel.BaseViewModel
-import com.krosskomics.series.viewmodel.SeriesViewModel
+import com.krosskomics.viewer.adapter.ViewerAdapter
+import com.krosskomics.viewer.viewmodel.ViewerViewModel
 import kotlinx.android.synthetic.main.activity_main_content.*
+import java.util.*
 
 class ViewerActivity : ToolbarTitleActivity() {
     private val TAG = "ViewerActivity"
 
-    override val viewModel: SeriesViewModel by lazy {
+    override val viewModel: ViewerViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return SeriesViewModel(application) as T
+                return ViewerViewModel(application) as T
             }
-        }).get(SeriesViewModel::class.java)
+        }).get(ViewerViewModel::class.java)
     }
 
     override fun getLayoutId(): Int {
-        recyclerViewItemLayoutId = R.layout.item_series
-        return R.layout.activity_series
+        recyclerViewItemLayoutId = R.layout.item_viewer
+        return R.layout.activity_viewer
     }
 
     override fun initTracker() {
-        setTracker(getString(R.string.str_series))
+        setTracker(getString(R.string.str_viewer))
     }
 
     override fun initModel() {
         intent?.apply {
             toolbarTitleString = extras?.getString("title").toString()
-            viewModel.sid = extras?.getString("sid").toString()
+            viewModel.item.eid = extras?.getString("eid").toString()
         }
         super.initModel()
     }
@@ -55,8 +53,21 @@ class ViewerActivity : ToolbarTitleActivity() {
         }
     }
 
+    override fun setMainContentView(body: Any) {
+        if (viewModel.isRefresh) {
+            viewModel.items.clear()
+        }
+        if (body is Episode) {
+            body.episode?.ep_contents?.let {
+                makeList(it, true)
+//                viewModel.items.addAll(it)
+//                recyclerView?.adapter?.notifyDataSetChanged()
+            }
+        }
+    }
+
     override fun initRecyclerViewAdapter() {
-        recyclerView.adapter = SeriesAdapter(viewModel.items, recyclerViewItemLayoutId, context)
+        recyclerView.adapter = ViewerAdapter(viewModel.items, recyclerViewItemLayoutId, context)
         (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
             override fun onItemClick(item: Any?) {
                 if (item is DataEpisode) {
@@ -68,5 +79,15 @@ class ViewerActivity : ToolbarTitleActivity() {
                 }
             }
         })
+    }
+
+    private fun makeList(urls: String, isReload: Boolean) {
+        val arr_url = urls.split(",".toRegex()).toTypedArray()
+            viewModel.items.addAll(
+                Arrays.asList(
+                    *arr_url
+                )
+            )
+        recyclerView?.adapter?.notifyDataSetChanged()
     }
 }

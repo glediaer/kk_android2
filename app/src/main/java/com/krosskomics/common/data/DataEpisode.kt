@@ -5,7 +5,7 @@ import java.util.*
 
 class DataEpisode {
     @SerializedName("eid")
-    var eid: String? = null
+    var eid: String = ""
 
     @SerializedName("ep_seq")
     var ep_seq = 0

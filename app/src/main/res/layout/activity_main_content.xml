@@ -159,7 +159,7 @@
                 android:layout_height="match_parent"
                 android:src="@mipmap/ic_launcher"
                 android:scaleType="fitXY"/>
-            
+
             <ImageView
                 android:id="@+id/bottomViewClose"
                 android:layout_width="20dp"
