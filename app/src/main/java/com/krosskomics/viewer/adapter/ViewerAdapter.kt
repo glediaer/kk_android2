@@ -8,7 +8,7 @@ import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.ranking.activity.RankingActivity
 
 class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int, private val context: Context) :
-    RecyclerViewBaseAdapter(items) {
+    RecyclerViewBaseAdapter(items, layoutRes) {
 
     private var onClickListener: OnItemClickListener? = null
 

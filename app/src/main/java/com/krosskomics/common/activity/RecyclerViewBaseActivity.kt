@@ -14,6 +14,7 @@ import com.krosskomics.R
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
+import com.krosskomics.common.model.Coin
 import com.krosskomics.common.model.Episode
 import com.krosskomics.common.model.More
 import com.krosskomics.common.viewmodel.BaseViewModel
@@ -82,6 +83,14 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             if ("00" == t.retcode) {
                 setMainContentView(t)
             }
+        } else if (t is Episode) {
+            if ("00" == t.retcode) {
+                setMainContentView(t)
+            }
+        } else if (t is Coin) {
+            if ("00" == t.retcode) {
+                setMainContentView(t)
+            }
         }
     }
 
@@ -97,6 +106,11 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             }
         } else if (body is Episode) {
             body.list?.let {
+                viewModel.items.addAll(it)
+                recyclerView?.adapter?.notifyDataSetChanged()
+            }
+        } else if (body is Coin) {
+            body.product_list?.let {
                 viewModel.items.addAll(it)
                 recyclerView?.adapter?.notifyDataSetChanged()
             }

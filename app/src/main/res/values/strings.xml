@@ -34,7 +34,6 @@
     <string name="str_more">more</string>
     <string name="str_my_profile">My profile</string>
     <string name="str_signup_login">Sign up or Log in</string>
-    <string name="str_coin_shop">Coin Shop</string>
     <string name="str_promotion_code">Promotion Code</string>
     <string name="str_gift_shop">Gift Shop</string>
     <string name="str_history">History</string>
@@ -300,6 +299,9 @@
 
     <string name="str_series">Series</string>
     <string name="str_viewer">Viewer</string>
+
+    <string name="str_coin_shop">Coin Shop</string>
+
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

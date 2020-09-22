@@ -6,7 +6,7 @@ import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 
 class OnGoingAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
-    RecyclerViewBaseAdapter(items) {
+    RecyclerViewBaseAdapter(items, layoutRes) {
 
     private var onClickListener: OnItemClickListener? = null
 

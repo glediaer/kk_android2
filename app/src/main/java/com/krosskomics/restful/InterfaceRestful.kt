@@ -332,7 +332,7 @@ interface InterfaceRestful {
 
     // 인앱 리스트
     @get:POST("app/google/37/product")
-    val inappData: Call<Coin?>?
+    val inappData: Call<Coin>
 
     // 인앱 결제 후 코인 지급
     @FormUrlEncoded

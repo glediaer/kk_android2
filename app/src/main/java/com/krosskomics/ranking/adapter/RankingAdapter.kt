@@ -9,7 +9,7 @@ import com.krosskomics.home.activity.MainActivity
 import com.krosskomics.ranking.activity.RankingActivity
 
 class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int, private val context: Context) :
-    RecyclerViewBaseAdapter(items) {
+    RecyclerViewBaseAdapter(items, layoutRes) {
 
     enum class VIEW_TYPE {
         VIEW_TYPE_A, VIEW_TYPE_B, VIEW_TYPE_C

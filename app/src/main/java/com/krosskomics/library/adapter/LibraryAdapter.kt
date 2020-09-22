@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 
-class LibraryAdapter(private val items: ArrayList<*>) :
-    RecyclerViewBaseAdapter(items) {
+class LibraryAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
+    RecyclerViewBaseAdapter(items, layoutRes) {
 
     private var onClickListener: OnItemClickListener? = null
 

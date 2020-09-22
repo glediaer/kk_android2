@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.DataBook
+import com.krosskomics.common.data.DataCoin
 import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.ranking.activity.RankingDetailActivity
 import com.krosskomics.util.CommonUtil
+import kotlinx.android.synthetic.main.item_coin.view.*
 import kotlinx.android.synthetic.main.item_genre_detail.view.*
 import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.*
@@ -22,14 +24,14 @@ import kotlinx.android.synthetic.main.item_ranking_detail.view.*
 import kotlinx.android.synthetic.main.item_series.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 
-open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
+open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
     RecyclerView.Adapter<RecyclerViewBaseAdapter.BaseItemHolder>() {
 
     private var onClickListener: OnItemClickListener? = null
     private var onDeleteClickListener: OnDeleteItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_series, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)
         return BaseItemHolder(view)
     }
 
@@ -100,6 +102,8 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>) :
                 } else if (item is String) { // viewer
                     img_ep_title.controller = CommonUtil.getDraweeController(context, item,
                         200, 200)
+                } else if (item is DataCoin) {
+                    tv_coin.text = item.product_name
                 }
             }
         }

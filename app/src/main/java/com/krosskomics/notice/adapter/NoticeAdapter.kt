@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 
-class NoticeAdapter(private val items: ArrayList<*>) :
-    RecyclerViewBaseAdapter(items) {
+class NoticeAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
+    RecyclerViewBaseAdapter(items, layoutRes) {
 
     private var onClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewBaseAdapter.BaseItemHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ongoing, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)
         return BaseItemHolder(view)
     }
 
