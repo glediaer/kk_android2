@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.krosskomics.library.repository.LibraryRepository
 import com.krosskomics.ongoing.repository.OnGoingRepository
 
 open class FragmentBaseViewModel(val context: Context) : ViewModel() {
@@ -14,7 +15,7 @@ open class FragmentBaseViewModel(val context: Context) : ViewModel() {
     var isRefresh = false
     var tabIndex = 0
 
-    private val repository = OnGoingRepository()
+    private val repository = LibraryRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
 
     open fun requestMain() {

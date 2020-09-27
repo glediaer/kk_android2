@@ -6,234 +6,213 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:paddingLeft="20dp">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/monView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:tag="0"
         android:layout_weight="1"
-        android:paddingTop="14dp"
-        android:paddingBottom="13dp"
-        android:background="@drawable/kk_selector_ongoing_date"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
-            android:id="@+id/monInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
-            tools:text="24" />
-
-        <TextView
-            android:id="@+id/monString"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"
             android:textSize="12dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/kk_selector_color_gray_white"
             android:text="@string/str_mon" />
+        
+        <View
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:duplicateParentState="true"
+            android:background="@drawable/kk_white_circle"
+            tools:visibility="visible"/>
 
-    </LinearLayout>
+    </FrameLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/tueView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="13dp"
-        android:background="@drawable/kk_selector_ongoing_date"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:tag="1"
+        android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
-            android:id="@+id/tueInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
-            tools:text="24" />
-
-        <TextView
-            android:id="@+id/tueString"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"
             android:textSize="12dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/kk_selector_color_gray_white"
             android:text="@string/str_tue" />
 
-    </LinearLayout>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:duplicateParentState="true"
+            android:background="@drawable/kk_white_circle"
+            tools:visibility="visible"/>
 
-    <LinearLayout
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/wedView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="13dp"
-        android:background="@drawable/kk_selector_ongoing_date"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:tag="2"
+        android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
-            android:id="@+id/wedInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
-            tools:text="24" />
-
-        <TextView
-            android:id="@+id/wedString"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"
             android:textSize="12dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/kk_selector_color_gray_white"
             android:text="@string/str_wed" />
 
-    </LinearLayout>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:duplicateParentState="true"
+            android:background="@drawable/kk_white_circle"
+            tools:visibility="visible"/>
 
-    <LinearLayout
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/thuView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="13dp"
-        android:background="@drawable/kk_selector_ongoing_date"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:tag="3"
+        android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
-            android:id="@+id/thuInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
-            tools:text="24" />
-
-        <TextView
-            android:id="@+id/thuString"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"
             android:textSize="12dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/kk_selector_color_gray_white"
             android:text="@string/str_thu" />
 
-    </LinearLayout>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:duplicateParentState="true"
+            android:background="@drawable/kk_white_circle"
+            tools:visibility="visible"/>
 
-    <LinearLayout
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/friView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="13dp"
-        android:background="@drawable/kk_selector_ongoing_date"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:tag="4"
+        android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
-            android:id="@+id/friInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
-            tools:text="24" />
-
-        <TextView
-            android:id="@+id/friString"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"
             android:textSize="12dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/kk_selector_color_gray_white"
             android:text="@string/str_fri" />
 
-    </LinearLayout>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:duplicateParentState="true"
+            android:background="@drawable/kk_white_circle"
+            tools:visibility="visible"/>
 
-    <LinearLayout
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/satView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="13dp"
-        android:background="@drawable/kk_selector_ongoing_date"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:tag="5"
+        android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
-            android:id="@+id/satInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
-            tools:text="24" />
-
-        <TextView
-            android:id="@+id/satString"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"
             android:textSize="12dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/kk_selector_color_gray_white"
             android:text="@string/str_sat" />
 
-    </LinearLayout>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:duplicateParentState="true"
+            android:background="@drawable/kk_white_circle"
+            tools:visibility="visible"/>
 
-    <LinearLayout
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/sunView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:paddingTop="14dp"
-        android:paddingBottom="13dp"
-        android:background="@drawable/kk_selector_ongoing_date"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:tag="6"
+        android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
-            android:id="@+id/sunInt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
-            tools:text="24" />
-
-        <TextView
-            android:id="@+id/sunString"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
+            android:layout_gravity="center"
+            android:duplicateParentState="true"
             android:textSize="12dp"
-            android:textColor="#aeaeae"
-            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/kk_selector_color_gray_white"
             android:text="@string/str_sun" />
 
-    </LinearLayout>
+        <View
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:duplicateParentState="true"
+            android:background="@drawable/kk_white_circle"
+            tools:visibility="visible"/>
+
+    </FrameLayout>
 
 </LinearLayout>

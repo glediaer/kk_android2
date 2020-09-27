@@ -19,13 +19,12 @@
                 android:layout_height="115dp"
                 android:background="@drawable/kk_gradient_ranking_first_rect">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textSize="100dp"
-                    android:textColor="#26000000"
-                    android:text="1" />
+                <ImageView
+                    android:layout_width="59dp"
+                    android:layout_height="71dp"
+                    android:layout_marginLeft="131dp"
+                    android:src="@drawable/kk_first_ranking"
+                    android:layout_centerVertical="true"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

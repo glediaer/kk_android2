@@ -2,6 +2,7 @@ package com.krosskomics.waitfree.activity
 
 import android.content.Intent
 import android.view.View
+import android.widget.TextView
 import com.google.android.gms.analytics.HitBuilders
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
@@ -9,6 +10,8 @@ import com.krosskomics.common.activity.RecyclerViewBaseActivity
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.ongoing.activity.OnGoingActivity
 import com.krosskomics.ranking.activity.RankingActivity
+import kotlinx.android.synthetic.main.activity_waitfree.*
+import kotlinx.android.synthetic.main.view_ongoing_date.*
 
 class WaitFreeActivity : RecyclerViewBaseActivity() {
     private val TAG = "WaitFreeActivity"
@@ -20,6 +23,7 @@ class WaitFreeActivity : RecyclerViewBaseActivity() {
 //            }
 //        }).get(WaitViewModel::class.java)
 //    }
+    lateinit var dateViewItems: ArrayList<TextView>
 
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_waitfree
@@ -33,6 +37,23 @@ class WaitFreeActivity : RecyclerViewBaseActivity() {
     override fun initLayout() {
         viewModel.tabIndex = 2
         super.initLayout()
+        initDateView()
+    }
+
+    private fun initDateView() {
+        dateViewItems = arrayListOf(oneDateTextView, twoDateTextView, threeDateTextView,
+            fourDateTextView, fiveDateTextView)
+        dateViewItems.forEach { dateView ->
+            dateView.setOnClickListener {
+                resetDateViewItems()
+                it.isSelected = true
+                requestServer()
+            }
+        }
+    }
+
+    private fun resetDateViewItems() {
+        dateViewItems.forEach { it.isSelected = false }
     }
 
     override fun onClick(v: View?) {

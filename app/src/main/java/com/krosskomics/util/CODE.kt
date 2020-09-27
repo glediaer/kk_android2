@@ -41,6 +41,8 @@ object CODE {
     var LOCAL_Android_Id = "android_id"
     var LOCAL_REF_SOURCE = "ref_source"
     var LOCAL_IS_VIEWER_TUTO = "false"
+    var LOCAL_RID = "rid"
+
 
     // 푸시설정여부
     var LOCAL_RECIEVE_PUSH = "recieve_push"

@@ -53,8 +53,6 @@ import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
-import kotlinx.android.synthetic.main.nav_header_main.view.termsTextView
-import kotlinx.android.synthetic.main.view_login_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_main_action_item.*
 import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
@@ -88,17 +86,15 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         if (BuildConfig.DEBUG) {
             Log.e(TAG, "token : " + read(this, CODE.LOCAL_token, ""))
         }
-        //        actBinding.includeBottomView.bottomNavigationView.setSelectedItemId(R.id.navigation_menu1);
-//        mIsFirstEnter = true
-//        if (KJKomicsApp.IS_CHANGE_LANGUAGE) {
-//            KJKomicsApp.IS_CHANGE_LANGUAGE = false
-//            requestServer()
-//        }
-//        if (KJKomicsApp.IS_GET_NEW_GIFT) {
-//            actBinding.ivGiftNew.setVisibility(View.VISIBLE)
-//        } else {
-//            actBinding.ivGiftNew.setVisibility(View.GONE)
-//        }
+        if (KJKomicsApp.IS_CHANGE_LANGUAGE) {
+            KJKomicsApp.IS_CHANGE_LANGUAGE = false
+            requestServer()
+        }
+        if (KJKomicsApp.IS_GET_NEW_GIFT) {
+            newGiftPointView.visibility = View.VISIBLE
+        } else {
+            newGiftPointView.visibility = View.GONE
+        }
     }
 
     override fun onStart() {
@@ -123,7 +119,6 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     override fun initLayout() {
         initHeaderView()
         initMainView()
-        //외부에서 통신받기
         //외부에서 통신받기
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(mMessageReceiver, IntentFilter(CODE.LB_MAIN))
@@ -192,7 +187,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                 setMainBannerView(t.main_banner)
                 setMainContentView(t.layout_contents)
             } else if ("201" == t.retcode) {
-//                goLoginAlert(context)
+                goLoginAlert(context)
             } else if ("908" == t.retcode) {
             } else {
                 if ("" != t.msg) {
@@ -251,7 +246,13 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
     private fun setMainBannerView(items: ArrayList<DataBanner>?) {
         items?.let {
-            bannerPager.adapter = HomeBannerAdapter(items)
+            bannerPager.apply {
+                val currentItem: Int = items.size * 100
+                clipToPadding = false
+                setPadding(CommonUtil.dpToPx(context, 13 + 14), 0, CommonUtil.dpToPx(context, 13 + 14),0)
+                adapter = HomeBannerAdapter(items)
+                setCurrentItem(currentItem, true)
+            }
         }
     }
 
@@ -402,8 +403,8 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         override fun onReceive(context: Context, intent: Intent) {
             val message = intent.getStringExtra("message")
             if (message.equals(CODE.MSG_NAV_REFRESH, ignoreCase = true)) {
+                refreshNaviView()
                 requestServer()
-
             }
         }
     }

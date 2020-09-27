@@ -11,10 +11,10 @@ class DataEpisode {
     var ep_seq = 0
 
     @SerializedName("ep_title")
-    var ep_title: String? = null
+    var ep_title: String = ""
 
     @SerializedName("ep_show_date")
-    var ep_show_date: String? = null
+    var ep_show_date: String = ""
 
     @SerializedName("isupdate")
     var isupdate: String? = null
@@ -46,7 +46,7 @@ class DataEpisode {
 
     @SerializedName("ep_rent_term")
     var ep_rent_term: String? = null
-    var isdownload: String? = null
+    var isdownload: String? = "0"
     var isChecked = false
     var isCheckVisible = false
     var possibility_allbuy = false
@@ -95,7 +95,7 @@ class DataEpisode {
     var ep_contents_path: String? = null
 
     @SerializedName("ep_contents")
-    var ep_contents: String? = null
+    var ep_contents: String = ""
 
     @SerializedName("vviewer")
     var vviewer: String? = null
@@ -125,7 +125,7 @@ class DataEpisode {
     var fb_share_url: String? = null
     var share_image: String? = null
     var ep_view_id: String? = null
-    var download_expire: String? = null
+    var download_expire: String = ""
 
     companion object {
         var seq = Comparator<DataEpisode> { s1, s2 ->

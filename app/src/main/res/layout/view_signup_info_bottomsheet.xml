@@ -19,12 +19,13 @@
         android:textColor="#828282"
         tools:text="(1/5)  Enter your information." />
 
-    <SeekBar
-        android:id="@+id/seekBar"
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_marginTop="5dp"
-        android:max="5"/>
+        android:layout_height="50dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:max="5"
+        android:progress="1" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -84,11 +85,11 @@
             android:layout_gravity="center" />
 
         <!-- age -->
-        <Spinner
-            android:id="@+id/spinner"
+        <include
+            android:id="@+id/ageView"
+            layout="@layout/view_signup_info_age"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/kk_age_spinner_rect"
+            android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_gravity="center"/>
 

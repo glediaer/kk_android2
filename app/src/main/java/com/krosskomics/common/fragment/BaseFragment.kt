@@ -13,14 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
-import kotlinx.android.synthetic.main.fragment_genre.recyclerView
 import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.view_empty_library.*
 
 abstract class BaseFragment : Fragment(), Observer<Any> {
     protected var recyclerViewItemLayoutId = 0
 
-    protected val viewModel: FragmentBaseViewModel by lazy {
+    protected open val viewModel: FragmentBaseViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return FragmentBaseViewModel(requireContext()) as T
@@ -58,7 +57,7 @@ abstract class BaseFragment : Fragment(), Observer<Any> {
     }
 
     open fun showEmptyView() {
-        recyclerView?.visibility = View.GONE
+        mainView?.visibility = View.GONE
         emptyView?.visibility = View.VISIBLE
         goSeriesButton?.setOnClickListener {
             val intent = Intent(context, SeriesActivity::class.java)

@@ -41,6 +41,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.login.activity.LoginActivity
+import com.krosskomics.login.activity.LoginIntroActivity
 import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -522,7 +523,7 @@ object CommonUtil {
         isSea: Boolean
     ) {
 
-        showAppbar.setBackgroundColor(ContextCompat.getColor(context, R.color.kross_trans))
+        showAppbar.setBackgroundColor(ContextCompat.getColor(context, R.color.trans))
         mDecorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -549,7 +550,7 @@ object CommonUtil {
         showAppbar: LinearLayout,
         layBottom: LinearLayout
     ) {
-        showAppbar.setBackgroundColor(ContextCompat.getColor(context, R.color.kross_trans))
+        showAppbar.setBackgroundColor(ContextCompat.getColor(context, R.color.trans))
         toolbar.visibility = View.GONE
         layBottom.visibility = View.GONE
     }
@@ -637,7 +638,7 @@ object CommonUtil {
     }
 
     fun goLoginAlert(context: Context) {
-        val intent = Intent(context, LoginActivity::class.java)
+        val intent = Intent(context, LoginIntroActivity::class.java)
         intent.putExtra("pageType", "login")
         context.startActivity(intent)
     }

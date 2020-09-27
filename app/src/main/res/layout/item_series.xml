@@ -2,167 +2,86 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="14dp"
-    android:paddingRight="14dp">
+    android:layout_height="65dp"
+    android:orientation="horizontal">
+
+    <!-- 썸네일 -->
+    <FrameLayout
+        android:layout_width="78dp"
+        android:layout_height="65dp"
+        android:gravity="top|center_horizontal"
+        android:orientation="horizontal">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/img_ep_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            fresco:actualImageScaleType="fitXY"
+            fresco:placeholderImage="@drawable/kk_placeholder"/>
+
+        <ImageView
+            android:id="@+id/ticketImageView"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_gravity="right|bottom"
+            android:src="@drawable/kross_selector_ticket"
+            android:visibility="visible" />
+
+        <include
+            layout="@layout/view_dim"/>
+
+        <ImageView
+            android:id="@+id/checkbox"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_gravity="center"
+            android:src="@drawable/kross_selector_allbuy_list"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone"/>
+
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/ll_default"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_ep_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="#000000"
+                tools:text="Episode 12" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:orientation="horizontal">
-
-                    <!-- 썸네일 -->
-                    <FrameLayout
-                        android:layout_width="79dp"
-                        android:layout_height="60dp"
-                        android:gravity="top|center_horizontal"
-                        android:orientation="horizontal">
-
-                        <com.facebook.drawee.view.SimpleDraweeView
-                            android:id="@+id/img_ep_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            fresco:actualImageScaleType="fitXY"
-                            fresco:placeholderImage="@drawable/kross_placeholder"/>
-
-                        <ImageView
-                            android:id="@+id/checkbox"
-                            android:layout_width="26dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/kross_selector_allbuy_list"
-                            android:clickable="false"
-                            android:focusable="false"
-                            android:visibility="gone"/>
-
-                        <ImageView
-                            android:id="@+id/iv_ticket"
-                            android:layout_width="33dp"
-                            android:layout_height="17dp"
-                            android:layout_gravity="right|bottom"
-                            android:visibility="visible"
-                            android:src="@drawable/kross_selector_ticket"/>
-
-
-                    </FrameLayout>
-
-                    <!-- 컨텐츠 -->
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <!-- 타이틀 -->
-                            <TextView
-                                android:id="@+id/txt_ep_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:textSize="17dp"
-                                android:textColor="#484847"
-                                android:includeFontPadding="false"
-                                tools:text="Determinant Error"/>
-
-                            <TextView
-                                android:id="@+id/txt_update"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="6dp"
-                                android:includeFontPadding="false"
-                                android:textColor="#999999"
-                                android:textSize="13dp"
-                                tools:text="April 27, 2013" />
-
-                            <TextView
-                                android:id="@+id/txt_showDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:includeFontPadding="false"
-                                android:textSize="13dp"
-                                android:textColor="#999999"
-                                tools:text="April 27, 2013"/>
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tv_episode_state"
-                            android:layout_width="72dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center_vertical|right"
-                            android:background="@drawable/kross_btn_orange_unlock"
-                            android:gravity="center"
-                            android:textSize="17dp"
-                            android:textColor="#ffffff"/>
-                    </FrameLayout>
-                </LinearLayout>
-
-            </FrameLayout>
-
-            <View
-                android:id="@+id/view_line"
-                android:layout_width="match_parent"
-                android:layout_height="0.7dp"
-                android:background="#eeeeee"
-                android:layout_marginTop="10dp" />
+            <TextView
+                android:id="@+id/txt_showDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:textSize="10dp"
+                android:textColor="#c6c6c6"
+                tools:text="Free after 21 days" />
 
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/iv_bookmark"
-            android:layout_width="35dp"
-            android:layout_height="28dp"
-            android:layout_gravity="right"
-            android:visibility="gone"
-            tools:visibility="visible"
-            android:src="@drawable/kross_book_mark"/>
-        
-        <ImageView
-            android:id="@+id/iv_download"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginRight="8dp"
+            android:id="@+id/downloadImageView"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_gravity="right|center_vertical"
             android:visibility="gone"
             tools:visibility="visible"
-            android:src="@drawable/kross_selector_download_icon"/>
+            android:src="@drawable/kk_selector_series_download"/>
 
     </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_empty"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal">
-    </LinearLayout>
 
 </LinearLayout>

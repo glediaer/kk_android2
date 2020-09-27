@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.view_ongoing_date.*
 class OnGoingActivity : RecyclerViewBaseActivity() {
     private val TAG = "OnGoingActivity"
 
+    lateinit var dateViewItems: ArrayList<View>
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_ongoing
         return R.layout.activity_ongoing
@@ -28,13 +29,18 @@ class OnGoingActivity : RecyclerViewBaseActivity() {
     }
 
     private fun initDateView() {
-        monView.setOnClickListener {  }
-        tueView.setOnClickListener {  }
-        wedView.setOnClickListener {  }
-        thuView.setOnClickListener {  }
-        friView.setOnClickListener {  }
-        satView.setOnClickListener {  }
-        sunView.setOnClickListener {  }
+        dateViewItems = arrayListOf(monView, tueView, wedView, thuView, friView, satView, sunView)
+        dateViewItems.forEach { dateView ->
+            dateView.setOnClickListener {
+                resetDateViewItems()
+                it.isSelected = true
+                requestServer()
+            }
+        }
+    }
+
+    private fun resetDateViewItems() {
+        dateViewItems.forEach { it.isSelected = false }
     }
 
     override fun onClick(v: View?) {

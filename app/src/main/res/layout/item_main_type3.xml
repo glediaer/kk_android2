@@ -14,7 +14,7 @@
         tools:src="@mipmap/ic_launcher"
         android:scaleType="fitXY"
         fresco:actualImageScaleType="fitXY"
-        fresco:placeholderImage="@drawable/kross_placeholder"/>
+        fresco:placeholderImage="@drawable/kk_placeholder"/>
 
     <FrameLayout
         android:layout_width="match_parent"

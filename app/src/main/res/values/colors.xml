@@ -2,13 +2,18 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#ff2e39</color>
 
+    <color name="trans">#00000000</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="orange">#ff9933</color>
     <color name="lightgray">#f3f3f3</color>
     <color name="gray">#E5E5E5</color>
     <color name="blue">#4A90E2</color>
-    <color name="kross_trans">#00000000</color>
+    <color name="yellow">#ffd900</color>
+    <color name="red">#ff2e39</color>
+    <color name="purple">#6236ff</color>
+    <color name="green">#b9d511</color>
+
 </resources>

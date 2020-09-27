@@ -2,7 +2,7 @@ package com.krosskomics.common.activity
 
 import com.google.android.material.tabs.TabLayoutMediator
 import com.krosskomics.R
-import com.krosskomics.genre.adapter.GenrePagerAdapter
+import com.krosskomics.common.adapter.CommonPagerAdapter
 import kotlinx.android.synthetic.main.activity_genre_detail.*
 
 abstract class ToolbarViewPagerActivity : ToolbarTitleActivity() {
@@ -32,7 +32,11 @@ abstract class ToolbarViewPagerActivity : ToolbarTitleActivity() {
     }
 
     protected fun initViewPager() {
-        viewPager.adapter = GenrePagerAdapter(this, tabItems.size, adapterType)
+        viewPager.adapter = CommonPagerAdapter(
+            this,
+            tabItems.size,
+            adapterType
+        )
         TabLayoutMediator(tabLayout, viewPager){ tab, position->
             tab.text = tabItems[position]
         }.attach()

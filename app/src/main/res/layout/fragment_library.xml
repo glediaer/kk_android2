@@ -7,44 +7,52 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include
+            android:id="@+id/categoryView"
+            layout="@layout/view_mytoon_category"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/mainView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/categoryView"
-                layout="@layout/view_mytoon_category"/>
-
-            <include
-                android:id="@+id/filterView"
-                layout="@layout/view_mytoon_filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="27dp"/>
-
-            <include
-                android:id="@+id/networkStateView"
-                layout="@layout/view_network_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:visibility="gone"
-                android:layout_centerHorizontal="true" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="6dp" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <include
+                    android:id="@+id/filterView"
+                    layout="@layout/view_mytoon_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="27dp"/>
 
-    </androidx.core.widget.NestedScrollView>
+                <include
+                    android:id="@+id/networkStateView"
+                    layout="@layout/view_network_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="gone"
+                    android:layout_centerHorizontal="true" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="6dp" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 
     <include
         layout="@layout/view_topbutton"

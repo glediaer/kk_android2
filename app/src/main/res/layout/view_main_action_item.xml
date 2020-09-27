@@ -1,7 +1,7 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingRight="16dp">
 
     <ImageView
@@ -10,13 +10,30 @@
         android:layout_centerVertical="true"
         android:src="@drawable/kk_logo_symbol"/>
 
-    <ImageView
-        android:id="@+id/giftboxImageView"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+    <FrameLayout
+        android:id="@+id/giftboxView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/kk_ic_gift"/>
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/giftboxImageView"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/kk_ic_gift"/>
+        
+        <View
+            android:id="@+id/newGiftPointView"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:background="@drawable/kk_new_gift_circle"
+            android:layout_gravity="right"/>
+
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/searchImageView"
@@ -24,7 +41,7 @@
         android:layout_height="25dp"
         android:layout_marginRight="25dp"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/giftboxImageView"
+        android:layout_toLeftOf="@+id/giftboxView"
         android:src="@drawable/kk_ic_search"/>
 
     <ImageView

@@ -12,6 +12,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         fresco:actualImageScaleType="fitXY"
-        fresco:placeholderImage="@drawable/kross_placeholder"/>
+        fresco:placeholderImage="@drawable/kk_placeholder"/>
 
 </LinearLayout>

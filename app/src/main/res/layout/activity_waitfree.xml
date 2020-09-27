@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".ongoing.activity.OnGoingActivity">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,22 +21,89 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
                 android:layout_marginTop="40dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/sideSearchRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="#cbccff"
+                    android:gravity="center_horizontal"
+                    android:text="@string/str_later" />
 
-            </RelativeLayout>
+                <include
+                    layout="@layout/item_underline_1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="1dp"/>
+
+                <TextView
+                    android:id="@+id/oneDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/kk_selector_waitfree_date"
+                    android:layout_marginTop="16dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/kk_selector_color_darkgray_white"
+                    android:gravity="center"
+                    android:text="@string/str_12hours" />
+
+                <TextView
+                    android:id="@+id/twoDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/kk_selector_waitfree_date"
+                    android:layout_marginTop="16dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/kk_selector_color_darkgray_white"
+                    android:gravity="center_horizontal"
+                    android:text="@string/str_1day" />
+
+                <TextView
+                    android:id="@+id/threeDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/kk_selector_waitfree_date"
+                    android:layout_marginTop="16dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/kk_selector_color_darkgray_white"
+                    android:gravity="center_horizontal"
+                    android:text="@string/str_3day" />
+
+                <TextView
+                    android:id="@+id/fourDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/kk_selector_waitfree_date"
+                    android:layout_marginTop="16dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/kk_selector_color_darkgray_white"
+                    android:gravity="center_horizontal"
+                    android:text="@string/str_5day" />
+
+                <TextView
+                    android:id="@+id/fiveDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:background="@drawable/kk_selector_waitfree_date"
+                    android:layout_marginTop="16dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/kk_selector_color_darkgray_white"
+                    android:gravity="center_horizontal"
+                    android:text="@string/str_7day" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="22dp"
                 android:layout_marginTop="16dp"/>
 
         </LinearLayout>
@@ -51,7 +117,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:visibility="gone"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="174dp"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>

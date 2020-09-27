@@ -6,11 +6,9 @@
     <string name="default_notification_channel_id">default_notification_channel_id</string>
     <string name="google_account_webclient_id">987318076947-2fcv7n13tshg902la45qd74ge06neqoq.apps.googleusercontent.com</string>
 
-    <string name="str_description">Description</string>
     <string name="str_close">Close</string>
     <string name="str_free_episode_count_format">%d more previews</string>
-    <string name="str_first_view">First Episode</string>
-    <string name="str_continue">Continue</string>
+
     <string name="str_input_email">Email</string>
     <string name="str_input_password">Password</string>
 
@@ -57,7 +55,6 @@
     <string name="msg_empty_search_word">No results</string>
     <string name="str_episode_seq_format2">Ep. %d</string>
     <string name="str_episode_seq_format3">Ep.%d</string>
-    <string name="str_episodes_seq_format1">%d Episodes</string>
     <string name="str_send">Send</string>
 
 
@@ -117,8 +114,8 @@
     <string name="str_gift_popup_title">You have received the gift successfully.</string>
     <string name="str_writer_format">%s %s %s</string>
     <string name="str_earn">Earn</string>
-    <string name="str_rental">rental</string>
-    <string name="str_permanent">permanent</string>
+
+
     <string name="str_ticket">Ticket</string>
     <string name="str_invite_notice1">Having a great time? Invite your friends\nto join you. Share the app with them now!</string>
     <string name="str_invite_notice2">You will receive 1 bonus coin when your friends\ndownload KrossKomics app and sign up\nthrough your unique invite link.</string>
@@ -236,7 +233,7 @@
     <string name="str_and">and</string>
     <string name="str_next">NEXT</string>
 
-    <string name="str_nickname_title">Display name</string>
+    <string name="str_nickname_title">Nickname</string>
     <string name="str_minimum_nickname">*Minimum 6 digits.</string>
     <string name="str_sign_info_step_noti">Enter your information.</string>
     <string name="str_gender">Gender</string>
@@ -301,7 +298,19 @@
     <string name="str_viewer">Viewer</string>
 
     <string name="str_coin_shop">Coin Shop</string>
+    <string name="str_later">Later</string>
+    <string name="str_12hours">"12\nhours"</string>
+    <string name="str_1day">"1\nday"</string>
+    <string name="str_3day">"3\ndays"</string>
+    <string name="str_5day">"5\ndays"</string>
+    <string name="str_7day">"7\ndays"</string>
 
+    <string name="str_description">Description</string>
+    <string name="str_permanent">Permanent</string>
+    <string name="str_rental">Rental</string>
+    <string name="str_episodes_seq_format1">%d Episodes</string>
+    <string name="str_first_ep">First Episode</string>
+    <string name="str_continue">Continue</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

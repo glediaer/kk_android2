@@ -8,8 +8,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.Spinner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -30,15 +28,13 @@ import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
+import com.krosskomics.common.data.DataAge
 import com.krosskomics.common.data.DataGenre
 import com.krosskomics.common.data.DataLogin
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Login
 import com.krosskomics.home.activity.MainActivity
-import com.krosskomics.login.adapter.AgeSpinnerAdapter
-import com.krosskomics.login.adapter.GenreDecoration
-import com.krosskomics.login.adapter.InfoGenreAdapter
-import com.krosskomics.login.adapter.InfoLanguageAdapter
+import com.krosskomics.login.adapter.*
 import com.krosskomics.login.viewmodel.LoginViewModel
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -420,6 +416,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                             1 -> {
                                 KJKomicsApp.LOGIN_DATA?.nickname = infoEmailEditTextView.text.toString()
                                 viewModel.repository.signOutInfoStep = 2
+                                nextImageView.isEnabled = false
                                 setGenderView()
                             }
                             2 -> {
@@ -541,7 +538,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
         dialogView.run {
             infoTextView.text =
                 "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
-            seekBar.progress = 5
+            progressBar.progress = 5
             infoTitleTextView.text = getString(R.string.str_language)
 
             genreView.visibility = View.GONE
@@ -573,10 +570,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
         dialogView.run {
             infoTextView.text =
                 "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
-            seekBar.progress = 4
+            progressBar.progress = 4
             infoTitleTextView.text = getString(R.string.str_genre_title)
 
-            spinner.visibility = View.GONE
+            ageView.visibility = View.GONE
 
             genreView.apply {
                 visibility = View.VISIBLE
@@ -617,44 +614,30 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
         dialogView.run {
             infoTextView.text =
                 "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
-            seekBar.progress = 3
+            progressBar.progress = 3
             infoTitleTextView.text = getString(R.string.str_age)
 
             genderView.visibility = View.GONE
             KJKomicsApp.INIT_SET.age_list?.let {
-                spinner.apply {
-                    it.forEachIndexed { index, dataAge ->
-                        dataAge.isUpSelect = index == 0
-                    }
+                ageView.apply {
                     visibility = View.VISIBLE
-                    spinner.adapter = AgeSpinnerAdapter(it)
-                    spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                        override fun onItemSelected(
-                            parent: AdapterView<*>?,
-                            view: View?,
-                            position: Int,
-                            id: Long
-                        ) {
-                            val item = it[position]
-                            it.forEachIndexed { index, dataAge ->
-                                when (position) {
-                                    0 -> {
-                                        dataAge.isUpSelect = true
-                                    }
-                                    it.size - 1 -> {
-                                        dataAge.isDownSelect = true
-                                    }
-                                    else -> {
-                                        dataAge.isUpSelect = false
-                                        dataAge.isDownSelect = false
-                                    }
+                    ageRecyclerView.layoutManager = GridLayoutManager(context, 2)
+                    ageRecyclerView.addItemDecoration(AgeDecoration(context))
+                    ageRecyclerView.adapter = InfoAgeAdapter(it)
+                    (ageRecyclerView.adapter as InfoAgeAdapter).setOnItemClickListener(object : InfoAgeAdapter.OnItemClickListener {
+                        override fun onItemClick(item: Any?) {
+                            if (item is DataAge) {
+                                KJKomicsApp.LOGIN_DATA?.age = item.age
+                                it.forEach  { ageData->
+                                    ageData.isSelect = false
                                 }
-                            }
-                            KJKomicsApp.LOGIN_DATA?.age = item.age
-                        }
+                                item.isSelect = !item.isSelect
 
-                        override fun onNothingSelected(parent: AdapterView<*>?) {}
-                    }
+                                (ageRecyclerView.adapter as InfoAgeAdapter).notifyDataSetChanged()
+                                dialogView.nextImageView.isEnabled = true
+                            }
+                        }
+                    })
                 }
             }
         }
@@ -663,26 +646,29 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
     private fun setGenderView() {
         dialogView.run {
             infoTextView.text = "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
-            seekBar.progress = 2
+            progressBar.progress = 2
             infoTitleTextView.text = getString(R.string.str_gender)
 
             infoEmailEditTextView.visibility = View.GONE
             genderView.apply {
                 visibility = View.VISIBLE
-                maleView.isSelected = true
                 maleView.setOnClickListener {
-                    it.isSelected = !isSelected
-                    if (it.isSelected) {
-                        maleView.mailTextView.setTypeface(null, Typeface.BOLD)
+                    if (!it.isSelected) {
+                        it.isSelected = true
+                        femaleView.isSelected = false
+                        it.mailTextView.setTypeface(null, Typeface.BOLD)
                         femaleView.femailTextView.setTypeface(null, Typeface.NORMAL)
                     }
+                    dialogView.nextImageView.isEnabled = true
                 }
                 femaleView.setOnClickListener {
-                    it.isSelected = !isSelected
-                    if (it.isSelected) {
+                    if (!it.isSelected) {
+                        it.isSelected = true
+                        maleView.isSelected = false
+                        it.femailTextView.setTypeface(null, Typeface.BOLD)
                         maleView.mailTextView.setTypeface(null, Typeface.NORMAL)
-                        femaleView.femailTextView.setTypeface(null, Typeface.BOLD)
                     }
+                    dialogView.nextImageView.isEnabled = true
                 }
             }
         }
@@ -692,7 +678,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
         dialogView.apply {
             nextImageView.isEnabled = false
             infoTextView.text = "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
-            seekBar.progress = 1
+            progressBar.progress = 1
             infoEmailEditTextView.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence,

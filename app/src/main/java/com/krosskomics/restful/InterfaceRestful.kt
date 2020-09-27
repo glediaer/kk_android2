@@ -165,7 +165,7 @@ interface InterfaceRestful {
         @Field("list_type") list_type: String?,
         @Field("page") page: Int,
         @Field("sort") sort: String?
-    ): Call<More?>?
+    ): Call<More>
 
     // 소장목록
     @FormUrlEncoded
@@ -360,7 +360,7 @@ interface InterfaceRestful {
     fun getDownloadEpisode(
         @Field("lang") lang: String?,
         @Field("eid") eid: String?
-    ): Call<Episode?>?
+    ): Call<Episode>
 
     // 친구초대
     @FormUrlEncoded
