@@ -2,17 +2,22 @@ package com.krosskomics.series.activity
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.AsyncTask
 import android.os.Bundle
+import android.os.StrictMode
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataEpisode
+import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Episode
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.series.adapter.SeriesAdapter
@@ -21,18 +26,37 @@ import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.convertUno
 import com.krosskomics.util.CommonUtil.read
+import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.FileUtils
+import com.krosskomics.util.FileUtils.deleteDir
+import com.krosskomics.util.FileUtils.fileToByte
+import com.krosskomics.util.FileUtils.generateKey
+import com.krosskomics.util.FileUtils.getBitmapFromURL
+import com.krosskomics.util.FileUtils.getStream
+import com.krosskomics.util.FileUtils.saveBitmapToFileCache
+import com.krosskomics.util.FileUtils.writeFile
+import com.krosskomics.util.FileUtils.writeFile2
+import com.krosskomics.util.ServerUtil.service
+import com.krosskomics.util.UtilBitmap
 import com.krosskomics.viewer.activity.ViewerActivity
+import com.scottyab.aescrypt.AESCrypt
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_content_like_white.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
 import java.util.*
 
 class SeriesActivity : ToolbarTitleActivity() {
     private val TAG = "SeriesActivity"
+
+    lateinit var dialogView: View
+    lateinit var bottomSheetDialog: BottomSheetDialog
 
     public override val viewModel: SeriesViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -69,6 +93,10 @@ class SeriesActivity : ToolbarTitleActivity() {
     }
 
     override fun initModel() {
+        val policy =
+            StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
         intent?.apply {
             toolbarTitleString = extras?.getString("title").toString()
             viewModel.sid = extras?.getString("sid").toString()
@@ -86,12 +114,39 @@ class SeriesActivity : ToolbarTitleActivity() {
         viewModel.requestImageUrl()
     }
 
+    private fun sendDownloadComplete() {
+        val api: Call<Default?>? = service.sendDownloadComplete(
+            read(context, CODE.CURRENT_LANGUAGE, "en"),
+            "download_episode", viewModel.downloadEpEid
+        )
+        api!!.enqueue(object : Callback<Default?> {
+            override fun onResponse(
+                call: Call<Default?>,
+                response: Response<Default?>
+            ) {
+                try {
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onFailure(call: Call<Default?>, t: Throwable) {
+                try {
+                    t.printStackTrace()
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
+    }
+
     override fun onChanged(t: Any?) {
         if (t is Episode) {
             when(viewModel.requestType) {
                 BaseViewModel.REQUEST_TYPE.REQUEST_TYPE_A -> {
                     if ("00" == t.retcode) {
                         viewModel.seriesItem = t.series!!
+                        viewModel.arr_episode = t.list
                         setMainContentView(t)
                         setHeaderContentView(t)
                     }
@@ -101,13 +156,19 @@ class SeriesActivity : ToolbarTitleActivity() {
                     when(t.retcode) {
                         "00" -> showEp()
                         "201" -> goLoginAlert(context)
-                        "202" -> goCoinAlert(context)
-                        "205" -> {
+//                        "202" -> goCoinAlert(context)
+                        "202" -> {
                             // 구매팝업
                             // ablestore == 1 소장구매 가능
                             // ablerent == 1 렌트 가능
                             showPurchaseRentDialog(t.episode);
                         }
+//                        "205" -> {
+//                            // 구매팝업
+//                            // ablestore == 1 소장구매 가능
+//                            // ablerent == 1 렌트 가능
+//                            showPurchaseRentDialog(t.episode);
+//                        }
                         else -> {
                             t.msg?.let {
                                 CommonUtil.showToast(it, context)
@@ -129,7 +190,7 @@ class SeriesActivity : ToolbarTitleActivity() {
                         }
                         else -> {
                             t.msg?.let {
-                                CommonUtil.showToast(it, context)
+                                showToast(it, context)
                             }
                         }
                     }
@@ -158,20 +219,177 @@ class SeriesActivity : ToolbarTitleActivity() {
     private fun goDownload(t: Episode) {
         t.episode?.apply {
             if (ep_contents.isNotEmpty()) {
-                viewModel.imageUrlItems = (ep_contents).split(",").toString()
-                viewModel.downloadExpire = download_expire
-                saveThumbnailFile(viewModel.downloadEpEid)
+                viewModel.let {
+                    it.arr_url = ep_contents.split(",").toTypedArray()
+                    it.downloadExpire = download_expire
+                    saveThumbnailFile(it.downloadEpEid)
+                    KJKomicsApp.DOWNLOAD_COUNT = 0
+                    it.isCompleteDownload = false
+
+                    DownloadFileFromURL().execute()
+                }
+            }
+        }
+    }
+
+    /**
+     * Background Async Task to download file
+     */
+    inner class DownloadFileFromURL :
+        AsyncTask<String?, String?, String?>() {
+        /**
+         * Before starting background thread
+         * Show Progress Bar Dialog
+         */
+        override fun onPreExecute() {
+            super.onPreExecute()
+            viewModel.arr_pics.clear()
+            viewModel.arr_episode[viewModel.selectedDownloadIndex].download_max = viewModel.arr_url.size
+        }
+
+        override fun onCancelled() {
+            super.onCancelled()
+            try {
+                if (viewModel.isSelectDownload) {
+                    viewModel.isSelectDownload = false
+                    viewModel.arr_episode[viewModel.selectedDownloadIndex].download_progress = 0
+                    recyclerView.adapter?.notifyDataSetChanged()
+                    // 다운받던 에피소드 파일 삭제
+                    deleteDir(viewModel.downloadPath)
+                    if (viewModel.isDownloadException) {
+                        viewModel.isDownloadException = false
+                        if (context != null) {
+                            showToast(
+                                getString(R.string.msg_fail_file_download),
+                                context
+                            )
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        /**
+         * Downloading file in background thread
+         */
+        override fun doInBackground(vararg params: String?): String? {
+            try {
+                viewModel.secretKeySpec =
+                    generateKey(CODE.ENC_PASSWORD)
+                for (i in viewModel.arr_url.indices) {
+                    if (isCancelled) {
+                        break
+                    }
+                    val imageUrl: String =
+                        viewModel.arr_url[i].split("\\?__token".toRegex()).toTypedArray()[0]
+                    val subString =
+                        imageUrl.split("_".toRegex()).toTypedArray()[1]
+                    val formatIndex =
+                        subString.substring(subString.length - 7, subString.length - 4)
+                    var exist = subString.substring(subString.length - 3)
+                    exist = ".$exist"
+                    viewModel.arr_pics.add(viewModel.arr_url[i])
+
+                    // create file
+                    viewModel.downloadPath = (KJKomicsApp.DOWNLOAD_ROOT_PATH
+                            + convertUno(
+                        read(
+                            context,
+                            CODE.LOCAL_RID,
+                            ""
+                        )!!
+                    ) + "/"
+                            + read(context, CODE.CURRENT_LANGUAGE, "en") + "/"
+                            + viewModel.sid + "_"
+                            + viewModel.seriesItem.title + "_"
+                            + java.lang.String.format(
+                        getString(R.string.str_writer_format),
+                        viewModel.seriesItem.genre1,
+                        viewModel.seriesItem.genre2,
+                        viewModel.seriesItem.genre3
+                    ) + "_"
+                            + java.lang.String.format(
+                        getString(R.string.str_writer_format),
+                        viewModel.seriesItem.writer1,
+                        viewModel.seriesItem.writer2,
+                        viewModel.seriesItem.writer3
+                    )
+                            + "/" + viewModel.downloadEpEid + "_" + viewModel.downloadEpTitle + "_" + viewModel.downloadEpShowdate
+                            + "_" + viewModel.downloadExpire + "_" + viewModel.isVerticalView + "_" + viewModel.revPager)
+                    val file = File(viewModel.downloadPath)
+                    // url to bitmap
+                    val bitmap = getBitmapFromURL(viewModel.arr_pics[i])
+                    // set ratio
+                    val ratio: Float = bitmap?.height!! / (bitmap.width * 1.0f)
+                    var fixRatio = String.format("%.2f", ratio)
+                    fixRatio = fixRatio.replace(".", "p")
+                    val fileName = "imagefile" + formatIndex + "_" + fixRatio + exist
+                    val fullPath = viewModel.downloadPath + "/" + fileName
+                    writeFile(
+                        file.absolutePath,
+                        fileName,
+                        UtilBitmap.bitmapToByteArray(bitmap)
+                    )
+                    var imgIncode = fileToByte(
+                        getStream(fullPath)!!
+                    )
+                    // encrypt
+                    imgIncode = AESCrypt.encrypt(
+                        viewModel.secretKeySpec,
+                        CODE.ivBytes,
+                        imgIncode
+                    )
+                    // bitmap to save file
+                    writeFile2(
+                        file.getAbsolutePath(),
+                        fileName,
+                        imgIncode
+                    )
+                    publishProgress("" + KJKomicsApp.DOWNLOAD_COUNT)
+                }
+            } catch (e: Exception) {
+                e.stackTrace
+                viewModel.isDownloadException = true
+                cancel(true)
+//                Crashlytics.logException(Exception(TAG + " " + "DownloadFileFromURL : " + "fullPath : " + fullPath + ", message : " + e.message))
+            }
+            return null
+        }
+
+        /**
+         * Updating progress bar
+         */
+        override fun onProgressUpdate(vararg progress: String?) {
+            // setting progress percentage
+            viewModel.arr_episode[viewModel.selectedDownloadIndex].download_progress = progress[0]?.toInt()!!
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
+
+        /**
+         * After completing background task
+         * Dismiss the progress dialog
+         */
+        override fun onPostExecute(file_url: String?) {
+            // dismiss the dialog after the file was downloaded
+            viewModel.let {
+                it.arr_pics.clear()
                 KJKomicsApp.DOWNLOAD_COUNT = 0
-                viewModel.isCompleteDownload = false
-//                downLoadAsyncTask = new DownloadFileFromURL();
-//                            downLoadAsyncTask.execute();
+                showToast(getString(R.string.msg_success_file_download), context)
+                sendDownloadComplete()
+                it.isSelectDownload = false
+                it.isCompleteDownload = true
+                it.arr_episode[it.selectedDownloadIndex].isdownload = "1"
+                it.arr_episode[it.selectedDownloadIndex].download_progress = 0
+                recyclerView.adapter?.notifyDataSetChanged()
             }
         }
     }
 
     private fun saveThumbnailFile(eid: String) {
         // save series thumbnail
-        val bitmap: Bitmap = FileUtils.getBitmapFromURL(viewModel.seriesItem.image1)!!
+        val bitmap: Bitmap = getBitmapFromURL(viewModel.seriesItem.image1)!!
         FileUtils.saveBitmapToFileCache(
             bitmap,
             KJKomicsApp.DOWNLOAD_ROOT_PATH + convertUno(
@@ -184,22 +402,25 @@ class SeriesActivity : ToolbarTitleActivity() {
                     + "/thumbnail/" + viewModel.sid + "/",
             viewModel.sid + ".png"
         )
+
         // save ep thumbnail
-        for (item in viewModel.items) {
-            if (item is DataEpisode && eid == item.eid) {
-                val epBitmap: Bitmap = FileUtils.getBitmapFromURL(item.image)!!
-                FileUtils.saveBitmapToFileCache(
-                    epBitmap,
-                    KJKomicsApp.DOWNLOAD_ROOT_PATH + convertUno(
-                        read(
-                            context,
-                            CODE.LOCAL_RID,
-                            ""
-                        )!!
+        for (item in viewModel.arr_episode) {
+            if (eid == item.eid) {
+                val epBitmap = getBitmapFromURL(item.image)
+                if (epBitmap != null) {
+                    saveBitmapToFileCache(
+                        epBitmap,
+                        KJKomicsApp.DOWNLOAD_ROOT_PATH + convertUno(
+                            read(
+                                context,
+                                CODE.LOCAL_RID,
+                                ""
+                            )!!
+                        )
+                                + "/thumbnail/" + viewModel.sid + "/",
+                        item.eid + ".png"
                     )
-                            + "/thumbnail/" + viewModel.sid + "/",
-                    item.eid + ".png"
-                )
+                }
             }
         }
     }
@@ -293,7 +514,14 @@ class SeriesActivity : ToolbarTitleActivity() {
     }
 
     private fun showPurchaseRentDialog(episode: DataEpisode?) {
+        if (::dialogView.isInitialized) {
+            (dialogView.parent as ViewGroup).removeView(dialogView)
+        }
 
+        dialogView = layoutInflater.inflate(R.layout.view_signup_info_bottomsheet, null)
+        bottomSheetDialog = BottomSheetDialog(this)
+        bottomSheetDialog.setContentView(dialogView)
+        bottomSheetDialog.show()
     }
 
     private fun showEp() {

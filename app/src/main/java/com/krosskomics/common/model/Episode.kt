@@ -17,7 +17,7 @@ class Episode {
     var series: DataSeries? = null
 
     @SerializedName("list")
-    var list: ArrayList<DataEpisode>? = null
+    var list: ArrayList<DataEpisode> = arrayListOf()
 
     @SerializedName("episode")
     var episode: DataEpisode? = null

@@ -112,7 +112,6 @@
     <string name="str_empty_gift2">Gifts you receive will show up here. Check this space to avail your rewards.</string>
     <string name="str_empty_history">No History</string>
     <string name="str_gift_popup_title">You have received the gift successfully.</string>
-    <string name="str_writer_format">%s %s %s</string>
     <string name="str_earn">Earn</string>
 
 
@@ -169,13 +168,7 @@
 
     <string name="str_finish_app_msg">Do you wish to exit KrossKomics app?</string>
 
-    <string name="msg_check_network">Check network</string>
-    <string name="msg_disable_remove_file">You can only delete the downloaded series on online.</string>
-    <string name="msg_copied">copied</string>
-    <string name="msg_not_install_app">Not install app</string>
-    <string name="msg_reloading_init_data">Reload App for initial data.</string>
-    <string name="msg_success_file_download">Download success.</string>
-    <string name="msg_fail_file_download">Download failed.</string>
+
 
     // ver2
     <string name="str_kk_email">help@krosskomics.com</string>
@@ -311,6 +304,8 @@
     <string name="str_episodes_seq_format1">%d Episodes</string>
     <string name="str_first_ep">First Episode</string>
     <string name="str_continue">Continue</string>
+    <string name="str_writer_format">%s %s %s</string>
+
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>
@@ -320,6 +315,13 @@
     <string name="msg_empty_download">Oops..\nNo Downloaded episodes</string>
     <string name="msg_empty_download2">Episodes you’ve downloaded will appear here.</string>
     <string name="msg_empty_gift">Oops..\nNo message in gifts</string>
-    <string name="msg_not_available_sns">This option is not available when signed in with a Facebook account</string>
+    <string name="msg_not_available_sns">This option is not available when signed in with a Facebook account</string>\
+    <string name="msg_check_network">Check network</string>
+    <string name="msg_disable_remove_file">You can only delete the downloaded series on online.</string>
+    <string name="msg_copied">copied</string>
+    <string name="msg_not_install_app">Not install app</string>
+    <string name="msg_reloading_init_data">Reload App for initial data.</string>
+    <string name="msg_success_file_download">Download success.</string>
+    <string name="msg_fail_file_download">Download failed.</string>
 
 </resources>

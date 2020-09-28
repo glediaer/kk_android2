@@ -120,15 +120,6 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                                 downloadImageView?.visibility = View.VISIBLE
                                 downloadImageView?.setOnClickListener(View.OnClickListener {
                                     onDownloadClickListener?.onItemClick(item, position)
-//                                if (isSelectDownload || "1" == itemData.isdownload) {
-//                                    return@OnClickListener
-//                                }
-//                                mDownloadEpEid = itemData.eid
-//                                mDownloadEpShowdate = itemData.ep_show_date
-//                                mDownloadEpTitle = itemData.ep_title
-//                                mSelectedDownloadIndex = position
-//                                isSelectDownload = true
-//                                requestImageUrl(itemData.eid)
                                 })
                                 if (item.download_progress > 0) {
                                     downloadImageView?.visibility = View.GONE

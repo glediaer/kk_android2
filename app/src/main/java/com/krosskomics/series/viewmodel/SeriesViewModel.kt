@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.data.DataSeries
-import com.krosskomics.common.model.Episode
-import com.krosskomics.series.repository.SeriesRepository
 import com.krosskomics.common.viewmodel.BaseViewModel
-import com.krosskomics.ongoing.repository.OnGoingRepository
+import com.krosskomics.series.repository.SeriesRepository
+import java.util.*
+import javax.crypto.spec.SecretKeySpec
 
 class SeriesViewModel(application: Application): BaseViewModel(application) {
     var sid = ""
@@ -25,8 +25,15 @@ class SeriesViewModel(application: Application): BaseViewModel(application) {
     var downloadEpTitle = ""
     var selectedDownloadIndex = 0
     var downloadExpire = ""
-    var imageUrlItems = ""
+    var arr_url: Array<String> = emptyArray()
     var isCompleteDownload = false
+    var arr_pics = ArrayList<String>()
+    var arr_episode = ArrayList<DataEpisode>()
+    var downloadPath: String? = null
+    var isDownloadException = false
+    var secretKeySpec: SecretKeySpec? = null
+    var isVerticalView = false // 화면 보기 방식(세로보기, 가로보기)
+    var revPager = false
 
     private val repository = SeriesRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
