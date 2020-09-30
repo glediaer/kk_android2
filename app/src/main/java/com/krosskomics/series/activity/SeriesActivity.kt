@@ -6,7 +6,6 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.os.StrictMode
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,11 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
+import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Episode
+import com.krosskomics.common.model.PurchaseEpisode
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.series.adapter.SeriesAdapter
 import com.krosskomics.series.viewmodel.SeriesViewModel
@@ -27,6 +28,7 @@ import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.convertUno
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
+import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.FileUtils
 import com.krosskomics.util.FileUtils.deleteDir
 import com.krosskomics.util.FileUtils.fileToByte
@@ -45,6 +47,7 @@ import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_content_like_white.*
+import kotlinx.android.synthetic.main.view_ep_purchase.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -89,6 +92,10 @@ class SeriesActivity : ToolbarTitleActivity() {
 
             toolbarTitle.visibility = View.VISIBLE
             toolbarTitle.text = toolbarTitleString
+        }
+
+        moveTopView.setOnClickListener {
+            nestedScrollView.scrollTo(0, 0)
         }
     }
 
@@ -149,6 +156,26 @@ class SeriesActivity : ToolbarTitleActivity() {
                         viewModel.arr_episode = t.list
                         setMainContentView(t)
                         setHeaderContentView(t)
+
+                        checkViewerType()
+                        getSeriesDownloadedFile()
+                        // 전체구매
+                        viewModel.arr_episode.forEach { item ->
+                            if ("0" == item.isunlocked) {
+                                item.isChecked = true
+                                item.isCheckVisible = false
+                                item.possibility_allbuy = true
+                                viewModel.allbuy_possibility_count++
+//                                mLockedEpisodeCount++
+                            } else {
+                                item.isdownload = "0"
+                                for (epDownloadedEid in viewModel.seriesDownloadEpList) {
+                                    if (epDownloadedEid == item.eid) {
+                                        item.isdownload = "1"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -156,19 +183,20 @@ class SeriesActivity : ToolbarTitleActivity() {
                     when(t.retcode) {
                         "00" -> showEp()
                         "201" -> goLoginAlert(context)
-//                        "202" -> goCoinAlert(context)
-                        "202" -> {
+                        "202" -> goCoinAlert(context)
+//                        "202" -> {
+//                            // 구매팝업
+//                            // ablestore == 1 소장구매 가능
+//                            // ablerent == 1 렌트 가능
+//                            viewModel.epList.add(viewModel.selectEpItem.eid)
+//                            showPurchaseRentDialog(t.episode);
+//                        }
+                        "205" -> {
                             // 구매팝업
                             // ablestore == 1 소장구매 가능
                             // ablerent == 1 렌트 가능
                             showPurchaseRentDialog(t.episode);
                         }
-//                        "205" -> {
-//                            // 구매팝업
-//                            // ablestore == 1 소장구매 가능
-//                            // ablerent == 1 렌트 가능
-//                            showPurchaseRentDialog(t.episode);
-//                        }
                         else -> {
                             t.msg?.let {
                                 CommonUtil.showToast(it, context)
@@ -186,6 +214,7 @@ class SeriesActivity : ToolbarTitleActivity() {
                             // 구매팝업
                             // ablestore == 1 소장구매 가능
                             // ablerent == 1 렌트 가능
+                            viewModel.epList.add(viewModel.selectEpItem.eid)
                             showPurchaseRentDialog(t.episode);
                         }
                         else -> {
@@ -194,23 +223,6 @@ class SeriesActivity : ToolbarTitleActivity() {
                             }
                         }
                     }
-//                    Episode body = response.body();
-//                    if ("00".equals(body.retcode)) {
-//                        if (null != body.episode.ep_contents && 0 < body.episode.ep_contents.length()) {
-//                            arr_url = (body.episode.ep_contents).split(",");
-//                            mDownloadExpire = body.episode.download_expire;
-//                            saveThumbnailFile(eid);
-//                            KJKomicsApp.DOWNLOAD_COUNT = 0;
-//                            mIsCompleteDownload = false;
-//                            downLoadAsyncTask = new DownloadFileFromURL();
-//                            downLoadAsyncTask.execute();
-//                        }
-//                    } else {
-//                        if (!"".equals(body.msg)) {
-//                            CommonUtil.showToast(body.msg, context);
-//                        }
-//                        isSelectDownload = false;
-//                    }
                 }
             }
         }
@@ -227,6 +239,47 @@ class SeriesActivity : ToolbarTitleActivity() {
                     it.isCompleteDownload = false
 
                     DownloadFileFromURL().execute()
+                }
+            }
+        }
+    }
+
+    private fun checkViewerType() {
+        if ("1" == viewModel.seriesItem.vviewer) {  //세로스크롤만 가능
+            viewModel.isVerticalView = true
+        } else {
+            viewModel.isVerticalView = false
+            viewModel.revPager = "R" == viewModel.seriesItem.hviewer
+        }
+    }
+    private fun getSeriesDownloadedFile() {
+        // download
+        viewModel.let {
+            val downloadPath = (KJKomicsApp.DOWNLOAD_ROOT_PATH
+                    + convertUno(read(context, CODE.LOCAL_RID, "")!!) + "/"
+                    + read(context, CODE.CURRENT_LANGUAGE, "en") + "/"
+                    + it.sid + "_"
+                    + it.seriesItem.title + "_"
+                    + java.lang.String.format(
+                getString(R.string.str_writer_format),
+                it.seriesItem.genre1,
+                it.seriesItem.genre2,
+                it.seriesItem.genre3
+            ) + "_"
+                    + java.lang.String.format(
+                getString(R.string.str_writer_format),
+                it.seriesItem.writer1,
+                it.seriesItem.writer2,
+                it.seriesItem.writer3
+            ))
+            it.seriesDonwnloadedFile = File(downloadPath)
+            if (it.seriesDonwnloadedFile?.absolutePath!!.contains(it.sid)
+            ) {
+                if (it.seriesDonwnloadedFile?.listFiles() == null) return
+                for (file in it.seriesDonwnloadedFile?.listFiles()!!) {
+                    val epFileName = file.name
+                    val eid = epFileName.split("_".toRegex()).toTypedArray()[0]
+                    it.seriesDownloadEpList.add(eid)
                 }
             }
         }
@@ -504,7 +557,7 @@ class SeriesActivity : ToolbarTitleActivity() {
                         // 현재 선택한 회차부터 구매가능한 회차까지 계산
                         viewModel.selectBuyPosibilityCount = 0
                         calcPurchaseCurrentToLastEp(item.ep_seq)
-                        viewModel.item = item
+                        viewModel.selectEpItem = item
                         loadEpCheck()
                         return@setOnClickListener
                     }
@@ -514,18 +567,95 @@ class SeriesActivity : ToolbarTitleActivity() {
     }
 
     private fun showPurchaseRentDialog(episode: DataEpisode?) {
-        if (::dialogView.isInitialized) {
-            (dialogView.parent as ViewGroup).removeView(dialogView)
-        }
+        episode?.let {
+            epPurchaseDialog.visibility = View.VISIBLE
+            titleTextView.text = viewModel.seriesItem.title
 
-        dialogView = layoutInflater.inflate(R.layout.view_signup_info_bottomsheet, null)
-        bottomSheetDialog = BottomSheetDialog(this)
-        bottomSheetDialog.setContentView(dialogView)
-        bottomSheetDialog.show()
+            myKeyTextView.text = read(context, CODE.LOCAL_coin, "0")
+            discountRateTextView.text = "0 %"
+            totalTextView.text = "${it.ep_rent_price}"
+
+            viewModel.itemViewMode = 1
+            viewModel.items.forEach { item ->
+                if (item is DataEpisode) {
+                    item.isCheckVisible = true
+                    item.isChecked = item.ep_seq == viewModel.selectEpItem.ep_seq
+                    calcPurchaseCurrentToLastEp(item.ep_seq)
+                }
+            }
+            recyclerView.adapter?.notifyDataSetChanged()
+
+            if ("1" == viewModel.seriesItem.allow_rent) {
+                rentalButton.isEnabled
+                rentalButton.isSelected = true
+            } else if ("1" == viewModel.seriesItem.allow_store) {
+                purchaseButton.isEnabled
+                purchaseButton.isSelected = true
+            }
+
+            allBuyCal()
+
+            rentalButton.setOnClickListener { view ->
+                view.isSelected = true
+                purchaseButton.isSelected = false
+                unlockButton.isEnabled = true
+
+                allBuyCal()
+            }
+            purchaseButton.setOnClickListener { view ->
+                view.isSelected = true
+                rentalButton.isSelected = false
+                unlockButton.isEnabled = true
+
+                allBuyCal()
+            }
+            totalPurchaseImageView.setOnClickListener { view ->
+                // 전체구매
+                view.visibility = View.GONE
+                viewModel.items.forEach { item ->
+                    if (item is DataEpisode) {
+                        item.isCheckVisible = true
+                        item.isChecked = true
+                    }
+                }
+                allBuyAll()
+            }
+            unlockButton.setOnClickListener {
+                if ("1" == viewModel.seriesItem.allow_rent) {
+                    if (viewModel.allbuyRentCoin > read(context, CODE.LOCAL_coin, "0")!!.toInt()) {
+                        val intent = Intent(context, CoinActivity::class.java) //충전 페이지
+                        startActivity(intent)
+                    } else {
+                        // rent request
+                        requestEpisodeSelectPurchase("rent")
+                    }
+                } else {
+                    if (viewModel.allbuy_coin > read(context, CODE.LOCAL_coin, "0")!!.toInt()) {
+                        val intent = Intent(context, CoinActivity::class.java) //충전 페이지
+                        startActivity(intent)
+                    } else {
+                        // purchase request
+                        requestEpisodeSelectPurchase("store")
+                    }
+                }
+                resetDefaultView()
+            }
+            epPurchaseDialog.setOnClickListener { epPurchaseDialog.visibility = View.GONE }
+        }
+    }
+
+    private fun resetDefaultView() {
+        epPurchaseDialog.visibility = View.GONE
+        viewModel.arr_episode.forEach {
+            it.isCheckVisible = false
+            it.isChecked = false
+        }
+        viewModel.itemViewMode = 0
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     private fun showEp() {
-        viewModel.item.let {
+        viewModel.selectEpItem.let {
             val intent = Intent(context, ViewerActivity::class.java)
             val bundle = Bundle().apply {
                 putString("title", it.ep_title)
@@ -547,8 +677,30 @@ class SeriesActivity : ToolbarTitleActivity() {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
             override fun onItemClick(item: Any?) {
                 if (item is DataEpisode) {
-                    viewModel.item = item
-                    loadEpCheck()
+                    if (viewModel.isSelectDownload) {
+                        return
+                    }
+                    viewModel.selectEpItem = item
+                    if (viewModel.itemViewMode == 0) {  // 일반모드
+                        KJKomicsApp.DATA_EPISODE = item
+
+                        // 현재 선택한 회차부터 구매가능한 회차까지 계산
+                        viewModel.selectBuyPosibilityCount = 0
+                        calcPurchaseCurrentToLastEp(item.ep_seq)
+                        loadEpCheck()
+                    } else {
+                        if (item.possibility_allbuy) {
+                            if (item.isChecked) {
+                                item.isChecked = false
+                                viewModel.epList.remove(item.eid)
+                            } else {
+                                item.isChecked = true
+                                viewModel.epList.add(item.eid)
+                            }
+                            allBuyCal()
+                            recyclerView.adapter?.notifyDataSetChanged()
+                        }
+                    }
                 }
             } })
             setOnDownloadClickListener(object : RecyclerViewBaseAdapter.OnDownloadClickListener {
@@ -576,6 +728,65 @@ class SeriesActivity : ToolbarTitleActivity() {
         viewModel.requestCheckEp()
     }
 
+    //에피소드 선택구매 요청
+    private fun requestEpisodeSelectPurchase(unlockType: String) {
+            var ep_list: String = viewModel.epList.toString()
+            ep_list = ep_list.trim { it <= ' ' }.replace(" ", "")
+            ep_list = ep_list.substring(1, ep_list.length - 1)
+            val setPurchaseEpisode: Call<PurchaseEpisode?>? =
+                service.setPurchaseSelectEpisode(
+                    read(context, CODE.CURRENT_LANGUAGE, "en"),
+                    ep_list, unlockType
+                )
+            setPurchaseEpisode!!.enqueue(object : Callback<PurchaseEpisode?> {
+                override fun onResponse(
+                    call: Call<PurchaseEpisode?>,
+                    response: Response<PurchaseEpisode?>
+                ) {
+                    try {
+                        if (response.isSuccessful) {
+                            viewModel.epList.clear()
+                            epPurchaseDialog.visibility = View.GONE
+
+                            response.body()?.let {
+                                if ("00" == it.retcode) {
+                                    requestServer()
+                                    if ("" != it.user_coin) {
+                                        write(context, CODE.LOCAL_coin, it.user_coin)
+                                    }
+                                } else if ("202" == it.retcode) {
+                                    startActivity(Intent(context, CoinActivity::class.java))
+                                } else {
+                                    if ("" != it.msg) {
+                                        showToast(it.msg, context)
+                                    }
+                                }
+                            }
+
+                        }
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<PurchaseEpisode?>,
+                    t: Throwable
+                ) {
+//                    hideProgress()
+                    try {
+//                        checkNetworkConnection(
+//                            context,
+//                            t,
+//                            viewError
+//                        )
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            })
+    }
+
     /**
      * 리스트에서 선택한 회차부터 마지막 회차까지 구매가능한 회차 계산
      *
@@ -592,6 +803,111 @@ class SeriesActivity : ToolbarTitleActivity() {
                     }
                 }
             }
+        }
+    }
+
+    //전체구매 코인 계산
+    fun allBuyCal(): Int {
+        viewModel.let {
+            it.allbuy_possibility_count = 0
+            it.allbuy_count = 0
+            it.allbuySaveRate = 0f
+            it.allbuy_coin = 0
+            it.allbuyRentCoin = 0
+            it.arr_episode.forEach { item ->
+                if (item.isChecked) {
+                    it.allbuy_coin = it.allbuy_coin + item.ep_store_price
+                    it.allbuyRentCoin = it.allbuyRentCoin + item.ep_rent_price
+                    it.allbuy_count++
+                }
+                if (item.possibility_allbuy) {
+                    it.allbuy_possibility_count++
+                }
+            }// 대여
+            // 소장
+            when {
+                it.allbuy_count in 2..2 -> {
+                    it.allbuySaveRate = 0f
+                }
+                it.allbuy_count in 3..9 -> {
+                    it.allbuySaveRate = 0.1f
+                }
+                it.allbuy_count in 10..29 -> {
+                    it.allbuySaveRate = 0.2f
+                }
+                it.allbuy_count >= 30 -> {
+                    it.allbuySaveRate = 0.3f
+                }
+            }
+            it.allbuy_coin = it.allbuy_coin - Math.round(it.allbuy_coin * it.allbuySaveRate)
+
+            it.allbuyRentCoin = it.allbuyRentCoin - Math.round(it.allbuyRentCoin * it.allbuySaveRate)
+
+            discountRateTextView.text = "${(it.allbuySaveRate * 100).toInt()} %"
+
+            if (purchaseButton.isSelected) {
+                totalTextView.text = "${viewModel.allbuy_coin}"
+            }
+            if (rentalButton.isSelected) {
+                totalTextView.text = "${viewModel.allbuyRentCoin}"
+            }
+
+            unlockButton.isEnabled = it.allbuy_count > 0
+
+            epPurchaseCountTextView.text = "${viewModel.allbuy_count}"
+            return it.allbuy_coin
+        }
+    }
+
+    //전체구매 리스트 전체 선택
+    fun allBuyAll(): Int {
+        viewModel.let {
+            it.allbuy_possibility_count = 0
+            it.allbuy_count = 0
+            it.allbuySaveRate = 0f
+            it.allbuy_coin = 0
+            it.allbuyRentCoin = 0
+            it.arr_episode.forEach { item ->
+                if (item.possibility_allbuy) {
+                    item.isChecked = true
+                    item.isCheckVisible = true
+                    it.epList.add(it.allbuy_count, item.eid)
+                    it.allbuy_coin = it.allbuy_coin + item.ep_store_price
+                    it.allbuyRentCoin = it.allbuyRentCoin + item.ep_rent_price
+                    it.allbuy_count++
+                }
+            }
+            recyclerView.adapter?.notifyDataSetChanged()
+            when {
+                it.allbuy_count in 2..2 -> {
+                    it.allbuySaveRate = 0f
+                }
+                it.allbuy_count in 3..9 -> {
+                    it.allbuySaveRate = 0.1f
+                }
+                it.allbuy_count in 10..29 -> {
+                    it.allbuySaveRate = 0.2f
+                }
+                it.allbuy_count >= 30 -> {
+                    it.allbuySaveRate = 0.3f
+                }
+            }
+            it.allbuy_coin = it.allbuy_coin - Math.round(it.allbuy_coin * it.allbuySaveRate)
+
+            it.allbuyRentCoin = it.allbuyRentCoin - Math.round(it.allbuyRentCoin * it.allbuySaveRate)
+
+            discountRateTextView.text = "${(it.allbuySaveRate * 100).toInt()} %"
+
+            if (purchaseButton.isSelected) {
+                totalTextView.text = "${viewModel.allbuy_coin}"
+            }
+            if (rentalButton.isSelected) {
+                totalTextView.text = "${viewModel.allbuyRentCoin}"
+            }
+            unlockButton.isEnabled = it.allbuy_count > 0
+
+            epPurchaseCountTextView.text = "${viewModel.allbuy_count}"
+            return it.allbuy_coin
         }
     }
 }

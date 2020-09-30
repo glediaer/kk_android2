@@ -6,12 +6,13 @@ import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.data.DataSeries
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.series.repository.SeriesRepository
+import java.io.File
 import java.util.*
 import javax.crypto.spec.SecretKeySpec
 
 class SeriesViewModel(application: Application): BaseViewModel(application) {
     var sid = ""
-    var item: DataEpisode = DataEpisode()
+    var selectEpItem: DataEpisode = DataEpisode()
     var seriesItem = DataSeries()
     var nextEp = ""
     var selectBuyPosibilityCount = 0
@@ -35,6 +36,18 @@ class SeriesViewModel(application: Application): BaseViewModel(application) {
     var isVerticalView = false // 화면 보기 방식(세로보기, 가로보기)
     var revPager = false
 
+    // purchase
+    var itemViewMode = 0 // 0: default, 1: select
+    var allbuy_count = 0
+    var allbuySaveRate = 0f
+    var allbuy_coin = 0
+    var allbuyRentCoin = 0
+    var allbuy_possibility_count = 0
+    var epList = ArrayList<String>()
+    var seriesDownloadEpList = ArrayList<String>()
+    var seriesDonwnloadedFile: File? = null
+
+
     private val repository = SeriesRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
     private val checkResponseLiveData = repository.getCheckEpResponseLiveData()
@@ -51,7 +64,7 @@ class SeriesViewModel(application: Application): BaseViewModel(application) {
 
     fun requestCheckEp() {
         requestType = REQUEST_TYPE.REQUEST_TYPE_B
-        repository.requestCheckEp(getApplication(), item.eid)
+        repository.requestCheckEp(getApplication(), selectEpItem.eid)
     }
 
     fun requestImageUrl() {

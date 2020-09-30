@@ -7,6 +7,7 @@
     android:gravity="center_horizontal">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -38,7 +39,7 @@
                     android:layout_height="19dp"
                     android:layout_gravity="right|bottom"
                     android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"/>
+                    android:layout_marginBottom="40dp"/>
 
             </FrameLayout>
 
@@ -277,6 +278,28 @@
                 android:paddingRight="20dp"
                 android:layout_below="@id/epInfoView" />
 
+            <include
+                android:id="@+id/underLineView"
+                layout="@layout/item_underline_1dp"
+                android:layout_marginTop="14dp"
+                android:layout_width="match_parent"
+                android:layout_below="@id/recyclerView"
+                android:layout_height="1dp" />
+
+            <FrameLayout
+                android:id="@+id/moveTopView"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_below="@+id/underLineView">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/kk_ic_move_top"/>
+
+            </FrameLayout>
+
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
@@ -308,6 +331,14 @@
             android:src="@drawable/kk_next_yellow"/>
 
     </LinearLayout>
+
+    <include
+        android:id="@+id/epPurchaseDialog"
+        layout="@layout/view_ep_purchase"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <include
         layout="@layout/view_topbutton"

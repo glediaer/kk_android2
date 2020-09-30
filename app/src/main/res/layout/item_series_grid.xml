@@ -10,18 +10,30 @@
         android:layout_height="130dp"
         android:orientation="vertical">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/img_ep_title"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="88dp"
-            fresco:actualImageScaleType="fitXY"
-            fresco:placeholderImage="@drawable/kk_placeholder"/>
+            android:layout_height="88dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/img_ep_title"
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                fresco:actualImageScaleType="fitXY"
+                fresco:placeholderImage="@drawable/kk_placeholder"/>
+
+            <include
+                layout="@layout/view_ticket"
+                android:layout_gravity="right|bottom"
+                android:layout_width="33dp"
+                android:layout_height="33dp"/>
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="7dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="7dp">
 
             <TextView
                 android:id="@+id/txt_ep_title"
@@ -29,9 +41,9 @@
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
                 android:singleLine="true"
-                android:textSize="12dp"
                 android:textColor="#000000"
-                tools:text="Determinant Error"/>
+                android:textSize="12dp"
+                tools:text="Determinant Error" />
 
             <TextView
                 android:id="@+id/txt_update"
@@ -50,6 +62,23 @@
     <include
         layout="@layout/view_dim"
         android:layout_width="match_parent"
-        android:layout_height="130dp"/>
+        android:layout_height="88dp"/>
+
+    <FrameLayout
+        android:id="@+id/selectView"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:visibility="gone"
+        tools:visibility="gone"
+        android:background="#99ffd900">
+
+        <ImageView
+            android:id="@+id/checkImageView"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/kk_ic_select_on"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
 
 </RelativeLayout>

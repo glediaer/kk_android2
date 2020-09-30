@@ -305,6 +305,8 @@
     <string name="str_first_ep">First Episode</string>
     <string name="str_continue">Continue</string>
     <string name="str_writer_format">%s %s %s</string>
+    <string name="str_discount_rate">Discount rate</string>
+    <string name="str_7_days_rental">7 days rental"</string>
 
 
     <!-- msg -->

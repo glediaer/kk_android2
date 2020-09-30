@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:paddingTop="0dp"
+    android:background="#e6ffffff"
+    android:gravity="center_horizontal">
+    
+    <ImageView
+        android:id="@+id/totalPurchaseImageView"
+        android:layout_width="143dp"
+        android:layout_height="53dp"
+        android:src="@drawable/kk_purchase_img"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:paddingTop="17dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="30dp"
+            android:background="@drawable/kk_rect_ep_purchase"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:textColor="#ffffff"
+                    tools:text="The Last Print" />
+
+                <TextView
+                    android:id="@+id/epPurchaseCountTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="right"
+                    android:textStyle="bold"
+                    tools:text="2" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:layout_marginTop="59dp"
+            android:orientation="vertical"
+            android:background="@drawable/kk_rect_ep_purchase_white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/rentalButton"
+                    android:layout_width="0dp"
+                    android:layout_height="31dp"
+                    android:background="@drawable/kk_selector_ep_purchase_rental"
+                    android:layout_weight="1"
+                    android:textSize="14dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textColor="@color/kk_selector_color_gray_white"
+                    android:text="@string/str_7_days_rental"/>
+
+                <TextView
+                    android:id="@+id/purchaseButton"
+                    android:layout_width="0dp"
+                    android:layout_height="31dp"
+                    android:background="@drawable/kk_selector_ep_purchase_rental"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="16dp"
+                    android:gravity="center"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/kk_selector_color_gray_white"
+                    android:text="@string/str_permanent"/>
+
+            </LinearLayout>
+
+            <include
+                layout="@layout/item_underline_1dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="15dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="#828282"
+                        android:gravity="center_horizontal"
+                        android:text="@string/str_my_keys" />
+
+                    <TextView
+                        android:id="@+id/myKeyTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:textSize="14dp"
+                        android:textStyle="bold"
+                        android:textColor="#2e2e2e"
+                        android:gravity="center_horizontal"
+                        tools:text="4" />
+                </LinearLayout>
+
+                <include
+                    layout="@layout/item_vline"
+                    android:layout_width="1dp"
+                    android:layout_height="33dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="#e02020"
+                        android:gravity="center_horizontal"
+                        android:text="@string/str_discount_rate" />
+
+                    <TextView
+                        android:id="@+id/discountRateTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:textSize="14dp"
+                        android:textStyle="bold"
+                        android:textColor="#e02020"
+                        android:gravity="center_horizontal"
+                        tools:text="0 %" />
+                </LinearLayout>
+
+                <include
+                    layout="@layout/item_vline"
+                    android:layout_width="1dp"
+                    android:layout_height="33dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:textColor="#828282"
+                        android:gravity="center_horizontal"
+                        android:text="@string/str_total" />
+
+                    <TextView
+                        android:id="@+id/totalTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:textSize="14dp"
+                        android:textStyle="bold"
+                        android:textColor="#2e2e2e"
+                        android:gravity="center_horizontal"
+                        tools:text="0" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/unlockButton"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="25dp"
+                android:enabled="false"
+                android:background="@drawable/kk_selector_gray_yellow"
+                android:textSize="18dp"
+                android:textColor="#ffffff"
+                android:textAllCaps="false"
+                android:text="@string/str_unlock"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

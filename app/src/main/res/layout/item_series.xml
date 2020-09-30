@@ -20,13 +20,11 @@
             fresco:actualImageScaleType="fitXY"
             fresco:placeholderImage="@drawable/kk_placeholder"/>
 
-        <ImageView
-            android:id="@+id/ticketImageView"
-            android:layout_width="33dp"
-            android:layout_height="33dp"
+        <include
+            layout="@layout/view_ticket"
             android:layout_gravity="right|bottom"
-            android:src="@drawable/kross_selector_ticket"
-            android:visibility="visible" />
+            android:layout_width="33dp"
+            android:layout_height="33dp"/>
 
         <include
             layout="@layout/view_dim"/>

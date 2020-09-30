@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.item_series.view.txt_ep_title
 import kotlinx.android.synthetic.main.item_series_grid.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 import kotlinx.android.synthetic.main.view_dim.view.*
+import kotlinx.android.synthetic.main.view_ticket.view.*
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
     RecyclerView.Adapter<RecyclerViewBaseAdapter.BaseItemHolder>() {
@@ -142,16 +143,16 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         dimView?.visibility = View.VISIBLE
                         // 티켓
                         if (itemView.context is SeriesActivity) {
-                            if (viewModel.item.rticket > 0) {
-                                if (item.ep_seq < viewModel.item.except_ep_seq) {
+                            if (viewModel.selectEpItem.rticket > 0) {
+                                if (item.ep_seq < viewModel.selectEpItem.except_ep_seq) {
                                     ticketImageView?.visibility = View.VISIBLE
                                     ticketImageView?.isSelected = false
                                 } else {
                                     ticketImageView?.visibility = View.GONE
                                 }
                             } else {
-                                if (viewModel.item.sticket > 0) {
-                                    if (item.ep_seq < viewModel.item.except_ep_seq) {
+                                if (viewModel.selectEpItem.sticket > 0) {
+                                    if (item.ep_seq < viewModel.selectEpItem.except_ep_seq) {
                                         ticketImageView?.visibility = View.VISIBLE
                                         ticketImageView?.isSelected = true
                                     } else {
@@ -161,6 +162,19 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                                     ticketImageView?.visibility = View.GONE
                                 }
                             }
+                        }
+                        // 구매
+                        if (item.isCheckVisible) {
+                            dimView?.visibility = View.GONE
+                            selectView?.visibility = View.VISIBLE
+                            if (item.isChecked) {
+                                checkImageView?.visibility = View.VISIBLE
+                            } else {
+                                checkImageView?.visibility = View.GONE
+                            }
+                        } else {
+                            dimView?.visibility = View.VISIBLE
+                            selectView?.visibility = View.GONE
                         }
                     }
                 } else if (item is String) { // viewer
