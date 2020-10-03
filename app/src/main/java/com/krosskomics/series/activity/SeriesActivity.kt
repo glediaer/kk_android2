@@ -184,13 +184,6 @@ class SeriesActivity : ToolbarTitleActivity() {
                         "00" -> showEp()
                         "201" -> goLoginAlert(context)
                         "202" -> goCoinAlert(context)
-//                        "202" -> {
-//                            // 구매팝업
-//                            // ablestore == 1 소장구매 가능
-//                            // ablerent == 1 렌트 가능
-//                            viewModel.epList.add(viewModel.selectEpItem.eid)
-//                            showPurchaseRentDialog(t.episode);
-//                        }
                         "205" -> {
                             // 구매팝업
                             // ablestore == 1 소장구매 가능

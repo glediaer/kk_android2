@@ -5,30 +5,135 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/view_toolbar_viewer" />
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-                <include
-                    layout="@layout/view_toolbar"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"/>
+        </FrameLayout>
 
-        </LinearLayout>
+    </LinearLayout>
 
-        <include
-            layout="@layout/view_topbutton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:visibility="visible"
+    <include
+        layout="@layout/view_topbutton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:visibility="visible" />
+
+    <FrameLayout
+        android:id="@+id/llTutorial"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CC000000"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="142dp"
+            android:src="@drawable/kk_coach_mark_top" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="142dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/kk_coach_mark_bottom" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/vScrollImageView"
+        android:layout_width="60dp"
+        android:layout_height="293dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/kk_coach_mark_ver_scroll"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/hScrollImageView"
+        android:layout_width="288dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/kk_coach_mark_hor_scroll"
+        android:visibility="gone" />
+
+    <include
+        layout="@layout/view_viewer_footer"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" />
+
+    <LinearLayout
+        android:id="@+id/epView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/epCloseView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="7dp"
+            android:background="@drawable/kk_circle_viewer_footer">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:src="@drawable/kk_viewer_ep_close"/>
+
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/epRecyclerView"
+            android:layout_width="match_parent"
+            android:background="#262626"
+            android:paddingTop="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="16dp"
+            android:clipToPadding="false"
+            android:layout_height="118dp"
+            android:layout_alignParentBottom="true" />
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/epPurchaseDialog"
+        layout="@layout/view_ep_purchase"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        android:id="@+id/settingBottomView"
+        layout="@layout/view_viewer_footer_setting"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

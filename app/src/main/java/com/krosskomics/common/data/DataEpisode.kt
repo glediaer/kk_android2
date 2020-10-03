@@ -126,6 +126,7 @@ class DataEpisode {
     var share_image: String? = null
     var ep_view_id: String? = null
     var download_expire: String = ""
+    var isEpSelect = false
 
     companion object {
         var seq = Comparator<DataEpisode> { s1, s2 ->

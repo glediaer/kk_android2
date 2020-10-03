@@ -135,8 +135,7 @@
     <string name="msg_fail_google">Google login Failed</string>
     <string name="msg_fail_dataloading">Failed roading data. Please try again..</string>
     <string name="msg_error_common">Errors occurred.</string>
-    <string name="msg_scroll_end_next_view">Continue scrolling for\nnext episode.</string>
-    <string name="msg_scroll_end_last_view">This is the last episode.</string>
+
     <string name="msg_push_not_support_device">This device does not provide any push alert system.</string>
     <string name="msg_enter_episode">Loading...</string>
     <string name="msg_loading">Loading...</string>
@@ -307,6 +306,15 @@
     <string name="str_writer_format">%s %s %s</string>
     <string name="str_discount_rate">Discount rate</string>
     <string name="str_7_days_rental">7 days rental"</string>
+    <string name="str_night_mode">Night Mode"</string>
+    <string name="str_night_mode_desc">Reducing eye strain"</string>
+    <string name="str_auto_next">Auto Next"</string>
+    <string name="str_auto_next_desc">Continue scrolling for next episode."</string>
+    <string name="str_auto_play">Auto Play"</string>
+    <string name="str_auto_play_desc">Play automatically without touch."</string>
+    <string name="str_1x">1x"</string>
+    <string name="str_2x">2x"</string>
+    <string name="str_3x">3x"</string>
 
 
     <!-- msg -->
@@ -325,5 +333,7 @@
     <string name="msg_reloading_init_data">Reload App for initial data.</string>
     <string name="msg_success_file_download">Download success.</string>
     <string name="msg_fail_file_download">Download failed.</string>
+    <string name="msg_scroll_end_next_view">Continue scrolling for\nnext episode.</string>
+    <string name="msg_scroll_end_last_view">This is the last episode.</string>
 
 </resources>

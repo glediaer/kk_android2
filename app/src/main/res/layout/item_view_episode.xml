@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_ep_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:textColor="@color/kk_selector_color_white_yellow"
+        tools:text="Ep. 29"/>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/img_ep_title"
+            android:layout_width="85dp"
+            android:layout_height="70dp"
+            android:background="@drawable/kk_selector_viewer_ep"
+            fresco:actualImageScaleType="fitXY"/>
+
+        <include
+            layout="@layout/item_vline"
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:layout_gravity="center_vertical"/>
+
+    </LinearLayout>
+
+</LinearLayout>

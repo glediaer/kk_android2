@@ -23,7 +23,7 @@ class ViewerRepository : CommonRepository() {
         return checkEpLiveData
     }
 
-    fun requestMain(context: Context, eid: String) {
+    fun requestMain(context: Context, eid: String?) {
         val api: Call<Episode> = ServerUtil.service.getEpisodeViewer(
             read(context, CODE.CURRENT_LANGUAGE, "en"),
             eid,
@@ -42,7 +42,7 @@ class ViewerRepository : CommonRepository() {
         })
     }
 
-    fun requestCheckEp(context: Context, eid: String) {
+    fun requestCheckEp(context: Context, eid: String?) {
         val api: Call<Episode> = ServerUtil.service.checkEpisode(
             read(context, CODE.CURRENT_LANGUAGE, "en"),
             eid,

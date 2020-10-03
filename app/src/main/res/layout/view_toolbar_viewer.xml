@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:minHeight="?attr/actionBarSize"
+    android:background="#262626"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="70dp"
+            android:visibility="visible"
+            android:textSize="18dp"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            tools:text="My News" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            >
+
+            <ImageView
+                android:id="@+id/toolbarLike"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/kk_selector_viewer_like"/>
+
+            <ImageView
+                android:id="@+id/toolbarShare"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="25dp"
+                android:src="@drawable/kk_share_wh"/>
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</androidx.appcompat.widget.Toolbar>

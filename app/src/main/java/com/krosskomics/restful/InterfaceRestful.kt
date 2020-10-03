@@ -225,7 +225,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("set_type") set_type: String?,
         @Field("sid") sid: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 작품 삭제
     @FormUrlEncoded
@@ -265,7 +265,7 @@ interface InterfaceRestful {
         @Field("eid") eid: String?,
         @Field("img_index") img_index: String?,
         @Field("ep_view_id") ep_view_id: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 로그아웃시 호출
     @FormUrlEncoded
