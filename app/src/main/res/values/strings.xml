@@ -69,7 +69,7 @@
     <string name="str_empty_downloaded2">The series you download will show up here, so you can read them offline.</string>
     <string name="str_select_all">Select All</string>
     <string name="str_deselect_all">Deselect All</string>
-    <string name="str_delete">Delete</string>
+
     <string name="str_sortby">Sort by</string>
     <string name="str_title_az">Title A→Z</string>
     <string name="str_coin">Coin</string>
@@ -315,6 +315,9 @@
     <string name="str_1x">1x"</string>
     <string name="str_2x">2x"</string>
     <string name="str_3x">3x"</string>
+    <string name="str_comments">Comments"</string>
+    <string name="str_comment_here">Write your comment here.."</string>
+    <string name="str_delete">Delete</string>
 
 
     <!-- msg -->

@@ -86,6 +86,7 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".series.activity.SeriesActivity"
+            android:launchMode="singleTask"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
@@ -133,6 +134,11 @@
         <activity android:name=".mynews.activity.MyNewsActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".comment.activity.CommentActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
 
 
         <!-- 3rd party -->

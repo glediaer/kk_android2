@@ -22,6 +22,7 @@ import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
+import com.krosskomics.comment.activity.CommentActivity
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataEpisode
@@ -201,7 +202,9 @@ class ViewerActivity : ToolbarTitleActivity() {
 
     private fun initFooterView() {
         prevView.setOnClickListener { loadEpCheck(viewModel.item.pre_eid) }
-        commentView.setOnClickListener {  }
+        commentView.setOnClickListener {
+            startActivity(Intent(context, CommentActivity::class.java))
+        }
         settingView.setOnClickListener { settingBottomView.visibility = View.VISIBLE }
         epListView.setOnClickListener { epView.visibility = View.VISIBLE }
         nextView.setOnClickListener { loadEpCheck(viewModel.item.next_eid) }
@@ -485,9 +488,6 @@ class ViewerActivity : ToolbarTitleActivity() {
                     commentView.visibility = View.GONE
                 } else {
                     commentView.visibility = View.VISIBLE
-                    commentView.setOnClickListener(View.OnClickListener {_ ->
-                        moveBrowserChrome(context, it.comment_url)
-                    })
                 }
                 if ("" != it.read_ep_img_index) {
                     viewModel.viewPosition = it.read_ep_img_index!!.toInt()

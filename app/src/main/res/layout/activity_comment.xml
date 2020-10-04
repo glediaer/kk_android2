@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/view_toolbar_black"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:background="#262626">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    android:text="@string/str_comments" />
+
+                <TextView
+                    android:id="@+id/commentsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:textSize="16dp"
+                    android:textColor="@color/yellow"
+                    tools:text="(15)" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/kk_comment_sort"/>
+
+                <TextView
+                    android:id="@+id/sortTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="12dp"
+                    android:textColor="#e5e5e5"
+                    android:text="@string/str_top" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f4f4f4"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <include
+            layout="@layout/item_underline_1dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/kk_rect_white_r20"
+            android:layout_gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/commentEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textSize="14dp"
+                android:textColor="#c6c6c6"
+                android:hint="@string/str_comment_here" />
+            
+            <ImageView
+                android:id="@+id/sendImageView"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/kk_selector_comment_send"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/view_topbutton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>

@@ -74,9 +74,11 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     onClickListener?.onItemClick(item)
                 }
                 if (item is DataBook) {
-                    Glide.with(itemView.context)
-                        .load(item.image)
-                        .into(mainImageView)
+                    mainImageView?.let {
+                        Glide.with(itemView.context)
+                            .load(item.image)
+                            .into(it)
+                    }
 
                     titleTextView?.text = item.title
                     writerTextView?.text = item.writer1
