@@ -5,6 +5,7 @@
     android:paddingRight="16dp">
 
     <ImageView
+        android:id="@+id/logoImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_centerVertical="true"

@@ -244,7 +244,7 @@ interface InterfaceRestful {
         @Field("set_type") set_type: String?,
         @Field("sid") sid: String?,
         @Field("eids") eids: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 쿠폰
     @FormUrlEncoded
@@ -310,7 +310,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("list_type") list_type: String?,
         @Field("page") page: Int
-    ): Call<Gift?>?
+    ): Call<Gift>
 
     // 선물 받기
     @FormUrlEncoded
@@ -368,7 +368,7 @@ interface InterfaceRestful {
     fun getUser(
         @Field("lang") lang: String?,
         @Field("gtype") gtype: String?
-    ): Call<User?>?
+    ): Call<User>
 
     // 뷰어 체류시간 체크
     @FormUrlEncoded

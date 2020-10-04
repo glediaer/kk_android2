@@ -152,34 +152,34 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                 // 하루 체크
                 // 오늘 날짜 데이터
                 val handler = Handler()
-//                handler.postDelayed({
-//                    val intent = Intent(context, EventActivity::class.java)
-//                    val curDate = Date()
-//                    val curMillis = curDate.time
-//                    var diffDay = 2
-//                    // 이전 저장 데이터
-//                    if ("0" != read(
-//                            context,
-//                            CODE.FLOATING_BANNER_CLOSE_TIME,
-//                            "-1"
-//                        )
-//                    ) {
-//                        val savedMillis = read(
-//                            context,
-//                            CODE.FLOATING_BANNER_CLOSE_TIME,
-//                            "-1"
-//                        )!!.toLong()
-//                        val diffSec = curMillis - savedMillis
-//                        diffDay = (diffSec / (60 * 60 * 24) / 1000).toInt()
-//                        if (savedMillis == -1L) {
-//                            startActivity(intent)
-//                        } else {
-//                            if (diffDay >= 1) {
-//                                startActivity(intent)
-//                            }
-//                        }
-//                    }
-//                }, 500)
+                handler.postDelayed({
+                    val intent = Intent(context, EventActivity::class.java)
+                    val curDate = Date()
+                    val curMillis = curDate.time
+                    var diffDay = 2
+                    // 이전 저장 데이터
+                    if ("0" != read(
+                            context,
+                            CODE.FLOATING_BANNER_CLOSE_TIME,
+                            "-1"
+                        )
+                    ) {
+                        val savedMillis = read(
+                            context,
+                            CODE.FLOATING_BANNER_CLOSE_TIME,
+                            "-1"
+                        )!!.toLong()
+                        val diffSec = curMillis - savedMillis
+                        diffDay = (diffSec / (60 * 60 * 24) / 1000).toInt()
+                        if (savedMillis == -1L) {
+                            startActivity(intent)
+                        } else {
+                            if (diffDay >= 1) {
+                                startActivity(intent)
+                            }
+                        }
+                    }
+                }, 500)
             }
         } else if (t is Main) {
             if ("00" == t.retcode) {
@@ -214,6 +214,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         changeLangImageView.setOnClickListener(this)
         giftboxImageView.setOnClickListener(this)
         searchImageView.setOnClickListener(this)
+        logoImageView.setOnClickListener(this)
     }
 
     private fun initBottomView() {
@@ -415,6 +416,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
+            R.id.logoImageView -> requestServer()
             R.id.searchImageView -> startActivity(Intent(context, SearchActivity::class.java))
             R.id.changeLangImageView -> {
                 changeLanguageView()

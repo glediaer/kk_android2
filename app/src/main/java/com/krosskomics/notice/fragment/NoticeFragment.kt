@@ -12,6 +12,7 @@ import com.krosskomics.common.fragment.BaseFragment
 import com.krosskomics.common.model.More
 import com.krosskomics.ongoing.adapter.OnGoingAdapter
 import com.krosskomics.util.CODE
+import com.krosskomics.util.CommonUtil
 import kotlinx.android.synthetic.main.fragment_genre.recyclerView
 import kotlinx.android.synthetic.main.view_topbutton.*
 
@@ -38,7 +39,9 @@ class NoticeFragment : BaseFragment() {
             if ("00" == t.retcode) {
                 setMainContentView(t)
             } else {
-
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
             }
         }
     }

@@ -11,7 +11,7 @@ class LibraryAdapter(private val items: ArrayList<*>, private val layoutRes: Int
     private var onClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewBaseAdapter.BaseItemHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_ongoing, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)
         return BaseItemHolder(view)
     }
 
