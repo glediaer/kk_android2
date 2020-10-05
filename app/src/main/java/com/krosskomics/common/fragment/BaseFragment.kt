@@ -51,8 +51,8 @@ abstract class BaseFragment : Fragment(), Observer<Any> {
             .findFirstVisibleItemPosition()
     }
 
-    open fun showRecyclerView() {
-        recyclerView?.visibility = View.VISIBLE
+    open fun showMainView() {
+        mainView?.visibility = View.VISIBLE
         emptyView?.visibility = View.GONE
     }
 

@@ -19,6 +19,7 @@ import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.More
 import com.krosskomics.common.model.User
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
+import com.krosskomics.library.activity.DownloadEpActivity
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.library.viewmodel.LibraryViewModel
 import com.krosskomics.ongoing.adapter.OnGoingAdapter
@@ -160,7 +161,6 @@ class LibraryFragment : BaseFragment() {
             downloadTextView.isSelected = true
             activity?.toolbarTrash?.visibility = View.VISIBLE
             filterView.visibility = View.GONE
-            networkStateView.visibility = View.VISIBLE
             currentCategory = 2
             viewModel.items.clear()
 
@@ -209,9 +209,17 @@ class LibraryFragment : BaseFragment() {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {
                     if (item is DataBook) {
-                        val intent = Intent(context, SeriesActivity::class.java).apply {
-                            putExtra("sid", item.sid)
-                            putExtra("title", item.title)
+                        var intent: Intent
+                        if (currentCategory == 2) {     // download
+                            intent = Intent(context, DownloadEpActivity::class.java).apply {
+                                putExtra("sid", item.sid)
+                                putExtra("title", item.title)
+                            }
+                        } else {
+                            intent = Intent(context, SeriesActivity::class.java).apply {
+                                putExtra("sid", item.sid)
+                                putExtra("title", item.title)
+                            }
                         }
                         startActivity(intent)
                     }
@@ -239,7 +247,7 @@ class LibraryFragment : BaseFragment() {
         }
         viewModel.totalPage = body.tot_pages
         body.list?.let {
-            showRecyclerView()
+            showMainView()
             viewModel.items.addAll(it)
             recyclerView.adapter?.notifyDataSetChanged()
             activity?.apply {
@@ -412,7 +420,7 @@ class LibraryFragment : BaseFragment() {
                 }
 
                 if (items.size > 0) {
-                    showRecyclerView()
+                    showMainView()
                     (activity as LibraryActivity).toolbar.toolbarTrash.visibility = View.VISIBLE
                 } else {
                     showEmptyView()

@@ -104,7 +104,7 @@ class FAQFragment : BaseFragment() {
         }
         viewModel.totalPage = body.tot_pages
         body.list?.let {
-            showRecyclerView()
+            showMainView()
             viewModel.items.addAll(it)
             recyclerView.adapter?.notifyDataSetChanged()
         }

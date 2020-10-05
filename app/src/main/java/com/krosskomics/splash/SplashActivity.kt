@@ -20,10 +20,12 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.NonNull
 import bolts.AppLinks
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.tasks.OnCompleteListener
 //import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.iid.FirebaseInstanceId
 import com.gun0912.tedpermission.PermissionListener
@@ -183,10 +185,25 @@ class SplashActivity : Activity() {
     }
 
     private fun checkFCMToken() {
-        val FCMToken = FirebaseInstanceId.getInstance().id
-        if (FCMToken != null) {
-            write(this@SplashActivity, CODE.LOCAL_token, FCMToken)
-        }
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "getInstanceId failed", task.exception)
+                    return@OnCompleteListener
+                }
+
+                // Get new Instance ID token
+                val token = task.result?.token
+                write(this@SplashActivity, CODE.LOCAL_token, token)
+                // Log and toast
+//                val msg = getString(R.string.msg_token_fmt, token)
+//                Log.d(TAG, msg)
+//                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            })
+//        val FCMToken = FirebaseInstanceId.getInstance().id
+//        if (FCMToken != null) {
+//            write(this@SplashActivity, CODE.LOCAL_token, FCMToken)
+//        }
     }
 
     /**
