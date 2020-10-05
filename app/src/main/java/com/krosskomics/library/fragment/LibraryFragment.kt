@@ -14,6 +14,7 @@ import com.krosskomics.R
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
+import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.fragment.BaseFragment
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.More
@@ -96,6 +97,87 @@ class LibraryFragment : BaseFragment() {
         })
     }
 
+    /**
+     * 삭제
+     */
+    private fun requestDeleteLibrary() {
+        var sids = viewModel.mSeriesList.toString()
+        sids = sids.trim { it <= ' ' }.replace(" ", "")
+        sids = sids.substring(1, sids.length - 1)
+            val api = ServerUtil.service.setDeleteContents(CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+                "delete_library", sids)
+            api.enqueue(object : Callback<Default> {
+                override fun onResponse(call: Call<Default>, response: Response<Default>) {
+                    try {
+                        if (response.isSuccessful) {
+                            if ("00" == response.body()!!.retcode) {
+                            } else {
+                                if ("" != response.body()!!.msg) {
+                                    CommonUtil.showToast(response.body()!!.msg, context)
+                                }
+                            }
+                        } else {
+                            CommonUtil.showToast(getString(R.string.msg_fail_dataloading), context)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(call: Call<Default>, t: Throwable) {
+                    try {
+                        t.printStackTrace()
+//                        checkNetworkConnection(context, t, actBinding.viewError)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            })
+    }
+
+    /**
+     * 삭제
+     */
+    private fun requestDeleteFile() {
+            var sids = viewModel.mSeriesList.toString()
+            sids = sids.trim { it <= ' ' }.replace(" ", "")
+            sids = sids.substring(1, sids.length - 1)
+
+            val api = ServerUtil.service.setDeleteContents(CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+                "delete_download_series", sids)
+            api.enqueue(object : Callback<Default> {
+                override fun onResponse(call: Call<Default>, response: Response<Default>) {
+                    try {
+                        if (response.isSuccessful) {
+                            if ("00" == response.body()!!.retcode) {
+                                viewModel.mSeriesList.clear()
+//                                if (actBinding.flEditMode.isShown()) {
+//                                    actBinding.flEditMode.setVisibility(View.GONE)
+//                                    actBinding.bottomNavigationView.setVisibility(View.VISIBLE)
+//                                    actBinding.ivEdit.isSelected = false
+//                                }
+                            }
+                            if ("" != response.body()!!.msg) {
+                                CommonUtil.showToast(response.body()!!.msg, context)
+                            }
+                        } else {
+                            CommonUtil.showToast(getString(R.string.msg_fail_dataloading), context)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onFailure(call: Call<Default>, t: Throwable) {
+                    try {
+                        t.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            })
+    }
+
     override fun onChanged(t: Any?) {
         if (t is More) {
             if ("00" == t.retcode) {
@@ -141,7 +223,7 @@ class LibraryFragment : BaseFragment() {
             filterView.visibility = View.VISIBLE
             networkStateView.visibility = View.GONE
             currentCategory = 0
-            viewModel.items.clear()
+
             requestServer()
         }
         unlockTextView.setOnClickListener {
@@ -151,7 +233,7 @@ class LibraryFragment : BaseFragment() {
             filterView.visibility = View.GONE
             networkStateView.visibility = View.GONE
             currentCategory = 1
-            viewModel.items.clear()
+
             viewModel.repository.listType = "U"
             viewModel.repository.sortType = "S"
             requestServer()
@@ -162,7 +244,6 @@ class LibraryFragment : BaseFragment() {
             activity?.toolbarTrash?.visibility = View.VISIBLE
             filterView.visibility = View.GONE
             currentCategory = 2
-            viewModel.items.clear()
 
             if (CommonUtil.getNetworkInfo(requireContext()) != null) {
                 requestExpireEpisode()
@@ -176,7 +257,9 @@ class LibraryFragment : BaseFragment() {
         allTextView.isSelected = false
         unlockTextView.isSelected = false
         downloadTextView.isSelected = false
-        emptyView.visibility = View.GONE
+
+        viewModel.items.clear()
+        viewModel.mSeriesList.clear()
     }
 
     private fun initRecyclerView() {
@@ -230,7 +313,26 @@ class LibraryFragment : BaseFragment() {
                 override fun onItemClick(item: Any) {
                     if (item is DataBook) {
                         // remove request
-
+                        if (currentCategory == 2) {
+                            if (viewModel.items.size == 0) {
+                                return
+                            }
+                            if (CommonUtil.getNetworkInfo(requireContext()) == null) {
+                                CommonUtil.showToast(getString(R.string.msg_disable_remove_file), context)
+                                return
+                            }
+                            if (item.isChecked) {
+                                item.isChecked = false;
+                                viewModel.mSeriesList.remove(item.sid);
+                            } else {
+                                item.isChecked = true;
+                                viewModel.mSeriesList.add(item.sid);
+                            }
+                            removeFile()
+                            requestDeleteFile()
+                        } else {
+                            requestDeleteLibrary()
+                        }
                     }
                 }
             })
@@ -270,6 +372,43 @@ class LibraryFragment : BaseFragment() {
                     recyclerView.adapter?.notifyDataSetChanged()
                 }
             }
+        }
+    }
+
+    /**
+     * 파일 삭제
+     */
+    private fun removeFile() {
+        for (i in viewModel.items.indices.reversed()) {
+            val item = viewModel.items as DataBook
+            item.isCheckVisible = false
+            if (item.isChecked) {
+                FileUtils.deleteDir(item.filePath)
+                viewModel.items.removeAt(i)
+            }
+        }
+        if (viewModel.items.size > 0) {
+//            actBinding.flEmptyDataView.visibility = View.GONE
+//            actBinding.flDefaultView.visibility = View.VISIBLE
+//            actBinding.ivEdit.visibility = View.VISIBLE
+        } else {
+            viewModel.mFile.delete()
+//            actBinding.flEmptyDataView.visibility = View.VISIBLE
+//            actBinding.flDefaultView.visibility = View.GONE
+//            actBinding.ivEdit.visibility = View.GONE
+        }
+        recyclerView.adapter?.notifyDataSetChanged()
+
+        removeThumbnailFile()
+    }
+
+    private fun removeThumbnailFile() {
+        var seriesPath = KJKomicsApp.DOWNLOAD_ROOT_PATH +
+                CommonUtil.convertUno(CommonUtil.read(context, CODE.LOCAL_RID, "")) +
+                "/thumbnail/"
+        viewModel.mSeriesList.forEach {
+            seriesPath = seriesPath + it
+            FileUtils.deleteDir(seriesPath)
         }
     }
 

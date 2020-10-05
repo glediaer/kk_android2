@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.Process
 import android.provider.Settings
 import android.text.TextUtils
@@ -247,35 +248,35 @@ class SplashActivity : Activity() {
     private fun goMain() {
         val permissionListener: PermissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
-                runBlocking {
-                    launch {
-                        delay(500)
-                        val intentMain = Intent(this@SplashActivity, MainActivity::class.java)
-                        intentMain.putExtra("atype", KJKomicsApp.ATYPE)
-                        intentMain.putExtra("sid", KJKomicsApp.SID)
-//                        intentMain.addFlags(
-//                            Intent.FLAG_ACTIVITY_NEW_TASK
-//                                    or Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                                    or Intent.FLAG_ACTIVITY_SINGLE_TOP
-//                        )
-                        startActivity(intentMain)
-                        finish()
-                    }
-                }
-//                val handler = Handler()
-//                handler.postDelayed({
-//                    val intentMain: Intent
-//                    intentMain = Intent(this@SplashActivity, MainActivity::class.java)
-//                    intentMain.putExtra("atype", KJKomicsApp.ATYPE)
-//                    intentMain.putExtra("sid", KJKomicsApp.SID)
-//                    intentMain.addFlags(
-//                        Intent.FLAG_ACTIVITY_NEW_TASK
-//                                or Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                                or Intent.FLAG_ACTIVITY_SINGLE_TOP
-//                    )
-//                    startActivity(intentMain)
-//                    finish()
-//                }, 500)
+//                runBlocking {
+//                    launch {
+//                        delay(500)
+//                        val intentMain = Intent(this@SplashActivity, MainActivity::class.java)
+//                        intentMain.putExtra("atype", KJKomicsApp.ATYPE)
+//                        intentMain.putExtra("sid", KJKomicsApp.SID)
+////                        intentMain.addFlags(
+////                            Intent.FLAG_ACTIVITY_NEW_TASK
+////                                    or Intent.FLAG_ACTIVITY_CLEAR_TOP
+////                                    or Intent.FLAG_ACTIVITY_SINGLE_TOP
+////                        )
+//                        startActivity(intentMain)
+//                        finish()
+//                    }
+//                }
+                val handler = Handler()
+                handler.postDelayed({
+                    val intentMain: Intent
+                    intentMain = Intent(this@SplashActivity, MainActivity::class.java)
+                    intentMain.putExtra("atype", KJKomicsApp.ATYPE)
+                    intentMain.putExtra("sid", KJKomicsApp.SID)
+                    intentMain.addFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK
+                                or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    )
+                    startActivity(intentMain)
+                    finish()
+                }, 500)
             }
 
             override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {

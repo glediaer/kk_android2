@@ -234,7 +234,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("set_type") set_type: String?,
         @Field("sids") sids: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 에피소드 삭제
     @FormUrlEncoded

@@ -12,6 +12,7 @@ import java.util.ArrayList
 class LibraryViewModel(context: Context): FragmentBaseViewModel(context) {
     val repository = LibraryRepository()
     // download
+    var mSeriesList = ArrayList<String?>()
     var mEpExpireDateList = ArrayList<String>()
     var mPath = ""
     var mFileName = ""

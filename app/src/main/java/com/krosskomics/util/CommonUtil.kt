@@ -19,6 +19,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
 import android.net.wifi.WifiManager
+import android.os.Bundle
 import android.preference.PreferenceManager
 import android.telephony.TelephonyManager
 import android.view.*
@@ -34,14 +35,12 @@ import com.facebook.imagepipeline.common.Priority
 import com.facebook.imagepipeline.common.ResizeOptions
 import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.facebook.login.LoginManager
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApiClient
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
+import com.krosskomics.home.activity.MainActivity
 import com.krosskomics.login.activity.LoginActivity
 import com.krosskomics.login.activity.LoginIntroActivity
+import com.krosskomics.series.activity.SeriesActivity
 import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -694,8 +693,8 @@ object CommonUtil {
         erroView.setOnClickListener(null)
     }
 
-    fun convertUno(uno: String): String? {
-        return uno.replace("/", "slash")
+    fun convertUno(uno: String?): String? {
+        return uno?.replace("/", "slash")
     }
 
     /**
@@ -740,5 +739,28 @@ object CommonUtil {
         likeCount.let {
             if (it.toInt() <= 999) return it else return context.getString(R.string.str_like_count_max)
         }
+    }
+
+    /**
+     * 푸시타입별 액션 설정
+     * @param context
+     * @param pushType
+     * @param cno
+     */
+    fun setPushAction(context: Context?, pushType: String?, cno: String?): Intent {
+        var intent = Intent(context, MainActivity::class.java)
+        when (pushType) {
+            "M" -> {
+                intent = Intent(context, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            }
+            "H" -> {
+                intent = Intent(context, SeriesActivity::class.java)
+                val b = Bundle()
+                b.putString("cid", cno)
+                intent.putExtras(b)
+            }
+        }
+        return intent
     }
 }
