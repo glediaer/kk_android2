@@ -110,6 +110,20 @@ class ViewerActivity : ToolbarTitleActivity() {
         autoNextSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
 
         }
+        settingSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener{
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                if (progress < 10) {
+                    seekBar.progress = 10
+                }
+                val params = window.attributes;
+
+                params.screenBrightness = (progress / 100).toFloat()
+
+                window.attributes = params;
+            }
+            override fun onStartTrackingTouch(p0: SeekBar?) {}
+            override fun onStopTrackingTouch(p0: SeekBar?) {}
+        })
     }
 
     private fun initAutoScroll() {

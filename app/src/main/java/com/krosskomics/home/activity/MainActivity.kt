@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -259,6 +260,17 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
     private fun setMainContentView(items: ArrayList<DataMainContents>?) {
         items?.let {
+            nestedScrollView.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "scrollY : " + scrollY)
+                    Log.e(TAG, "oldScrollY : " + oldScrollY)
+                    if (scrollY >= 1777) {
+                        mainStickyTabView.visibility = View.VISIBLE
+                    } else {
+                        mainStickyTabView.visibility = View.GONE
+                    }
+                }
+            }
             MAIN_CONTENTS = items
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = HomeAdapter(items)

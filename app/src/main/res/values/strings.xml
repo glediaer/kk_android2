@@ -24,7 +24,7 @@
     <string name="str_language_noti1">* Features and available series  may differ for\n   the language you have selected.</string>
     <string name="str_language_noti2">* Anytime you can change the language on Settings</string>
     <string name="str_recent">Recent</string>
-    <string name="str_downloaded">Downloaded</string>
+
     <string name="str_unlocked_series">Unlocked Series</string>
     <string name="str_updated">Updated</string>
     <string name="str_updates">Updates</string>
@@ -318,7 +318,7 @@
     <string name="str_comments">Comments"</string>
     <string name="str_comment_here">Write your comment here.."</string>
     <string name="str_delete">Delete</string>
-
+    <string name="str_downloaded">Downloaded</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

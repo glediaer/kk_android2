@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                layout="@layout/view_toolbar"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="203dp">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/mainImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:placeholderImage="@drawable/kk_placeholder"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#33000000" />
+
+                <include
+                    layout="@layout/view_content_like_white"
+                    android:layout_width="55dp"
+                    android:layout_height="19dp"
+                    android:layout_gravity="right|bottom"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="40dp"/>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/infoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:background="@drawable/kk_gradient_series_info_rect"
+                android:layout_marginTop="170dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/optionView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:duplicateParentState="true"
+                                android:src="@drawable/kk_selector_series_option"/>
+
+                            <TextView
+                                android:id="@+id/optionTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:textSize="12dp"
+                                android:textColor="@color/purple"
+                                tools:text="Free every 5 days" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/genreTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textSize="10dp"
+                            android:textColor="#c6c6c6"
+                            android:layout_gravity="right"
+                            android:gravity="center"
+                            android:background="@drawable/kk_rect_seris_genre"
+                            tools:text="Drama" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/contentTitleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:layout_marginTop="10dp"
+                        android:textStyle="bold"
+                        android:textColor="#ffffff"
+                        tools:text="The Last Print" />
+
+                    <TextView
+                        android:id="@+id/writerTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:textSize="14dp"
+                        android:textColor="#828282"
+                        tools:text="Luri Kim" />
+
+                    <LinearLayout
+                        android:id="@+id/descButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center"
+                        android:background="@drawable/kk_rect_series_desc_btn">
+
+                        <TextView
+                            android:id="@+id/descTitleTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="#ffffff"
+                            android:text="@string/str_description" />
+
+                        <ImageView
+                            android:layout_width="13dp"
+                            android:layout_height="13dp"
+                            android:layout_marginLeft="7dp"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/kk_selector_up_down"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/descTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="19dp"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:textSize="14dp"
+                        android:textColor="#c6c6c6"
+                        android:lineSpacingExtra="7sp"
+                        tools:text="An evil witch rises to power through a random girl every ten years to cause destruction to the world. Agni, a feisty girl, sets out to make her own team to trace the origin of the witch and put an end to her for good." />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/kk_rect_seris_permanent">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1">
+                        
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="13dp"
+                            android:src="@drawable/kk_permanent_ticket"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="7dp"
+                            android:textSize="14dp"
+                            android:textColor="@color/red"
+                            android:text="@string/str_permanent" />
+
+                        <TextView
+                            android:id="@+id/permanentCntTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:layout_marginLeft="7dp"
+                            android:textColor="@color/kk_selector_color_gray_red"
+                            tools:text="0"/>
+                        
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="10dp"
+                        android:background="#e5e5e5"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="13dp"
+                            android:src="@drawable/kk_rental_ticket"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="7dp"
+                            android:textSize="14dp"
+                            android:textColor="@color/yellow"
+                            android:text="@string/str_rental" />
+
+                        <TextView
+                            android:id="@+id/rentalCntTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:layout_marginLeft="7dp"
+                            android:textColor="@color/kk_selector_color_gray_yellow"
+                            tools:text="0"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include
+                    layout="@layout/item_underbar"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/epInfoView"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:gravity="center_vertical"
+                android:layout_below="@id/infoView">
+
+                <ImageView
+                    android:id="@+id/listTypeImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/kk_selector_series_list_type"/>
+
+                <TextView
+                    android:id="@+id/epCountTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="14dp"
+                    android:textColor="#2e2e2e"
+                    android:gravity="center_horizontal"
+                    tools:text="15 episodes" />
+
+                <ImageView
+                    android:id="@+id/listOrderImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/kk_selector_series_order"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_below="@id/epInfoView" />
+
+            <include
+                android:id="@+id/underLineView"
+                layout="@layout/item_underline_1dp"
+                android:layout_marginTop="14dp"
+                android:layout_width="match_parent"
+                android:layout_below="@id/recyclerView"
+                android:layout_height="1dp" />
+
+            <FrameLayout
+                android:id="@+id/moveTopView"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_below="@+id/underLineView">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/kk_ic_move_top"/>
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/firstContinueEpView"
+        android:layout_width="158dp"
+        android:layout_height="45dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:background="@drawable/kk_rect_series_first_continue"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/firstContinueEpTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:textColor="#ffffff"
+            android:text="@string/str_first_ep" />
+        
+        <ImageView
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_marginLeft="7dp"
+            android:src="@drawable/kk_next_yellow"/>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/epPurchaseDialog"
+        layout="@layout/view_ep_purchase"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include
+        layout="@layout/view_topbutton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:visibility="visible"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"/>
+
+</RelativeLayout>

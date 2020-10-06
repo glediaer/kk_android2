@@ -42,12 +42,12 @@ import com.krosskomics.util.ServerUtil.service
 import com.krosskomics.util.UtilBitmap
 import com.krosskomics.viewer.activity.ViewerActivity
 import com.scottyab.aescrypt.AESCrypt
-import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_content_like_white.*
 import kotlinx.android.synthetic.main.view_ep_purchase.*
+import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -516,9 +516,9 @@ class SeriesActivity : ToolbarTitleActivity() {
                 // 리스트 정렬 변경
                 if (view.isSelected) {
                     Collections.sort(t.list, DataEpisode.seq)
+                    t.list.reverse()
                 } else {
                     Collections.sort(t.list, DataEpisode.seq)
-                    t.list?.reverse()
                 }
                 recyclerView.adapter?.notifyDataSetChanged()
             }
