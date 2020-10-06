@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#f7f8fa">
+
+    <include
+        layout="@layout/item_underline"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="7dp">
+
+        <FrameLayout
+            android:id="@+id/deleteView"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:duplicateParentState="true"
+                android:src="@drawable/kk_selector_delete"/>
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/mainImageView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:scaleType="fitXY"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="36dp"
+            android:paddingLeft="15dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:singleLine="true"
+                android:textSize="14dp"
+                android:textColor="#000000"
+                tools:text="Michelin Star" />
+
+            <TextView
+                android:id="@+id/tv_expire_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:textSize="12dp"
+                android:textColor="#c6c6c6"
+                tools:text="Girlsgeneration" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

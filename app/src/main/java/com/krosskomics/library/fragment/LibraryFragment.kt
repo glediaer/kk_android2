@@ -2,6 +2,7 @@ package com.krosskomics.library.fragment
 
 import android.app.Application
 import android.content.Intent
+import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -294,10 +295,15 @@ class LibraryFragment : BaseFragment() {
                     if (item is DataBook) {
                         var intent: Intent
                         if (currentCategory == 2) {     // download
-                            intent = Intent(context, DownloadEpActivity::class.java).apply {
-                                putExtra("sid", item.sid)
-                                putExtra("title", item.title)
+                            intent = Intent(context, DownloadEpActivity::class.java)
+                            val bundle = Bundle().apply {
+                                putString("path", item.filePath)
+                                putString("thumbnail", KJKomicsApp.DOWNLOAD_ROOT_PATH + CommonUtil.convertUno(CommonUtil.read(context, CODE.LOCAL_RID, ""))
+                                        + "/thumbnail/" + item.sid + "/")
+                                putString("sid", item.sid)
+                                putString("title", item.title)
                             }
+                            intent.putExtras(bundle)
                         } else {
                             intent = Intent(context, SeriesActivity::class.java).apply {
                                 putExtra("sid", item.sid)

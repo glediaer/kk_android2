@@ -1,5 +1,6 @@
 package com.krosskomics.common.adapter
 
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,10 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.drawee.view.SimpleDraweeView
 import com.krosskomics.R
-import com.krosskomics.common.data.DataBanner
-import com.krosskomics.common.data.DataBook
-import com.krosskomics.common.data.DataCoin
-import com.krosskomics.common.data.DataEpisode
+import com.krosskomics.common.data.*
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.ranking.activity.RankingDetailActivity
 import com.krosskomics.series.activity.SeriesActivity
@@ -192,6 +190,22 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     img_ep_title.controller = CommonUtil.getDraweeController(context, item.image,
                         200, 200)
                     txt_ep_title?.text = item.title
+                } else if (item is DataFile) {
+                    if (!TextUtils.isEmpty(item.image)) {
+                        img_ep_title?.setImageURI("file://" + item.image)
+                    }
+//                    if (holder.selectLayout != null) {
+//                        holder.selectLayout?.setSelected(item.isChecked)
+//
+//                        if (item.isCheckVisible) {
+//                            holder.selectLayout?.setVisibility(View.VISIBLE)
+//                        } else {
+//                            holder.selectLayout?.setVisibility(View.GONE)
+//                        }
+//                    }
+                    txt_ep_title?.text = item.ep_title
+//                    tv_show_date?.text = item.ep_show_date
+//                    tv_expire_date?.text = item.expireDate
                 }
             }
         }
