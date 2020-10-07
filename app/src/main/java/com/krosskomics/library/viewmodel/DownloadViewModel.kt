@@ -17,6 +17,9 @@ class DownloadViewModel(application: Application): BaseViewModel(application) {
     var mPath = ""
     var mThumbnail = ""
     var mSid = ""
+
+    var revPager = false
+    var isVerticalView = true
     lateinit var mFile: File
 
 

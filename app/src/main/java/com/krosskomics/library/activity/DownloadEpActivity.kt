@@ -141,16 +141,15 @@ class DownloadEpActivity : ToolbarTitleActivity() {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {
                     if (item is DataFile) {
+                        // show episode
                         val intent = Intent(context, DownloadViewerActivity::class.java)
-                            val bundle = Bundle().apply {
-                                putString("path", item.filePath)
-                                putString("thumbnail", KJKomicsApp.DOWNLOAD_ROOT_PATH + CommonUtil.convertUno(CommonUtil.read(context, CODE.LOCAL_RID, ""))
-                                        + "/thumbnail/" + item.eid + "/")
-                                putString("eid", item.eid)
-                                putString("title", item.title)
-                            }
-                            intent.putExtras(bundle)
-
+                        val bundle = Bundle().apply {
+                            putString("path", item.filePath)
+                            putString("episode_title", item.ep_title)
+                            putString("isVerticalView", item.isVerticalView)
+                            putString("revPager", item.revPager)
+                        }
+                        intent.putExtras(bundle)
                         startActivity(intent)
                     }
                 }
