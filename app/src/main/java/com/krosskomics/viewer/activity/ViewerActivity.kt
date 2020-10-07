@@ -2,14 +2,13 @@ package com.krosskomics.viewer.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.ActivityInfo
+import android.content.Intent.createChooser
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Message
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import android.view.View.OnTouchListener
 import android.view.animation.AnimationUtils
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
@@ -17,6 +16,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
@@ -33,7 +33,6 @@ import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getScreenHeight
-import com.krosskomics.util.CommonUtil.moveBrowserChrome
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
@@ -84,7 +83,14 @@ class ViewerActivity : ToolbarTitleActivity() {
         toolbarLike.setOnClickListener {
             requestLike()
         }
-        toolbarShare.setOnClickListener {  }
+        toolbarShare.setOnClickListener {
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, viewModel.item.share_url)
+                createChooser(this, "공유하기")
+                startActivity(this)
+            }
+        }
     }
 
     override fun initTracker() {
@@ -655,8 +661,11 @@ class ViewerActivity : ToolbarTitleActivity() {
                     layoutManager = PreCachingLayoutManager(context)
                     (layoutManager as PreCachingLayoutManager).orientation = LinearLayoutManager.HORIZONTAL
                     (layoutManager as PreCachingLayoutManager).setExtraLayoutSpace(getScreenHeight(context))
+
                     recyclerView.adapter = ViewerAdapter(viewModel.items, R.layout.item_viewer_comic, context)
                     (recyclerView.adapter as ViewerAdapter).setFooterBannerData(viewModel.listBanner)
+                    val snapHelper = PagerSnapHelper()
+                    snapHelper.attachToRecyclerView(recyclerView)
                 }
 //                if (revPager) {
 //                    com.krosskomics.page.ShowActivity.arr_pics.add(0, arr_url[0])

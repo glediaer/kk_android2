@@ -136,7 +136,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!recyclerView?.canScrollVertically(1)) {
+                if (!recyclerView.canScrollVertically(1)) {
                     //TODO 화면이 바닥에 닿을때 처리
                     if (viewModel.page < viewModel.totalPage) {
                         viewModel.page++
@@ -157,7 +157,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             }
 
         if (viewModel.tabIndex != 4) {
-            (recyclerView?.adapter as RecyclerViewBaseAdapter)?.setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
+            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {
                     if (item is DataBook) {
                         val intent = Intent(context, SeriesActivity::class.java).apply {

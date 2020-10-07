@@ -1,19 +1,29 @@
 package com.krosskomics.library.activity
 
+import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
+import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
+import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.data.DataFile
 import com.krosskomics.common.model.Default
 import com.krosskomics.library.viewmodel.DownloadViewModel
+import com.krosskomics.ongoing.adapter.OnGoingAdapter
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.ServerUtil
 import kotlinx.android.synthetic.main.activity_download_ep.*
+import kotlinx.android.synthetic.main.activity_download_ep.recyclerView
+import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,7 +73,6 @@ class DownloadEpActivity : ToolbarTitleActivity() {
             viewModel.mThumbnail = extras?.getString("thumbnail") ?: ""
             viewModel.mSid = extras?.getString("sid") ?: ""
         }
-        super.initModel()
         getDownloadedData()
     }
 
@@ -124,6 +133,51 @@ class DownloadEpActivity : ToolbarTitleActivity() {
 //                actBinding.ivEdit.visibility = View.GONE
 //            }
             recyclerView.adapter?.notifyDataSetChanged()
+        }
+    }
+
+    override fun initRecyclerViewAdapter() {
+        (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
+            setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
+                override fun onItemClick(item: Any?) {
+                    if (item is DataFile) {
+                        val intent = Intent(context, DownloadViewerActivity::class.java)
+                            val bundle = Bundle().apply {
+                                putString("path", item.filePath)
+                                putString("thumbnail", KJKomicsApp.DOWNLOAD_ROOT_PATH + CommonUtil.convertUno(CommonUtil.read(context, CODE.LOCAL_RID, ""))
+                                        + "/thumbnail/" + item.eid + "/")
+                                putString("eid", item.eid)
+                                putString("title", item.title)
+                            }
+                            intent.putExtras(bundle)
+
+                        startActivity(intent)
+                    }
+                }
+            })
+
+            setOnDelteItemClickListener(object : RecyclerViewBaseAdapter.OnDeleteItemClickListener {
+                override fun onItemClick(item: Any) {
+                    if (item is DataFile) {
+                        // remove request
+                        if (viewModel.items.size == 0) {
+                            return
+                        }
+                        if (CommonUtil.getNetworkInfo(context) == null) {
+                            CommonUtil.showToast(getString(R.string.msg_disable_remove_file), context)
+                            return
+                        }
+                        if (item.isChecked) {
+                            item.isChecked = false;
+                            viewModel.mEpList.remove(item.eid)
+                        } else {
+                            item.isChecked = true;
+                            viewModel.mEpList.add(item.eid ?: "")
+                        }
+                        requestDeleteFile()
+                    }
+                }
+            })
         }
     }
 

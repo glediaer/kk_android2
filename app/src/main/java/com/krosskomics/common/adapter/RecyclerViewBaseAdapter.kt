@@ -18,7 +18,9 @@ import com.krosskomics.util.CommonUtil.getDeviceWidth
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.viewer.activity.ViewerActivity
 import kotlinx.android.synthetic.main.item_coin.view.*
+import kotlinx.android.synthetic.main.item_download_ep.view.*
 import kotlinx.android.synthetic.main.item_genre_detail.view.*
+import kotlinx.android.synthetic.main.item_genre_detail.view.deleteView
 import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
@@ -194,18 +196,18 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     if (!TextUtils.isEmpty(item.image)) {
                         img_ep_title?.setImageURI("file://" + item.image)
                     }
-//                    if (holder.selectLayout != null) {
-//                        holder.selectLayout?.setSelected(item.isChecked)
-//
-//                        if (item.isCheckVisible) {
-//                            holder.selectLayout?.setVisibility(View.VISIBLE)
-//                        } else {
-//                            holder.selectLayout?.setVisibility(View.GONE)
-//                        }
-//                    }
+                    if (item.isCheckVisible) {
+                        deleteView?.visibility = View.VISIBLE
+                        deleteView?.isEnabled = item.isChecked
+                        deleteView.setOnClickListener {
+                            onDeleteClickListener?.onItemClick(item)
+                        }
+                    } else {
+                        deleteView?.visibility = View.GONE
+                    }
                     txt_ep_title?.text = item.ep_title
 //                    tv_show_date?.text = item.ep_show_date
-//                    tv_expire_date?.text = item.expireDate
+                    tv_expire_date?.text = item.expireDate
                 }
             }
         }
