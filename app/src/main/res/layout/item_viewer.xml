@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="600dp"
         fresco:progressBarAutoRotateInterval="3000"
+        fresco:progressBarImage="@drawable/kk_progress_bar"
         fresco:progressBarImageScaleType="centerInside"/>
 
 </FrameLayout>

@@ -6,6 +6,7 @@ import com.krosskomics.R
 import com.krosskomics.common.activity.RecyclerViewBaseActivity
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.util.CommonUtil
 import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.view_ongoing_date.*
 
@@ -30,6 +31,13 @@ class OnGoingActivity : RecyclerViewBaseActivity() {
 
     private fun initDateView() {
         dateViewItems = arrayListOf(monView, tueView, wedView, thuView, friView, satView, sunView)
+        // 오늘 요일 얻어오기
+        val selectIndex = if (CommonUtil.getDayWeek() == 0) {
+            6
+        } else {
+            CommonUtil.getDayWeek() - 2
+        }
+        resetDateViewItems(selectIndex)
         dateViewItems.forEach { dateView ->
             dateView.setOnClickListener {
                 resetDateViewItems()
@@ -39,8 +47,11 @@ class OnGoingActivity : RecyclerViewBaseActivity() {
         }
     }
 
-    private fun resetDateViewItems() {
-        dateViewItems.forEach { it.isSelected = false }
+    private fun resetDateViewItems(selectIndex: Int = -1) {
+        dateViewItems.forEachIndexed { index, _ ->
+            val item = dateViewItems[index]
+            item.isSelected = selectIndex == index
+        }
     }
 
     override fun onClick(v: View?) {

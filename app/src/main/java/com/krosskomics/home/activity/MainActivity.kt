@@ -56,6 +56,7 @@ import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.view_main_action_item.*
 import kotlinx.android.synthetic.main.view_main_tab.*
+import kotlinx.android.synthetic.main.view_main_tab.view.*
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
 import java.util.*
 
@@ -244,6 +245,14 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         waitButton.setOnClickListener(this)
         rankingButton.setOnClickListener(this)
         genreButton.setOnClickListener(this)
+        initStickyTabView()
+    }
+
+    private fun initStickyTabView() {
+        mainStickyTabView.onGoingButton.setOnClickListener { startActivity(Intent(context, OnGoingActivity::class.java))  }
+        mainStickyTabView.waitButton.setOnClickListener { startActivity(Intent(context, WaitFreeActivity::class.java)) }
+        mainStickyTabView.rankingButton.setOnClickListener { startActivity(Intent(context, RankingActivity::class.java)) }
+        mainStickyTabView.genreButton.setOnClickListener { startActivity(Intent(context, GenreActivity::class.java)) }
     }
 
     private fun setMainBannerView(items: ArrayList<DataBanner>?) {

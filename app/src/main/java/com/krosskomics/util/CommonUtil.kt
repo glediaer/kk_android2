@@ -763,4 +763,10 @@ object CommonUtil {
         }
         return intent
     }
+
+    fun getDayWeek(): Int {
+        val calendar = Calendar.getInstance()
+        // 1: 일요일, 7: 토요일
+        return calendar.get(Calendar.DAY_OF_WEEK)
+    }
 }

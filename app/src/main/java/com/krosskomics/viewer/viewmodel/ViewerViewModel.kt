@@ -10,6 +10,7 @@ import java.util.*
 
 class ViewerViewModel(application: Application): BaseViewModel(application) {
     var item: DataEpisode = DataEpisode()
+    var isVerticalView = true // 화면 보기 방식(세로보기, 가로보기)
     var revPager = false
     var viewPosition = 0
     var arr_episode = ArrayList<DataEpisode>()

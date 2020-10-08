@@ -258,38 +258,46 @@ class ViewerActivity : ToolbarTitleActivity() {
             }
         }
         handler.sendEmptyMessageDelayed(0, 3000) // ms, 3초후 종료시킴
-    }
-
-    private fun refreshViewer() {
-        if ("1" == viewModel.item.vviewer) {
+        if (viewModel.isVerticalView) {
             vScrollImageView.visibility = View.VISIBLE
             hScrollImageView.visibility = View.GONE
+            vScrollImageView.setOnClickListener { it.visibility = View.GONE }
         } else {
             vScrollImageView.visibility = View.GONE
             hScrollImageView.visibility = View.VISIBLE
-            if ("L" == viewModel.item.hviewer) {
-                viewModel.revPager = false
-            } else if ("R" == viewModel.item.hviewer) {
-                viewModel.revPager = true
-            }
+            hScrollImageView.setOnClickListener { it.visibility = View.GONE }
         }
-        vScrollImageView.setOnClickListener { it.visibility = View.GONE }
-        hScrollImageView.setOnClickListener { it.visibility = View.GONE }
-        val handler: Handler = @SuppressLint("HandlerLeak")
-        object : Handler() {
-            override fun handleMessage(msg: Message) {
-                val fadeOutAni =
-                    AnimationUtils.loadAnimation(
-                        context,
-                        R.anim.fadeout
-                    )
-                vScrollImageView.animation = fadeOutAni
-                vScrollImageView.visibility = View.GONE
-                hScrollImageView.animation = fadeOutAni
-                hScrollImageView.visibility = View.GONE
-            }
-        }
-        handler.sendEmptyMessageDelayed(0, 3000) // ms, 3초후 종료시킴
+    }
+
+    private fun refreshViewer() {
+//        if ("1" == viewModel.item.vviewer) {
+//            vScrollImageView.visibility = View.VISIBLE
+//            hScrollImageView.visibility = View.GONE
+//        } else {
+//            vScrollImageView.visibility = View.GONE
+//            hScrollImageView.visibility = View.VISIBLE
+//            if ("L" == viewModel.item.hviewer) {
+//                viewModel.revPager = false
+//            } else if ("R" == viewModel.item.hviewer) {
+//                viewModel.revPager = true
+//            }
+//        }
+
+//        val handler: Handler = @SuppressLint("HandlerLeak")
+//        object : Handler() {
+//            override fun handleMessage(msg: Message) {
+//                val fadeOutAni =
+//                    AnimationUtils.loadAnimation(
+//                        context,
+//                        R.anim.fadeout
+//                    )
+//                vScrollImageView.animation = fadeOutAni
+//                vScrollImageView.visibility = View.GONE
+//                hScrollImageView.animation = fadeOutAni
+//                hScrollImageView.visibility = View.GONE
+//            }
+//        }
+//        handler.sendEmptyMessageDelayed(0, 3000) // ms, 3초후 종료시킴
         viewModel.apply {
             items.clear()
             epList.clear()
@@ -302,6 +310,8 @@ class ViewerActivity : ToolbarTitleActivity() {
         intent?.apply {
             toolbarTitleString = extras?.getString("title").toString()
             viewModel.item.eid = extras?.getString("eid").toString()
+            viewModel.isVerticalView = extras?.getBoolean("isVerticalView") ?: true
+            viewModel.revPager = extras?.getBoolean("revPager") ?: false
         }
         super.initModel()
         viewModel.getCheckEpResponseLiveData().observe(this, this)

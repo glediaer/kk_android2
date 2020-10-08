@@ -5,12 +5,15 @@ import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.StrictMode
+import android.util.Log
 import android.view.View
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
@@ -42,12 +45,15 @@ import com.krosskomics.util.ServerUtil.service
 import com.krosskomics.util.UtilBitmap
 import com.krosskomics.viewer.activity.ViewerActivity
 import com.scottyab.aescrypt.AESCrypt
+import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.activity_series.*
+import kotlinx.android.synthetic.main.activity_series.nestedScrollView
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_content_like_white.*
 import kotlinx.android.synthetic.main.view_ep_purchase.*
 import kotlinx.android.synthetic.main.view_toolbar.*
+import kotlinx.android.synthetic.main.view_toolbar.toolbar
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -472,6 +478,17 @@ class SeriesActivity : ToolbarTitleActivity() {
     }
 
     private fun setHeaderContentView(t: Episode) {
+        nestedScrollView.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            if (BuildConfig.DEBUG) {
+                Log.e(TAG, "scrollY : " + scrollY)
+                Log.e(TAG, "oldScrollY : " + oldScrollY)
+                if (scrollY >= CommonUtil.dpToPx(context, 50)) {
+                    toolbar.visibility = View.VISIBLE
+                } else {
+                    toolbar.visibility = View.GONE
+                }
+            }
+        }
         t.series?.let {
             toolbar.actionItem.scribeImageView.isSelected = it.issubscribed != "0"
             mainImageView.setImageURI(it.image)
@@ -653,6 +670,8 @@ class SeriesActivity : ToolbarTitleActivity() {
             val bundle = Bundle().apply {
                 putString("title", it.ep_title)
                 putString("eid", it.eid)
+                putBoolean("isVerticalView", viewModel.isVerticalView)
+                putBoolean("revPager", viewModel.revPager)
             }
             intent.putExtras(bundle)
             startActivity(intent)
