@@ -12,10 +12,8 @@ import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.fragment.BaseFragment
 import com.krosskomics.common.model.Gift
-import com.krosskomics.common.model.More
 import com.krosskomics.library.viewmodel.GiftBoxViewModel
-import com.krosskomics.library.viewmodel.LibraryViewModel
-import com.krosskomics.ongoing.adapter.OnGoingAdapter
+import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import kotlinx.android.synthetic.main.fragment_genre.recyclerView
@@ -95,7 +93,11 @@ class GiftBoxFragment : BaseFragment() {
     }
 
     private fun initRecyclerViewAdapter() {
-        recyclerView.adapter = OnGoingAdapter(viewModel.items, recyclerViewItemLayoutId)
+        recyclerView.adapter =
+            CommonRecyclerViewAdapter(
+                viewModel.items,
+                recyclerViewItemLayoutId
+            )
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {

@@ -319,6 +319,7 @@
     <string name="str_comment_here">Write your comment here.."</string>
     <string name="str_delete">Delete</string>
     <string name="str_downloaded">Downloaded</string>
+    <string name="str_download_viewer">Download Viewer</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

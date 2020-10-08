@@ -10,7 +10,7 @@ import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.fragment.BaseFragment
 import com.krosskomics.common.model.More
-import com.krosskomics.ongoing.adapter.OnGoingAdapter
+import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.util.CODE
 import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.view_topbutton.*
@@ -74,7 +74,11 @@ class GenreFragment : BaseFragment() {
     }
 
     private fun initRecyclerViewAdapter() {
-        recyclerView.adapter = OnGoingAdapter(viewModel.items, recyclerViewItemLayoutId)
+        recyclerView.adapter =
+            CommonRecyclerViewAdapter(
+                viewModel.items,
+                recyclerViewItemLayoutId
+            )
         (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
             override fun onItemClick(item: Any?) {
                 if (item is DataBook) {

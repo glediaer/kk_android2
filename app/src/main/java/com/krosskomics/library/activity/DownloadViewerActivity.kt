@@ -24,11 +24,11 @@ import com.krosskomics.util.FileUtils.writeFile2
 import com.krosskomics.util.PreCachingLayoutManager
 import com.krosskomics.viewer.adapter.ViewerAdapter
 import com.scottyab.aescrypt.AESCrypt
-import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.activity_viewer.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.toolbar
+import kotlinx.android.synthetic.main.view_toolbar_viewer.view.*
 import java.io.File
 import java.io.IOException
 import java.security.GeneralSecurityException
@@ -54,14 +54,26 @@ class DownloadViewerActivity : ToolbarTitleActivity() {
     }
 
     override fun initTracker() {
-        setTracker(getString(R.string.str_downloaded))
+        setTracker(getString(R.string.str_download_viewer))
     }
 
     override fun initLayout() {
-        toolbarTitleString = getString(R.string.str_downloaded)
+        toolbarTitleString = viewModel.title
         super.initLayout()
 
         requestViewerData()
+        initHeaderView()
+        initBottomView()
+
+    }
+
+    private fun initBottomView() {
+        footerView.visibility = View.GONE
+    }
+
+    private fun initHeaderView() {
+        toolbar.toolbarLike.visibility = View.GONE
+        toolbar.toolbarShare.visibility = View.GONE
     }
 
     override fun onDestroy() {

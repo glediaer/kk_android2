@@ -4,26 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
-import com.krosskomics.common.data.DataBook
-import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.data.DataFile
 import com.krosskomics.common.model.Default
 import com.krosskomics.library.viewmodel.DownloadViewModel
-import com.krosskomics.ongoing.adapter.OnGoingAdapter
-import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.ServerUtil
 import kotlinx.android.synthetic.main.activity_download_ep.*
 import kotlinx.android.synthetic.main.activity_download_ep.recyclerView
-import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,6 +47,7 @@ class DownloadEpActivity : ToolbarTitleActivity() {
         toolbarTitleString = getString(R.string.str_downloaded)
         super.initLayout()
         setHeaderView()
+        getDownloadedData()
     }
 
     override fun initToolbar() {
@@ -73,7 +67,6 @@ class DownloadEpActivity : ToolbarTitleActivity() {
             viewModel.mThumbnail = extras?.getString("thumbnail") ?: ""
             viewModel.mSid = extras?.getString("sid") ?: ""
         }
-        getDownloadedData()
     }
 
     private fun setHeaderView() {
@@ -137,6 +130,7 @@ class DownloadEpActivity : ToolbarTitleActivity() {
     }
 
     override fun initRecyclerViewAdapter() {
+        super.initRecyclerViewAdapter()
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {

@@ -1,6 +1,5 @@
 package com.krosskomics.library.fragment
 
-import android.app.Application
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -15,17 +14,14 @@ import com.krosskomics.R
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
-import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.fragment.BaseFragment
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.More
 import com.krosskomics.common.model.User
-import com.krosskomics.common.viewmodel.FragmentBaseViewModel
 import com.krosskomics.library.activity.DownloadEpActivity
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.library.viewmodel.LibraryViewModel
-import com.krosskomics.ongoing.adapter.OnGoingAdapter
-import com.krosskomics.series.viewmodel.SeriesViewModel
+import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.FileUtils
@@ -288,7 +284,11 @@ class LibraryFragment : BaseFragment() {
     }
 
     private fun initRecyclerViewAdapter() {
-        recyclerView.adapter = OnGoingAdapter(viewModel.items, recyclerViewItemLayoutId)
+        recyclerView.adapter =
+            CommonRecyclerViewAdapter(
+                viewModel.items,
+                recyclerViewItemLayoutId
+            )
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {

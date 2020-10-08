@@ -1,11 +1,9 @@
-package com.krosskomics.ongoing.adapter
+package com.krosskomics.common.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.krosskomics.R
-import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 
-class OnGoingAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
+class CommonRecyclerViewAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
     RecyclerViewBaseAdapter(items, layoutRes) {
 
     private var onClickListener: OnItemClickListener? = null

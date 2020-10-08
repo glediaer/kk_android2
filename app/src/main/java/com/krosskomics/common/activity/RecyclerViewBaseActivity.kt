@@ -21,7 +21,7 @@ import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.genre.adapter.GenreAdapter
 import com.krosskomics.library.activity.LibraryActivity
-import com.krosskomics.ongoing.adapter.OnGoingAdapter
+import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.ranking.adapter.RankingAdapter
 import com.krosskomics.search.activity.SearchActivity
@@ -153,7 +153,10 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             when(viewModel.tabIndex) {
                 3 -> RankingAdapter(viewModel.items, recyclerViewItemLayoutId, context)
                 4 -> GenreAdapter(KJKomicsApp.MAIN_CONTENTS)
-                else -> OnGoingAdapter(viewModel.items, recyclerViewItemLayoutId)
+                else -> CommonRecyclerViewAdapter(
+                    viewModel.items,
+                    recyclerViewItemLayoutId
+                )
             }
 
         if (viewModel.tabIndex != 4) {
