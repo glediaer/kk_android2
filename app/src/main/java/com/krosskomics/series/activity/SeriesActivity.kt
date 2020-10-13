@@ -160,6 +160,7 @@ class SeriesActivity : ToolbarTitleActivity() {
                     if ("00" == t.retcode) {
                         viewModel.seriesItem = t.series!!
                         viewModel.arr_episode = t.list
+                        viewModel.items.addAll(t.list)
                         setMainContentView(t)
                         setHeaderContentView(t)
 
@@ -482,7 +483,7 @@ class SeriesActivity : ToolbarTitleActivity() {
             if (BuildConfig.DEBUG) {
                 Log.e(TAG, "scrollY : " + scrollY)
                 Log.e(TAG, "oldScrollY : " + oldScrollY)
-                if (scrollY >= CommonUtil.dpToPx(context, 50)) {
+                if (scrollY >= 320) {
                     toolbar.visibility = View.VISIBLE
                 } else {
                     toolbar.visibility = View.GONE
@@ -530,13 +531,7 @@ class SeriesActivity : ToolbarTitleActivity() {
             epCountTextView.text = getString(R.string.str_episodes_seq_format1, t.list?.size)
             listOrderImageView.setOnClickListener { view ->
                 view.isSelected = !view.isSelected
-                // 리스트 정렬 변경
-                if (view.isSelected) {
-                    Collections.sort(t.list, DataEpisode.seq)
-                    t.list.reverse()
-                } else {
-                    Collections.sort(t.list, DataEpisode.seq)
-                }
+                viewModel.items.reverse()
                 recyclerView.adapter?.notifyDataSetChanged()
             }
             if ("0" == it.read_next_ep_seq || read(context, CODE.LOCAL_loginYn, "N")

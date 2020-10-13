@@ -95,9 +95,9 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                 val genreTextView = view.findViewById<TextView>(R.id.tv_genre)
                 val likeCountTextView = view.findViewById<TextView>(R.id.tv_like_count)
 
-                titleTextView.setText(item.title)
-                genreTextView.setText(item.genre1)
-                likeCountTextView.text = CommonUtil.likeCountFormat(context, item.like_cnt)
+                titleTextView.text = item.title
+                genreTextView.text = item.genre1
+                likeCountTextView.text = item.like_cnt
 
                 mainImageView.setController(CommonUtil.getDraweeController(context, item.image, 200, 200))
 
@@ -140,9 +140,9 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
 
                 val likeCountTextView = view.findViewById<TextView>(R.id.tv_like_count)
 
-                titleTextView.setText(item.title)
-                genreTextView.setText(item.genre1)
-                likeCountTextView.text = CommonUtil.likeCountFormat(context, item.like_cnt)
+                titleTextView.text = item.title
+                genreTextView.text = item.genre1
+                likeCountTextView.text = item.like_cnt
 
                 mainImageView.setController(CommonUtil.getDraweeController(context, item.image, 200, 200))
 

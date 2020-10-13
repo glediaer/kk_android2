@@ -321,6 +321,18 @@
     <string name="str_downloaded">Downloaded</string>
     <string name="str_download_viewer">Download Viewer</string>
 
+    <string name="str_coin_footer_noti">Download Viewer</string>
+    <string name="str_coin_footer_noti2">Download Viewer</string>
+    <string name="str_best">Best</string>
+    <string name="str_key_mean">str_key_mean</string>
+    <string name="str_key_mean_answer">str_key_mean</string>
+    <string name="str_coin_info_notice_title">str_key_mean</string>
+    <string name="str_coin_info_notice1">str_key_mean</string>
+    <string name="str_coin_info_notice2">str_key_mean</string>
+    <string name="str_coin_info_notice3">str_key_mean</string>
+    <string name="str_coin_info_notice4">str_key_mean</string>
+    <string name="str_coin_info_notice5">str_key_mean</string>
+
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>
     <string name="msg_empty_series">Oops..\nNo series</string>

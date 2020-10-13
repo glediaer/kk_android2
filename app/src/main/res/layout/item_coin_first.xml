@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_product_text"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:background="@drawable/kk_rect_red"
+        android:gravity="center"
+        android:text="@string/str_best"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_coin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        tools:text="33 Keys" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_bonus_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textSize="13dp"
+            tools:text="10 + 0 Bonus = " />
+
+        <TextView
+            android:id="@+id/tv_total_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/orange"
+            android:textSize="13sp"
+            tools:text="10 Coin" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_won"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:textSize="15dp"
+            tools:text="60 INR" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

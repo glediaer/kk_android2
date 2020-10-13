@@ -117,10 +117,10 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         }
     }
 
-    private fun initMainView() {
+    open fun initMainView() {
         recyclerView?.let { initRecyclerView() }
         topButton?.setOnClickListener {
-            recyclerView?.smoothScrollToPosition(0)
+            recyclerView?.scrollTo(0, 0)
         }
     }
 

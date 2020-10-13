@@ -3,7 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="80dp"
+        android:src="@drawable/kross_coin_big" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,11 +26,6 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-            
-            <ImageView
-                android:layout_width="29dp"
-                android:layout_height="29dp"
-                android:src="@drawable/kross_coin_big" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -34,34 +34,23 @@
                 android:layout_marginLeft="12dp"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_product_text"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/kk_rect_yellow"
+                    android:gravity="center"
+                    android:text="@string/str_best"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_coin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:id="@+id/tv_coin"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="18dp"
-                        android:textColor="#333333"
-                        tools:text="10 Coin"/>
-
-                    <TextView
-                        android:id="@+id/tv_product_text"
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="29dp"
-                        android:paddingLeft="13dp"
-                        android:gravity="center_vertical"
-                        android:background="@drawable/kross_coin_item_sticker"
-                        android:textSize="10dp"
-                        android:textColor="#ffffff"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        tools:text="Best Start"/>
-
-                </LinearLayout>
+                    android:textSize="18dp"
+                    android:textColor="#333333"
+                    tools:text="10 Coin"/>
 
 
                 <LinearLayout
@@ -94,15 +83,21 @@
         <LinearLayout
             android:layout_width="86dp"
             android:layout_height="34dp"
-            android:background="@drawable/kross_rect_white_gray_r24"
+            android:background="@drawable/kk_rect_black_r30"
             android:gravity="center">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/kk_circle_yellow" />
 
             <TextView
                 android:id="@+id/tv_won"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
                 android:textSize="15dp"
-                android:textColor="#333333"
+                android:textColor="@color/yellow"
                 tools:text="60 INR"/>
             
         </LinearLayout>

@@ -4,8 +4,8 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.android.billingclient.api.*
-import com.android.billingclient.api.BillingClient.BillingResponseCode.*
 import com.krosskomics.R
+import com.krosskomics.coin.adapter.CoinAdapter
 import com.krosskomics.coin.viewmodel.CoinViewModel
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
@@ -13,9 +13,9 @@ import com.krosskomics.common.data.DataCoin
 import com.krosskomics.common.model.Coin
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil.read
-import kotlinx.android.synthetic.main.activity_main_content.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.android.synthetic.main.activity_coin.*
+import kotlinx.android.synthetic.main.view_toolbar_black.*
+import kotlinx.android.synthetic.main.view_toolbar_black.view.*
 
 class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
     private val TAG = "CoinActivity"
@@ -34,11 +34,7 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
         }
 
     private var skuDetails: MutableList<SkuDetails>? = null
-
-    private var billingClient = BillingClient.newBuilder(context)
-        .setListener(purchaseUpdateListener)
-        .enablePendingPurchases()
-        .build()
+    private lateinit var billingClient: BillingClient
 
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_coin
@@ -46,16 +42,67 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
     }
 
     override fun initTracker() {
-        setTracker(getString(R.string.str_coin_shop))
+        setTracker(getString(R.string.str_keyshop))
     }
 
     override fun initLayout() {
-        toolbarTitleString = getString(R.string.str_coin_shop)
+        toolbarTitleString = getString(R.string.str_keyshop)
         super.initLayout()
         initInApp()
+        initHeaderView()
+    }
+
+    override fun initMainView() {
+        super.initMainView()
+
+        initInfoView()
+        buyButton.setOnClickListener {
+            recyclerView.visibility = View.VISIBLE
+            historyWebView.visibility = View.GONE
+        }
+
+        historyButton.setOnClickListener {
+            historyWebView.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+        }
+
+    }
+
+    private fun initInfoView() {
+        closeInfoImageView.setOnClickListener {
+            coinInfoView.visibility = View.GONE
+        }
+        coinInfoView.setOnClickListener { coinInfoView.visibility = View.GONE }
+    }
+
+    private fun initHeaderView() {
+        keyTextView.text = read(context, CODE.LOCAL_coin, "0")
+    }
+
+    override fun initToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowTitleEnabled(false)
+            setHomeAsUpIndicator(R.drawable.kk_icon_back_white)
+        }
+        toolbarTitle.text = toolbarTitleString
+        toolbar.toolbarTrash.visibility = View.GONE
+        toolbar.toolbarInfo.visibility = View.VISIBLE
+        toolbar.toolbarInfo.setOnClickListener {
+            if (coinInfoView.isShown) {
+                coinInfoView.visibility = View.GONE
+            } else {
+                coinInfoView.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun initInApp() {
+        billingClient = BillingClient.newBuilder(context)
+            .setListener(purchaseUpdateListener)
+            .enablePendingPurchases()
+            .build()
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode ==  BillingClient.BillingResponseCode.OK) {
@@ -97,7 +144,7 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
     }
 
     override fun initRecyclerViewAdapter() {
-        recyclerView.adapter = RecyclerViewBaseAdapter(viewModel.items, recyclerViewItemLayoutId)
+        recyclerView.adapter = CoinAdapter(viewModel.items, recyclerViewItemLayoutId)
         (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
             override fun onItemClick(item: Any?) {
                 if (item is DataCoin) {

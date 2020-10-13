@@ -734,12 +734,12 @@ object CommonUtil {
             .build()
     }
 
-    fun likeCountFormat(context: Context, likeCount: String?): String{
-        if (likeCount == null) return ""
-        likeCount.let {
-            if (it.toInt() <= 999) return it else return context.getString(R.string.str_like_count_max)
-        }
-    }
+//    fun likeCountFormat(context: Context, likeCount: String?): String{
+//        if (likeCount == null) return ""
+//        likeCount.let {
+//            if (it.toInt() <= 999) return it else return context.getString(R.string.str_like_count_max)
+//        }
+//    }
 
     /**
      * 푸시타입별 액션 설정

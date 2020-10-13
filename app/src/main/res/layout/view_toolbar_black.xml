@@ -43,6 +43,14 @@
             android:textColor="#ffffff"
             android:text="@string/str_done" />
 
+        <ImageView
+            android:id="@+id/toolbarInfo"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="right"
+            android:visibility="gone"
+            android:src="@drawable/kk_ic_event"/>
+
     </FrameLayout>
 
 </androidx.appcompat.widget.Toolbar>

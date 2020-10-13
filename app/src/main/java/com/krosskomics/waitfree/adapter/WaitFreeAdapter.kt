@@ -46,7 +46,7 @@ class WaitFreeAdapter(private val items: ArrayList<*>) :
                     titleTextView.text = item.title
                     writerTextView.text = item.writer1
                     genreTextView.text = item.genre1
-                    likeCountTextView.text = CommonUtil.likeCountFormat(itemView.context, item.like_cnt)
+                    likeCountTextView.text = item.like_cnt
 
                     setOnClickListener {
                         onClickListener?.onItemClick(item)
