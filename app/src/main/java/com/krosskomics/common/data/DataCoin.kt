@@ -1,7 +1,7 @@
 package com.krosskomics.common.data
 
 class DataCoin {
-    var product_id: String? = null
+    var product_id: String = ""
     var product_name: String? = null
     var coin = 0
     var bonus_coin = 0

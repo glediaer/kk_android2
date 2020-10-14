@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import com.krosskomics.ongoing.repository.OnGoingRepository
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {
-    var items = arrayListOf<Any>()
+    open var items = arrayListOf<Any>()
     var page = 1
     var totalPage = 1
     var isRefresh = false

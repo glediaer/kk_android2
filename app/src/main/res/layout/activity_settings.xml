@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include
         android:id="@+id/toolbar"
@@ -218,11 +219,16 @@
                         android:textColor="#2e2e2e"
                         android:text="@string/str_push_notification" />
 
-                    <androidx.appcompat.widget.SwitchCompat
+                    <Switch
                         android:id="@+id/pushNotiSwitch"
                         android:layout_width="50dp"
                         android:layout_height="26dp"
-                        android:layout_gravity="right|center_vertical"/>
+                        style="@style/CommonSwitch"
+                        app:showText="true"
+                        android:textOn="ON"
+                        android:textOff="OFF"
+                        tools:ignore="UseSwitchCompatOrMaterialXml"
+                        android:layout_gravity="right|center_vertical" />
 
                 </FrameLayout>
 
@@ -245,10 +251,15 @@
                         android:textColor="#2e2e2e"
                         android:text="@string/str_subscribe_ep" />
 
-                    <androidx.appcompat.widget.SwitchCompat
+                    <Switch
                         android:id="@+id/subscribeSwitch"
                         android:layout_width="50dp"
                         android:layout_height="26dp"
+                        style="@style/CommonSwitch"
+                        app:showText="true"
+                        android:textOn="ON"
+                        android:textOff="OFF"
+                        tools:ignore="UseSwitchCompatOrMaterialXml"
                         android:layout_gravity="right|center_vertical"/>
 
                 </FrameLayout>

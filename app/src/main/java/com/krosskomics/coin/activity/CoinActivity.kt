@@ -4,6 +4,8 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.android.billingclient.api.*
+import com.android.billingclient.api.BillingClient.BillingResponseCode.*
+import com.android.billingclient.api.Purchase.PurchasesResult
 import com.krosskomics.R
 import com.krosskomics.coin.adapter.CoinAdapter
 import com.krosskomics.coin.viewmodel.CoinViewModel
@@ -16,6 +18,7 @@ import com.krosskomics.util.CommonUtil.read
 import kotlinx.android.synthetic.main.activity_coin.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
+
 
 class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
     private val TAG = "CoinActivity"
@@ -33,7 +36,7 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
             // To be implemented in a later section.
         }
 
-    private var skuDetails: MutableList<SkuDetails>? = null
+    private var skuDetailItems = ArrayList<SkuDetails>()
     private lateinit var billingClient: BillingClient
 
     override fun getLayoutId(): Int {
@@ -48,7 +51,6 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
     override fun initLayout() {
         toolbarTitleString = getString(R.string.str_keyshop)
         super.initLayout()
-        initInApp()
         initHeaderView()
     }
 
@@ -119,18 +121,15 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
 
     fun querySkuDetails() {
         val skuList = ArrayList<String>()
-        skuList.add("premium_upgrade")
-        skuList.add("gas")
+        (viewModel.items as ArrayList<DataCoin>).forEach {
+            skuList.add(it.product_id)
+        }
         val params = SkuDetailsParams.newBuilder()
         params.setSkusList(skuList).setType(BillingClient.SkuType.INAPP)
-//        val skuDetailsResult = withContext(Dispatchers.IO) {
-//
-//        }
         billingClient.querySkuDetailsAsync(params.build(), object : SkuDetailsResponseListener {
             override fun onSkuDetailsResponse(result: BillingResult, items: MutableList<SkuDetails>?) {
-                skuDetails = items
+                skuDetailItems.addAll(items!!)
             }
-
         })
         // Process the result.
     }
@@ -139,6 +138,7 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
         if (t is Coin) {
             if ("00" == t.retcode) {
                 setMainContentView(t)
+                initInApp()
             }
         }
     }
@@ -149,12 +149,12 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
             override fun onItemClick(item: Any?) {
                 if (item is DataCoin) {
                     if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
-//                        if (null != arr_coin && 0 < arr_coin.size) {
-//                            data = arr_coin.get(position)
-//                        }
-//                        // 결제 요청 팝업
-//                        payment(data)
-                        requestPurchase()
+                        skuDetailItems.forEach {
+                            if (item.product_id == it.sku) {
+                                requestPurchase(it)
+                                return
+                            }
+                        }
                     } else {
                         goLoginAlert(context)
                     }
@@ -163,28 +163,35 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
         })
     }
 
-    private fun requestPurchase() {
+    private fun requestPurchase(skuDetails: SkuDetails) {
         // An activity reference from which the billing flow will be launched.
 
 // Retrieve a value for "skuDetails" by calling querySkuDetailsAsync().
-//        val flowParams = BillingFlowParams.newBuilder()
-//            .setSkuDetails(skuDetails)
-//            .build()
-//        val responseCode = billingClient.launchBillingFlow(this@CoinActivity, flowParams).responseCode
-//        when (responseCode) {
-//            OK -> {} // Success
-//            BILLING_UNAVAILABLE -> {} // Billing API version is not supported for the type requested.
-//            DEVELOPER_ERROR -> {}   //I nvalid arguments provided to the API.
-//            ERROR -> {} // Fatal error during the API action.
-//            FEATURE_NOT_SUPPORTED -> {} // Requested feature is not supported by Play Store on the current device.
-//            ITEM_ALREADY_OWNED -> {} // Failure to purchase since item is already owned.
-//            ITEM_NOT_OWNED -> {} // Failure to consume since item is not owned.
-//            ITEM_UNAVAILABLE -> {} // Requested product is not available for purchase.
-//            SERVICE_DISCONNECTED -> {} // Play Store service is not connected now - potentially transient state.
-//            SERVICE_TIMEOUT -> {} // The request has reached the maximum timeout before Google Play responds.
-//            SERVICE_UNAVAILABLE -> {} // Network connection is down.
-//            USER_CANCELED -> {} // User pressed back or canceled a dialog.
-//        }
+        val flowParams = BillingFlowParams.newBuilder()
+            .setSkuDetails(skuDetails)
+            .build()
+        val responseCode = billingClient.launchBillingFlow(this@CoinActivity, flowParams).responseCode
+        when (responseCode) {
+            OK -> {} // Success
+            BILLING_UNAVAILABLE -> {} // Billing API version is not supported for the type requested.
+            DEVELOPER_ERROR -> {}   //I nvalid arguments provided to the API.
+            ERROR -> {} // Fatal error during the API action.
+            FEATURE_NOT_SUPPORTED -> {} // Requested feature is not supported by Play Store on the current device.
+            ITEM_ALREADY_OWNED -> {
+//                val purchasesResult: PurchasesResult =
+//                    billingClient.queryPurchases(BillingClient.SkuType.INAPP)
+//                onPurchasesUpdated(
+//                    BillingClient.BillingResponseCode.OK,
+//                    purchasesResult.purchasesList
+//                )
+            } // Failure to purchase since item is already owned.
+            ITEM_NOT_OWNED -> {} // Failure to consume since item is not owned.
+            ITEM_UNAVAILABLE -> {} // Requested product is not available for purchase.
+            SERVICE_DISCONNECTED -> {} // Play Store service is not connected now - potentially transient state.
+            SERVICE_TIMEOUT -> {} // The request has reached the maximum timeout before Google Play responds.
+            SERVICE_UNAVAILABLE -> {} // Network connection is down.
+            USER_CANCELED -> {} // User pressed back or canceled a dialog.
+        }
     }
 
     override fun onPurchasesUpdated(billingResult: BillingResult, purchases: List<Purchase>?) {

@@ -67,7 +67,11 @@
             <Switch
                 android:id="@+id/nightSwitch"
                 android:layout_width="50dp"
-                android:layout_height="26dp"/>
+                android:layout_height="26dp"
+                style="@style/CommonSwitch"
+                android:textOn="ON"
+                android:textOff="OFF"
+                tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
         </LinearLayout>
 
@@ -115,7 +119,11 @@
             <Switch
                 android:id="@+id/autoNextSwitch"
                 android:layout_width="50dp"
-                android:layout_height="26dp"/>
+                android:layout_height="26dp"
+                style="@style/CommonSwitch"
+                android:textOn="ON"
+                android:textOff="OFF"
+                tools:ignore="UseSwitchCompatOrMaterialXml"/>
 
         </LinearLayout>
 
