@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.facebook.drawee.view.SimpleDraweeView
 import com.krosskomics.R
 import com.krosskomics.common.data.*
 import com.krosskomics.common.holder.BaseItemViewHolder
@@ -14,7 +13,6 @@ import com.krosskomics.ranking.activity.RankingDetailActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
-import com.krosskomics.util.CommonUtil.getDeviceWidth
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.viewer.activity.ViewerActivity
 import kotlinx.android.synthetic.main.item_coin.view.*
@@ -109,8 +107,10 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         deleteView?.visibility = View.GONE
                     }
                 } else if (item is DataEpisode) {
-                    img_ep_title?.controller = CommonUtil.getDraweeController(context, item.image,
-                        200, 200)
+                    img_ep_title?.controller = CommonUtil.getDraweeController(
+                        context, item.image,
+                        200, 200
+                    )
                     txt_ep_title?.text = item.ep_title
                     txt_update?.text = item.ep_show_date
                     txt_showDate?.text = item.show_str
@@ -121,7 +121,10 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                             dimView?.visibility = View.GONE
                             ticketImageView?.visibility = View.GONE
                             if (viewModel.listViewType == 1) {
-                                if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
+                                if (read(context, CODE.LOCAL_loginYn, "N").equals(
+                                        "Y",
+                                        ignoreCase = true
+                                    )) {
                                     downloadImageView?.isSelected = "0" != item.isdownload
                                     downloadImageView?.visibility = View.VISIBLE
                                     downloadImageView?.setOnClickListener(View.OnClickListener {
@@ -188,9 +191,24 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     }
                 } else if (item is DataCoin) {
                     tv_coin.text = item.product_name
+
+                    val totalCoin: Int = item.coin + item.bonus_coin
+                    tv_bonus_coin.text = item.coin.toString() + " + " +
+                            item.bonus_coin + " " + itemView.context.getString(R.string.str_bonus) + " = "
+                    tv_total_coin.text = totalCoin.toString() + " " + itemView.context.getString(R.string.str_coins)
+
+                    tv_won.text = item.sale_price.toString() + " " + item.currency
+                    if (TextUtils.isEmpty(item.product_text)) {
+                        tv_product_text.visibility = View.GONE
+                    } else {
+                        tv_product_text.text = item.product_text
+                        tv_product_text.visibility = View.VISIBLE
+                    }
                 } else if (item is DataBanner) {
-                    img_ep_title.controller = CommonUtil.getDraweeController(context, item.image,
-                        200, 200)
+                    img_ep_title.controller = CommonUtil.getDraweeController(
+                        context, item.image,
+                        200, 200
+                    )
                     txt_ep_title?.text = item.title
                 } else if (item is DataFile) {
                     if (!TextUtils.isEmpty(item.image)) {

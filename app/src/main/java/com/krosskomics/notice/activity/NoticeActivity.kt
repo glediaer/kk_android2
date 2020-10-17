@@ -35,15 +35,7 @@ class NoticeActivity : ToolbarViewPagerActivity() {
             searchImageView.visibility = View.GONE
             contactImageView.visibility = View.VISIBLE
             contactImageView.setOnClickListener {
-                Intent(Intent.ACTION_SEND).apply {
-                    type = "plain/Text"
-                    putExtra(Intent.EXTRA_EMAIL, getString(R.string.str_kk_email))
-                    putExtra(Intent.EXTRA_SUBJECT, getString(R.string.str_faq))
-                    putExtra(Intent.EXTRA_TEXT, "앱 버전 (AppVersion):" + CommonUtil.getAppVersion(context) + "\n기기명 (Device):\n안드로이드 OS (Android OS):\n내용 (Content)")
-                    type = "message/rfc822"
-
-                    startActivity(this)
-                }
+                CommonUtil.sendEmail(context)
             }
         }
     }

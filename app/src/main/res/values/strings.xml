@@ -34,7 +34,6 @@
     <string name="str_signup_login">Sign up or Log in</string>
     <string name="str_promotion_code">Promotion Code</string>
     <string name="str_gift_shop">Gift Shop</string>
-    <string name="str_history">History</string>
     <string name="str_help">Help</string>
     <string name="str_buy_coins">Buy Coins</string>
     <string name="str_coin_transactions">Coins Transactions</string>
@@ -93,7 +92,7 @@
     <string name="str_episode2">episode</string>
     <string name="str_my_balance">My balance</string>
     <string name="str_save">Save</string>
-    <string name="str_buy">Buy</string>
+
 
     <string name="str_permanent_access">Permanent Access</string>
     <string name="str_expires_format">Expires in %d days</string>
@@ -152,7 +151,6 @@
     <string name="msg_not_match_password">Invalid password.</string>
     <string name="msg_inapp_setting_error">in-app purchases settings are incorrect.</string>
     <string name="msg_get_inventory_error">Failed to get the inventory.</string>
-    <string name="msg_cancel_pay">The in-app purchase has been Cancelled.</string>
     <string name="msg_service_unavailable_error">Unavailable to use in-app service due to network problems.</string>
     <string name="msg_billing_unavailable_error">This version of Google Play is not supported.</string>
     <string name="msg_item_unavailable_error">Can\'t buy coins.</string>
@@ -321,17 +319,22 @@
     <string name="str_downloaded">Downloaded</string>
     <string name="str_download_viewer">Download Viewer</string>
 
-    <string name="str_coin_footer_noti">Download Viewer</string>
-    <string name="str_coin_footer_noti2">Download Viewer</string>
-    <string name="str_best">Best</string>
-    <string name="str_key_mean">str_key_mean</string>
-    <string name="str_key_mean_answer">str_key_mean</string>
+    <string name="str_coin_footer_noti">For more assistance, reach out to us at</string>
+    <string name="str_best">BEST</string>
+    <string name="str_key_mean">Please read before purchasing :</string>
+    <string name="str_key_mean_answer">* Coins give you access to premium episodes.\n* You can buy one episode for 2 coins.\n* You can rent one episode for 1 coin. The rent is valid for 7 days.\n* Coins and unlocked episodes are linked to your account.\n* To know more about coins, check Coins Transactions.</string>
     <string name="str_coin_info_notice_title">str_key_mean</string>
     <string name="str_coin_info_notice1">str_key_mean</string>
     <string name="str_coin_info_notice2">str_key_mean</string>
     <string name="str_coin_info_notice3">str_key_mean</string>
     <string name="str_coin_info_notice4">str_key_mean</string>
     <string name="str_coin_info_notice5">str_key_mean</string>
+    <string name="str_buy">Buy</string>
+    <string name="str_history">History</string>
+    <string name="str_whatkey1">What does</string>
+    <string name="str_whatkey2">‘KEY’</string>
+    <string name="str_whatkey3">mean?</string>
+    <string name="str_whatkey_desc">‘KEY’ is a coin system used to unlock episodes.</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>
@@ -351,5 +354,7 @@
     <string name="msg_fail_file_download">Download failed.</string>
     <string name="msg_scroll_end_next_view">Continue scrolling for\nnext episode.</string>
     <string name="msg_scroll_end_last_view">This is the last episode.</string>
+    <string name="msg_cancel_pay">The in-app purchase has been Cancelled.</string>
+
 
 </resources>

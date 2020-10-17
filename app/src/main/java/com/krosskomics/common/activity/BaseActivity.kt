@@ -1,5 +1,6 @@
 package com.krosskomics.common.activity
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -129,5 +130,15 @@ abstract class BaseActivity : AppCompatActivity() {
         dialog.window!!.attributes = params as WindowManager.LayoutParams
         dialog.show()
         return dialog
+    }
+
+    open fun commonAlert(context: Context?, msg: String?) {
+        if (!this.isFinishing) {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            builder
+                .setMessage(msg)
+                .setPositiveButton("OK", null)
+                .show()
+        }
     }
 }

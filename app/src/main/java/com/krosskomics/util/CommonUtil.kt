@@ -769,4 +769,16 @@ object CommonUtil {
         // 1: 일요일, 7: 토요일
         return calendar.get(Calendar.DAY_OF_WEEK)
     }
+
+    fun sendEmail(context: Context) {
+        Intent(Intent.ACTION_SEND).apply {
+            type = "plain/Text"
+            putExtra(Intent.EXTRA_EMAIL, context.getString(R.string.str_kk_email))
+            putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.str_faq))
+            putExtra(Intent.EXTRA_TEXT, "앱 버전 (AppVersion):" + CommonUtil.getAppVersion(context) + "\n기기명 (Device):\n안드로이드 OS (Android OS):\n내용 (Content)")
+            type = "message/rfc822"
+
+            context.startActivity(this)
+        }
+    }
 }

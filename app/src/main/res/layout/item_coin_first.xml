@@ -4,20 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:paddingTop="29dp"
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_width="128dp"
+        android:layout_height="76dp"
+        android:src="@drawable/kk_main_key" />
 
     <TextView
         android:id="@+id/tv_product_text"
-        android:layout_width="70dp"
-        android:layout_height="30dp"
+        android:layout_width="39dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/kk_rect_red"
         android:gravity="center"
         android:text="@string/str_best"
+        android:textSize="12dp"
         android:textColor="@color/white"
         android:textStyle="bold" />
 
@@ -25,6 +28,9 @@
         android:id="@+id/tv_coin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="21dp"
+        android:textColor="#0c0036"
         android:textStyle="bold"
         tools:text="33 Keys" />
 
@@ -36,39 +42,50 @@
             android:id="@+id/tv_bonus_coin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="13dp"
-            tools:text="10 + 0 Bonus = " />
+            android:textSize="12dp"
+            android:textColor="#828282"
+            tools:text="10" />
 
         <TextView
             android:id="@+id/tv_total_coin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/orange"
-            android:textSize="13sp"
+            android:layout_marginLeft="7dp"
+            android:textColor="#e02020"
+            android:textSize="12dp"
             tools:text="10 Coin" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/kk_rect_560b00_r16"
+        android:paddingLeft="10dp"
+        android:paddingRight="15dp"
         android:gravity="center">
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/kk_ic_one_coin" />
 
         <TextView
             android:id="@+id/tv_won"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="15dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="16dp"
+            android:textColor="@color/yellow"
             tools:text="60 INR" />
 
     </LinearLayout>
 
+    <include
+        android:layout_marginTop="20dp"
+        layout="@layout/item_underbar"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
 
 </LinearLayout>

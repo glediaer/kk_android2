@@ -5,215 +5,294 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
-    <include
-        layout="@layout/view_toolbar_black" />
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="266dp"
-                android:background="#B3000000">
+                android:background="@drawable/kk_coin_bg">
 
-                <LinearLayout
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/kk_circle_trans_yellow"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#B3000000">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/str_my_keys"
-                        android:textColor="@color/yellow" />
+                    <LinearLayout
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_marginTop="68dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/kk_circle_trans_yellow"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/keyTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/yellow"
-                        tools:text="2" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_my_keys"
+                            android:textSize="12dp"
+                            android:textColor="@color/yellow" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/str_keys"
-                        android:textColor="@color/white" />
+                        <TextView
+                            android:id="@+id/keyTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="32dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            tools:text="2" />
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16dp"
+                            android:text="@string/str_keys"
+                            android:textColor="@color/white" />
 
-            </FrameLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="bottom">
+
+                        <Button
+                            android:id="@+id/buyButton"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/kk_selector_coin_tab"
+                            android:textColor="@color/kk_selector_color_gray_black"
+                            android:text="@string/str_buy"
+                            android:textStyle="bold"
+                            android:textSize="16dp"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:id="@+id/historyButton"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/str_history"
+                            android:textStyle="bold"
+                            android:textSize="16dp"
+                            android:background="@drawable/kk_selector_coin_tab"
+                            android:textColor="@color/kk_selector_color_gray_black"
+
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-                <Button
-                    android:id="@+id/buyButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <Button
-                    android:id="@+id/historyButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp" />
-
-                <WebView
-                    android:id="@+id/historyWebView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/blue"
-                android:gravity="center"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:src="@mipmap/ic_launcher" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/str_coin_footer_noti" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/str_kk_email" />
+                    <WebView
+                        android:id="@+id/historyWebView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/str_coin_footer_noti2" />
+                    android:background="@drawable/kk_gradient_coin_footer"
+                    android:gravity="center"
+                    android:paddingTop="30dp"
+                    android:paddingBottom="39dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/kk_bundle_coin" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:textSize="12dp"
+                        android:textColor="#828282"
+                        android:text="@string/str_coin_footer_noti" />
+
+                    <TextView
+                        android:id="@+id/emailTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:textSize="12dp"
+                        android:textColor="@color/white"
+                        android:text="@string/str_kk_email" />
+
+                    <include
+                        android:layout_marginTop="20dp"
+                        layout="@layout/item_underline_828282"
+                        android:layout_width="20dp"
+                        android:layout_height="1dp"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-
     </androidx.core.widget.NestedScrollView>
+
+    <include
+        layout="@layout/view_toolbar_trans" />
 
     <LinearLayout
         android:id="@+id/coinInfoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ccffffff"
+        tools:visibility="gone"
         android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="266dp"
-            android:background="#B3000000"
+            android:layout_height="wrap_content"
+            android:background="#e6000000"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="20dp"
+            android:paddingBottom="30dp"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/closeInfoImageView"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="right" />
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right"
+                android:src="@drawable/kk_viewer_ep_close"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@mipmap/ic_launcher" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/kk_what_s_key" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14dp"
+                                android:textColor="#ffffff"
+                                android:text="@string/str_whatkey1" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:textSize="14dp"
+                                android:textColor="@color/yellow"
+                                android:textStyle="bold"
+                                android:text="@string/str_whatkey2" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:textSize="14dp"
+                                android:textColor="#ffffff"
+                                android:text="@string/str_whatkey3" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="12dp"
+                            android:textColor="#e5e5e5"
+                            android:text="@string/str_whatkey_desc" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include
+                    android:layout_marginTop="20dp"
+                    layout="@layout/item_underline_2e2e2e"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <include
+                    android:layout_marginTop="2dp"
+                    layout="@layout/item_underline_2e2e2e"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="29dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="12dp"
+                        android:textColor="@color/yellow"
                         android:text="@string/str_key_mean" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:lineSpacingExtra="9sp"
+                        android:textSize="12dp"
+                        android:textColor="#e5e5e5"
                         android:text="@string/str_key_mean_answer" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/str_coin_info_notice_title" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/str_coin_info_notice1" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/str_coin_info_notice2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/str_coin_info_notice3" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/str_coin_info_notice4" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/str_coin_info_notice5" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-
         </LinearLayout>
 
 
     </LinearLayout>
-
 
     <include
         layout="@layout/view_topbutton"
@@ -223,6 +302,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </RelativeLayout>
