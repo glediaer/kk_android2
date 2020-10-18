@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="10dp">
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:background="@drawable/kk_rect_f4f4f4_r15">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="14dp"
+            android:textColor="#c6c6c6"
+            tools:text="thriller" />
+
+        <ImageView
+            android:id="@+id/deleteImageView"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_gravity="right|center_vertical"
+            android:src="@drawable/kk_ic_exit_small"/>
+
+    </FrameLayout>
+
+</RelativeLayout>

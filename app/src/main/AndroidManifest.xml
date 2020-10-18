@@ -80,6 +80,11 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".search.activity.SearchResultActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
+
         <activity android:name=".series.activity.SeriesActivity"
             android:launchMode="singleTask"
             android:configChanges="screenSize|orientation"

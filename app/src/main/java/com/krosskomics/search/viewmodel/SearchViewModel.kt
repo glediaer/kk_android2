@@ -7,4 +7,6 @@ import com.krosskomics.search.repository.SearchRepository
 
 class SearchViewModel(application: Application): BaseViewModel(application) {
     private val repository = SearchRepository()
+
+    var keyword = ""
 }
