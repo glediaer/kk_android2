@@ -292,7 +292,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("page") page: Int,
         @Field("k") k: String?
-    ): Call<Search?>?
+    ): Call<Search>
 
     // 검색 결과
     @FormUrlEncoded
@@ -301,7 +301,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("page") page: Int,
         @Field("k") k: String?
-    ): Call<SearchResult?>?
+    ): Call<SearchResult>
 
     // 선물함
     @FormUrlEncoded

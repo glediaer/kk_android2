@@ -31,6 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="20dp"
+                android:background="@null"
+                android:singleLine="true"
                 android:textColorHint="#80FFFFFF"
                 android:textColor="@color/white"
                 android:hint="@string/str_search_hint"/>
@@ -81,7 +83,7 @@
         </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recentRecyclerView"
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
@@ -112,7 +114,7 @@
                 android:text="@string/str_recommend_keywords" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/keywordRecyclerView"
+                android:id="@+id/tagRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"/>

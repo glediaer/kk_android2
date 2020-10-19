@@ -22,6 +22,7 @@ import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.genre.adapter.GenreAdapter
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
+import com.krosskomics.common.model.Search
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.ranking.adapter.RankingAdapter
 import com.krosskomics.search.activity.SearchActivity
@@ -91,6 +92,10 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             if ("00" == t.retcode) {
                 setMainContentView(t)
             }
+        } else if (t is Search) {
+            if ("00" == t.retcode) {
+                setMainContentView(t)
+            }
         }
     }
 
@@ -98,21 +103,25 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         if (viewModel.isRefresh) {
             viewModel.items.clear()
         }
-        if (body is More) {
-            viewModel.totalPage = body.tot_pages
-            body.list?.let {
-                viewModel.items.addAll(it)
-                recyclerView?.adapter?.notifyDataSetChanged()
+        when (body) {
+            is More -> {
+                viewModel.totalPage = body.tot_pages
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
             }
-        } else if (body is Episode) {
-            body.list?.let {
-                viewModel.items.addAll(it)
-                recyclerView?.adapter?.notifyDataSetChanged()
+            is Episode -> {
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
             }
-        } else if (body is Coin) {
-            body.product_list?.let {
-                viewModel.items.addAll(it)
-                recyclerView?.adapter?.notifyDataSetChanged()
+            is Coin -> {
+                body.product_list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
             }
         }
     }
@@ -124,7 +133,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         }
     }
 
-    private fun initRecyclerView() {
+    open fun initRecyclerView() {
         recyclerView?.layoutManager = LinearLayoutManager(context)
         recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

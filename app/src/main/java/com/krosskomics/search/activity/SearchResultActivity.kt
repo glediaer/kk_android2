@@ -6,15 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
+import com.krosskomics.common.activity.ToolbarTitleActivity
+import com.krosskomics.common.model.Search
 import com.krosskomics.search.viewmodel.SearchViewModel
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
 
-class SearchResultActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
-    private val TAG = "SearchActivity"
+class SearchResultActivity : ToolbarTitleActivity() {
+    private val TAG = "SearchResultActivity"
 
-    private val viewModel: SearchViewModel by lazy {
+    public override val viewModel: SearchViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
                 return SearchViewModel(application) as T
@@ -23,7 +25,8 @@ class SearchResultActivity : BaseActivity(), Observer<Any>, View.OnClickListener
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_search
+        recyclerViewItemLayoutId = R.layout.item_ongoing
+        return R.layout.activity_search_result
     }
 
     override fun initModel() {
@@ -40,9 +43,6 @@ class SearchResultActivity : BaseActivity(), Observer<Any>, View.OnClickListener
     }
 
     private fun initHeaderView() {
-        searchImageView.setOnClickListener {
-            
-        }
     }
 
     override fun initToolbar() {
@@ -60,17 +60,29 @@ class SearchResultActivity : BaseActivity(), Observer<Any>, View.OnClickListener
     }
 
     override fun initTracker() {
+        setTracker(getString(R.string.str_search))
     }
 
     override fun onChanged(t: Any?) {
+        if (t is Search) {
+            if ("00" == t.retcode) {
+                setMainContentView(t)
+            }
+        }
     }
 
-    private fun initMainView() {
-    }
+    override fun setMainContentView(body: Any) {
+        if (viewModel.isRefresh) {
+            viewModel.items.clear()
+        }
+        when (body) {
+            is Search -> {
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                }
 
-    override fun onClick(v: View?) {
-        when(v?.id) {
-
+                recyclerView?.adapter?.notifyDataSetChanged()
+            }
         }
     }
 }

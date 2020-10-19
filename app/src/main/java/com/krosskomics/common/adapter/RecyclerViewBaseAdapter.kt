@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.*
 import com.krosskomics.common.holder.BaseItemViewHolder
+import com.krosskomics.common.model.Search
 import com.krosskomics.ranking.activity.RankingDetailActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.writerTextView
 import kotlinx.android.synthetic.main.item_ranking.view.*
 import kotlinx.android.synthetic.main.item_ranking_detail.view.*
+import kotlinx.android.synthetic.main.item_search_recent.view.*
 import kotlinx.android.synthetic.main.item_series.view.*
 import kotlinx.android.synthetic.main.item_series.view.img_ep_title
 import kotlinx.android.synthetic.main.item_series.view.txt_ep_title
@@ -205,7 +207,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         tv_product_text.visibility = View.VISIBLE
                     }
                 } else if (item is DataBanner) {
-                    img_ep_title.controller = CommonUtil.getDraweeController(
+                    img_ep_title?.controller = CommonUtil.getDraweeController(
                         context, item.image,
                         200, 200
                     )
@@ -226,6 +228,11 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     txt_ep_title?.text = item.ep_title
 //                    tv_show_date?.text = item.ep_show_date
                     tv_expire_date?.text = item.expireDate
+                } else if (item is DataRecentSearch) {    // search recent
+                    titleTextView.text = item.subject
+                    deleteImageView.setOnClickListener {
+                        onDeleteClickListener?.onItemClick(item)
+                    }
                 }
             }
         }
