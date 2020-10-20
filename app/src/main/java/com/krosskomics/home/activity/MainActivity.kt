@@ -153,6 +153,9 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     override fun onChanged(t: Any?) {
         if (t == null) {
             checkNetworkConnection(context, t, errorView)
+            if (swipeLayout.isRefreshing) {
+                swipeLayout.isRefreshing = false
+            }
             return
         }
         if (t is InitSet) {
@@ -211,8 +214,9 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                     showToast(t.msg, this@MainActivity)
                 }
             }
-//            actBinding.swipeLayout.setRefreshing(false)
-//            mIsFirstEnter = false
+            if (swipeLayout.isRefreshing) {
+                swipeLayout.isRefreshing = false
+            }
         }
     }
 
@@ -228,6 +232,9 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         initToolbar()
         initDrawerView()
         initBottomView()
+        swipeLayout.setOnRefreshListener {
+            requestServer()
+        }
         changeLangImageView.setOnClickListener(this)
         giftboxImageView.setOnClickListener(this)
         searchImageView.setOnClickListener(this)

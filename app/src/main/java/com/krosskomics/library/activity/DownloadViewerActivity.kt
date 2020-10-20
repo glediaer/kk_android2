@@ -64,7 +64,6 @@ class DownloadViewerActivity : ToolbarTitleActivity() {
         requestViewerData()
         initHeaderView()
         initBottomView()
-
     }
 
     private fun initBottomView() {
