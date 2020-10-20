@@ -693,6 +693,10 @@ object CommonUtil {
         erroView.setOnClickListener(null)
     }
 
+    fun hideErrorView(erroView: View) {
+        erroView.visibility = View.GONE
+    }
+
     fun convertUno(uno: String?): String? {
         return uno?.replace("/", "slash")
     }

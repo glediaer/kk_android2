@@ -29,8 +29,12 @@ import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.waitfree.activity.WaitFreeActivity
+import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.activity_main_content.*
+import kotlinx.android.synthetic.main.activity_main_content.errorView
+import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.view_main_tab.*
+import kotlinx.android.synthetic.main.view_network_error.view.*
 import kotlinx.android.synthetic.main.view_topbutton.*
 
 open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
@@ -68,7 +72,21 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         initMainView()
     }
 
+    override fun initErrorView() {
+        errorView.refreshButton.setOnClickListener {
+            if (CommonUtil.getNetworkInfo(context) == null) {
+                return@setOnClickListener
+            }
+            errorView.visibility = View.GONE
+            requestServer()
+        }
+    }
+
     override fun requestServer() {
+        if (CommonUtil.getNetworkInfo(context) == null) {
+            errorView.visibility = View.VISIBLE
+            return
+        }
         viewModel.requestMain()
     }
 

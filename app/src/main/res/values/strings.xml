@@ -340,6 +340,8 @@
     <string name="str_recent">Recent</string>
     <string name="str_recommend_keywords">#_Recommend Keywords</string>
 
+    <string name="str_refresh">Refresh</string>
+
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>
     <string name="msg_empty_series">Oops..\nNo series</string>

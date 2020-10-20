@@ -1,73 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/view_toolbar"/>
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="85dp"
-            android:background="@drawable/kk_setting_title_rect"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:textColor="#ffffff"
-            android:text="@string/str_enter_email"/>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/view_toolbar"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="14dp"
-                android:textColor="#000000"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="85dp"
+                android:background="@drawable/kk_setting_title_rect"
+                android:textSize="16dp"
                 android:textStyle="bold"
-                android:text="@string/str_new_email" />
+                android:textColor="#ffffff"
+                android:text="@string/str_enter_email"/>
 
-            <EditText
-                android:id="@+id/newEmailEditText"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:maxLength="20"
+                android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:background="@drawable/kk_bottomsheet_edittext_rect" />
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/confirmButton"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="25dp"
-                android:enabled="false"
-                android:background="@drawable/kk_selector_bottomsheet_login_btn"
-                android:textSize="16dp"
-                android:textColor="#ffffff"
-                android:textAllCaps="false"
-                android:text="@string/str_confirm"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="14dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:text="@string/str_new_email" />
+
+                <EditText
+                    android:id="@+id/newEmailEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:maxLength="20"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:background="@drawable/kk_bottomsheet_edittext_rect" />
+
+                <Button
+                    android:id="@+id/confirmButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="25dp"
+                    android:enabled="false"
+                    android:background="@drawable/kk_selector_bottomsheet_login_btn"
+                    android:textSize="16dp"
+                    android:textColor="#ffffff"
+                    android:textAllCaps="false"
+                    android:text="@string/str_confirm"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <include
+        android:id="@+id/errorView"
+        layout="@layout/view_network_error"
+        android:visibility="gone"/>
+
+</RelativeLayout>

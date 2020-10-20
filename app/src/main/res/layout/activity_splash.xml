@@ -8,4 +8,9 @@
         android:layout_height="87dp"
         android:layout_centerInParent="true" />
 
+    <include
+        android:id="@+id/networkErrorView"
+        android:visibility="gone"
+        layout="@layout/view_network_error_init"/>
+
 </RelativeLayout>

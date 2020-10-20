@@ -1,109 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/view_toolbar"/>
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/accountTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="7dp"
-            android:paddingBottom="7dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="85dp"
-            android:background="@drawable/kk_setting_title_rect"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            android:textColor="#ffffff"
-            android:text="@string/str_enter_nickname"/>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/view_toolbar"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/accountTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="39dp"
-                android:textSize="14dp"
+                android:paddingTop="7dp"
+                android:paddingBottom="7dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="85dp"
+                android:background="@drawable/kk_setting_title_rect"
+                android:textSize="16dp"
                 android:textStyle="bold"
-                android:textColor="#828282"
-                android:text="@string/str_current_nickname" />
+                android:textColor="#ffffff"
+                android:text="@string/str_enter_nickname"/>
 
-            <EditText
-                android:id="@+id/currentNickNameEditText"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#c6c6c6"
+                android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:background="@drawable/kk_bottomsheet_edittext_rect" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="14dp"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:text="@string/str_new_nickname" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="39dp"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:textColor="#828282"
+                    android:text="@string/str_current_nickname" />
 
                 <EditText
-                    android:id="@+id/newNickNameEditText"
+                    android:id="@+id/currentNickNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:maxLength="20"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#c6c6c6"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:background="@drawable/kk_bottomsheet_edittext_rect" />
 
                 <TextView
-                    android:id="@+id/nicknameLengthTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:textSize="12dp"
-                    android:textColor="#c6c6c6"
-                    android:layout_gravity="center_vertical|right"
-                    tools:text="8 / 20" />
+                    android:layout_marginTop="20dp"
+                    android:textSize="14dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:text="@string/str_new_nickname" />
 
-            </FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp">
 
-            <Button
-                android:id="@+id/confirmButton"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="25dp"
-                android:enabled="false"
-                android:background="@drawable/kk_selector_bottomsheet_login_btn"
-                android:textSize="16dp"
-                android:textColor="#ffffff"
-                android:textAllCaps="false"
-                android:text="@string/str_confirm"/>
+                    <EditText
+                        android:id="@+id/newNickNameEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:maxLength="20"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:background="@drawable/kk_bottomsheet_edittext_rect" />
+
+                    <TextView
+                        android:id="@+id/nicknameLengthTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:textSize="12dp"
+                        android:textColor="#c6c6c6"
+                        android:layout_gravity="center_vertical|right"
+                        tools:text="8 / 20" />
+
+                </FrameLayout>
+
+                <Button
+                    android:id="@+id/confirmButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="25dp"
+                    android:enabled="false"
+                    android:background="@drawable/kk_selector_bottomsheet_login_btn"
+                    android:textSize="16dp"
+                    android:textColor="#ffffff"
+                    android:textAllCaps="false"
+                    android:text="@string/str_confirm"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <include
+        android:id="@+id/errorView"
+        layout="@layout/view_network_error"
+        android:visibility="gone"/>
+
+</RelativeLayout>

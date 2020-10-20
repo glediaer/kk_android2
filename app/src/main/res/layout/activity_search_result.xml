@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,89 +7,101 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/view_toolbar_black"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="66dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="109dp"
-        android:orientation="vertical"
-        android:background="#262626">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/view_toolbar_black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:paddingTop="66dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="109dp"
+            android:orientation="vertical"
+            android:background="#262626">
 
-            <EditText
-                android:id="@+id/searchEditText"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:singleLine="true"
-                android:background="@null"
-                android:textSize="20dp"
-                android:textColorHint="#80FFFFFF"
-                android:textColor="@color/white"
-                android:hint="@string/str_search_hint"/>
+                android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/searchImageView"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/kk_ic_search_wh" />
+                <EditText
+                    android:id="@+id/searchEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:background="@null"
+                    android:textSize="20dp"
+                    android:textColorHint="#80FFFFFF"
+                    android:textColor="@color/white"
+                    android:hint="@string/str_search_hint"/>
+
+                <ImageView
+                    android:id="@+id/searchImageView"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/kk_ic_search_wh" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/white"/>
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/white"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="38dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="14dp"
-                android:textColor="#c6c6c6"
-                android:textStyle="bold"
-                android:text="@string/str_recent" />
+                android:paddingTop="38dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
 
-            <ImageView
-                android:id="@+id/deleteAllImageView"
-                android:layout_width="50dp"
-                android:layout_height="24dp"
-                android:layout_gravity="right|center_vertical"
-                android:src="@drawable/kk_delete_all_search"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="14dp"
+                    android:textColor="#c6c6c6"
+                    android:textStyle="bold"
+                    android:text="@string/str_recent" />
 
-        </FrameLayout>
+                <ImageView
+                    android:id="@+id/deleteAllImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/kk_delete_all_search"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:layout_marginTop="15dp"/>
+            </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginTop="15dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+    <include
+        android:id="@+id/errorView"
+        layout="@layout/view_network_error"
+        android:visibility="gone"/>
+
+</RelativeLayout>

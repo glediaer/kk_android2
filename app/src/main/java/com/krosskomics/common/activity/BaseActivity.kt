@@ -18,6 +18,7 @@ import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.login.activity.LoginIntroActivity
 import com.krosskomics.util.CommonUtil.getNetworkInfo
+import com.krosskomics.util.CommonUtil.hideErrorView
 import com.krosskomics.util.CommonUtil.showErrorView
 import com.krosskomics.util.CommonUtil.showToast
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -36,6 +37,7 @@ abstract class BaseActivity : AppCompatActivity() {
         initLayout()
         requestServer()
         initTracker()
+        initErrorView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -59,6 +61,7 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun initLayout()
     abstract fun requestServer()
     abstract fun initTracker()
+    abstract fun initErrorView()
 
     open fun initToolbar() {
         setSupportActionBar(toolbar)
@@ -106,6 +109,8 @@ abstract class BaseActivity : AppCompatActivity() {
         if (errorView != null) {
             if (getNetworkInfo(context!!) == null) {   // 네트워크 연결 안된상태
                 showErrorView(errorView)
+            } else {
+                hideErrorView(errorView)
             }
         } else {
             if (null != throwable) {

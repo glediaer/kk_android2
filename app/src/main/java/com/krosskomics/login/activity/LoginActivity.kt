@@ -46,6 +46,7 @@ import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.view_forgot_password_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_login_bottomsheet.view.*
+import kotlinx.android.synthetic.main.view_network_error.view.*
 import kotlinx.android.synthetic.main.view_signup_info_age.view.*
 import kotlinx.android.synthetic.main.view_signup_info_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_signup_info_gender.view.*
@@ -142,6 +143,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
 
     override fun initTracker() {
         setTracker(getString(R.string.str_login))
+    }
+
+    override fun initErrorView() {
+        errorView.refreshButton.setOnClickListener {
+            requestServer()
+        }
     }
 
     override fun onChanged(t: Any?) {

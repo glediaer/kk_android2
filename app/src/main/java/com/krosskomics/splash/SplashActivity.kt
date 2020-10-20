@@ -27,6 +27,7 @@ import bolts.AppLinks
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 //import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.iid.FirebaseInstanceId
 import com.gun0912.tedpermission.PermissionListener
@@ -40,6 +41,7 @@ import com.krosskomics.common.model.Cookie
 import com.krosskomics.common.model.Login
 import com.krosskomics.common.model.Version
 import com.krosskomics.home.activity.MainActivity
+import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.getVersionCode
@@ -49,6 +51,8 @@ import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil
 import com.krosskomics.util.ServerUtil.setRetrofitServer
+import kotlinx.android.synthetic.main.activity_splash.*
+import kotlinx.android.synthetic.main.view_network_error_init.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -70,7 +74,18 @@ class SplashActivity : Activity() {
         context = this@SplashActivity
         if (getNetworkInfo(context) == null) {
             KJKomicsApp.IS_ENTER_OFFLINE = true
-            goMain()
+            networkErrorView.visibility = View.VISIBLE
+            refreshButton.setOnClickListener {
+                if (getNetworkInfo(context) == null) {
+                    return@setOnClickListener
+                }
+                networkErrorView.visibility = View.GONE
+                initProcess()
+            }
+            goDownloadEpButton.setOnClickListener {
+                startActivity(Intent(context, LibraryActivity::class.java))
+                finish()
+            }
             return
         }
         val bundle = intent.extras
@@ -91,9 +106,14 @@ class SplashActivity : Activity() {
             KJKomicsApp.DEEPLINK_CNO = data.getQueryParameter("sid")
             KJKomicsApp.DEEPLINK_RID = data.getQueryParameter("rid") ?: ""
         }
+
+        initProcess()
+    }
+
+    private fun initProcess() {
         initPreference()
         checkFCMToken()
-//        setDynamicLink()
+        setDynamicLink()
         setFacebookLink()
         if ("0" == read(context, CODE.IS_RUN_FIRST_APP, "0")) {
             write(context, CODE.IS_RUN_FIRST_APP, "1")
@@ -134,23 +154,23 @@ class SplashActivity : Activity() {
 //        );
     }
 
-//    private fun setDynamicLinksetDynamicLink() {
-//        FirebaseDynamicLinks.getInstance()
-//            .getDynamicLink(intent)
-//            .addOnSuccessListener(
-//                this
-//            ) { pendingDynamicLinkData -> // Get deep link from result (may be null if no link is found)
-//                var deepLink: Uri? = null
-//                if (pendingDynamicLinkData != null) {
-//                    deepLink = pendingDynamicLinkData.link
-//                    KJKomicsApp.DEEPLINK_DATA = deepLink.toString()
-//                }
-//                Log.e(TAG, "deepLink : $deepLink")
-//            }
-//            .addOnFailureListener(
-//                this
-//            ) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
-//    }
+    private fun setDynamicLink() {
+        FirebaseDynamicLinks.getInstance()
+            .getDynamicLink(intent)
+            .addOnSuccessListener(
+                this
+            ) { pendingDynamicLinkData -> // Get deep link from result (may be null if no link is found)
+                var deepLink: Uri? = null
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+                    KJKomicsApp.DEEPLINK_DATA = deepLink.toString()
+                }
+                Log.e(TAG, "deepLink : $deepLink")
+            }
+            .addOnFailureListener(
+                this
+            ) { e -> Log.w(TAG, "getDynamicLink:onFailure", e) }
+    }
 
     private fun initPreference() {
         setRetrofitServer(context)
@@ -248,21 +268,6 @@ class SplashActivity : Activity() {
     private fun goMain() {
         val permissionListener: PermissionListener = object : PermissionListener {
             override fun onPermissionGranted() {
-//                runBlocking {
-//                    launch {
-//                        delay(500)
-//                        val intentMain = Intent(this@SplashActivity, MainActivity::class.java)
-//                        intentMain.putExtra("atype", KJKomicsApp.ATYPE)
-//                        intentMain.putExtra("sid", KJKomicsApp.SID)
-////                        intentMain.addFlags(
-////                            Intent.FLAG_ACTIVITY_NEW_TASK
-////                                    or Intent.FLAG_ACTIVITY_CLEAR_TOP
-////                                    or Intent.FLAG_ACTIVITY_SINGLE_TOP
-////                        )
-//                        startActivity(intentMain)
-//                        finish()
-//                    }
-//                }
                 val handler = Handler()
                 handler.postDelayed({
                     val intentMain: Intent

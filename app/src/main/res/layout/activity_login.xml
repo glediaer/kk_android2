@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="#ffd900"
-    tools:context=".login.activity.LoginActivity">
+    android:background="#ffd900">
 
     <include
         layout="@layout/view_base_toolbar"/>

@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
@@ -124,11 +126,10 @@ class SearchActivity : ToolbarTitleActivity() {
 
     override fun initRecyclerView() {
         recyclerView?.layoutManager = LinearLayoutManager(context)
-        val flowLayoutManager = FlowLayoutManager().apply {
-            isAutoMeasureEnabled = true
-            setAlignment(Alignment.LEFT)
+        val flexboxLayoutManager = FlexboxLayoutManager(context).apply {
+            flexWrap = FlexWrap.WRAP
         }
-        tagRecyclerView?.layoutManager = flowLayoutManager
+        tagRecyclerView?.layoutManager = flexboxLayoutManager
         initRecyclerViewAdapter()
     }
 
@@ -158,7 +159,12 @@ class SearchActivity : ToolbarTitleActivity() {
             setOnItemClickListener(object : SearchTagAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {
                     if (item is String) {
-                        Log.e(TAG, "TAG onItemClick")
+                        val intent = Intent(context, SearchResultActivity::class.java)
+                        val bundle = Bundle().apply {
+                            putString("keyword", item)
+                        }
+                        intent.putExtras(bundle)
+                        startActivity(intent)
                     }
                 }
             })

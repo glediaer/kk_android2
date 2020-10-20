@@ -57,6 +57,7 @@ import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.view_main_action_item.*
 import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_main_tab.view.*
+import kotlinx.android.synthetic.main.view_network_error.view.*
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
 import java.util.*
 
@@ -127,6 +128,10 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     override fun requestServer() {
+        if (CommonUtil.getNetworkInfo(context) == null) {
+            errorView.visibility = View.VISIBLE
+            return
+        }
         viewModel.requestInitSet()
         viewModel.requestMain()
     }
@@ -135,9 +140,19 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         setTracker(getString(R.string.str_home))
     }
 
+    override fun initErrorView() {
+        errorView.refreshButton.setOnClickListener {
+            if (CommonUtil.getNetworkInfo(context) == null) {
+                return@setOnClickListener
+            }
+            errorView.visibility = View.GONE
+            requestServer()
+        }
+    }
+
     override fun onChanged(t: Any?) {
         if (t == null) {
-//            checkNetworkConnection(context, t, errorView)
+            checkNetworkConnection(context, t, errorView)
             return
         }
         if (t is InitSet) {

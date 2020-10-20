@@ -26,6 +26,8 @@ class LoginIntroActivity : BaseActivity() {
         setTracker(getString(R.string.str_login))
     }
 
+    override fun initErrorView() {}
+
     private fun initMainView() {
         signupButton.setOnClickListener {
             startActivity(Intent(context, LoginActivity::class.java).apply {
