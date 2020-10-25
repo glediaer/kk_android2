@@ -18,10 +18,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="66dp"
+            android:paddingTop="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingBottom="109dp"
+            android:paddingBottom="20dp"
             android:orientation="vertical"
             android:background="#262626">
 
@@ -38,15 +38,13 @@
                     android:singleLine="true"
                     android:background="@null"
                     android:textSize="20dp"
-                    android:textColorHint="#80FFFFFF"
-                    android:textColor="@color/white"
-                    android:hint="@string/str_search_hint"/>
+                    android:textColor="@color/white" />
 
                 <ImageView
-                    android:id="@+id/searchImageView"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/kk_ic_search_wh" />
+                    android:id="@+id/cancelImageView"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/kk_ic_exit_small" />
 
             </LinearLayout>
 
@@ -57,45 +55,13 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="38dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="14dp"
-                    android:textColor="#c6c6c6"
-                    android:textStyle="bold"
-                    android:text="@string/str_recent" />
-
-                <ImageView
-                    android:id="@+id/deleteAllImageView"
-                    android:layout_width="50dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/kk_delete_all_search"/>
-
-            </FrameLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_marginTop="15dp"/>
-
-        </LinearLayout>
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="15dp"/>
 
     </LinearLayout>
 

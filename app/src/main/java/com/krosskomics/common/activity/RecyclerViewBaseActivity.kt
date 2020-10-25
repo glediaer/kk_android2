@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.errorView
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
+import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_network_error.view.*
 import kotlinx.android.synthetic.main.view_topbutton.*
@@ -79,6 +80,11 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             }
             errorView.visibility = View.GONE
             requestServer()
+        }
+
+        errorView.goDownloadEpButton.setOnClickListener {
+            startActivity(Intent(context, LibraryActivity::class.java))
+            finish()
         }
     }
 

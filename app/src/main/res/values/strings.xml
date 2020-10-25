@@ -341,6 +341,10 @@
     <string name="str_recommend_keywords">#_Recommend Keywords</string>
 
     <string name="str_refresh">Refresh</string>
+    <string name="str_no_network">Please checkyour network connection</string>
+    <string name="str_my_downloaded_komics">My Downloaded KOMICS</string>
+
+    <string name="str_loading">Loading…</string>
 
     <!-- msg -->
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

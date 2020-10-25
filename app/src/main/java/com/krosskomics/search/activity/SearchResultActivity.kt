@@ -25,7 +25,7 @@ class SearchResultActivity : ToolbarTitleActivity() {
     }
 
     override fun getLayoutId(): Int {
-        recyclerViewItemLayoutId = R.layout.item_ongoing
+        recyclerViewItemLayoutId = R.layout.item_contents
         return R.layout.activity_search_result
     }
 
@@ -40,9 +40,13 @@ class SearchResultActivity : ToolbarTitleActivity() {
         initToolbar()
         initMainView()
         initHeaderView()
+        deleteAllImageView?.setOnClickListener {
+
+        }
     }
 
     private fun initHeaderView() {
+        searchEditText.setText(viewModel.keyword)
     }
 
     override fun initToolbar() {

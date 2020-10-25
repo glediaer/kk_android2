@@ -143,7 +143,7 @@ class SearchActivity : ToolbarTitleActivity() {
         tagRecyclerView.adapter =
             SearchTagAdapter(
                 viewModel.tagItems,
-                R.layout.item_search_tag
+                R.layout.item_recommend_keyword
             )
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnDelteItemClickListener(object : RecyclerViewBaseAdapter.OnDeleteItemClickListener {

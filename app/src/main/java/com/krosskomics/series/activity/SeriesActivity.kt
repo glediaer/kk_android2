@@ -483,11 +483,11 @@ class SeriesActivity : ToolbarTitleActivity() {
             if (BuildConfig.DEBUG) {
                 Log.e(TAG, "scrollY : " + scrollY)
                 Log.e(TAG, "oldScrollY : " + oldScrollY)
-                if (scrollY >= 320) {
-                    toolbar.visibility = View.VISIBLE
-                } else {
-                    toolbar.visibility = View.GONE
-                }
+//                if (scrollY >= 320) {
+//                    toolbar.visibility = View.VISIBLE
+//                } else {
+//                    toolbar.visibility = View.GONE
+//                }
             }
         }
         t.series?.let {
