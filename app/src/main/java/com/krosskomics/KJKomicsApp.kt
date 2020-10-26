@@ -17,6 +17,9 @@ import com.facebook.stetho.Stetho
 import com.google.android.gms.analytics.GoogleAnalytics
 import com.google.android.gms.analytics.Tracker
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.data.DataLogin
 import com.krosskomics.common.data.DataMainContents
@@ -29,6 +32,7 @@ import java.util.*
 class KJKomicsApp : Application() {
     private var instance: KJKomicsApp? = null
     private val currentActivity: Activity? = null
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     companion object {
         var DOWNLOAD_COUNT = 0
@@ -115,7 +119,6 @@ class KJKomicsApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-//            FacebookSdk.fullyInitialize();
         FacebookSdk.setApplicationId(getString(R.string.facebook_app_id))
         FacebookSdk.sdkInitialize(applicationContext)
             try {
@@ -146,7 +149,7 @@ class KJKomicsApp : Application() {
                     FacebookSdk.setIsDebugEnabled(true)
                     FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS)
                 }
-//            setCrashlytics()
+            setCrashlytics()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -168,10 +171,12 @@ class KJKomicsApp : Application() {
 
 
 
-//    private fun setCrashlytics() {
+    private fun setCrashlytics() {
+        // Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = Firebase.analytics
 //        val crashlyticsKit: Crashlytics = Crashlytics.Builder()
 //            .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
 //            .build()
 //        Fabric.with(this, crashlyticsKit)
-//    }
+    }
 }
