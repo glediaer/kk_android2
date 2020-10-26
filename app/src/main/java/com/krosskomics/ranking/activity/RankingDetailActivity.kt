@@ -2,11 +2,11 @@ package com.krosskomics.ranking.activity
 
 import android.content.Intent
 import com.krosskomics.R
-import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.ranking.adapter.RankingAdapter
+import com.krosskomics.series.activity.SeriesActivity
 import kotlinx.android.synthetic.main.activity_main_content.*
 
 class RankingDetailActivity : ToolbarTitleActivity() {

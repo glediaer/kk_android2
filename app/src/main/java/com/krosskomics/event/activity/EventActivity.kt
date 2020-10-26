@@ -4,11 +4,11 @@ import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import com.krosskomics.R
-import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.event.adapter.EventAdapter
+import com.krosskomics.series.activity.SeriesActivity
 import kotlinx.android.synthetic.main.activity_event.*
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 

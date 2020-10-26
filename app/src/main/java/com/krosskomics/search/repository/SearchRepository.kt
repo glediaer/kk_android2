@@ -1,10 +1,7 @@
 package com.krosskomics.search.repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.krosskomics.KJKomicsApp
-import com.krosskomics.common.model.*
+import com.krosskomics.common.model.Search
 import com.krosskomics.common.repository.CommonRepository
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil

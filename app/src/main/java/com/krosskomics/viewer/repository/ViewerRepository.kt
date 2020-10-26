@@ -4,10 +4,8 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.krosskomics.common.model.Episode
-import com.krosskomics.common.model.More
 import com.krosskomics.common.repository.CommonRepository
 import com.krosskomics.util.CODE
-import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.ServerUtil
 import retrofit2.Call

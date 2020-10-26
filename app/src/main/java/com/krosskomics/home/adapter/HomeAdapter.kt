@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.facebook.drawee.view.SimpleDraweeView
 import com.krosskomics.R
-import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataMainContents
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.home.activity.MainActivity
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.webview.WebViewActivity

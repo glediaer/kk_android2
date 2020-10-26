@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
+import com.krosskomics.series.activity.SeriesActivity
 import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.view_empty_library.*
 

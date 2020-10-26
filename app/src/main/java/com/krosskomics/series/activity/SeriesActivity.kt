@@ -52,14 +52,12 @@ import kotlinx.android.synthetic.main.activity_series.nestedScrollView
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_content_like_white.*
 import kotlinx.android.synthetic.main.view_ep_purchase.*
-import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
-import java.util.*
 
 class SeriesActivity : ToolbarTitleActivity() {
     private val TAG = "SeriesActivity"
@@ -214,7 +212,6 @@ class SeriesActivity : ToolbarTitleActivity() {
                             // 구매팝업
                             // ablestore == 1 소장구매 가능
                             // ablerent == 1 렌트 가능
-                            viewModel.epList.add(viewModel.selectEpItem.eid)
                             showPurchaseRentDialog(t.episode);
                         }
                         else -> {
@@ -580,6 +577,8 @@ class SeriesActivity : ToolbarTitleActivity() {
             discountRateTextView.text = "0 %"
             totalTextView.text = "${it.ep_rent_price}"
 
+            viewModel.epList.add(episode.eid)
+
             viewModel.itemViewMode = 1
             viewModel.items.forEach { item ->
                 if (item is DataEpisode) {
@@ -740,12 +739,12 @@ class SeriesActivity : ToolbarTitleActivity() {
             var ep_list: String = viewModel.epList.toString()
             ep_list = ep_list.trim { it <= ' ' }.replace(" ", "")
             ep_list = ep_list.substring(1, ep_list.length - 1)
-            val setPurchaseEpisode: Call<PurchaseEpisode?>? =
+            val setPurchaseEpisode: Call<PurchaseEpisode> =
                 service.setPurchaseSelectEpisode(
                     read(context, CODE.CURRENT_LANGUAGE, "en"),
                     ep_list, unlockType
                 )
-            setPurchaseEpisode!!.enqueue(object : Callback<PurchaseEpisode?> {
+            setPurchaseEpisode.enqueue(object : Callback<PurchaseEpisode?> {
                 override fun onResponse(
                     call: Call<PurchaseEpisode?>,
                     response: Response<PurchaseEpisode?>

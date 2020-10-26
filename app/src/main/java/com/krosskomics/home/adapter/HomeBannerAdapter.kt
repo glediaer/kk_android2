@@ -11,7 +11,7 @@ import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.data.DataBanner
 import com.krosskomics.common.holder.BaseItemViewHolder
-import com.krosskomics.home.adapter.HomeBannerAdapter.*
+import com.krosskomics.home.adapter.HomeBannerAdapter.HomeBannerItemHolder
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil

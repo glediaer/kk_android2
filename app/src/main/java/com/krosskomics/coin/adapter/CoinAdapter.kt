@@ -1,12 +1,9 @@
 package com.krosskomics.coin.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
-import com.krosskomics.home.activity.MainActivity
-import com.krosskomics.ranking.activity.RankingActivity
 
 class CoinAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
     RecyclerViewBaseAdapter(items, layoutRes) {

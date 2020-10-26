@@ -5,12 +5,12 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.krosskomics.R
-import com.krosskomics.series.activity.SeriesActivity
+import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.fragment.BaseFragment
 import com.krosskomics.common.model.More
-import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.view_topbutton.*

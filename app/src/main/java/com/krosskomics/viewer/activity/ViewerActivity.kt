@@ -330,12 +330,12 @@ class ViewerActivity : ToolbarTitleActivity() {
         var ep_list: String = viewModel.epList.toString()
         ep_list = ep_list.trim { it <= ' ' }.replace(" ", "")
         ep_list = ep_list.substring(1, ep_list.length - 1)
-        val setPurchaseEpisode: Call<PurchaseEpisode?>? =
-            ServerUtil.service.setPurchaseSelectEpisode(
+        val setPurchaseEpisode: Call<PurchaseEpisode> =
+            service.setPurchaseSelectEpisode(
                 read(context, CODE.CURRENT_LANGUAGE, "en"),
                 ep_list, unlockType
             )
-        setPurchaseEpisode!!.enqueue(object : Callback<PurchaseEpisode?> {
+        setPurchaseEpisode.enqueue(object : Callback<PurchaseEpisode?> {
             override fun onResponse(
                 call: Call<PurchaseEpisode?>,
                 response: Response<PurchaseEpisode?>

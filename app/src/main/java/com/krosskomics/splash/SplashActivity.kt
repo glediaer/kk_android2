@@ -1,5 +1,6 @@
 package com.krosskomics.splash
 
+//import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
@@ -21,14 +22,12 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.NonNull
 import bolts.AppLinks
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
-//import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.iid.FirebaseInstanceId
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
@@ -44,7 +43,6 @@ import com.krosskomics.home.activity.MainActivity
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil.getNetworkInfo
-import com.krosskomics.util.CommonUtil.getVersionCode
 import com.krosskomics.util.CommonUtil.moveAppMarket
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
@@ -53,9 +51,6 @@ import com.krosskomics.util.ServerUtil
 import com.krosskomics.util.ServerUtil.setRetrofitServer
 import kotlinx.android.synthetic.main.activity_splash.*
 import kotlinx.android.synthetic.main.view_network_error_init.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

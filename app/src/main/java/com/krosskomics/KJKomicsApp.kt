@@ -8,7 +8,6 @@ import android.util.DisplayMetrics
 import android.view.WindowManager
 import com.facebook.FacebookSdk
 import com.facebook.LoggingBehavior
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.cache.disk.DiskCacheConfig
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.imagepipeline.core.ImagePipelineConfig
@@ -18,7 +17,6 @@ import com.facebook.stetho.Stetho
 import com.google.android.gms.analytics.GoogleAnalytics
 import com.google.android.gms.analytics.Tracker
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.firebase.FirebaseApp
 import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.data.DataLogin
 import com.krosskomics.common.data.DataMainContents

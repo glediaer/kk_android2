@@ -5,10 +5,7 @@ import android.text.TextWatcher
 import android.view.View
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
-import com.krosskomics.util.CODE
-import com.krosskomics.util.CommonUtil
 import kotlinx.android.synthetic.main.activity_comment.*
-import kotlinx.android.synthetic.main.view_login_bottomsheet.view.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
 

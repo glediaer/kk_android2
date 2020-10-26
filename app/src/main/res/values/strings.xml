@@ -6,168 +6,18 @@
     <string name="default_notification_channel_id">default_notification_channel_id</string>
     <string name="google_account_webclient_id">987318076947-2fcv7n13tshg902la45qd74ge06neqoq.apps.googleusercontent.com</string>
 
-    <string name="str_close">Close</string>
-    <string name="str_free_episode_count_format">%d more previews</string>
-
-    <string name="str_input_email">Email</string>
-    <string name="str_input_password">Password</string>
-
-
-    <string name="str_find_password">Forgot password</string>
-    <string name="str_hindi">Hindi</string>
-    <string name="str_eng">English</string>
-    <string name="str_language_question">Language?</string>
-
-
-    <string name="str_gender_title">Gender</string>
-    <string name="str_age_title">Age</string>
-    <string name="str_language_noti1">* Features and available series  may differ for\n   the language you have selected.</string>
-    <string name="str_language_noti2">* Anytime you can change the language on Settings</string>
-
-
-    <string name="str_unlocked_series">Unlocked Series</string>
-    <string name="str_updated">Updated</string>
-    <string name="str_updates">Updates</string>
-    <string name="str_library_noti">When your bookmarked series are updated with new episodes, they will show up here.</string>
-    <string name="str_more">more</string>
-    <string name="str_my_profile">My profile</string>
-    <string name="str_signup_login">Sign up or Log in</string>
-    <string name="str_promotion_code">Promotion Code</string>
-    <string name="str_gift_shop">Gift Shop</string>
-    <string name="str_help">Help</string>
-    <string name="str_buy_coins">Buy Coins</string>
-    <string name="str_coin_transactions">Coins Transactions</string>
-    <string name="str_information">Information</string>
-    <string name="str_coin_notice">Please read before purchasing:\n* Coins give you access to premium episodes.\n* You can buy one episode for 2 coins.\n* You can buy one episode for 2 coins.\n* You can rent one episode for 1 coin.\n&#160;&#160;&#160;The rent is valid for 7 days.\n* Coins and unlocked episodes are linked to your account.\n* To know more about coins, check Coins Transactions.</string>
-    <string name="str_coin_notice_email">For more assistance, reach out to us at</string>
-    <string name="str_invite_notice">* Everyone who has a KrossKomics account also has a unique Invite link.\n* You can invite up to 20 friends in total.\n* You will receive bonus coins immediately when someone new signs up through your invite link.\n* You will both receive extra 3 bonus coins when one of your friends purchases coins for the first time.</string>
-    <string name="str_language_notice">* Features and available series may differ for the language you have selected.\n* You can change the language by going on My Profile.\n* You can change the language even offline to read the downloaded series.\n* New languages will be updated soon.</string>
-    <string name="str_email_address">help@krosskomics.com</string>
-    <string name="str_confirm">Confirm</string>
-    <string name="str_my_gift">My Gift</string>
-    <string name="str_edit_profile">Change email address</string>
-    <string name="str_notification">Notification</string>
-
-    <string name="msg_permission_denied1">If you want to use Kross Komics app, please configure the settings.</string>
-    <string name="msg_permission_denied2">No configured any necessary permission for Kross Komics app.\n\n Please configure [Settings] &gt; [Apps] &gt; [Storage] permission.</string>
-    <string name="str_search">Search</string>
-    <string name="msg_empty_search_word">No results</string>
-    <string name="str_episode_seq_format2">Ep. %d</string>
-    <string name="str_episode_seq_format3">Ep.%d</string>
-    <string name="str_send">Send</string>
-
-
-    <string name="str_select_genre">Please choose 3 genres you like!</string>
-    <string name="str_empty_recent1">No viewed series yet.</string>
-    <string name="str_empty_recent2">The series you read recently will show up here, so you can continue to read them.</string>
-    <string name="str_empty_subscribed1">No bookmarked series yet</string>
-    <string name="str_empty_subscribed2">The series you subscribed to recently will show up here, so you can continue to read them. Tap the bookmark icon at the top of a series to subscribe.</string>
-    <string name="str_empty_unlocked_series1">No unlocked series yet</string>
-    <string name="str_empty_unlocked_series2">The series you unlocked with your coins or tickets will show up here.</string>
-    <string name="str_empty_downloaded1">No downloaded series yet</string>
-    <string name="str_empty_downloaded2">The series you download will show up here, so you can read them offline.</string>
-    <string name="str_select_all">Select All</string>
-    <string name="str_deselect_all">Deselect All</string>
-
-    <string name="str_sortby">Sort by</string>
-    <string name="str_title_az">Title A→Z</string>
-    <string name="str_coin">Coin</string>
-    <string name="str_coins">Coins</string>
-    <string name="str_coin2">coin</string>
-    <string name="str_bonus">Bonus</string>
-    <string name="str_change_password">Change password</string>
-    <string name="str_notify_push">Notify me via push</string>
-    <string name="str_new_episode">New episodes</string>
-    <string name="str_languge_notice">* Features and available series may differ for\n   the language you have selected.</string>
-    <string name="str_delete_account_question">Delete account?</string>
-    <string name="str_setting">Settings</string>
-    <string name="str_name">Name</string>
-    <string name="str_email">Email</string>
-    <string name="str_change_password_notice">Please enter your new password below.</string>
-    <string name="str_min_password">* It should have 6 characters or more</string>
-    <string name="str_current_password">Current Password</string>
-    <string name="str_top_featured">Top featured</string>
-    <string name="str_buy_select">Unlock in bulk</string>
-    <string name="str_episode">Episode</string>
-    <string name="str_episode2">episode</string>
-    <string name="str_my_balance">My balance</string>
-    <string name="str_save">Save</string>
-
-
-    <string name="str_permanent_access">Permanent Access</string>
-    <string name="str_expires_format">Expires in %d days</string>
-    <string name="str_cancel">Cancel</string>
-    <string name="str_findpassword_noti">Please enter your email to get a reset link.</string>
-
-
-    <string name="str_delete_account_notice">Deleting your account will permanently remove all coins and series you purchased.</string>
-    <string name="str_home">Home</string>
-    <string name="str_profile">My Profile</string>
-    <string name="str_update">Update</string>
-    <string name="str_read_now">READ NOW</string>
-    <string name="str_no_thanks">No, thanks</string>
-
-    <string name="str_empty_gift1">No gifts received yet</string>
-    <string name="str_empty_gift2">Gifts you receive will show up here. Check this space to avail your rewards.</string>
-    <string name="str_empty_history">No History</string>
-    <string name="str_gift_popup_title">You have received the gift successfully.</string>
-    <string name="str_earn">Earn</string>
-
-
-    <string name="str_ticket">Ticket</string>
-    <string name="str_invite_notice1">Having a great time? Invite your friends\nto join you. Share the app with them now!</string>
-    <string name="str_invite_notice2">You will receive 1 bonus coin when your friends\ndownload KrossKomics app and sign up\nthrough your unique invite link.</string>
-    <string name="str_change_email_notice">Please enter your new e-mail below.</string>
-    <string name="str_change_email_hint">New email address</string>
-    <string name="str_change_email_notice2">* You can login with the new email id after the changes have been confirmed/made.</string>
-    <string name="str_no_wifi_title">Connection Is unstable.</string>
-    <string name="str_no_wifi_msg">Please check your network again.</string>
-    <string name="str_share_popup_title">Share series with your friends</string>
-    <string name="str_instagram">Instagram</string>
-    <string name="str_url_copy">url copy</string>
-    <string name="str_maintenance"><u>      Maintenance     </u></string>
-
-
-    <string name="msg_error_server">No any response from server yet. Please try again.</string>
-    <string name="msg_fail_login">Failed to log in. Please check your ID or password.</string>
-    <string name="msg_fail_facebook">Facebook login Failed</string>
-    <string name="msg_fail_google">Google login Failed</string>
-    <string name="msg_fail_dataloading">Failed roading data. Please try again..</string>
-    <string name="msg_error_common">Errors occurred.</string>
-
-    <string name="msg_push_not_support_device">This device does not provide any push alert system.</string>
-    <string name="msg_enter_episode">Loading...</string>
-    <string name="msg_loading">Loading...</string>
-    <string name="msg_fail_inapp_give_coin">Sorry. The payment information is incorrect. Please contact us with your Google order number, date and account(ID) and we\'ll get back to you as soon as we can.</string>
-    <string name="msg_empty_email">Please enter your email address.</string>
-    <string name="msg_empty_password">Please enter your password.</string>
-    <string name="msg_fail_email_type">Invalid email address.</string>
-    <string name="msg_fail_password_length">Password must be a minimum of 6 characters.</string>
-    <string name="msg_empty_age">Please choose age.</string>
-    <string name="msg_empty_genre">Please choose genres.</string>
-    <string name="msg_empty_coupon">Enter your promotion code!</string>
-    <string name="msg_exist_nickname">Nickname exists.</string>
-    <string name="msg_disable_edit_profile">Facebook account can not edit your profile.</string>
-    <string name="msg_not_match_password">Invalid password.</string>
-    <string name="msg_inapp_setting_error">in-app purchases settings are incorrect.</string>
-    <string name="msg_get_inventory_error">Failed to get the inventory.</string>
-    <string name="msg_service_unavailable_error">Unavailable to use in-app service due to network problems.</string>
-    <string name="msg_billing_unavailable_error">This version of Google Play is not supported.</string>
-    <string name="msg_item_unavailable_error">Can\'t buy coins.</string>
-    <string name="msg_developer_error">Unverified product.</string>
-    <string name="msg_fail_get_purcharse_result">Failed to receive the result of purchase.</string>
-    <string name="msg_fail_verify_payload">Failed to verify payload.</string>
-    <string name="msg_fail_recieve_consume">Failed to receive the result of the purchase request.</string>
-    <string name="msg_go_update">A new version has been updated for better service. &lt;font color="#5e4ec2"&gt;Click UPDATE button&lt;/font&gt;~</string>
-    <string name="str_finish_service">Close</string>
-    <string name="msg_slow_wifi_image_loading">Loading could be slow due to poor WIFI network </string>
-    <string name="msg_success_login">Log in normally</string>
-
-    <string name="str_finish_app_msg">Do you wish to exit KrossKomics app?</string>
-
-
-
     // ver2
+    <string name="str_confirm">Confirm</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_more">more</string>
+    <string name="str_maintenance"><u>      Maintenance     </u></string>
+    <string name="str_coins">Coins</string>
+    <string name="str_bonus">Bonus</string>
+    <string name="str_home">Home</string>
+    <string name="str_close">Close</string>
+
+    <string name="str_search">Search</string>
+
     <string name="str_kk_email">help@krosskomics.com</string>
 
     <string name="str_home_uppper">HOME</string>
@@ -347,6 +197,19 @@
     <string name="str_loading">Loading…</string>
 
     <!-- msg -->
+    <string name="msg_fail_login">Failed to log in. Please check your ID or password.</string>
+    <string name="msg_fail_facebook">Facebook login Failed</string>
+    <string name="msg_fail_google">Google login Failed</string>
+    <string name="msg_error_common">Errors occurred.</string>
+    <string name="msg_cancel_pay">The in-app purchase has been Cancelled.</string>
+    <string name="msg_fail_inapp_give_coin">Sorry. The payment information is incorrect. Please contact us with your Google order number, date and account(ID) and we\'ll get back to you as soon as we can.</string>
+    <string name="msg_error_server">No any response from server yet. Please try again.</string>
+    <string name="msg_fail_dataloading">Failed roading data. Please try again..</string>
+    <string name="msg_permission_denied1">If you want to use Kross Komics app, please configure the settings.</string>
+    <string name="msg_permission_denied2">No configured any necessary permission for Kross Komics app.\n\n Please configure [Settings] &gt; [Apps] &gt; [Storage] permission.</string>
+    <string name="str_finish_app_msg">Do you wish to exit KrossKomics app?</string>
+
+
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>
     <string name="msg_empty_series">Oops..\nNo series</string>
     <string name="msg_empty_unlock_ep">Oops..\nNo unlock episodes</string>
@@ -364,7 +227,9 @@
     <string name="msg_fail_file_download">Download failed.</string>
     <string name="msg_scroll_end_next_view">Continue scrolling for\nnext episode.</string>
     <string name="msg_scroll_end_last_view">This is the last episode.</string>
-    <string name="msg_cancel_pay">The in-app purchase has been Cancelled.</string>
+    <string name="msg_fail_password_length">Password must be a minimum of 6 characters.</string>
+    <string name="msg_success_login">Log in normally</string>
+    <string name="msg_push_not_support_device">This device does not provide any push alert system.</string>
 
 
 </resources>

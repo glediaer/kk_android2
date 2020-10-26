@@ -2,10 +2,9 @@ package com.krosskomics.search.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.search.repository.SearchRepository
-import java.util.ArrayList
+import java.util.*
 
 
 class SearchViewModel(application: Application): BaseViewModel(application) {

@@ -16,7 +16,6 @@ import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.ServerUtil
 import kotlinx.android.synthetic.main.activity_download_ep.*
-import kotlinx.android.synthetic.main.activity_download_ep.recyclerView
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import retrofit2.Call
 import retrofit2.Callback

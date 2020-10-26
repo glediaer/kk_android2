@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.*
 import com.krosskomics.common.holder.BaseItemViewHolder
-import com.krosskomics.common.model.Search
 import com.krosskomics.ranking.activity.RankingDetailActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE

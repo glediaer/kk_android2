@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
-import com.krosskomics.series.activity.SeriesActivity
+import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.fragment.BaseFragment
@@ -21,7 +21,7 @@ import com.krosskomics.common.model.User
 import com.krosskomics.library.activity.DownloadEpActivity
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.library.viewmodel.LibraryViewModel
-import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.FileUtils
@@ -221,6 +221,7 @@ class LibraryFragment : BaseFragment() {
             networkStateView.visibility = View.GONE
             currentCategory = 0
 
+            viewModel.repository.sortType = "SU"
             requestServer()
         }
         unlockTextView.setOnClickListener {
@@ -232,7 +233,6 @@ class LibraryFragment : BaseFragment() {
             currentCategory = 1
 
             viewModel.repository.listType = "U"
-            viewModel.repository.sortType = "S"
             requestServer()
         }
         downloadTextView.setOnClickListener {

@@ -2,17 +2,10 @@ package com.krosskomics.ranking.activity
 
 import android.content.Intent
 import android.view.View
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.analytics.HitBuilders
-import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
-import com.krosskomics.common.activity.BaseActivity
 import com.krosskomics.common.activity.RecyclerViewBaseActivity
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.ongoing.activity.OnGoingActivity
-import com.krosskomics.ranking.viewmodel.RankingViewModel
 import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.view_title_section_ranking.*
 

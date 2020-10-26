@@ -4,13 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.DataAge
-import com.krosskomics.common.data.DataGenre
 import com.krosskomics.common.holder.BaseItemViewHolder
 import kotlinx.android.synthetic.main.item_info_age.view.*
-import kotlinx.android.synthetic.main.item_info_genre.view.*
 
 class InfoAgeAdapter(private val items: ArrayList<*>) :
     RecyclerView.Adapter<InfoAgeAdapter.CustomItemHolder>() {

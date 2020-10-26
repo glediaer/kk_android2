@@ -1,11 +1,6 @@
 package com.krosskomics.settings.repository
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.krosskomics.KJKomicsApp
-import com.krosskomics.common.model.InitSet
-import com.krosskomics.common.model.Main
 import com.krosskomics.common.model.More
 import com.krosskomics.common.repository.CommonRepository
 import com.krosskomics.util.CODE

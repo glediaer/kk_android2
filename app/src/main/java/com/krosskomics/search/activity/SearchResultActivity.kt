@@ -1,11 +1,9 @@
 package com.krosskomics.search.activity
 
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
-import com.krosskomics.common.activity.BaseActivity
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.model.Search
 import com.krosskomics.search.viewmodel.SearchViewModel

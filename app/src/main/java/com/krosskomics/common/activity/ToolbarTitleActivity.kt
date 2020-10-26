@@ -1,8 +1,6 @@
 package com.krosskomics.common.activity
 
 import android.view.View
-import com.krosskomics.R
-import com.krosskomics.common.activity.RecyclerViewBaseActivity
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 

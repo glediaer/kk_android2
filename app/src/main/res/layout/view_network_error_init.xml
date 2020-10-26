@@ -3,42 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@color/white"
-    tools:visibility="visible"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:src="@drawable/kross_no_wifi"/>
+        android:layout_width="match_parent"
+        android:layout_height="274dp"
+        android:src="@drawable/kk_img_no_network"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:textSize="17dp"
-        android:textColor="#ff9933"
-        android:text="@string/str_no_wifi_title" />
+        android:layout_marginTop="50dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:textColor="#828282"
+        android:text="@string/str_no_network" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="13dp"
-        android:textColor="#999999"
-        android:text="@string/str_no_wifi_msg" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp">
 
-    <Button
-        android:id="@+id/refreshButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/str_refresh"/>
+        <Button
+            android:id="@+id/refreshButton"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/kk_reload_network" />
 
-    <Button
-        android:id="@+id/goDownloadEpButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/str_go_to_download"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="48dp"
+            android:background="#262626">
+
+            <Button
+                android:id="@+id/goDownloadEpButton"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:background="@drawable/kk_rect_trans_white_2d_r5"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:textSize="16dp"
+                android:textColor="#ffffff"
+                android:layout_marginBottom="60dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:text="@string/str_my_downloaded_komics" />
+
+        </FrameLayout>
+
+    </FrameLayout>
 
 </LinearLayout>

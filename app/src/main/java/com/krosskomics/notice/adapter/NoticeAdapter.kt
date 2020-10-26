@@ -2,7 +2,6 @@ package com.krosskomics.notice.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 
 class NoticeAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :

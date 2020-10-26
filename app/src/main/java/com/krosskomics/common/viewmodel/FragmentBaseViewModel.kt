@@ -1,12 +1,9 @@
 package com.krosskomics.common.viewmodel
 
-import android.app.Application
 import android.content.Context
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.krosskomics.library.repository.LibraryRepository
-import com.krosskomics.ongoing.repository.OnGoingRepository
 
 open class FragmentBaseViewModel(val context: Context) : ViewModel() {
     var items = arrayListOf<Any>()

@@ -1,9 +1,7 @@
 package com.krosskomics.library.viewmodel
 
-import android.app.Application
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
 import com.krosskomics.library.repository.GiftBoxRepository
 

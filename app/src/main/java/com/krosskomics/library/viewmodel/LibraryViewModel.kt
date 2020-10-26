@@ -1,13 +1,10 @@
 package com.krosskomics.library.viewmodel
 
-import android.app.Application
 import android.content.Context
-import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
 import com.krosskomics.library.repository.LibraryRepository
-import com.krosskomics.series.repository.SeriesRepository
 import java.io.File
-import java.util.ArrayList
+import java.util.*
 
 class LibraryViewModel(context: Context): FragmentBaseViewModel(context) {
     val repository = LibraryRepository()

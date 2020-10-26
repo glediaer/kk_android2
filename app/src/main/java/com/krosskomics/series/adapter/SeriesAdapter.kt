@@ -3,9 +3,7 @@ package com.krosskomics.series.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
-import com.krosskomics.ranking.activity.RankingActivity
 
 class SeriesAdapter(private val items: ArrayList<*>, private val layoutRes: Int, private val context: Context) :
     RecyclerViewBaseAdapter(items, layoutRes) {

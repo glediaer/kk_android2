@@ -8,7 +8,6 @@ import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.holder.BaseItemViewHolder
-import com.krosskomics.util.CommonUtil
 import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*

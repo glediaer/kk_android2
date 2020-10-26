@@ -130,15 +130,6 @@ interface InterfaceRestful {
         @Field("deviceid") deviceid: String?
     ): Call<Episode>
 
-    //에피소드 소장,대여
-    @FormUrlEncoded
-    @POST("app/google/37/unlockepisode")
-    fun setRentEpisode(
-        @Field("lang") lang: String?,
-        @Field("eid") eid: String?,
-        @Field("unlock_type") unlock_type: String?
-    ): Call<PurchaseEpisode?>?
-
     //에피소드 선택구매
     @FormUrlEncoded
     @POST("app/google/37/unlockepisode/bulk")
@@ -146,7 +137,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("eids") eids: String?,
         @Field("unlock_type") unlock_typ: String?
-    ): Call<PurchaseEpisode?>?
+    ): Call<PurchaseEpisode>
 
     // 뷰어 호출
     @FormUrlEncoded

@@ -12,11 +12,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.view.SimpleDraweeView
 import com.krosskomics.R
-import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataMainContents
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.genre.activity.GenreDetailActivity
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CommonUtil
 
 class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<GenreAdapter.RankingViewHolder>() {

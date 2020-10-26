@@ -1,11 +1,10 @@
 package com.krosskomics.notice.activity
 
-import android.content.Intent
 import android.view.View
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarViewPagerActivity
 import com.krosskomics.util.CommonUtil
-import kotlinx.android.synthetic.main.activity_main_content.toolbar
+import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 
