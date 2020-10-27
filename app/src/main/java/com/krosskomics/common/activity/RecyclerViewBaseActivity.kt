@@ -79,32 +79,33 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
     }
 
     override fun initErrorView() {
-        errorView.refreshButton.setOnClickListener {
-            if (CommonUtil.getNetworkInfo(context) == null) {
+        errorView?.refreshButton?.setOnClickListener {
+            if (getNetworkInfo(context) == null) {
                 return@setOnClickListener
             }
-            errorView.visibility = View.GONE
+            errorView?.visibility = View.GONE
             requestServer()
         }
 
-        errorView.goDownloadEpButton.setOnClickListener {
+        errorView?.goDownloadEpButton?.setOnClickListener {
             startActivity(Intent(context, LibraryActivity::class.java))
             finish()
         }
     }
 
     override fun requestServer() {
-        if (CommonUtil.getNetworkInfo(context) == null) {
-            errorView.visibility = View.VISIBLE
+        if (getNetworkInfo(context) == null) {
+            errorView?.visibility = View.VISIBLE
             return
         }
+        showProgress(context)
         viewModel.requestMain()
     }
 
     override fun initTracker() {
         // Get tracker.
         val tracker = (application as KJKomicsApp).getTracker(KJKomicsApp.TrackerName.APP_TRACKER)
-        tracker?.setScreenName(getString(R.string.str_ongoing))
+        tracker?.setScreenName(getString(R.string.str_home))
         tracker?.send(HitBuilders.ScreenViewBuilder().build())
     }
 
@@ -153,6 +154,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
                 }
             }
         }
+        hideProgress()
     }
 
     open fun initMainView() {

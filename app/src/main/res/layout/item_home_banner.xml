@@ -2,14 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_view"
+        android:id="@+id/card_view1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
+        android:visibility="gone"
         app:cardCornerRadius="17dp">
 
         <ImageView
@@ -19,5 +21,30 @@
             android:scaleType="fitXY"/>
 
     </androidx.cardview.widget.CardView>
+
+    <!-- 메인 베너 -->
+    <FrameLayout
+        android:id="@+id/lay_main_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/big_banner_height">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            app:cardCornerRadius="17dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/iv_main"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/big_banner_height"
+                fresco:actualImageScaleType="fitXY"
+                fresco:placeholderImage="@drawable/kross_placeholder"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
 
 </RelativeLayout>

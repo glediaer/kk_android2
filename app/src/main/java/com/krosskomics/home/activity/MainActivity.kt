@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.gms.analytics.GoogleAnalytics
 import com.krosskomics.BuildConfig
@@ -40,7 +41,7 @@ import com.krosskomics.event.activity.EventActivity
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.home.adapter.ChangeLanguageAdapter
 import com.krosskomics.home.adapter.HomeAdapter
-import com.krosskomics.home.adapter.HomeBannerAdapter
+import com.krosskomics.home.adapter.MainBannerPagerAdapter
 import com.krosskomics.home.viewmodel.MainViewModel
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.mynews.activity.MyNewsActivity
@@ -52,6 +53,7 @@ import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.settings.activity.SettingsActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
+import com.krosskomics.util.CommonUtil.dpToPx
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
@@ -137,6 +139,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(mMessageReceiver, IntentFilter(CODE.LB_MAIN))
         setPushAction()
+        setDeepLink()
     }
 
     override fun requestServer() {
@@ -297,13 +300,47 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
     private fun setMainBannerView(items: ArrayList<DataBanner>?) {
         items?.let {
-            bannerPager.apply {
-                val currentItem: Int = items.size * 100
-                clipToPadding = false
-                setPadding(CommonUtil.dpToPx(context, 13 + 14), 0, CommonUtil.dpToPx(context, 13 + 14),0)
-                adapter = HomeBannerAdapter(items)
-                setCurrentItem(currentItem, true)
-            }
+//            bannerPager.apply {
+//                val currentItem: Int = items.size * 100
+//                clipToPadding = false
+//                setPadding(CommonUtil.dpToPx(context, 13 + 14), 0, CommonUtil.dpToPx(context, 13 + 14),0)
+//                adapter = HomeBannerAdapter(items)
+//                setCurrentItem(currentItem, true)
+//            }
+            pager_banner.adapter = MainBannerPagerAdapter(context, it, true)
+
+            pager_banner.clipToPadding = false
+            pager_banner.setPadding(
+                dpToPx(context, 13 + 14),
+                0,
+                dpToPx(context, 13 + 14),
+                0
+            )
+            pager_banner.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                }
+
+                override fun onPageSelected(position: Int) {}
+                override fun onPageScrollStateChanged(state: Int) {
+                    if (state == ViewPager.SCROLL_STATE_DRAGGING) {
+                        swipeLayout.isEnabled = false
+                    } else if (state == ViewPager.SCROLL_STATE_IDLE) {
+                        swipeLayout.isEnabled = true
+                    }
+                }
+            })
+
+            val currentItem: Int = it.size * 100
+            pager_banner.setCurrentItem(currentItem, true)
+
+//            if (mBannerLolling > 0) {
+//                actBinding.pagerBanner.setInterval(mBannerLolling * 1000)
+//                actBinding.pagerBanner.startAutoScroll()
+//            }
         }
     }
 
@@ -524,6 +561,52 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             }, 500)
         }
         KJKomicsApp.ATYPE = ""
+    }
+
+    private fun setDeepLink() {
+        try {
+//        KJKomicsApp.DEEPLINK_DATA = "https://krosskomics.com/series/954316/hi/";
+//        KJKomicsApp.DEEPLINK_DATA = "https://krosskomics.com/series/585200/en?ref_source=web";
+            if (TextUtils.isEmpty(KJKomicsApp.DEEPLINK_DATA) &&
+                TextUtils.isEmpty(KJKomicsApp.DEEPLINK_CNO) &&
+                TextUtils.isEmpty(KJKomicsApp.DEEPLINK_RID)
+            ) {
+                return
+            }
+
+            // 웹 인텐트 케이스
+            if (TextUtils.isEmpty(KJKomicsApp.DEEPLINK_DATA)) {
+                if (!TextUtils.isEmpty(KJKomicsApp.DEEPLINK_CNO)) {
+                    requestCheckData(KJKomicsApp.DEEPLINK_CNO)
+                } else if (!TextUtils.isEmpty(KJKomicsApp.DEEPLINK_RID)) {
+                    moveSignUp(context)
+                }
+            } else {
+                Log.e(TAG, "KJKomicsApp.DEEPLINK_DATA : " + KJKomicsApp.DEEPLINK_DATA)
+                // 스키마 구분
+                val splitData =
+                    KJKomicsApp.DEEPLINK_DATA!!.split("//").toTypedArray()
+                // 호스트 구분
+                Log.e(TAG, "splitData.length : " + splitData.size)
+                var splitTemp =
+                    splitData[1].split("/").toTypedArray()
+                val type = splitTemp[1]
+                if ("series" == type) {
+//            "https://krosskomics.com/series/914365/en/";
+                    KJKomicsApp.DEEPLINK_CNO = splitTemp[2]
+                    requestCheckData(KJKomicsApp.DEEPLINK_CNO)
+                } else if ("signup" == type) {
+//            "https://krosskomics.com/signup/?rid=2020202";
+                    val rid = splitTemp[2]
+                    splitTemp = rid.split("=").toTypedArray()
+                    KJKomicsApp.DEEPLINK_RID = splitTemp[1]
+                    moveSignUp(context)
+                }
+            }
+            KJKomicsApp.DEEPLINK_DATA = ""
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun requestSetLanguage(newLanguage: String) {

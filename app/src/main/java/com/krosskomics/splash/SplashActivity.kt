@@ -43,6 +43,7 @@ import com.krosskomics.home.activity.MainActivity
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil.getNetworkInfo
+import com.krosskomics.util.CommonUtil.getVersionCode
 import com.krosskomics.util.CommonUtil.moveAppMarket
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
@@ -343,16 +344,6 @@ class SplashActivity : Activity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-//        AppEventsLogger.activateApp(application)
-    }
-
-    override fun onPause() {
-        super.onPause()
-//        AppEventsLogger.deactivateApp(application)
-    }
-
     private fun checkPlayServices(): Boolean {
         val apiAvailability = GoogleApiAvailability.getInstance()
         val resultCode = apiAvailability.isGooglePlayServicesAvailable(this)
@@ -418,20 +409,20 @@ class SplashActivity : Activity() {
         //action U: 업데이트 유도
         try {
             data?.let {
-//                if ("F" == it.action) {       // 강제 업데이트
-//                    if (it.app_version > getVersionCode(context)) {
-//                        showUpdateAlert(it)
-//                        return
-//                    }
-//                } else if ("M" == it.action) {    // 서비스 점검
-//                    showMaintenanceAlert(it)
-//                    return
-//                } else if ("U" == data.action) {    // 업데이트 유도
-//                    if (it.app_version > getVersionCode(context)) {
-//                        showUpdateAlert(it)
-//                        return
-//                    }
-//                }
+                if ("F" == it.action) {       // 강제 업데이트
+                    if (it.app_version > getVersionCode(context)) {
+                        showUpdateAlert(it)
+                        return
+                    }
+                } else if ("M" == it.action) {    // 서비스 점검
+                    showMaintenanceAlert(it)
+                    return
+                } else if ("U" == data.action) {    // 업데이트 유도
+                    if (it.app_version > getVersionCode(context)) {
+                        showUpdateAlert(it)
+                        return
+                    }
+                }
                 LATEST_APP_VERSION_CODE = it.app_version
                 requestAppToken()
             }

@@ -53,11 +53,17 @@
                     android:layout_height="@dimen/big_banner_height"
                     android:fitsSystemWindows="true">
 
-                    <androidx.viewpager2.widget.ViewPager2
-                        android:id="@+id/bannerPager"
+<!--                    <androidx.viewpager2.widget.ViewPager2-->
+<!--                        android:id="@+id/bannerPager"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:orientation="horizontal" />-->
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/pager_banner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal" />
+                        android:background="@android:color/transparent"/>
 
                 </FrameLayout>
 

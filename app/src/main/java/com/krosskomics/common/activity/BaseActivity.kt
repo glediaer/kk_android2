@@ -18,6 +18,7 @@ import com.google.android.gms.analytics.HitBuilders
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
+import com.krosskomics.login.activity.LoginActivity
 import com.krosskomics.login.activity.LoginIntroActivity
 import com.krosskomics.splash.SplashActivity
 import com.krosskomics.util.CommonUtil.getNetworkInfo
@@ -157,6 +158,12 @@ abstract class BaseActivity : AppCompatActivity() {
                 .setPositiveButton("OK", null)
                 .show()
         }
+    }
+
+    open fun moveSignUp(context: Context?) {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.putExtra("pageType", "signup")
+        startActivity(intent)
     }
 
     open fun showProgress(context: Context) {

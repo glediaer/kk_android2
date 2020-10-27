@@ -109,4 +109,7 @@ dependencies {
     implementation "com.android.billingclient:billing-ktx:3.0.1"
     implementation 'com.google.android:flexbox:1.0.0'
     implementation 'com.airbnb.android:lottie:3.4.1'
+    implementation ('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
+        exclude module: 'support-v4'
+    }
 }

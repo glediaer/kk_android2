@@ -29,9 +29,9 @@
 
     </LinearLayout>
 
-    <include
-        android:id="@+id/errorView"
-        layout="@layout/view_network_error"
-        android:visibility="gone"/>
+<!--    <include-->
+<!--        android:id="@+id/errorView"-->
+<!--        layout="@layout/view_network_error"-->
+<!--        android:visibility="gone"/>-->
 
 </RelativeLayout>
