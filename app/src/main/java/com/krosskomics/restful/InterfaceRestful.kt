@@ -9,7 +9,7 @@ import retrofit2.http.POST
 interface InterfaceRestful {
     // 버전 체크
     @get:POST("app/google/24/version")
-    val getVersion: Call<Version?>
+    val getVersion: Call<Version>
 
     // 앱 체크
     @FormUrlEncoded
@@ -52,7 +52,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("login_type") login_type: String?,
         @Field("firebase_token") firebase_token: String?
-    ): Call<Login?>
+    ): Call<Login>
 
     // 로그인 중복 체크
     @FormUrlEncoded
@@ -69,7 +69,7 @@ interface InterfaceRestful {
     fun setDeleteUser(
         @Field("lang") lang: String?,
         @Field("atype") atype: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 크로스 코믹스 회원가입
     @FormUrlEncoded
@@ -166,7 +166,7 @@ interface InterfaceRestful {
         @Field("list_type") list_type: String?,
         @Field("page") page: Int,
         @Field("sid") sid: String?
-    ): Call<UnLockedSeriesEp?>?
+    ): Call<UnLockedSeriesEp>
 
     // 푸시, 노티 등 셀렉터
     @FormUrlEncoded
@@ -178,7 +178,7 @@ interface InterfaceRestful {
         @Field("action") action: String?,
         @Field("firebase_token") firebase_token: String?,
         @Field("deviceid") deviceid: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 유저 정보 설정
     @FormUrlEncoded
@@ -188,7 +188,7 @@ interface InterfaceRestful {
         @Field("set_type") set_type: String?,
         @Field("email") email: String?,
         @Field("preemail") preemail: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 패스워드 변경
     @FormUrlEncoded
@@ -198,7 +198,7 @@ interface InterfaceRestful {
         @Field("set_type") set_type: String?,
         @Field("passwd") passwd: String?,
         @Field("prepasswd") prepasswd: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 언어 변경
     @FormUrlEncoded
@@ -207,7 +207,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("set_type") set_type: String?,
         @Field("ulang") ulang: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 좋아요
     @FormUrlEncoded
@@ -244,7 +244,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("set_type") set_type: String?,
         @Field("coupon") coupon: String?
-    ): Call<Coin?>?
+    ): Call<Coin>
 
     // 뷰어 최종 인덱스
     @FormUrlEncoded
@@ -265,7 +265,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("gtype") gtype: String?,
         @Field("login_seq") login_seq: Long
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 앱 종료시 호출
     @FormUrlEncoded
@@ -274,7 +274,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("run_seq") run_seq: Long,
         @Field("login_seq") login_seq: Long
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 검색 초기 데이터
     @FormUrlEncoded
@@ -285,14 +285,14 @@ interface InterfaceRestful {
         @Field("k") k: String?
     ): Call<Search>
 
-    // 검색 결과
-    @FormUrlEncoded
-    @POST("app/google/37/search")
-    fun getSearchResult(
-        @Field("lang") lang: String?,
-        @Field("page") page: Int,
-        @Field("k") k: String?
-    ): Call<SearchResult>
+//    // 검색 결과
+//    @FormUrlEncoded
+//    @POST("app/google/37/search")
+//    fun getSearchResult(
+//        @Field("lang") lang: String?,
+//        @Field("page") page: Int,
+//        @Field("k") k: String?
+//    ): Call<SearchResult>
 
     // 선물함
     @FormUrlEncoded
@@ -310,7 +310,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("set_type") set_type: String?,
         @Field("seq") seq: String?
-    ): Call<Gift?>?
+    ): Call<Gift>
 
     // 히스토리
     @FormUrlEncoded
@@ -319,7 +319,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("list_type") list_type: String?,
         @Field("page") page: Int
-    ): Call<Gift?>?
+    ): Call<Gift>
 
     // 인앱 리스트
     @get:POST("app/google/37/product")
@@ -334,7 +334,7 @@ interface InterfaceRestful {
         @Field("purchasetime") purchasetime: Long,
         @Field("purchasestate") purchasestate: Int,
         @Field("purchasetoken") purchasetoken: String?
-    ): Call<Coin?>?
+    ): Call<Coin>
 
     // 에피소드 유효성 체크
     @FormUrlEncoded
@@ -343,7 +343,7 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("check_type") check_type: String?,
         @Field("sid") sid: String?
-    ): Call<CheckData?>?
+    ): Call<CheckData>
 
     // 뷰어 호출
     @FormUrlEncoded
@@ -369,7 +369,7 @@ interface InterfaceRestful {
         @Field("set_type") set_type: String?,
         @Field("ep_view_id") ep_view_id: String?,
         @Field("img_index") img_index: String?
-    ): Call<Default?>?
+    ): Call<Default>
 
     // 다운로드 완료 알림
     @FormUrlEncoded
@@ -378,5 +378,5 @@ interface InterfaceRestful {
         @Field("lang") lang: String?,
         @Field("set_type") set_type: String?,
         @Field("eid") eid: String?
-    ): Call<Default?>?
+    ): Call<Default>
 }

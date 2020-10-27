@@ -104,4 +104,5 @@ object CODE {
     val SIGNUP_MODE = "1"
 
     val VISIBLE_LIST_TOPBUTTON_CNT = 3
+    val PW_MIN_LENGTH = 6
 }

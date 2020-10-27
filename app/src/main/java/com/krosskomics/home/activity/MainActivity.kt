@@ -6,9 +6,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
+import android.os.Process
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.widget.NestedScrollView
@@ -27,6 +30,8 @@ import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.activity.BaseActivity
 import com.krosskomics.common.data.DataBanner
 import com.krosskomics.common.data.DataMainContents
+import com.krosskomics.common.model.CheckData
+import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.InitSet
 import com.krosskomics.common.model.Main
 import com.krosskomics.common.view.SpanningLinearLayoutManager
@@ -43,12 +48,15 @@ import com.krosskomics.notice.activity.NoticeActivity
 import com.krosskomics.ongoing.activity.OnGoingActivity
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.search.activity.SearchActivity
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.settings.activity.SettingsActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
+import com.krosskomics.util.ServerUtil
+import com.krosskomics.util.ServerUtil.service
 import com.krosskomics.waitfree.activity.WaitFreeActivity
 import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -59,6 +67,9 @@ import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_main_tab.view.*
 import kotlinx.android.synthetic.main.view_network_error.view.*
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
@@ -125,6 +136,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         //외부에서 통신받기
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(mMessageReceiver, IntentFilter(CODE.LB_MAIN))
+        setPushAction()
     }
 
     override fun requestServer() {
@@ -224,7 +236,13 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         if(dl_main_drawer_root.isDrawerOpen(GravityCompat.START)) {
             dl_main_drawer_root.closeDrawer(GravityCompat.START)
         } else {
-            super.onBackPressed()
+            if (!this@MainActivity.isFinishing) {
+                try {
+                    showFinishAlert();
+                } catch (e: Exception) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -322,6 +340,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                     items.forEachIndexed { index, dataLanguage ->
                         dataLanguage.isSelect = position == index
                         write(context, CODE.CURRENT_LANGUAGE, dataLanguage.lang)
+                        requestSetLanguage(dataLanguage.lang)
                         requestServer()
                     }
                     adapter?.notifyDataSetChanged()
@@ -429,6 +448,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             }
             logoutTextView.setOnClickListener {
                 if (read(context, CODE.LOCAL_loginYn, "N") == "Y") {
+                    requestLogOutApi()
                     CommonUtil.logout(context)
                     logoutTextView.text = getString(R.string.str_login)
                     refreshNaviView()
@@ -438,6 +458,28 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                 dl_main_drawer_root.closeDrawers()
             }
         }
+    }
+
+    private fun requestLogOutApi() {
+        val api = ServerUtil.service.postLogout(CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+            "logout", KJKomicsApp.LOGIN_SEQ)
+        api.enqueue(object : retrofit2.Callback<Default> {
+            override fun onResponse(call: Call<Default>, response: Response<Default>) {
+                try {
+                    if (response.isSuccessful) {
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onFailure(call: Call<Default>, t: Throwable) {
+                try {
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
     }
 
     /**
@@ -455,6 +497,181 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
     private fun changeLanguageView() {
         initLanguageRecyclerView()
+    }
+
+    private fun setPushAction() {
+        val handler = Handler()
+        // push type 분류
+        // 0:메인,1:딥링크
+//        KJKomicsApp.ATYPE = "H";
+//        KJKomicsApp.SID = "12321312";
+        if (BuildConfig.DEBUG) {
+            Log.e(TAG, "KJKomicsApp.ATYPE : " + KJKomicsApp.ATYPE)
+            Log.e(TAG, "KJKomicsApp.SID : " + KJKomicsApp.SID)
+        }
+        if (TextUtils.isEmpty(KJKomicsApp.ATYPE)) {
+            return
+        }
+        when (KJKomicsApp.ATYPE) {
+            "M" -> {
+            }
+            "H" -> handler.postDelayed({
+                if (!TextUtils.isEmpty(KJKomicsApp.SID) &&
+                    "0" != KJKomicsApp.SID
+                ) {
+                    requestCheckData(KJKomicsApp.SID)
+                }
+            }, 500)
+        }
+        KJKomicsApp.ATYPE = ""
+    }
+
+    private fun requestSetLanguage(newLanguage: String) {
+        val api = ServerUtil.service.setLanguage(CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+            "change_language", newLanguage)
+        api.enqueue(object : retrofit2.Callback<Default> {
+            override fun onResponse(call: Call<Default>, response: Response<Default>) {
+                try {
+                    if (response.isSuccessful) {
+                        val item = response.body()
+                        if ("00" == item!!.retcode) {
+                        } else if ("203" == item.retcode) {
+                            goLoginAlert(context)
+                        } else {
+                            if ("" != item.msg) {
+                                showToast(item.msg, context)
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onFailure(call: Call<Default>, t: Throwable) {
+                try {
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
+    }
+
+    private fun requestAppFinishApi() {
+        val api = ServerUtil.service.postFinishApp(
+            read(context, CODE.CURRENT_LANGUAGE, "en"),
+            KJKomicsApp.RUN_SEQ, if (KJKomicsApp.LOGIN_SEQ != 0L) KJKomicsApp.LOGIN_SEQ else 0
+        )
+        api.enqueue(object : Callback<Default?> {
+            override fun onResponse(
+                call: Call<Default?>,
+                response: Response<Default?>
+            ) {
+                moveTaskToBack(true)
+                finish()
+                Process.killProcess(Process.myPid())
+            }
+
+            override fun onFailure(call: Call<Default?>, t: Throwable) {
+                moveTaskToBack(true)
+                finish()
+                Process.killProcess(Process.myPid())
+            }
+        })
+    }
+
+    /**
+     * 앱링크 작품 존재여부 체크 api
+     * @param sid
+     */
+    private fun requestCheckData(sid: String?) {
+        val api: Call<CheckData> = service.getCheckData(
+            read(context, CODE.CURRENT_LANGUAGE, "en"),
+            "valid_series_lang", sid
+        )
+        api.enqueue(object : Callback<CheckData> {
+            override fun onResponse(
+                call: Call<CheckData>,
+                response: Response<CheckData>
+            ) {
+                if (response.isSuccessful) {
+                    val body: CheckData? = response.body()
+                    if ("00" == body?.retcode) {
+                        val handler = Handler()
+                        handler.postDelayed({
+                            val intent = Intent(context, SeriesActivity::class.java)
+                            val b = Bundle()
+                            b.putString("sid", sid)
+                            intent.putExtras(b)
+                            startActivity(intent)
+                            if (!TextUtils.isEmpty(KJKomicsApp.DEEPLINK_CNO)) {
+                                KJKomicsApp.DEEPLINK_CNO = ""
+                            }
+                            if (!TextUtils.isEmpty(KJKomicsApp.SID)) {
+                                KJKomicsApp.SID = ""
+                            }
+                        }, 100)
+                    } else {
+                        if (!TextUtils.isEmpty(body?.msg)) {
+                            showToast(body!!.msg, context)
+                        }
+                        if (!TextUtils.isEmpty(body?.popup_msg)) {
+                            showCheckDataAlert(body?.popup_msg)
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<CheckData?>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
+
+    private fun showFinishAlert() {
+        try {
+            val innerView: View =
+                layoutInflater.inflate(R.layout.dialog_default, null)
+            val dialog = initDialog(innerView)
+            val tvTitle = innerView.findViewById<TextView>(R.id.tv_title)
+            val msgTextView = innerView.findViewById<TextView>(R.id.tv_msg)
+            val btnConfirm =
+                innerView.findViewById<Button>(R.id.btn_confirm)
+            val btnCancel =
+                innerView.findViewById<Button>(R.id.btn_cancel)
+            tvTitle.text = getString(R.string.app_name2)
+            msgTextView.text = getString(R.string.str_finish_app_msg)
+            btnCancel.setOnClickListener { dialog.dismiss() }
+            btnConfirm.setOnClickListener {
+                dialog.dismiss()
+                requestAppFinishApi()
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun showCheckDataAlert(msg: String?) {
+        try {
+            val innerView =
+                layoutInflater.inflate(R.layout.dialog_default, null)
+            val dialog = initDialog(innerView)
+            val tvTitle = innerView.findViewById<TextView>(R.id.tv_title)
+            val msgTextView = innerView.findViewById<TextView>(R.id.tv_msg)
+            val btnConfirm =
+                innerView.findViewById<Button>(R.id.btn_confirm)
+            val btnCancel =
+                innerView.findViewById<Button>(R.id.btn_cancel)
+            tvTitle.text = msg
+            msgTextView.visibility = View.GONE
+            btnCancel.setOnClickListener { dialog.dismiss() }
+            btnConfirm.setOnClickListener {
+                dialog.dismiss()
+                startActivity(Intent(context, SettingsActivity::class.java))
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onClick(v: View?) {

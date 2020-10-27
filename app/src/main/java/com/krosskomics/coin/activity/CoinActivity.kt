@@ -274,7 +274,7 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
                 purchase.purchaseTime, purchase.purchaseState, ""
 //                , purchase.getToken()
             )
-            api!!.enqueue(object : Callback<Coin?> {
+            api.enqueue(object : Callback<Coin?> {
                 override fun onResponse(call: Call<Coin?>, response: Response<Coin?>) {
                     try {
                         if (response.isSuccessful) {
@@ -315,7 +315,7 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
                         mPaymentRetryCount++
                     } else {
                         try {
-//                            checkNetworkConnection(this@CoinActivity, t, actBinding.viewError)
+                            checkNetworkConnection(this@CoinActivity, t, errorView)
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }

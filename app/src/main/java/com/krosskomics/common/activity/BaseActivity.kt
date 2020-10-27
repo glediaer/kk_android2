@@ -1,5 +1,6 @@
 package com.krosskomics.common.activity
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -8,6 +9,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import android.widget.ProgressBar
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.login.activity.LoginIntroActivity
+import com.krosskomics.splash.SplashActivity
 import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.hideErrorView
 import com.krosskomics.util.CommonUtil.showErrorView
@@ -28,6 +31,7 @@ abstract class BaseActivity : AppCompatActivity() {
     protected lateinit var context: Context
     protected var recyclerViewItemLayoutId = 0
     lateinit var toolbarTitleString: String
+    private var mProgressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +49,14 @@ abstract class BaseActivity : AppCompatActivity() {
             android.R.id.home -> finish()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onDestroy() {
+        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+            mProgressDialog!!.dismiss()
+            mProgressDialog = null
+        }
+        super.onDestroy()
     }
 
     // fragment 추가
@@ -144,6 +156,42 @@ abstract class BaseActivity : AppCompatActivity() {
                 .setMessage(msg)
                 .setPositiveButton("OK", null)
                 .show()
+        }
+    }
+
+    open fun showProgress(context: Context) {
+        try {
+            if (KJKomicsApp.IS_ENTER_OFFLINE && getNetworkInfo(context) != null) {
+                KJKomicsApp.IS_ENTER_OFFLINE = false
+                showToast(context.getString(R.string.msg_reloading_init_data), context)
+                val intent = Intent(context, SplashActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+                return
+            }
+            if (mProgressDialog == null) {
+                mProgressDialog = Dialog(context, R.style.TransDialog)
+                val pb = ProgressBar(context)
+                val params =
+                    ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                mProgressDialog?.addContentView(pb, params)
+                mProgressDialog?.setCancelable(false)
+                mProgressDialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+                if (!(context as Activity).isFinishing) {
+                    mProgressDialog?.show()
+                }
+            } else {
+                mProgressDialog?.show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    open fun hideProgress() {
+        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+            mProgressDialog!!.dismiss()
+            mProgressDialog = null
         }
     }
 }

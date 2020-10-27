@@ -1,7 +1,13 @@
 package com.krosskomics.common.activity
 
+import android.app.Activity
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -26,8 +32,11 @@ import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.ranking.adapter.RankingAdapter
 import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.series.activity.SeriesActivity
+import com.krosskomics.splash.SplashActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
+import com.krosskomics.util.CommonUtil.getNetworkInfo
+import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_main_tab.*

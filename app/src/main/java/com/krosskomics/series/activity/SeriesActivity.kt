@@ -45,7 +45,6 @@ import com.krosskomics.util.ServerUtil.service
 import com.krosskomics.util.UtilBitmap
 import com.krosskomics.viewer.activity.ViewerActivity
 import com.scottyab.aescrypt.AESCrypt
-import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.activity_series.nestedScrollView
@@ -90,8 +89,14 @@ class SeriesActivity : ToolbarTitleActivity() {
             actionItem.searchImageView.visibility = View.GONE
             actionItem.scribeImageView.visibility = View.VISIBLE
             actionItem.scribeImageView.setOnClickListener {
+                if (it.isSelected) {
+                    viewModel.mAction = "C"
+                } else {
+                    viewModel.mAction = "S"
+                }
                 it.isSelected = !it.isSelected
                 // 구독 요청/해지 api request
+                requestSubscribe()
             }
 
             toolbarTitle.visibility = View.VISIBLE
@@ -101,6 +106,47 @@ class SeriesActivity : ToolbarTitleActivity() {
         moveTopView.setOnClickListener {
             nestedScrollView.scrollTo(0, 0)
         }
+    }
+
+    private fun requestSubscribe() {
+        val api = service.setNotiSelector(
+            read(context, CODE.CURRENT_LANGUAGE, "en"),
+            "subscribe", viewModel.sid, viewModel.mAction, "", ""
+        )
+        api.enqueue(object : Callback<Default?> {
+            override fun onResponse(
+                call: Call<Default?>,
+                response: Response<Default?>
+            ) {
+                try {
+                    if (response.isSuccessful) {
+                        val item = response.body()
+                        if ("00" == item!!.retcode) {
+                            toolbar.actionItem.scribeImageView.isSelected = "C" != viewModel.mAction
+                        } else if ("202" == item.retcode) {
+                            goCoinAlert(context)
+                        } else {
+                            if ("" != item.msg) {
+                                showToast(item.msg, context)
+                            }
+                        }
+//                        hideProgress()
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+//                    hideProgress()
+                }
+            }
+
+            override fun onFailure(call: Call<Default?>, t: Throwable) {
+//                hideProgress()
+                try {
+//                    checkNetworkConnection(context, t, actBinding.viewError)
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
     }
 
     override fun initModel() {
@@ -126,11 +172,11 @@ class SeriesActivity : ToolbarTitleActivity() {
     }
 
     private fun sendDownloadComplete() {
-        val api: Call<Default?>? = service.sendDownloadComplete(
+        val api: Call<Default> = service.sendDownloadComplete(
             read(context, CODE.CURRENT_LANGUAGE, "en"),
             "download_episode", viewModel.downloadEpEid
         )
-        api!!.enqueue(object : Callback<Default?> {
+        api.enqueue(object : Callback<Default?> {
             override fun onResponse(
                 call: Call<Default?>,
                 response: Response<Default?>

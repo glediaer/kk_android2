@@ -1,6 +1,5 @@
 package com.krosskomics.splash
 
-//import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
@@ -24,6 +23,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.NonNull
 import bolts.AppLinks
+import com.facebook.applinks.AppLinkData
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
@@ -127,26 +127,6 @@ class SplashActivity : Activity() {
                 Log.i(TAG, "App Link Target URL: $targetUrl")
             }
         }
-
-        //        AppLinkData.fetchDeferredAppLinkData(this,
-//                new AppLinkData.CompletionHandler() {
-//                    @Override
-//                    public void onDeferredAppLinkDataFetched(AppLinkData appLinkData) {
-//                        // Process app link data
-//                        Log.e(TAG, "onDeferredAppLinkDataFetched appLinkData : " + appLinkData);
-//                        if (appLinkData != null) {
-//                            try {
-//                                Bundle bundle = appLinkData.getArgumentBundle();
-//                                // Get deeplink from ApplinkData
-//                                KJKomicsApp.DEEPLINK_DATA = bundle.getString(AppLinkData.ARGUMENTS_NATIVE_URL);
-//                                Log.e(TAG, "onDeferredAppLinkDataFetched deeplink : " + KJKomicsApp.DEEPLINK_DATA);
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                }
-//        );
     }
 
     private fun setDynamicLink() {
@@ -298,15 +278,15 @@ class SplashActivity : Activity() {
      */
     private fun requestLoginId(loginType: String) {
         if (!this@SplashActivity.isFinishing) {
-            val api: Call<Login?> = ServerUtil.service.setAutoLogin(
+            val api: Call<Login> = ServerUtil.service.setAutoLogin(
                 read(context, CODE.CURRENT_LANGUAGE, "en"),
                 loginType,
                 read(context, CODE.LOCAL_token, "")
             )
-            api.enqueue(object : Callback<Login?> {
+            api.enqueue(object : Callback<Login> {
                 override fun onResponse(
-                    @NonNull call: Call<Login?>,
-                    @NonNull response: Response<Login?>
+                    @NonNull call: Call<Login>,
+                    @NonNull response: Response<Login>
                 ) {
                     try {
                         if (response.isSuccessful) {
@@ -397,11 +377,11 @@ class SplashActivity : Activity() {
      */
     private fun requestAppVersion() {
         if (!this@SplashActivity.isFinishing) {
-            val version: Call<Version?> = ServerUtil.service.getVersion
-            version.enqueue(object : Callback<Version?> {
+            val version: Call<Version> = ServerUtil.service.getVersion
+            version.enqueue(object : Callback<Version> {
                 override fun onResponse(
-                    @NonNull call: Call<Version?>,
-                    @NonNull response: Response<Version?>
+                    @NonNull call: Call<Version>,
+                    @NonNull response: Response<Version>
                 ) {
                     try {
                         if (response.isSuccessful) {
@@ -418,7 +398,7 @@ class SplashActivity : Activity() {
                 }
 
                 override fun onFailure(
-                    @NonNull call: Call<Version?>,
+                    @NonNull call: Call<Version>,
                     @NonNull t: Throwable
                 ) {
                     t.printStackTrace()

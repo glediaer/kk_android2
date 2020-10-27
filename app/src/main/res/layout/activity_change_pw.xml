@@ -93,6 +93,26 @@
                     android:paddingRight="20dp"
                     android:background="@drawable/kk_bottomsheet_edittext_rect" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="14dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:text="@string/str_current_password" />
+
+                <EditText
+                    android:id="@+id/currentPwEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="10dp"
+                    android:inputType="textPassword"
+                    android:paddingLeft="20dp"
+                    android:textSize="16dp"
+                    android:paddingRight="20dp"
+                    android:background="@drawable/kk_bottomsheet_edittext_rect" />
+
 
                 <Button
                     android:id="@+id/confirmButton"

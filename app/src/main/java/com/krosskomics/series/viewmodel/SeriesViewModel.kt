@@ -49,6 +49,8 @@ class SeriesViewModel(application: Application): BaseViewModel(application) {
     var seriesDownloadEpList = ArrayList<String>()
     var seriesDonwnloadedFile: File? = null
 
+    // 구독
+    var mAction = "S"
 
     private val repository = SeriesRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
