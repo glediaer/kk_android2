@@ -39,15 +39,12 @@ class MainBannerPagerAdapter(val context: Context?,
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.item_home_banner, container, false)
-        val lay_main_banner = view.findViewById<FrameLayout>(R.id.lay_main_banner)
         val iv_main: SimpleDraweeView = view.findViewById(R.id.iv_main)
         if (null != items && 0 < items!!.size) {
             val pos = position % items!!.size
             val item: DataBanner = items!![pos]
-            val params = lay_main_banner.layoutParams
-//            params.height = (getDeviceWidth(context!!) * MainActivity.HEADER_RATE) as Int -
-//                    dpToPx(context, MainActivity.BANNER_INDICATOR_MARGIN)
-//            lay_main_banner.layoutParams = params
+            val params = iv_main.layoutParams
+
             iv_main.controller = CommonUtil.getDraweeController(
                 context,
                 item.image,

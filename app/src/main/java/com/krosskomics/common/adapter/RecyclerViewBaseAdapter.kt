@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.item_coin.view.*
 import kotlinx.android.synthetic.main.item_download_ep.view.*
 import kotlinx.android.synthetic.main.item_genre_detail.view.*
 import kotlinx.android.synthetic.main.item_genre_detail.view.deleteView
-import kotlinx.android.synthetic.main.item_home_banner.view.mainImageView
+import kotlinx.android.synthetic.main.item_ongoing.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.writerTextView

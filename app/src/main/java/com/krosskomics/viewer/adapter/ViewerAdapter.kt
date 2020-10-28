@@ -16,6 +16,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.controller.BaseControllerListener
 import com.facebook.drawee.controller.ControllerListener
 import com.facebook.drawee.interfaces.DraweeController
+import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.common.Priority
 import com.facebook.imagepipeline.common.ResizeOptions
 import com.facebook.imagepipeline.image.ImageInfo
@@ -26,6 +27,7 @@ import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBanner
+import com.krosskomics.common.data.DataImage
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
@@ -53,19 +55,19 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
         TYPE_ITEM, TYPE_FOOTER
     }
 
-//    var viewerOrientation = 0  // 0: v, 1: h
+    var viewerOrientation = 0  // 0: v, 1: h
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewerViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)
         when (viewType) {
             VIEW_TYPE.TYPE_ITEM.ordinal -> {
-//                view = if (viewerOrientation == 0) {
+                view = if (viewerOrientation == 0) {
                     LayoutInflater.from(parent.context)
                         .inflate(layoutRes, parent, false)
-//                } else {
-//                    LayoutInflater.from(parent.context)
-//                        .inflate(R.layout.item_viewer_comic, parent, false)
-//                }
+                } else {
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_viewer_comic, parent, false)
+                }
             }
             VIEW_TYPE.TYPE_FOOTER.ordinal -> {
                 view = LayoutInflater.from(parent.context)
@@ -87,8 +89,8 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
         when (getItemViewType(position)) {
             VIEW_TYPE.TYPE_ITEM.ordinal ->
                 holder.itemView.apply {
-                    items[position].let { url ->
-                        if (url is String) {
+                    items[position].let { item ->
+                        if (item is String) {
                             val controllerListener: ControllerListener<ImageInfo> = object :
                                 BaseControllerListener<ImageInfo>() {
                                 override fun onFinalImageSet(
@@ -106,11 +108,11 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
                                             imageInfo.width.toFloat(),
                                             imageInfo.height.toFloat(),
                                             holder.itemView,
-                                            url
+                                            item
                                         ) as Float
                                         if (heightTarget <= 0) return
-                                        heightMap[url] = heightTarget
-                                        updateItemtHeight(heightTarget, holder.itemView)
+                                        heightMap[item] = heightTarget
+                                        updateItemHeight(heightTarget, holder.itemView)
                                     }
                                 }
 
@@ -161,17 +163,17 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
                                 }
                             }
                             if (layoutRes == R.layout.item_viewer) {
-                                if (heightMap.containsKey(url)) {
-                                    val height: Float = heightMap[url]!!
+                                if (heightMap.containsKey(item)) {
+                                    val height: Float = heightMap[item]!!
                                     if (height > 0) {
-                                        updateItemtHeight(height, holder.itemView)
-                                        draweeview.setImageURI(Uri.parse(url))
+                                        updateItemHeight(height, holder.itemView)
+                                        draweeview.setImageURI(Uri.parse(item))
                                         return
                                     }
                                 }
 
                                 val requestBuilder =
-                                    ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
+                                    ImageRequestBuilder.newBuilderWithSource(Uri.parse(item))
                                 if (getDeviceWidth(context) <= 720) {
                                     requestBuilder.resizeOptions = ResizeOptions(
                                         getDeviceWidth(
@@ -188,7 +190,7 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
 
                                 val controller: DraweeController =
                                     Fresco.newDraweeControllerBuilder()
-                                        .setUri(Uri.parse(url))
+                                        .setUri(Uri.parse(item))
                                         .setOldController(draweeview.controller)
                                         .setImageRequest(request)
                                         .setControllerListener(controllerListener)
@@ -208,12 +210,22 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
                                 }
                                 val controller: DraweeController =
                                     Fresco.newDraweeControllerBuilder()
-                                        .setUri(url)
+                                        .setUri(item)
                                         .setControllerListener(controllerListener)
                                         .setCallerContext(context)
                                         .build()
                                 zoomDraweeView.controller = controller
                             }
+                        } else if (item is DataImage) {     // download viewer
+                            // set height
+                            if (item.ratio === 0.0f) return
+                            updateItemHeight(
+                                item.ratio,
+                                draweeview
+                            )
+                            draweeview.setImageURI(
+                                "file://" + item.decPath
+                            )
                         }
                     }
                 }
@@ -259,13 +271,20 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
         }
     }
 
-    private fun updateItemtHeight(height: Float, view: View) {
+    private fun updateItemHeight(height: Float, view: View) {
         val frameLayout = view.findViewById<FrameLayout>(R.id.fl_webtoon)
         val child = view.findViewById<View>(R.id.draweeview)
         val layoutParams =
             child.layoutParams as FrameLayout.LayoutParams
         layoutParams.height = height.toInt()
         frameLayout.updateViewLayout(child, layoutParams)
+    }
+
+    private fun updateItemHeight(ratio: Float, view: SimpleDraweeView) {
+        val params = view.layoutParams
+        params.width = getDeviceWidth(context)
+        params.height = (params.width * ratio).toInt()
+        view.layoutParams = params
     }
 
     private fun getTargetHeight(

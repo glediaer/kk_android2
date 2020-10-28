@@ -1,7 +1,6 @@
 package com.krosskomics.search.activity
 
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
@@ -13,10 +12,13 @@ import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
+import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataRecentSearch
 import com.krosskomics.common.model.Search
 import com.krosskomics.search.adapter.SearchTagAdapter
 import com.krosskomics.search.viewmodel.SearchViewModel
+import com.krosskomics.series.activity.SeriesActivity
+import com.krosskomics.util.CommonUtil
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
@@ -55,12 +57,9 @@ class SearchActivity : ToolbarTitleActivity() {
         searchImageView.setOnClickListener {
             if (searchEditText.text.toString().isNullOrEmpty()) return@setOnClickListener
 
-            val intent = Intent(context, SearchResultActivity::class.java)
-            val bundle = Bundle().apply {
-                putString("keyword", searchEditText.text.toString())
-            }
-            intent.putExtras(bundle)
-            startActivity(intent)
+            viewModel.keyword = searchEditText.text.toString()
+            viewModel.isRefresh = true
+            requestServer()
         }
     }
 
@@ -94,9 +93,24 @@ class SearchActivity : ToolbarTitleActivity() {
             is Search -> {
                 body.banner?.let {
                     viewModel.items.addAll(it)
+                    recentRecyclerView.adapter?.notifyDataSetChanged()
+                    defaultView.visibility = View.VISIBLE
+                    resultView.visibility = View.GONE
+
+                    searchView.layoutParams.height = CommonUtil.dpToPx(context, 100)
                 }
                 body.tag?.let {
                     viewModel.tagItems.addAll(it.tag_text!!)
+                    defaultView.visibility = View.VISIBLE
+                    resultView.visibility = View.GONE
+                }
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                    defaultView.visibility = View.GONE
+                    resultView.visibility = View.VISIBLE
+                    searchEditText.setText(viewModel.keyword)
+
+                    searchView.layoutParams.height = CommonUtil.dpToPx(context, 30)
                 }
 
                 recyclerView?.adapter?.notifyDataSetChanged()
@@ -105,16 +119,17 @@ class SearchActivity : ToolbarTitleActivity() {
     }
 
     override fun initRecyclerView() {
-        recyclerView?.layoutManager = LinearLayoutManager(context)
+        recentRecyclerView?.layoutManager = LinearLayoutManager(context)
         val flexboxLayoutManager = FlexboxLayoutManager(context).apply {
             flexWrap = FlexWrap.WRAP
         }
         tagRecyclerView?.layoutManager = flexboxLayoutManager
+        recyclerView.layoutManager = LinearLayoutManager(context)
         initRecyclerViewAdapter()
     }
 
     override fun initRecyclerViewAdapter() {
-        recyclerView.adapter =
+        recentRecyclerView.adapter =
             CommonRecyclerViewAdapter(
                 viewModel.items,
                 recyclerViewItemLayoutId
@@ -125,7 +140,13 @@ class SearchActivity : ToolbarTitleActivity() {
                 viewModel.tagItems,
                 R.layout.item_recommend_keyword
             )
-        (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
+
+        recyclerView.adapter =
+            CommonRecyclerViewAdapter(
+                viewModel.items,
+                R.layout.item_contents
+            )
+        (recentRecyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnDelteItemClickListener(object : RecyclerViewBaseAdapter.OnDeleteItemClickListener {
                 override fun onItemClick(item: Any) {
                     if (item is DataRecentSearch) {
@@ -139,15 +160,24 @@ class SearchActivity : ToolbarTitleActivity() {
             setOnItemClickListener(object : SearchTagAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {
                     if (item is String) {
-                        val intent = Intent(context, SearchResultActivity::class.java)
-                        val bundle = Bundle().apply {
-                            putString("keyword", item)
-                        }
-                        intent.putExtras(bundle)
-                        startActivity(intent)
+                        viewModel.keyword = item
+                        viewModel.isRefresh = true
+                        requestServer()
                     }
                 }
             })
         }
+
+        (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
+            override fun onItemClick(item: Any?) {
+                if (item is DataBook) {
+                    val intent = Intent(context, SeriesActivity::class.java).apply {
+                        putExtra("sid", item.sid)
+                        putExtra("title", item.title)
+                    }
+                    startActivity(intent)
+                }
+            }
+        })
     }
 }

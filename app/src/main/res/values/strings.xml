@@ -209,6 +209,8 @@
     <string name="msg_permission_denied1">If you want to use Kross Komics app, please configure the settings.</string>
     <string name="msg_permission_denied2">No configured any necessary permission for Kross Komics app.\n\n Please configure [Settings] &gt; [Apps] &gt; [Storage] permission.</string>
     <string name="str_finish_app_msg">Do you wish to exit KrossKomics app?</string>
+    <string name="str_delete_account_question">Delete account?</string>
+    <string name="str_delete_account_notice">Deleting your account will permanently remove all coins and series you purchased.</string>
 
 
     <string name="msg_empty_news_msg">Oops..\nNo message at news</string>

@@ -1,10 +1,13 @@
 package com.krosskomics.settings.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.text.SpannableString
 import android.text.style.UnderlineSpan
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
+import com.krosskomics.KJKomicsApp
 import com.krosskomics.KJKomicsApp.Companion.LATEST_APP_VERSION_CODE
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
@@ -18,6 +21,7 @@ import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil
 import com.krosskomics.util.ServerUtil.service
+import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,6 +52,7 @@ class SettingsActivity : ToolbarTitleActivity() {
         changeEmailView.setOnClickListener(this)
         changePwView.setOnClickListener(this)
         deleteAccountView.setOnClickListener(this)
+        faqView.setOnClickListener(this)
         if (CommonUtil.read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
 
         } else {
@@ -257,6 +262,31 @@ class SettingsActivity : ToolbarTitleActivity() {
         }
     }
 
+    private fun showDeleteAccountAlert() {
+        try {
+            val innerView =
+                layoutInflater.inflate(R.layout.dialog_default, null)
+            val dialog = initDialog(innerView)
+            val tvTitle = innerView.findViewById<TextView>(R.id.tv_title)
+            val msgTextView = innerView.findViewById<TextView>(R.id.tv_msg)
+            val btnConfirm =
+                innerView.findViewById<Button>(R.id.btn_confirm)
+            val btnCancel =
+                innerView.findViewById<Button>(R.id.btn_cancel)
+            tvTitle.text = getString(R.string.str_delete_account_question)
+            msgTextView.setTextColor(Color.RED)
+            msgTextView.text = getString(R.string.str_delete_account_notice)
+            btnCancel.setOnClickListener { dialog.dismiss() }
+            btnConfirm.setOnClickListener {
+                dialog.dismiss()
+                // 계정 삭제
+                requestDeleteAccount()
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
     override fun onClick(v: View?) {
         when(v?.id) {
             R.id.changeNicknameView -> startActivity(Intent(context, ChangeNickNameActivity::class.java))
@@ -275,7 +305,16 @@ class SettingsActivity : ToolbarTitleActivity() {
                 }
             }
             R.id.deleteAccountView -> {
-                requestDeleteAccount()
+                showDeleteAccountAlert()
+            }
+            R.id.loginSignupView -> {
+                goLoginAlert(context)
+            }
+            R.id.faqView -> {
+                intent = Intent(context, WebViewActivity::class.java)
+                intent.putExtra("title", getString(R.string.str_faq))
+                intent.putExtra("url", KJKomicsApp.getWebUrl().toString() + "terms/privacy")
+                context.startActivity(intent)
             }
         }
     }

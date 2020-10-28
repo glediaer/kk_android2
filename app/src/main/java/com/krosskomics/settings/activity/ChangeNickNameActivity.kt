@@ -53,6 +53,7 @@ class ChangeNickNameActivity : ToolbarTitleActivity() {
         nicknameLengthTv.text = "0 / 20"
         confirmButton.setOnClickListener {
             // 닉네임 변경 api 호충
+
         }
     }
 }
