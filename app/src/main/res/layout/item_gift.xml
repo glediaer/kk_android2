@@ -33,7 +33,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/ddayTextView"
+                android:id="@+id/dDayTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12dp"
@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:textSize="14dp"
+                android:singleLine="true"
                 android:textColor="#000000"
                 android:textStyle="bold"
                 tools:text="A Chance for Romance Sale!Check it out!" />

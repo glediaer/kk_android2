@@ -53,14 +53,8 @@
                     android:layout_height="@dimen/big_banner_height"
                     android:fitsSystemWindows="true">
 
-<!--                    <androidx.viewpager2.widget.ViewPager2-->
-<!--                        android:id="@+id/bannerPager"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:orientation="horizontal" />-->
-
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/pager_banner"
+                    <com.krosskomics.common.view.AutoScrollViewPager
+                        android:id="@+id/bannerPager"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"/>

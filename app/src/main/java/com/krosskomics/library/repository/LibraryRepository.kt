@@ -14,7 +14,7 @@ import retrofit2.Response
 class LibraryRepository : CommonRepository() {
     var listType = "SU" // SU, U(unlock),
     var page = 1
-    var sortType = ""   // S
+    var sortType = "S"   // S
 
     fun requestMain(context: Context, page: Int) {
         val api: Call<More> = ServerUtil.service.getLibraryList(

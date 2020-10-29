@@ -19,4 +19,8 @@ class MyNewsActivity : ToolbarTitleActivity() {
         toolbarTitleString = getString(R.string.str_my_news)
         super.initLayout()
     }
+
+    override fun requestServer() {
+        viewModel.requestMain()
+    }
 }

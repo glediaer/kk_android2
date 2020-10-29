@@ -8,7 +8,9 @@ import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.waitfree.activity.WaitFreeActivity
+import kotlinx.android.synthetic.main.activity_ongoing.*
 import kotlinx.android.synthetic.main.view_ongoing_date.*
+import kotlinx.android.synthetic.main.view_topbutton.*
 
 class OnGoingActivity : RecyclerViewBaseActivity() {
     private val TAG = "OnGoingActivity"

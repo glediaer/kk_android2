@@ -140,6 +140,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             .registerReceiver(mMessageReceiver, IntentFilter(CODE.LB_MAIN))
         setPushAction()
         setDeepLink()
+        viewModel.requestInitSet()
     }
 
     override fun requestServer() {
@@ -147,7 +148,6 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             errorView.visibility = View.VISIBLE
             return
         }
-        viewModel.requestInitSet()
         viewModel.requestMain()
     }
 
@@ -219,7 +219,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         } else if (t is Main) {
             if ("00" == t.retcode) {
 //                mBannerLolling = t.banner_rolling
-                setMainBannerView(t.main_banner)
+                setMainBannerView(t.main_banner, t.banner_rolling)
                 setMainContentView(t.layout_contents)
             } else if ("201" == t.retcode) {
                 goLoginAlert(context)
@@ -298,25 +298,18 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         mainStickyTabView.genreButton.setOnClickListener { startActivity(Intent(context, GenreActivity::class.java)) }
     }
 
-    private fun setMainBannerView(items: ArrayList<DataBanner>?) {
+    private fun setMainBannerView(items: ArrayList<DataBanner>?, bannerLolling: Int) {
         items?.let {
-//            bannerPager.apply {
-//                val currentItem: Int = items.size * 100
-//                clipToPadding = false
-//                setPadding(CommonUtil.dpToPx(context, 13 + 14), 0, CommonUtil.dpToPx(context, 13 + 14),0)
-//                adapter = HomeBannerAdapter(items)
-//                setCurrentItem(currentItem, true)
-//            }
-            pager_banner.adapter = MainBannerPagerAdapter(context, it, true)
+            bannerPager.adapter = MainBannerPagerAdapter(context, it, true)
 
-            pager_banner.clipToPadding = false
-            pager_banner.setPadding(
+            bannerPager.clipToPadding = false
+            bannerPager.setPadding(
                 dpToPx(context, 13 + 14),
                 0,
                 dpToPx(context, 13 + 14),
                 0
             )
-            pager_banner.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            bannerPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrolled(
                     position: Int,
                     positionOffset: Float,
@@ -335,12 +328,12 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             })
 
             val currentItem: Int = it.size * 100
-            pager_banner.setCurrentItem(currentItem, true)
+            bannerPager.setCurrentItem(currentItem, true)
 
-//            if (mBannerLolling > 0) {
-//                actBinding.pagerBanner.setInterval(mBannerLolling * 1000)
-//                actBinding.pagerBanner.startAutoScroll()
-//            }
+            if (bannerLolling > 0) {
+                bannerPager.interval = (bannerLolling * 1000).toLong()
+                bannerPager.startAutoScroll()
+            }
         }
     }
 

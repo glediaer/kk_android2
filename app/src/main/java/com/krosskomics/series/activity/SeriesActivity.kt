@@ -63,6 +63,7 @@ class SeriesActivity : ToolbarTitleActivity() {
 
     lateinit var dialogView: View
     lateinit var bottomSheetDialog: BottomSheetDialog
+    lateinit var downLoadAsyncTask: DownloadFileFromURL
 
     public override val viewModel: SeriesViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -103,9 +104,7 @@ class SeriesActivity : ToolbarTitleActivity() {
             toolbarTitle.text = toolbarTitleString
         }
 
-        moveTopView.setOnClickListener {
-            nestedScrollView.scrollTo(0, 0)
-        }
+
     }
 
     private fun requestSubscribe() {
@@ -281,7 +280,8 @@ class SeriesActivity : ToolbarTitleActivity() {
                     KJKomicsApp.DOWNLOAD_COUNT = 0
                     it.isCompleteDownload = false
 
-                    DownloadFileFromURL().execute()
+                    downLoadAsyncTask = DownloadFileFromURL()
+                    downLoadAsyncTask.execute()
                 }
             }
         }
@@ -459,7 +459,7 @@ class SeriesActivity : ToolbarTitleActivity() {
          */
         override fun onProgressUpdate(vararg progress: String?) {
             // setting progress percentage
-            viewModel.arr_episode[viewModel.selectedDownloadIndex].download_progress = progress[0]?.toInt()!!
+            viewModel.arr_episode[viewModel.selectedDownloadIndex].download_progress = progress[0]!!.toInt()
             recyclerView.adapter?.notifyDataSetChanged()
         }
 
@@ -770,6 +770,15 @@ class SeriesActivity : ToolbarTitleActivity() {
                             it.isSelectDownload = true
                             requestImageUrl()
                         }
+                    }
+                }
+            })
+
+            setOnDownloadCancelClickListener(object : RecyclerViewBaseAdapter.OnDownloadCancelClickListener {
+                override fun onItemClick(item: Any, position: Int) {
+                    if (::downLoadAsyncTask.isInitialized && !downLoadAsyncTask.isCancelled) {
+                        viewModel.isDownloadException = true
+                        downLoadAsyncTask.cancel(true)
                     }
                 }
             })

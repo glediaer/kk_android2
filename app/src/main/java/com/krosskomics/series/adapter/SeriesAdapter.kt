@@ -8,10 +8,6 @@ import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 class SeriesAdapter(private val items: ArrayList<*>, private val layoutRes: Int, private val context: Context) :
     RecyclerViewBaseAdapter(items, layoutRes) {
 
-    enum class VIEW_TYPE {
-        VIEW_TYPE_A, VIEW_TYPE_B, VIEW_TYPE_C
-    }
-
     private var onClickListener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewBaseAdapter.BaseItemHolder {

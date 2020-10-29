@@ -221,7 +221,7 @@ class LibraryFragment : BaseFragment() {
             networkStateView.visibility = View.GONE
             currentCategory = 0
 
-            viewModel.repository.sortType = "SU"
+            viewModel.repository.listType = "SU"
             requestServer()
         }
         unlockTextView.setOnClickListener {

@@ -19,13 +19,13 @@ import kotlinx.android.synthetic.main.item_coin.view.*
 import kotlinx.android.synthetic.main.item_download_ep.view.*
 import kotlinx.android.synthetic.main.item_genre_detail.view.*
 import kotlinx.android.synthetic.main.item_genre_detail.view.deleteView
-import kotlinx.android.synthetic.main.item_ongoing.view.mainImageView
+import kotlinx.android.synthetic.main.item_gift.view.*
 import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
+import kotlinx.android.synthetic.main.item_ongoing.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.writerTextView
 import kotlinx.android.synthetic.main.item_ranking.view.*
 import kotlinx.android.synthetic.main.item_ranking_detail.view.*
-import kotlinx.android.synthetic.main.item_search_recent.view.*
 import kotlinx.android.synthetic.main.item_series.view.*
 import kotlinx.android.synthetic.main.item_series.view.img_ep_title
 import kotlinx.android.synthetic.main.item_series.view.txt_ep_title
@@ -40,6 +40,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
     private var onClickListener: OnItemClickListener? = null
     private var onDeleteClickListener: OnDeleteItemClickListener? = null
     private var onDownloadClickListener: OnDownloadClickListener? = null
+    private var onDownloadCancelClickListener: OnDownloadCancelClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemHolder {
         val view = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)
@@ -64,6 +65,10 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
 
     fun setOnDownloadClickListener(onItemClickListener: OnDownloadClickListener) {
         this.onDownloadClickListener = onItemClickListener
+    }
+
+    fun setOnDownloadCancelClickListener(onItemClickListener: OnDownloadCancelClickListener) {
+        this.onDownloadCancelClickListener = onItemClickListener
     }
 
     inner class BaseItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
@@ -133,17 +138,14 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                                     })
                                     if (item.download_progress > 0) {
                                         downloadImageView?.visibility = View.GONE
-//                                holder.circleView.setMax(itemData.download_max)
-//                                holder.circleView.setVisibility(View.VISIBLE)
-//                                holder.circleView.setProgress(itemData.download_progress)
-//                                holder.circleView.setOnClickListener(View.OnClickListener {
-//                                    if (downLoadAsyncTask != null && !downLoadAsyncTask.isCancelled()) {
-//                                        mIsDownloadException = true
-//                                        downLoadAsyncTask.cancel(true)
-//                                    }
-//                                })
+                                        circleView.max = item.download_max
+                                        circleView.visibility = View.VISIBLE
+                                        circleView.progress = item.download_progress
+                                        circleView.setOnClickListener(View.OnClickListener {
+                                            onDownloadCancelClickListener?.onItemClick(item, position)
+                                        })
                                     } else {
-//                                holder.circleView.setVisibility(View.GONE)
+                                        circleView.setVisibility(View.GONE)
                                         downloadImageView?.visibility = View.VISIBLE
                                     }
                                 }
@@ -227,11 +229,29 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     txt_ep_title?.text = item.ep_title
 //                    tv_show_date?.text = item.ep_show_date
                     tv_expire_date?.text = item.expireDate
-                } else if (item is DataRecentSearch) {    // search recent
-                    titleTextView.text = item.subject
-                    deleteImageView.setOnClickListener {
-                        onDeleteClickListener?.onItemClick(item)
+//                } else if (item is DataRecentSearch) {    // search recent
+//                    titleTextView.text = item.subject
+//                    deleteImageView.setOnClickListener {
+//                        onDeleteClickListener?.onItemClick(item)
+//                    }
+                } else if (item is DataGift) {
+                    mainImageView?.let {
+                        Glide.with(itemView.context)
+                            .load(item.image)
+                            .into(it)
                     }
+//                    if ("1" == item.isupdate) {
+//                        holder.upImaegeView.setVisibility(View.VISIBLE)
+//                    } else {
+//                        holder.upImaegeView.setVisibility(View.GONE)
+//                    }
+//                    if ("1" == item.isnew) {
+//                        holder.newImaegView.setVisibility(View.VISIBLE)
+//                    } else {
+//                        holder.newImaegView.setVisibility(View.GONE)
+//                    }
+                    titleTextView.setText(item.title)
+                    dDayTextView.setText(item.show_str)
                 }
             }
         }
@@ -246,6 +266,10 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
     }
 
     interface OnDownloadClickListener {
+        fun onItemClick(item: Any, position: Int)
+    }
+
+    interface OnDownloadCancelClickListener {
         fun onItemClick(item: Any, position: Int)
     }
 }

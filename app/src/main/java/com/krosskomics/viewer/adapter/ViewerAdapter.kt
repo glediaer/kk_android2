@@ -219,13 +219,20 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
                         } else if (item is DataImage) {     // download viewer
                             // set height
                             if (item.ratio === 0.0f) return
-                            updateItemHeight(
-                                item.ratio,
-                                draweeview
-                            )
-                            draweeview.setImageURI(
-                                "file://" + item.decPath
-                            )
+                            if (layoutRes == R.layout.item_viewer) {
+                                updateItemHeight(
+                                    item.ratio,
+                                    draweeview
+                                )
+                                draweeview.setImageURI(
+                                    "file://" + item.decPath
+                                )
+                            } else {
+                                val fileUri = Uri.parse("file://" + item.decPath)
+                                zoomDraweeView.setImageURI(
+                                    fileUri
+                                )
+                            }
                         }
                     }
                 }

@@ -13,7 +13,7 @@ open class FragmentBaseViewModel(val context: Context) : ViewModel() {
     var tabIndex = 0
 
     private val repository = LibraryRepository()
-    private val mainResponseLiveData = repository.getMainResponseLiveData()
+    private var mainResponseLiveData = repository.getMainResponseLiveData()
 
     open fun requestMain() {
         repository.requestMain(context, page)
