@@ -61,8 +61,6 @@ import java.io.File
 class SeriesActivity : ToolbarTitleActivity() {
     private val TAG = "SeriesActivity"
 
-    lateinit var dialogView: View
-    lateinit var bottomSheetDialog: BottomSheetDialog
     lateinit var downLoadAsyncTask: DownloadFileFromURL
 
     public override val viewModel: SeriesViewModel by lazy {
@@ -439,11 +437,12 @@ class SeriesActivity : ToolbarTitleActivity() {
                     )
                     // bitmap to save file
                     writeFile2(
-                        file.getAbsolutePath(),
+                        file.absolutePath,
                         fileName,
                         imgIncode
                     )
-                    publishProgress("" + KJKomicsApp.DOWNLOAD_COUNT)
+                    val progress =  (KJKomicsApp.DOWNLOAD_COUNT.toDouble().div(viewModel.arr_url.size) * 100).toInt()
+                    publishProgress("" + progress)
                 }
             } catch (e: Exception) {
                 e.stackTrace

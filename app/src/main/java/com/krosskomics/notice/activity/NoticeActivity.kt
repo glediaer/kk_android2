@@ -4,6 +4,7 @@ import android.view.View
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarViewPagerActivity
 import com.krosskomics.util.CommonUtil
+import kotlinx.android.synthetic.main.activity_genre_detail.*
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
@@ -11,6 +12,9 @@ import kotlinx.android.synthetic.main.view_toolbar.view.*
 class NoticeActivity : ToolbarViewPagerActivity() {
     private val TAG = "NoticeActivity"
 
+    override var tabIndex: Int
+        get() = super.tabIndex
+        set(value) {}
     override fun getLayoutId(): Int {
         return R.layout.activity_notice
     }

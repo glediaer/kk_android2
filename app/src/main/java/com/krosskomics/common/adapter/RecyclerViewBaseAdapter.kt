@@ -1,6 +1,7 @@
 package com.krosskomics.common.adapter
 
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -138,8 +139,9 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                                     })
                                     if (item.download_progress > 0) {
                                         downloadImageView?.visibility = View.GONE
-                                        circleView.max = item.download_max
+//                                        circleView.max = item.download_max
                                         circleView.visibility = View.VISIBLE
+                                        Log.e("Adapter", "download_progress : " + item.download_progress)
                                         circleView.progress = item.download_progress
                                         circleView.setOnClickListener(View.OnClickListener {
                                             onDownloadCancelClickListener?.onItemClick(item, position)

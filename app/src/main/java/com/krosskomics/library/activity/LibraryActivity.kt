@@ -2,10 +2,15 @@ package com.krosskomics.library.activity
 
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarViewPagerActivity
+import kotlinx.android.synthetic.main.activity_genre_detail.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 
 class LibraryActivity : ToolbarViewPagerActivity() {
     private val TAG = "LibraryActivity"
+
+    override var tabIndex: Int
+        get() = super.tabIndex
+        set(value) {}
 
     override fun getLayoutId(): Int {
         return R.layout.activity_library
@@ -19,6 +24,13 @@ class LibraryActivity : ToolbarViewPagerActivity() {
         toolbarTitleString = getString(R.string.str_library)
         adapterType = 1
         super.initLayout()
+    }
+
+    override fun initModel() {
+        intent?.apply {
+            tabIndex = extras?.getInt("tabIndex")!!.toInt()
+        }
+        super.initModel()
     }
 
     override fun initToolbar() {

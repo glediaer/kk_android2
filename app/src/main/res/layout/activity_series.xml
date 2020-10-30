@@ -6,9 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal">
 
-    <include
-        layout="@layout/view_toolbar"/>
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
@@ -303,6 +300,9 @@
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <include
+        layout="@layout/view_toolbar"/>
 
     <LinearLayout
         android:id="@+id/firstContinueEpView"

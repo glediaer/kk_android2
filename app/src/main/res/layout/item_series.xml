@@ -90,9 +90,7 @@
             android:visibility="gone"
             custom:donut_unfinished_color="@color/white"
             custom:donut_finished_color="@color/orange"
-            custom:donut_text=""
-            custom:donut_text_size="0dp"/>
-
+            custom:circle_max="100"/>
 
     </FrameLayout>
 

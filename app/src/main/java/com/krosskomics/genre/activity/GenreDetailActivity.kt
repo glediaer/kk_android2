@@ -2,6 +2,7 @@ package com.krosskomics.genre.activity
 
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarViewPagerActivity
+import kotlinx.android.synthetic.main.activity_genre_detail.*
 
 class GenreDetailActivity : ToolbarViewPagerActivity() {
     private val TAG = "GenreDetailActivity"
@@ -13,6 +14,10 @@ class GenreDetailActivity : ToolbarViewPagerActivity() {
 //            }
 //        }).get(RankingViewModel::class.java)
 //    }
+
+    override var tabIndex: Int
+        get() = super.tabIndex
+        set(value) {}
 
     override fun getLayoutId(): Int {
         return R.layout.activity_genre_detail
@@ -32,4 +37,5 @@ class GenreDetailActivity : ToolbarViewPagerActivity() {
     override fun initTabItems() {
         tabItems = listOf("Romance", "Drama", "Action", "Horror", "Comic", "Romance", "Drama")
     }
+
 }

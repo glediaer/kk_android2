@@ -93,6 +93,17 @@ class ViewerActivity : ToolbarTitleActivity() {
         }
     }
 
+    override fun initModel() {
+        intent?.apply {
+            toolbarTitleString = extras?.getString("title").toString()
+            viewModel.item.eid = extras?.getString("eid").toString()
+            viewModel.isVerticalView = extras?.getBoolean("isVerticalView") ?: true
+            viewModel.revPager = extras?.getBoolean("revPager") ?: false
+        }
+        super.initModel()
+        viewModel.getCheckEpResponseLiveData().observe(this, this)
+    }
+
     override fun initTracker() {
         setTracker(getString(R.string.str_viewer))
     }
@@ -306,16 +317,7 @@ class ViewerActivity : ToolbarTitleActivity() {
         }
     }
 
-    override fun initModel() {
-        intent?.apply {
-            toolbarTitleString = extras?.getString("title").toString()
-            viewModel.item.eid = extras?.getString("eid").toString()
-            viewModel.isVerticalView = extras?.getBoolean("isVerticalView") ?: true
-            viewModel.revPager = extras?.getBoolean("revPager") ?: false
-        }
-        super.initModel()
-        viewModel.getCheckEpResponseLiveData().observe(this, this)
-    }
+
 
     override fun requestServer() {
         viewModel.requestMain()

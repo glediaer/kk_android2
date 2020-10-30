@@ -760,6 +760,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             R.id.giftboxImageView -> {
                 if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
                     intent = Intent(context, LibraryActivity::class.java)
+                    intent.putExtra("tabIndex", 1)
                     startActivity(intent)
                 } else {
                     goLoginAlert(context)

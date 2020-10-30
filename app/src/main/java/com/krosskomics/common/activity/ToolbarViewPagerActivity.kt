@@ -19,6 +19,7 @@ abstract class ToolbarViewPagerActivity : ToolbarTitleActivity() {
 
     var adapterType = 0     // 0: 장르상세, 1: 라이브러리, 3: notice
     lateinit var tabItems: List<String>
+    open var tabIndex = 0
 
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_ranking
@@ -29,6 +30,7 @@ abstract class ToolbarViewPagerActivity : ToolbarTitleActivity() {
         super.initLayout()
         initTabItems()
         initViewPager()
+        initTabPosition()
     }
 
     protected fun initViewPager() {
@@ -40,6 +42,10 @@ abstract class ToolbarViewPagerActivity : ToolbarTitleActivity() {
         TabLayoutMediator(tabLayout, viewPager){ tab, position->
             tab.text = tabItems[position]
         }.attach()
+    }
+
+    private fun initTabPosition() {
+        viewPager.currentItem = tabIndex
     }
 
     abstract fun initTabItems()
