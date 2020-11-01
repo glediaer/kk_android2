@@ -101,7 +101,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             errorView?.visibility = View.VISIBLE
             return
         }
-//        showProgress(context)
+        showProgress(context)
         viewModel.requestMain()
     }
 

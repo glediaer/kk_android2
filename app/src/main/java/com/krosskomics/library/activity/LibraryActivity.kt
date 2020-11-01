@@ -28,7 +28,7 @@ class LibraryActivity : ToolbarViewPagerActivity() {
 
     override fun initModel() {
         intent?.apply {
-            tabIndex = extras?.getInt("tabIndex")!!.toInt()
+            tabIndex = extras?.getInt("tabIndex")?: 0
         }
         super.initModel()
     }

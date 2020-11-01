@@ -25,6 +25,7 @@ import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.hideErrorView
 import com.krosskomics.util.CommonUtil.showErrorView
 import com.krosskomics.util.CommonUtil.showToast
+import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -176,29 +177,31 @@ abstract class BaseActivity : AppCompatActivity() {
                 startActivity(intent)
                 return
             }
-            if (mProgressDialog == null) {
-                mProgressDialog = Dialog(context, R.style.TransDialog)
-                val pb = ProgressBar(context)
-                val params =
-                    ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-                mProgressDialog?.addContentView(pb, params)
-                mProgressDialog?.setCancelable(false)
-                mProgressDialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-                if (!(context as Activity).isFinishing) {
-                    mProgressDialog?.show()
-                }
-            } else {
-                mProgressDialog?.show()
-            }
+            loadingView.visibility = View.VISIBLE
+//            if (mProgressDialog == null) {
+//                mProgressDialog = Dialog(context, R.style.TransDialog)
+//                val pb = ProgressBar(context)
+//                val params =
+//                    ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//                mProgressDialog?.addContentView(pb, params)
+//                mProgressDialog?.setCancelable(false)
+//                mProgressDialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+//                if (!(context as Activity).isFinishing) {
+//                    mProgressDialog?.show()
+//                }
+//            } else {
+//                mProgressDialog?.show()
+//            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     open fun hideProgress() {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-            mProgressDialog!!.dismiss()
-            mProgressDialog = null
-        }
+//        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
+//            mProgressDialog!!.dismiss()
+//            mProgressDialog = null
+//        }
+        loadingView.visibility = View.GONE
     }
 }

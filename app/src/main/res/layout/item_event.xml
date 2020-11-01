@@ -14,4 +14,47 @@
         android:scaleType="fitXY"
         tools:src="@mipmap/ic_launcher"/>
 
+    <LinearLayout
+        android:id="@+id/eventInfoView"
+        android:layout_width="match_parent"
+        android:layout_height="67dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="17dp"
+            android:paddingRight="17dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:textColor="#000000"
+                tools:text="Review Contest" />
+
+            <TextView
+                android:id="@+id/eventPeriod"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textSize="12dp"
+                android:textColor="#828282"
+                tools:text="07. 03. 2020 ~ 14. 03. 2020" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="71dp"
+            android:layout_height="match_parent">
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

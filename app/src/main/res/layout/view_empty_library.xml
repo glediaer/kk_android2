@@ -33,7 +33,7 @@
         android:textColor="#828282"
         android:gravity="center_horizontal"
         android:text="@string/msg_empty_unlock_ep2" />
-    
+
     <Button
         android:id="@+id/goSeriesButton"
         android:layout_width="208dp"

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataMainContents
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.home.activity.MainActivity
+import com.krosskomics.more.activity.MoreActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -99,7 +101,8 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                 genreTextView.text = item.genre1
                 likeCountTextView.text = item.like_cnt
 
-                mainImageView.setController(CommonUtil.getDraweeController(context, item.image, 200, 200))
+                mainImageView.controller =
+                    CommonUtil.getDraweeController(context, item.image, 200, 200)
 
 //                if (item.isupdate == "1") {
 //                    upImaegeView.setVisibility(View.VISIBLE)
@@ -272,9 +275,8 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
 
     inner class HomeViewHolder(itemView: View) : BaseItemViewHolder(itemView) {
         val titleTextView = itemView.findViewById<TextView>(R.id.tv_title)
-        val moreButton = itemView.findViewById<Button>(R.id.btn_more)
+        val moreButton = itemView.findViewById<ImageView>(R.id.moreImageView)
         val contentLayout = itemView.findViewById<LinearLayout>(R.id.lay_user_update)
-        val rankingPager = itemView.findViewById<ViewPager>(R.id.rank_pager)
         val eventLayout = itemView.findViewById<LinearLayout>(R.id.lay_event)
 
         override fun setData(item: Any?, position: Int) {
@@ -283,9 +285,9 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                 if ("1".equals(item.show_more)) {
                     moreButton?.visibility = View.VISIBLE
                     moreButton?.setOnClickListener {
-//                        val intent = Intent(itemView.context, MoreActivity::class.java)
-//                        intent.putExtra("more_param", item.more_param)
-//                        context.startActivity(intent)
+                        val intent = Intent(itemView.context, MoreActivity::class.java)
+                        intent.putExtra("more_param", item.more_param)
+                        context.startActivity(intent)
                     }
                 } else {
                     moreButton?.visibility = View.GONE

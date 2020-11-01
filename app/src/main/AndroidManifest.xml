@@ -66,7 +66,6 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
-
         <activity android:name=".genre.activity.GenreActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
@@ -79,11 +78,6 @@
         <activity android:name=".search.activity.SearchActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
-
-        <activity android:name=".search.activity.SearchResultActivity"
-            android:configChanges="screenSize|orientation"
-            android:screenOrientation="portrait"/>
-
 
         <activity android:name=".series.activity.SeriesActivity"
             android:launchMode="singleTask"
@@ -148,6 +142,9 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".more.activity.MoreActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
 
 
         <!-- 3rd party -->

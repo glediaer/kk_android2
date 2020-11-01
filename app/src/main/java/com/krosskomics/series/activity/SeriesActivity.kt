@@ -2,6 +2,7 @@ package com.krosskomics.series.activity
 
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.StrictMode
@@ -82,6 +83,9 @@ class SeriesActivity : ToolbarTitleActivity() {
 
     override fun initToolbar() {
         super.initToolbar()
+        supportActionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.kk_icon_back_white)
+        }
         toolbar.apply {
             actionItem.visibility = View.VISIBLE
             actionItem.giftboxImageView.visibility = View.GONE
@@ -99,7 +103,7 @@ class SeriesActivity : ToolbarTitleActivity() {
             }
 
             toolbarTitle.visibility = View.VISIBLE
-            toolbarTitle.text = toolbarTitleString
+            toolbarTitle.text = ""
         }
 
 
@@ -525,11 +529,11 @@ class SeriesActivity : ToolbarTitleActivity() {
             if (BuildConfig.DEBUG) {
                 Log.e(TAG, "scrollY : " + scrollY)
                 Log.e(TAG, "oldScrollY : " + oldScrollY)
-//                if (scrollY >= 320) {
-//                    toolbar.visibility = View.VISIBLE
-//                } else {
-//                    toolbar.visibility = View.GONE
-//                }
+            }
+            if (scrollY >= 320) {
+                toolbar.setBackgroundColor(Color.parseColor("#262626"))
+            } else {
+                toolbar.setBackgroundColor(Color.TRANSPARENT)
             }
         }
         t.series?.let {

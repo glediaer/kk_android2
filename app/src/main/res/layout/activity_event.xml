@@ -55,12 +55,23 @@
         <include
             layout="@layout/item_underbar"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"/>
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
+
+            <include
+                android:id="@+id/emptyView"
+                layout="@layout/view_empty_event"
+                android:visibility="gone"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 
