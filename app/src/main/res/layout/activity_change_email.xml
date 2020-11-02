@@ -80,4 +80,10 @@
         layout="@layout/view_network_error"
         android:visibility="gone"/>
 
+    <include
+        android:id="@+id/loadingView"
+        layout="@layout/view_loading"
+        android:visibility="gone"/>
+
+
 </RelativeLayout>

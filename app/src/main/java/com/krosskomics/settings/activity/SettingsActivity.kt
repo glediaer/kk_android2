@@ -13,6 +13,8 @@ import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.model.Default
 import com.krosskomics.home.activity.MainActivity
+import com.krosskomics.library.activity.LibraryActivity
+import com.krosskomics.notice.activity.NoticeActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.logout
@@ -311,10 +313,9 @@ class SettingsActivity : ToolbarTitleActivity() {
                 goLoginAlert(context)
             }
             R.id.faqView -> {
-                intent = Intent(context, WebViewActivity::class.java)
-                intent.putExtra("title", getString(R.string.str_faq))
-                intent.putExtra("url", KJKomicsApp.getWebUrl().toString() + "terms/privacy")
-                context.startActivity(intent)
+                val intent = Intent(context, NoticeActivity::class.java)
+                intent.putExtra("tabIndex", 1)
+                startActivity(intent)
             }
         }
     }

@@ -7,7 +7,7 @@ class MyNewsActivity : ToolbarTitleActivity() {
     private val TAG = "MyNewsActivity"
 
     override fun getLayoutId(): Int {
-        recyclerViewItemLayoutId = R.layout.item_mynews
+        recyclerViewItemLayoutId = R.layout.item_contents
         return R.layout.activity_mynews
     }
 
@@ -18,9 +18,5 @@ class MyNewsActivity : ToolbarTitleActivity() {
     override fun initLayout() {
         toolbarTitleString = getString(R.string.str_my_news)
         super.initLayout()
-    }
-
-    override fun requestServer() {
-        viewModel.requestMain()
     }
 }

@@ -177,7 +177,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 startActivity(intent)
                 return
             }
-            loadingView.visibility = View.VISIBLE
+            loadingView?.visibility = View.VISIBLE
 //            if (mProgressDialog == null) {
 //                mProgressDialog = Dialog(context, R.style.TransDialog)
 //                val pb = ProgressBar(context)
@@ -202,6 +202,6 @@ abstract class BaseActivity : AppCompatActivity() {
 //            mProgressDialog!!.dismiss()
 //            mProgressDialog = null
 //        }
-        loadingView.visibility = View.GONE
+        loadingView?.visibility = View.GONE
     }
 }

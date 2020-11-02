@@ -61,7 +61,7 @@
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
 
             </LinearLayout>
 
@@ -86,6 +86,11 @@
     <include
         android:id="@+id/errorView"
         layout="@layout/view_network_error"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/loadingView"
+        layout="@layout/view_loading"
         android:visibility="gone"/>
 
 </RelativeLayout>

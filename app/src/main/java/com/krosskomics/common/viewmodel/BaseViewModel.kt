@@ -3,6 +3,7 @@ package com.krosskomics.common.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import com.krosskomics.more.repository.MoreRepository
 import com.krosskomics.ongoing.repository.OnGoingRepository
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {
@@ -17,7 +18,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         REQUEST_TYPE_A, REQUEST_TYPE_B, REQUEST_TYPE_C, REQUEST_TYPE_D
     }
 
-    private val repository = OnGoingRepository()
+    private val repository = MoreRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
 
     open fun requestMain() {

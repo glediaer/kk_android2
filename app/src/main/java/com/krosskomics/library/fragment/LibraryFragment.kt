@@ -15,6 +15,7 @@ import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.fragment.BaseFragment
+import com.krosskomics.common.fragment.RecyclerViewBaseFragment
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.More
 import com.krosskomics.common.model.User
@@ -26,8 +27,10 @@ import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.FileUtils
 import com.krosskomics.util.ServerUtil
+import kotlinx.android.synthetic.main.activity_more.*
 import kotlinx.android.synthetic.main.fragment_genre.recyclerView
 import kotlinx.android.synthetic.main.fragment_library.*
+import kotlinx.android.synthetic.main.fragment_library.emptyView
 import kotlinx.android.synthetic.main.view_empty_library.view.*
 import kotlinx.android.synthetic.main.view_mytoon_category.*
 import kotlinx.android.synthetic.main.view_mytoon_filter.*
@@ -41,7 +44,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LibraryFragment : BaseFragment() {
+class LibraryFragment : RecyclerViewBaseFragment() {
     var currentCategory = 0 // all, unlock, download
 
     override val viewModel: LibraryViewModel by lazy {
@@ -55,10 +58,6 @@ class LibraryFragment : BaseFragment() {
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_genre_detail
         return R.layout.fragment_library
-    }
-
-    override fun initModel() {
-        viewModel.getMainResponseLiveData().observe(this, this)
     }
 
     override fun initLayout() {
@@ -108,6 +107,9 @@ class LibraryFragment : BaseFragment() {
                     try {
                         if (response.isSuccessful) {
                             if ("00" == response.body()!!.retcode) {
+                                viewModel.isRefresh = true
+                                viewModel.mSeriesList.clear()
+                                requestServer()
                             } else {
                                 if ("" != response.body()!!.msg) {
                                     CommonUtil.showToast(response.body()!!.msg, context)
@@ -147,12 +149,9 @@ class LibraryFragment : BaseFragment() {
                     try {
                         if (response.isSuccessful) {
                             if ("00" == response.body()!!.retcode) {
+                                viewModel.isRefresh = true
                                 viewModel.mSeriesList.clear()
-//                                if (actBinding.flEditMode.isShown()) {
-//                                    actBinding.flEditMode.setVisibility(View.GONE)
-//                                    actBinding.bottomNavigationView.setVisibility(View.VISIBLE)
-//                                    actBinding.ivEdit.isSelected = false
-//                                }
+                                getDownloadedData()
                             }
                             if ("" != response.body()!!.msg) {
                                 CommonUtil.showToast(response.body()!!.msg, context)
@@ -175,25 +174,34 @@ class LibraryFragment : BaseFragment() {
             })
     }
 
-    override fun onChanged(t: Any?) {
-        if (t is More) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-            } else {
-                t.msg?.let {
-                    CommonUtil.showToast(it, context)
+    override fun initMainView() {
+        super.initMainView()
+        activity?.apply {
+            toolbarTrash?.setOnClickListener { _ ->
+                toolbarTrash.visibility = View.GONE
+                toolbarDone.visibility = View.VISIBLE
+                viewModel.items.forEach {
+                    if (it is DataBook) {
+                        it.isCheckVisible = true
+                        it.isChecked = true
+                    }
                 }
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
+            toolbarDone?.setOnClickListener { _ ->
+                toolbarTrash.visibility = View.VISIBLE
+                toolbarDone.visibility = View.GONE
+                viewModel.items.forEach {
+                    if (it is DataBook) {
+                        it.isCheckVisible = false
+                        it.isChecked = false
+                    }
+                }
+                recyclerView.adapter?.notifyDataSetChanged()
             }
         }
-    }
-
-    private fun initMainView() {
         initCategory()
         initfilter()
-        initRecyclerView()
-        topButton.setOnClickListener {
-            recyclerView?.smoothScrollToPosition(0)
-        }
     }
 
     private fun initfilter() {
@@ -216,17 +224,19 @@ class LibraryFragment : BaseFragment() {
         allTextView.setOnClickListener {
             resetCategory()
             allTextView.isSelected = true
+            activity?.toolbarDone?.visibility = View.GONE
             activity?.toolbarTrash?.visibility = View.VISIBLE
             filterView.visibility = View.VISIBLE
             networkStateView.visibility = View.GONE
             currentCategory = 0
 
-            viewModel.repository.listType = "SU"
+            viewModel.repository.listType = "R"
             requestServer()
         }
         unlockTextView.setOnClickListener {
             resetCategory()
             unlockTextView.isSelected = true
+            activity?.toolbarDone?.visibility = View.GONE
             activity?.toolbarTrash?.visibility = View.GONE
             filterView.visibility = View.GONE
             networkStateView.visibility = View.GONE
@@ -238,6 +248,7 @@ class LibraryFragment : BaseFragment() {
         downloadTextView.setOnClickListener {
             resetCategory()
             downloadTextView.isSelected = true
+            activity?.toolbarDone?.visibility = View.GONE
             activity?.toolbarTrash?.visibility = View.VISIBLE
             filterView.visibility = View.GONE
             currentCategory = 2
@@ -259,31 +270,7 @@ class LibraryFragment : BaseFragment() {
         viewModel.mSeriesList.clear()
     }
 
-    private fun initRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (getCurrentItem(recyclerView) > CODE.VISIBLE_LIST_TOPBUTTON_CNT) {
-                    topButton.visibility = View.VISIBLE
-                } else {
-                    topButton.visibility = View.GONE
-                }
-            }
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!recyclerView.canScrollVertically(1)) {
-                    //TODO 화면이 바닥에 닿을때 처리
-                    if (viewModel.page < viewModel.totalPage) {
-                        viewModel.page++
-                        requestServer()
-                    }
-                }
-            }
-        })
-        initRecyclerViewAdapter()
-    }
-
-    private fun initRecyclerViewAdapter() {
+    override fun initRecyclerViewAdapter() {
         recyclerView.adapter =
             CommonRecyclerViewAdapter(
                 viewModel.items,
@@ -317,67 +304,36 @@ class LibraryFragment : BaseFragment() {
 
             setOnDelteItemClickListener(object : RecyclerViewBaseAdapter.OnDeleteItemClickListener {
                 override fun onItemClick(item: Any) {
+                    if (viewModel.items.size == 0) {
+                        return
+                    }
+                    if (CommonUtil.getNetworkInfo(requireContext()) == null) {
+                        CommonUtil.showToast(getString(R.string.msg_disable_remove_file), context)
+                        return
+                    }
                     if (item is DataBook) {
                         // remove request
-                        if (currentCategory == 2) {
-                            if (viewModel.items.size == 0) {
-                                return
+//                        if (item.isChecked) {
+//                            item.isChecked = false;
+//                            viewModel.mSeriesList.remove(item.sid);
+//                        } else {
+//                            item.isChecked = true;
+//                            viewModel.mSeriesList.add(item.sid);
+//                        }
+                        item.isChecked = true;
+                        viewModel.mSeriesList.add(item.sid);
+                        when (currentCategory) {
+                            0 -> {
+                                requestDeleteLibrary()
                             }
-                            if (CommonUtil.getNetworkInfo(requireContext()) == null) {
-                                CommonUtil.showToast(getString(R.string.msg_disable_remove_file), context)
-                                return
+                            2 -> {
+                                removeFile()
+                                requestDeleteFile()
                             }
-                            if (item.isChecked) {
-                                item.isChecked = false;
-                                viewModel.mSeriesList.remove(item.sid);
-                            } else {
-                                item.isChecked = true;
-                                viewModel.mSeriesList.add(item.sid);
-                            }
-                            removeFile()
-                            requestDeleteFile()
-                        } else {
-                            requestDeleteLibrary()
                         }
                     }
                 }
             })
-        }
-    }
-
-    private fun setMainContentView(body: More) {
-        if (body.list.isNullOrEmpty()) {
-            showEmptyView()
-            return
-        }
-        if (viewModel.isRefresh) {
-            viewModel.items.clear()
-        }
-        viewModel.totalPage = body.tot_pages
-        body.list?.let {
-            showMainView()
-            viewModel.items.addAll(it)
-            recyclerView.adapter?.notifyDataSetChanged()
-            activity?.apply {
-                toolbarTrash?.setOnClickListener { _ ->
-                    toolbarTrash.visibility = View.GONE
-                    toolbarDone.visibility = View.VISIBLE
-                    it.forEach {
-                        it.isCheckVisible = true
-                        it.isChecked = true
-                    }
-                    recyclerView.adapter?.notifyDataSetChanged()
-                }
-                toolbarDone?.setOnClickListener { _ ->
-                    toolbarTrash.visibility = View.VISIBLE
-                    toolbarDone.visibility = View.GONE
-                    it.forEach {
-                        it.isCheckVisible = false
-                        it.isChecked = false
-                    }
-                    recyclerView.adapter?.notifyDataSetChanged()
-                }
-            }
         }
     }
 

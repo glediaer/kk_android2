@@ -164,10 +164,6 @@ class SeriesActivity : ToolbarTitleActivity() {
         viewModel.getImageUrlResponseLiveData().observe(this, this)
     }
 
-    override fun requestServer() {
-        viewModel.requestMain()
-    }
-
     private fun requestImageUrl() {
         viewModel.requestImageUrl()
     }
@@ -270,6 +266,7 @@ class SeriesActivity : ToolbarTitleActivity() {
                 }
             }
         }
+        hideProgress()
     }
 
     private fun goDownload(t: Episode) {

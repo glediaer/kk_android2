@@ -12,9 +12,8 @@ import kotlinx.android.synthetic.main.view_toolbar.view.*
 class NoticeActivity : ToolbarViewPagerActivity() {
     private val TAG = "NoticeActivity"
 
-    override var tabIndex: Int
-        get() = super.tabIndex
-        set(value) {}
+    override var tabIndex = 0
+
     override fun getLayoutId(): Int {
         return R.layout.activity_notice
     }
@@ -27,6 +26,11 @@ class NoticeActivity : ToolbarViewPagerActivity() {
         toolbarTitleString = getString(R.string.str_notice)
         adapterType = 3
         super.initLayout()
+    }
+
+    override fun initModel() {
+        tabIndex = intent?.getIntExtra("tabIndex", 0) ?: 0
+        super.initModel()
     }
 
     override fun initToolbar() {

@@ -12,7 +12,7 @@ import retrofit2.Response
 
 
 class LibraryRepository : CommonRepository() {
-    var listType = "SU" // SU, U(unlock),
+    var listType = "R" // R, U(unlock),
     var page = 1
     var sortType = "S"   // S
 

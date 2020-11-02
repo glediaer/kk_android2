@@ -11,6 +11,7 @@ import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataGift
 import com.krosskomics.common.fragment.BaseFragment
+import com.krosskomics.common.fragment.RecyclerViewBaseFragment
 import com.krosskomics.common.model.Gift
 import com.krosskomics.library.viewmodel.GiftBoxViewModel
 import com.krosskomics.util.CODE
@@ -28,7 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class GiftBoxFragment : BaseFragment() {
+class GiftBoxFragment : RecyclerViewBaseFragment() {
 
     override val viewModel: GiftBoxViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -43,67 +44,8 @@ class GiftBoxFragment : BaseFragment() {
         return R.layout.fragment_giftbox
     }
 
-    override fun initModel() {
-        viewModel.getMainResponseLiveData().observe(this, this)
-    }
-
-    override fun initLayout() {
-        initMainView()
-    }
-
-    override fun requestServer() {
-        viewModel.requestMain()
-    }
-
-    override fun onChanged(t: Any?) {
-        if (t is Gift) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-            } else {
-                t.msg?.let {
-                    CommonUtil.showToast(it, context)
-                }
-            }
-        }
-    }
-
-    private fun initMainView() {
-        initRecyclerView()
-        topButton.setOnClickListener {
-            recyclerView?.smoothScrollToPosition(0)
-        }
-    }
-
-    private fun initRecyclerView() {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (getCurrentItem(recyclerView) > CODE.VISIBLE_LIST_TOPBUTTON_CNT) {
-                    topButton.visibility = View.VISIBLE
-                } else {
-                    topButton.visibility = View.GONE
-                }
-            }
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!recyclerView.canScrollVertically(1)) {
-                    //TODO 화면이 바닥에 닿을때 처리
-                    if (viewModel.page < viewModel.totalPage) {
-                        viewModel.page++
-                        requestServer()
-                    }
-                }
-            }
-        })
-        initRecyclerViewAdapter()
-    }
-
-    private fun initRecyclerViewAdapter() {
-        recyclerView.adapter =
-            CommonRecyclerViewAdapter(
-                viewModel.items,
-                recyclerViewItemLayoutId
-            )
+    override fun initRecyclerViewAdapter() {
+        super.initRecyclerViewAdapter()
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {
@@ -121,42 +63,6 @@ class GiftBoxFragment : BaseFragment() {
                     }
                 }
             })
-        }
-    }
-
-    private fun setMainContentView(body: Gift) {
-        if (body.list.isNullOrEmpty()) {
-            showEmptyView()
-            return
-        }
-        if (viewModel.isRefresh) {
-            viewModel.items.clear()
-        }
-        viewModel.totalPage = body.tot_pages
-        body.list?.let {
-            showMainView()
-            viewModel.items.addAll(it)
-            recyclerView.adapter?.notifyDataSetChanged()
-            activity?.apply {
-                toolbarTrash?.setOnClickListener { _ ->
-                    toolbarTrash.visibility = View.GONE
-                    toolbarDone.visibility = View.VISIBLE
-                    it.forEach {
-//                        it.isCheckVisible = true
-//                        it.isChecked = true
-                    }
-                    recyclerView.adapter?.notifyDataSetChanged()
-                }
-                toolbarDone?.setOnClickListener { _ ->
-                    toolbarTrash.visibility = View.VISIBLE
-                    toolbarDone.visibility = View.GONE
-                    it.forEach {
-//                        it.isCheckVisible = false
-//                        it.isChecked = false
-                    }
-                    recyclerView.adapter?.notifyDataSetChanged()
-                }
-            }
         }
     }
 

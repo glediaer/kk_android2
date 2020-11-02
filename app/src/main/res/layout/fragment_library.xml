@@ -69,4 +69,9 @@
         layout="@layout/view_empty_library"
         android:visibility="gone"/>
 
+    <include
+        android:id="@+id/loadingView"
+        layout="@layout/view_loading"
+        android:visibility="gone"/>
+
 </RelativeLayout>
