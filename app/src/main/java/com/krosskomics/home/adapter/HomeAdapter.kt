@@ -286,6 +286,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                     moreButton?.visibility = View.VISIBLE
                     moreButton?.setOnClickListener {
                         val intent = Intent(itemView.context, MoreActivity::class.java)
+                        intent.putExtra("title", item.layout_title)
                         intent.putExtra("more_param", item.more_param)
                         context.startActivity(intent)
                     }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="60dp"
     android:layout_height="18dp"
     android:background="@drawable/kk_selector_ranking_content_tag"
@@ -17,6 +16,6 @@
         android:textColor="#ffffff"
         android:textSize="10dp"
         android:textStyle="bold"
-        tools:text="MON" />
+        android:text="MON" />
 
 </LinearLayout>

@@ -5,5 +5,5 @@
         android:drawable="@drawable/kk_ic_tabmenu_wait_for_free" />
     <item
         android:state_selected="false"
-        android:drawable="@drawable/kk_ic_tabmenu_wait_for_free" />
+        android:drawable="@drawable/kk_ic_tabmenu_wait_for_free_off" />
 </selector>

@@ -1,0 +1,20 @@
+package com.krosskomics.mynews.viewmodel
+
+import android.app.Application
+import androidx.lifecycle.LiveData
+import com.krosskomics.common.viewmodel.BaseViewModel
+import com.krosskomics.genre.repository.GenreRepository
+import com.krosskomics.mynews.repository.MyNewsRepository
+
+class MyNewsViewModel(application: Application): BaseViewModel(application) {
+    private val repository = MyNewsRepository()
+    private val mainResponseLiveData = repository.getMainResponseLiveData()
+
+    override fun requestMain() {
+        repository.requestMain(getApplication(), page)
+    }
+
+    override fun getMainResponseLiveData(): LiveData<Any> {
+        return mainResponseLiveData
+    }
+}

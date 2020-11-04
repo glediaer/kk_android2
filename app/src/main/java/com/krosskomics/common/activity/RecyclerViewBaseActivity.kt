@@ -1,13 +1,7 @@
 package com.krosskomics.common.activity
 
-import android.app.Activity
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -20,10 +14,7 @@ import com.krosskomics.R
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
-import com.krosskomics.common.model.Coin
-import com.krosskomics.common.model.Episode
-import com.krosskomics.common.model.More
-import com.krosskomics.common.model.Search
+import com.krosskomics.common.model.*
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.genre.adapter.GenreAdapter
@@ -32,19 +23,26 @@ import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.ranking.adapter.RankingAdapter
 import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.series.activity.SeriesActivity
-import com.krosskomics.splash.SplashActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.showToast
+import com.krosskomics.util.ServerUtil
 import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.errorView
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
-import kotlinx.android.synthetic.main.activity_ongoing.*
+import kotlinx.android.synthetic.main.activity_main_content.toolbar
+import kotlinx.android.synthetic.main.activity_more.*
+import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_network_error.view.*
+import kotlinx.android.synthetic.main.view_toolbar.*
+import kotlinx.android.synthetic.main.view_toolbar.view.*
 import kotlinx.android.synthetic.main.view_topbutton.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private val TAG = "RecyclerViewBaseActivity"
@@ -129,6 +127,10 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             if ("00" == t.retcode) {
                 setMainContentView(t)
             }
+        } else if (t is News) {
+            if ("00" == t.retcode) {
+                setMainContentView(t)
+            }
         }
         hideProgress()
     }
@@ -144,6 +146,8 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
                     viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
+
+                totalCountTextView?.text = getString(R.string.str_total) + " ${viewModel.items.count()}"
             }
             is Episode -> {
                 body.list?.let {
@@ -153,6 +157,13 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
             }
             is Coin -> {
                 body.product_list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+            }
+            is News -> {
+                viewModel.totalPage = body.tot_pages
+                body.list?.let {
                     viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
@@ -218,6 +229,19 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
                     }
                 }
             })
+
+            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnSubscribeClickListener(object : RecyclerViewBaseAdapter.OnSubscribeClickListener {
+                override fun onItemClick(item: Any, position: Int, selected: Boolean) {
+                    if (item is DataBook) {
+                        var action = if (selected) {
+                            "S"
+                        } else {
+                            "C"
+                        }
+                        requestSubscribe(item.sid ?: "", action)
+                    }
+                }
+            })
         }
     }
 
@@ -241,6 +265,48 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         waitButton?.isSelected = false
         rankingButton?.isSelected = false
         genreButton?.isSelected = false
+    }
+
+    private fun requestSubscribe(sid: String, action: String) {
+        val api = ServerUtil.service.setNotiSelector(
+            CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+            "subscribe", sid, action, "",
+            CommonUtil.read(context, CODE.LOCAL_Android_Id, "")
+        )
+        api.enqueue(object : Callback<Default?> {
+            override fun onResponse(
+                call: Call<Default?>,
+                response: Response<Default?>
+            ) {
+                try {
+                    if (response.isSuccessful) {
+                        val item = response.body()
+                        if ("00" == item!!.retcode) {
+
+                        } else if ("202" == item.retcode) {
+                            goCoinAlert(context)
+                        } else {
+                            if ("" != item.msg) {
+                                showToast(item.msg, context)
+                            }
+                        }
+                        hideProgress()
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                    hideProgress()
+                }
+            }
+
+            override fun onFailure(call: Call<Default?>, t: Throwable) {
+                hideProgress()
+                try {
+//                    checkNetworkConnection(context, t, errorView)
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
     }
 
     override fun onClick(v: View?) {

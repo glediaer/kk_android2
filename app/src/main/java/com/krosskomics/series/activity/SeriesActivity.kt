@@ -112,7 +112,8 @@ class SeriesActivity : ToolbarTitleActivity() {
     private fun requestSubscribe() {
         val api = service.setNotiSelector(
             read(context, CODE.CURRENT_LANGUAGE, "en"),
-            "subscribe", viewModel.sid, viewModel.mAction, "", ""
+            "subscribe", viewModel.sid, viewModel.mAction, "",
+            read(context, CODE.LOCAL_Android_Id, "")
         )
         api.enqueue(object : Callback<Default?> {
             override fun onResponse(

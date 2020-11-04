@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.item_download_ep.view.*
 import kotlinx.android.synthetic.main.item_genre_detail.view.*
 import kotlinx.android.synthetic.main.item_genre_detail.view.deleteView
 import kotlinx.android.synthetic.main.item_gift.view.*
+import kotlinx.android.synthetic.main.item_mynews.view.*
 import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
@@ -34,6 +35,7 @@ import kotlinx.android.synthetic.main.item_series_grid.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 import kotlinx.android.synthetic.main.view_dim.view.*
 import kotlinx.android.synthetic.main.view_ticket.view.*
+import kotlinx.android.synthetic.main.item_mynews.view.remainTimeTextView
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
     RecyclerView.Adapter<RecyclerViewBaseAdapter.BaseItemHolder>() {
@@ -42,6 +44,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
     private var onDeleteClickListener: OnDeleteItemClickListener? = null
     private var onDownloadClickListener: OnDownloadClickListener? = null
     private var onDownloadCancelClickListener: OnDownloadCancelClickListener? = null
+    private var onSubscribeClickListener: OnSubscribeClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemHolder {
         val view = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)
@@ -70,6 +73,10 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
 
     fun setOnDownloadCancelClickListener(onItemClickListener: OnDownloadCancelClickListener) {
         this.onDownloadCancelClickListener = onItemClickListener
+    }
+
+    fun setOnSubscribeClickListener(onItemClickListener: OnSubscribeClickListener) {
+        this.onSubscribeClickListener = onItemClickListener
     }
 
     inner class BaseItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
@@ -102,6 +109,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     // genre
                     subscribeImageView?.setOnClickListener {
                         subscribeImageView.isSelected = !it.isSelected
+                        onSubscribeClickListener?.onItemClick(item, position, subscribeImageView.isSelected)
                     }
                     // library
                     if (item.isCheckVisible) {
@@ -252,8 +260,11 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
 //                    } else {
 //                        holder.newImaegView.setVisibility(View.GONE)
 //                    }
-                    titleTextView.setText(item.title)
-                    dDayTextView.setText(item.show_str)
+                    titleTextView.text = item.title
+                    dDayTextView.text = item.show_str
+                } else if (item is DataNews) {
+                    newsTextView.text = item.title
+                    remainTimeTextView.text = item.writer1
                 }
             }
         }
@@ -273,5 +284,9 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
 
     interface OnDownloadCancelClickListener {
         fun onItemClick(item: Any, position: Int)
+    }
+
+    interface OnSubscribeClickListener {
+        fun onItemClick(item: Any, position: Int, selected: Boolean)
     }
 }

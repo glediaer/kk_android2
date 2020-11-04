@@ -5,5 +5,5 @@
         android:drawable="@drawable/kk_ic_ongoing" />
     <item
         android:state_selected="false"
-        android:drawable="@drawable/kk_ic_ongoing" />
+        android:drawable="@drawable/kk_ic_ongoing_off" />
 </selector>

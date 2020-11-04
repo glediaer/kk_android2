@@ -31,7 +31,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/kk_ic_ongoing"/>
+            android:src="@drawable/kk_selector_tabmenu_ongoing"/>
 
     </RelativeLayout>
 
@@ -45,7 +45,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/kk_ic_tabmenu_wait_for_free"/>
+            android:src="@drawable/kk_selector_tabmenu_wait_for_free" />
 
     </RelativeLayout>
 
@@ -59,7 +59,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/kk_ic_tabmenu_top"/>
+            android:src="@drawable/kk_selector_tabmenu_top"/>
 
     </RelativeLayout>
 
@@ -73,7 +73,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/kk_ic_tabmenu_genre"/>
+            android:src="@drawable/kk_selector_tabmenu_genre"/>
 
     </RelativeLayout>
 

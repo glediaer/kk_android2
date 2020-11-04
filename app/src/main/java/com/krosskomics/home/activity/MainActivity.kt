@@ -283,15 +283,27 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     private fun initMainView() {
+        initTabView()
+        initStickyTabView()
+    }
+
+    private fun initTabView() {
+        onGoingButton.isSelected = false
+        waitButton.isSelected = false
+        rankingButton.isSelected = false
+        genreButton.isSelected = false
         homeButton.setOnClickListener(this)
         onGoingButton.setOnClickListener(this)
         waitButton.setOnClickListener(this)
         rankingButton.setOnClickListener(this)
         genreButton.setOnClickListener(this)
-        initStickyTabView()
     }
 
     private fun initStickyTabView() {
+        mainStickyTabView.onGoingButton.isSelected = false
+        mainStickyTabView.waitButton.isSelected = false
+        mainStickyTabView.rankingButton.isSelected = false
+        mainStickyTabView.genreButton.isSelected = false
         mainStickyTabView.onGoingButton.setOnClickListener { startActivity(Intent(context, OnGoingActivity::class.java))  }
         mainStickyTabView.waitButton.setOnClickListener { startActivity(Intent(context, WaitFreeActivity::class.java)) }
         mainStickyTabView.rankingButton.setOnClickListener { startActivity(Intent(context, RankingActivity::class.java)) }

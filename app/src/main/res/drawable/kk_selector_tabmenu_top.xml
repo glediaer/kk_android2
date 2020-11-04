@@ -5,5 +5,5 @@
         android:drawable="@drawable/kk_ic_tabmenu_top" />
     <item
         android:state_selected="false"
-        android:drawable="@drawable/kk_ic_tabmenu_top" />
+        android:drawable="@drawable/kk_ic_tabmenu_top_off" />
 </selector>

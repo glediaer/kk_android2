@@ -113,6 +113,15 @@ interface InterfaceRestful {
         @Field("page") page: Int
     ): Call<More>
 
+    // news 리스트
+    @FormUrlEncoded
+    @POST("app/google/37/list")
+    fun getNewsList(
+        @Field("lang") lang: String?,
+        @Field("param") param: String?,
+        @Field("page") page: Int
+    ): Call<News>
+
     // 에피소드 목록 호출
     @FormUrlEncoded
     @POST("app/google/37/series")
@@ -284,15 +293,6 @@ interface InterfaceRestful {
         @Field("page") page: Int,
         @Field("k") k: String?
     ): Call<Search>
-
-//    // 검색 결과
-//    @FormUrlEncoded
-//    @POST("app/google/37/search")
-//    fun getSearchResult(
-//        @Field("lang") lang: String?,
-//        @Field("page") page: Int,
-//        @Field("k") k: String?
-//    ): Call<SearchResult>
 
     // 선물함
     @FormUrlEncoded
