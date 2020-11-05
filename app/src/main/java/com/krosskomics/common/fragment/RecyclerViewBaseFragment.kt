@@ -11,15 +11,14 @@ import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.model.Gift
 import com.krosskomics.common.model.More
+import com.krosskomics.common.model.News
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_more.*
 import kotlinx.android.synthetic.main.activity_more.recyclerView
-import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.view_empty_library.*
-import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_topbutton.*
 
 open class RecyclerViewBaseFragment : BaseFragment() {
@@ -58,6 +57,14 @@ open class RecyclerViewBaseFragment : BaseFragment() {
                 }
             }
         } else if (t is More) {
+            if ("00" == t.retcode) {
+                setMainContentView(t)
+            } else {
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
+            }
+        } else if (t is News) {
             if ("00" == t.retcode) {
                 setMainContentView(t)
             } else {
@@ -148,6 +155,13 @@ open class RecyclerViewBaseFragment : BaseFragment() {
                 }
                 body.list?.let {
                     showMainView()
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+            }
+            is News -> {
+                viewModel.totalPage = body.tot_pages
+                body.list?.let {
                     viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }

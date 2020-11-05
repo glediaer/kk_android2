@@ -1,6 +1,5 @@
 package com.krosskomics.common.activity
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -9,7 +8,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.ProgressBar
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,17 +16,26 @@ import com.google.android.gms.analytics.HitBuilders
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
+import com.krosskomics.genre.activity.GenreActivity
+import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.login.activity.LoginActivity
 import com.krosskomics.login.activity.LoginIntroActivity
+import com.krosskomics.ongoing.activity.OnGoingActivity
+import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.splash.SplashActivity
+import com.krosskomics.util.CODE
+import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.hideErrorView
 import com.krosskomics.util.CommonUtil.showErrorView
 import com.krosskomics.util.CommonUtil.showToast
+import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.activity_series.*
+import kotlinx.android.synthetic.main.view_main_action_item.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
 
     protected lateinit var context: Context
     protected var recyclerViewItemLayoutId = 0
@@ -84,6 +91,8 @@ abstract class BaseActivity : AppCompatActivity() {
             setDisplayShowTitleEnabled(false)
             setHomeAsUpIndicator(R.drawable.icon_back)
         }
+        giftboxImageView?.setOnClickListener(this)
+        searchImageView?.setOnClickListener(this)
     }
 
     open fun goLoginAlert(context: Context?) {
@@ -178,30 +187,44 @@ abstract class BaseActivity : AppCompatActivity() {
                 return
             }
             loadingView?.visibility = View.VISIBLE
-//            if (mProgressDialog == null) {
-//                mProgressDialog = Dialog(context, R.style.TransDialog)
-//                val pb = ProgressBar(context)
-//                val params =
-//                    ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-//                mProgressDialog?.addContentView(pb, params)
-//                mProgressDialog?.setCancelable(false)
-//                mProgressDialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-//                if (!(context as Activity).isFinishing) {
-//                    mProgressDialog?.show()
-//                }
-//            } else {
-//                mProgressDialog?.show()
-//            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     open fun hideProgress() {
-//        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-//            mProgressDialog!!.dismiss()
-//            mProgressDialog = null
-//        }
         loadingView?.visibility = View.GONE
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id) {
+            R.id.searchImageView -> startActivity(Intent(context, SearchActivity::class.java))
+            R.id.giftboxImageView -> {
+                if (CommonUtil.read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
+                    intent = Intent(context, LibraryActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    goLoginAlert(context)
+                }
+            }
+            // tabview
+            R.id.homeButton -> finish()
+            R.id.onGoingButton -> {
+                startActivity(Intent(context, OnGoingActivity::class.java))
+                finish()
+            }
+            R.id.waitButton -> {
+                startActivity(Intent(context, WaitFreeActivity::class.java))
+                finish()
+            }
+            R.id.rankingButton -> {
+                startActivity(Intent(context, RankingActivity::class.java))
+                finish()
+            }
+            R.id.genreButton -> {
+                startActivity(Intent(context, GenreActivity::class.java))
+                finish()
+            }
+        }
     }
 }

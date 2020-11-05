@@ -2,7 +2,6 @@ package com.krosskomics.genre.activity
 
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarViewPagerActivity
-import kotlinx.android.synthetic.main.activity_genre_detail.*
 
 class GenreDetailActivity : ToolbarViewPagerActivity() {
     private val TAG = "GenreDetailActivity"

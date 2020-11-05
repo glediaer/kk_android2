@@ -1,10 +1,12 @@
 package com.krosskomics.notice.activity
 
 import android.view.View
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarViewPagerActivity
+import com.krosskomics.mynews.viewmodel.MyNewsViewModel
 import com.krosskomics.util.CommonUtil
-import kotlinx.android.synthetic.main.activity_genre_detail.*
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
@@ -15,6 +17,7 @@ class NoticeActivity : ToolbarViewPagerActivity() {
     override var tabIndex = 0
 
     override fun getLayoutId(): Int {
+        recyclerViewItemLayoutId = R.layout.item_mynews
         return R.layout.activity_notice
     }
 

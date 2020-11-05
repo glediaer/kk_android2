@@ -382,6 +382,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                     items.forEachIndexed { index, dataLanguage ->
                         dataLanguage.isSelect = position == index
                         write(context, CODE.CURRENT_LANGUAGE, dataLanguage.lang)
+
                         requestSetLanguage(dataLanguage.lang)
                         requestServer()
                     }
@@ -767,6 +768,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             R.id.logoImageView -> requestServer()
             R.id.searchImageView -> startActivity(Intent(context, SearchActivity::class.java))
             R.id.changeLangImageView -> {
+                changeLangImageView.isSelected = changeLangImageView.isSelected
                 changeLanguageView()
             }
             R.id.giftboxImageView -> {

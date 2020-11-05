@@ -1,13 +1,8 @@
 package com.krosskomics.waitfree.activity
 
-import android.content.Intent
-import android.view.View
 import android.widget.TextView
 import com.krosskomics.R
 import com.krosskomics.common.activity.RecyclerViewBaseActivity
-import com.krosskomics.genre.activity.GenreActivity
-import com.krosskomics.ongoing.activity.OnGoingActivity
-import com.krosskomics.ranking.activity.RankingActivity
 import kotlinx.android.synthetic.main.activity_waitfree.*
 
 class WaitFreeActivity : RecyclerViewBaseActivity() {
@@ -51,27 +46,5 @@ class WaitFreeActivity : RecyclerViewBaseActivity() {
 
     private fun resetDateViewItems() {
         dateViewItems.forEach { it.isSelected = false }
-    }
-
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            // tabview
-            R.id.homeButton -> finish()
-            R.id.onGoingButton -> {
-                startActivity(Intent(context, OnGoingActivity::class.java))
-                finish()
-            }
-            R.id.waitButton -> {
-                startActivity(Intent(context, WaitFreeActivity::class.java))
-            }
-            R.id.rankingButton -> {
-                startActivity(Intent(context, RankingActivity::class.java))
-                finish()
-            }
-            R.id.genreButton -> {
-                startActivity(Intent(context, GenreActivity::class.java))
-                finish()
-            }
-        }
     }
 }

@@ -16,35 +16,29 @@ import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.model.*
 import com.krosskomics.common.viewmodel.BaseViewModel
-import com.krosskomics.genre.activity.GenreActivity
 import com.krosskomics.genre.adapter.GenreAdapter
 import com.krosskomics.library.activity.LibraryActivity
-import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.ranking.adapter.RankingAdapter
-import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.ServerUtil
-import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.errorView
+import kotlinx.android.synthetic.main.activity_main_content.nestedScrollView
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
-import kotlinx.android.synthetic.main.activity_main_content.toolbar
 import kotlinx.android.synthetic.main.activity_more.*
-import kotlinx.android.synthetic.main.view_action_item.view.*
+import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_network_error.view.*
-import kotlinx.android.synthetic.main.view_toolbar.*
-import kotlinx.android.synthetic.main.view_toolbar.view.*
 import kotlinx.android.synthetic.main.view_topbutton.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
+open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
     private val TAG = "RecyclerViewBaseActivity"
 
     protected open val viewModel: BaseViewModel by lazy {
@@ -77,6 +71,17 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         initToolbar()
         initTabView()
         initMainView()
+        initFooterView()
+    }
+
+    private fun initFooterView() {
+        moveTopView?.setOnClickListener {
+            if (nestedScrollView != null) {
+                nestedScrollView.scrollTo(0, 0)
+            } else {
+                recyclerView?.layoutManager?.scrollToPosition(0)
+            }
+        }
     }
 
     override fun initErrorView() {
@@ -114,22 +119,42 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
         if (t is More) {
             if ("00" == t.retcode) {
                 setMainContentView(t)
+            } else {
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
             }
         } else if (t is Episode) {
             if ("00" == t.retcode) {
                 setMainContentView(t)
+            } else {
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
             }
         } else if (t is Coin) {
             if ("00" == t.retcode) {
                 setMainContentView(t)
+            } else {
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
             }
         } else if (t is Search) {
             if ("00" == t.retcode) {
                 setMainContentView(t)
+            } else {
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
             }
         } else if (t is News) {
             if ("00" == t.retcode) {
                 setMainContentView(t)
+            } else {
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
             }
         }
         hideProgress()
@@ -307,34 +332,5 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any>, View.OnClic
                 }
             }
         })
-    }
-
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            R.id.searchImageView -> startActivity(Intent(context, SearchActivity::class.java))
-            R.id.giftboxImageView -> {
-                if (CommonUtil.read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
-                    intent = Intent(context, LibraryActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    goLoginAlert(context)
-                }
-            }
-            // tabview
-            R.id.homeButton -> finish()
-            R.id.onGoingButton -> startActivity(Intent(context, RecyclerViewBaseActivity::class.java))
-            R.id.waitButton -> {
-                startActivity(Intent(context, WaitFreeActivity::class.java))
-                finish()
-            }
-            R.id.rankingButton -> {
-                startActivity(Intent(context, RankingActivity::class.java))
-                finish()
-            }
-            R.id.genreButton -> {
-                startActivity(Intent(context, GenreActivity::class.java))
-                finish()
-            }
-        }
     }
 }

@@ -23,7 +23,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.NonNull
 import bolts.AppLinks
-import com.facebook.applinks.AppLinkData
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.tasks.OnCompleteListener
@@ -43,7 +42,6 @@ import com.krosskomics.home.activity.MainActivity
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil.getNetworkInfo
-import com.krosskomics.util.CommonUtil.getVersionCode
 import com.krosskomics.util.CommonUtil.moveAppMarket
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.showToast

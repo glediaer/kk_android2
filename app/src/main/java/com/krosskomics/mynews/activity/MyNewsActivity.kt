@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.mynews.viewmodel.MyNewsViewModel
-import com.krosskomics.search.viewmodel.SearchViewModel
 
 class MyNewsActivity : ToolbarTitleActivity() {
     private val TAG = "MyNewsActivity"

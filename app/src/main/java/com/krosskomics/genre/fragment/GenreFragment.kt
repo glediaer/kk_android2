@@ -13,7 +13,6 @@ import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.fragment.BaseFragment
 import com.krosskomics.common.model.More
 import com.krosskomics.genre.viewmodel.GenreViewModel
-import com.krosskomics.library.viewmodel.LibraryViewModel
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import kotlinx.android.synthetic.main.fragment_genre.*

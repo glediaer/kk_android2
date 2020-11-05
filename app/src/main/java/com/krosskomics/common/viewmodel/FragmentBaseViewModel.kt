@@ -3,7 +3,6 @@ package com.krosskomics.common.viewmodel
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.krosskomics.library.repository.LibraryRepository
 import com.krosskomics.more.repository.MoreRepository
 
 open class FragmentBaseViewModel(val context: Context) : ViewModel() {

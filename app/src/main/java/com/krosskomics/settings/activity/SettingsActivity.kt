@@ -7,13 +7,11 @@ import android.text.style.UnderlineSpan
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import com.krosskomics.KJKomicsApp
 import com.krosskomics.KJKomicsApp.Companion.LATEST_APP_VERSION_CODE
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.model.Default
 import com.krosskomics.home.activity.MainActivity
-import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.notice.activity.NoticeActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -23,7 +21,6 @@ import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil
 import com.krosskomics.util.ServerUtil.service
-import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import retrofit2.Call
 import retrofit2.Callback

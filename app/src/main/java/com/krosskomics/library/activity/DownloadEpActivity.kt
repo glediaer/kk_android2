@@ -126,6 +126,7 @@ class DownloadEpActivity : ToolbarTitleActivity() {
 //            }
             recyclerView.adapter?.notifyDataSetChanged()
         }
+        hideProgress()
     }
 
     override fun initRecyclerViewAdapter() {

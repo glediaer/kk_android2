@@ -1,12 +1,7 @@
 package com.krosskomics.genre.activity
 
-import android.content.Intent
-import android.view.View
 import com.krosskomics.R
 import com.krosskomics.common.activity.RecyclerViewBaseActivity
-import com.krosskomics.ongoing.activity.OnGoingActivity
-import com.krosskomics.ranking.activity.RankingActivity
-import com.krosskomics.waitfree.activity.WaitFreeActivity
 
 class GenreActivity : RecyclerViewBaseActivity() {
     private val TAG = "GenreActivity"
@@ -29,27 +24,5 @@ class GenreActivity : RecyclerViewBaseActivity() {
     override fun initLayout() {
         viewModel.tabIndex = 4
         super.initLayout()
-    }
-
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            // tabview
-            R.id.homeButton -> finish()
-            R.id.onGoingButton -> {
-                startActivity(Intent(context, OnGoingActivity::class.java))
-                finish()
-            }
-            R.id.waitButton -> {
-                startActivity(Intent(context, WaitFreeActivity::class.java))
-                finish()
-            }
-            R.id.rankingButton -> {
-                startActivity(Intent(context, RankingActivity::class.java))
-                finish()
-            }
-            R.id.genreButton -> {
-                startActivity(Intent(context, GenreActivity::class.java))
-            }
-        }
     }
 }

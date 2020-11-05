@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.item_genre_detail.view.*
 import kotlinx.android.synthetic.main.item_genre_detail.view.deleteView
 import kotlinx.android.synthetic.main.item_gift.view.*
 import kotlinx.android.synthetic.main.item_mynews.view.*
+import kotlinx.android.synthetic.main.item_mynews.view.remainTimeTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
@@ -35,7 +36,6 @@ import kotlinx.android.synthetic.main.item_series_grid.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 import kotlinx.android.synthetic.main.view_dim.view.*
 import kotlinx.android.synthetic.main.view_ticket.view.*
-import kotlinx.android.synthetic.main.item_mynews.view.remainTimeTextView
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
     RecyclerView.Adapter<RecyclerViewBaseAdapter.BaseItemHolder>() {

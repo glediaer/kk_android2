@@ -3,14 +3,26 @@ package com.krosskomics.comment.activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
+import com.krosskomics.comment.viewmodel.CommentViewModel
 import com.krosskomics.common.activity.ToolbarTitleActivity
+import com.krosskomics.mynews.viewmodel.MyNewsViewModel
 import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
 
 class CommentActivity : ToolbarTitleActivity() {
     private val TAG = "CommentActivity"
+
+    public override val viewModel: CommentViewModel by lazy {
+        ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return CommentViewModel(application) as T
+            }
+        }).get(CommentViewModel::class.java)
+    }
 
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_mynews

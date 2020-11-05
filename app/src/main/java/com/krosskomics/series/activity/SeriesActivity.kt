@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
@@ -105,8 +104,6 @@ class SeriesActivity : ToolbarTitleActivity() {
             toolbarTitle.visibility = View.VISIBLE
             toolbarTitle.text = ""
         }
-
-
     }
 
     private fun requestSubscribe() {

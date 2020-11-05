@@ -1,12 +1,8 @@
 package com.krosskomics.ranking.activity
 
 import android.content.Intent
-import android.view.View
 import com.krosskomics.R
 import com.krosskomics.common.activity.RecyclerViewBaseActivity
-import com.krosskomics.genre.activity.GenreActivity
-import com.krosskomics.ongoing.activity.OnGoingActivity
-import com.krosskomics.waitfree.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.view_title_section_ranking.*
 
 class RankingActivity : RecyclerViewBaseActivity() {
@@ -35,28 +31,6 @@ class RankingActivity : RecyclerViewBaseActivity() {
 
         moreImageView.setOnClickListener {
             startActivity(Intent(context, RankingDetailActivity::class.java))
-        }
-    }
-
-    override fun onClick(v: View?) {
-        when(v?.id) {
-            // tabview
-            R.id.homeButton -> finish()
-            R.id.onGoingButton -> {
-                startActivity(Intent(context, OnGoingActivity::class.java))
-                finish()
-            }
-            R.id.waitButton -> {
-                startActivity(Intent(context, WaitFreeActivity::class.java))
-                finish()
-            }
-            R.id.rankingButton -> {
-                startActivity(Intent(context, RankingActivity::class.java))
-            }
-            R.id.genreButton -> {
-                startActivity(Intent(context, GenreActivity::class.java))
-                finish()
-            }
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.krosskomics.common.model
 
-import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataNews
 import java.util.*
 

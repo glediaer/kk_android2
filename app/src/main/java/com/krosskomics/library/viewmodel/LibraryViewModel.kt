@@ -3,7 +3,6 @@ package com.krosskomics.library.viewmodel
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
-import com.krosskomics.genre.repository.GenreRepository
 import com.krosskomics.library.repository.LibraryRepository
 import java.io.File
 import java.util.*
