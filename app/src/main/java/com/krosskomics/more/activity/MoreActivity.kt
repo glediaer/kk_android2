@@ -7,7 +7,7 @@ class MoreActivity : ToolbarTitleActivity() {
     private val TAG = "MoreActivity"
 
     override fun getLayoutId(): Int {
-        recyclerViewItemLayoutId = R.layout.item_genre_detail
+        recyclerViewItemLayoutId = R.layout.item_more
         return R.layout.activity_more
     }
 

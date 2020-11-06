@@ -144,7 +144,7 @@ class SearchActivity : ToolbarTitleActivity() {
         recyclerView.adapter =
             CommonRecyclerViewAdapter(
                 viewModel.items,
-                R.layout.item_contents
+                R.layout.item_more
             )
         (recentRecyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnDelteItemClickListener(object : RecyclerViewBaseAdapter.OnDeleteItemClickListener {
@@ -169,7 +169,7 @@ class SearchActivity : ToolbarTitleActivity() {
         }
 
         (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-            override fun onItemClick(item: Any?) {
+            override fun onItemClick(item: Any?, position: Int) {
                 if (item is DataBook) {
                     val intent = Intent(context, SeriesActivity::class.java).apply {
                         putExtra("sid", item.sid)

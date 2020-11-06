@@ -1,5 +1,6 @@
 package com.krosskomics.common.fragment
 
+import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -9,17 +10,24 @@ import com.krosskomics.R
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
+import com.krosskomics.common.data.DataNews
+import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Gift
 import com.krosskomics.common.model.More
 import com.krosskomics.common.model.News
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
+import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
-import kotlinx.android.synthetic.main.activity_main_content.*
-import kotlinx.android.synthetic.main.activity_more.*
-import kotlinx.android.synthetic.main.activity_more.recyclerView
-import kotlinx.android.synthetic.main.view_empty_library.*
+import com.krosskomics.util.ServerUtil
+import kotlinx.android.synthetic.main.fragment_genre.*
+import kotlinx.android.synthetic.main.fragment_genre.recyclerView
+import kotlinx.android.synthetic.main.fragment_library.*
+import kotlinx.android.synthetic.main.view_empty_library.view.*
 import kotlinx.android.synthetic.main.view_topbutton.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 open class RecyclerViewBaseFragment : BaseFragment() {
     override val viewModel: FragmentBaseViewModel by lazy {
@@ -31,7 +39,7 @@ open class RecyclerViewBaseFragment : BaseFragment() {
     }
 
     override fun getLayoutId(): Int {
-        recyclerViewItemLayoutId = R.layout.item_contents
+        recyclerViewItemLayoutId = R.layout.item_more
         return R.layout.activity_more
     }
 
@@ -99,7 +107,6 @@ open class RecyclerViewBaseFragment : BaseFragment() {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (!recyclerView.canScrollVertically(1)) {
-                    //TODO 화면이 바닥에 닿을때 처리
                     if (viewModel.page < viewModel.totalPage) {
                         viewModel.page++
                         requestServer()
@@ -118,8 +125,18 @@ open class RecyclerViewBaseFragment : BaseFragment() {
             )
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-                override fun onItemClick(item: Any?) {
-                    if (item is More) {
+                override fun onItemClick(item: Any?, position: Int) {
+                    when (item) {
+                        is DataBook -> {
+                            val intent = Intent(context, SeriesActivity::class.java).apply {
+                                putExtra("sid", item.sid)
+                                putExtra("title", item.title)
+                            }
+                            startActivity(intent)
+                        }
+                        is DataNews -> {
+                            expandNoticeItem(position)
+                        }
                     }
                 }
             })
@@ -132,7 +149,29 @@ open class RecyclerViewBaseFragment : BaseFragment() {
                     }
                 }
             })
+
+            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnSubscribeClickListener(object : RecyclerViewBaseAdapter.OnSubscribeClickListener {
+                override fun onItemClick(item: Any, position: Int, selected: Boolean) {
+                    if (item is DataBook) {
+                        var action = if (selected) {
+                            "S"
+                        } else {
+                            "C"
+                        }
+                        requestSubscribe(item.sid ?: "", action)
+                    }
+                }
+            })
         }
+    }
+
+    private fun expandNoticeItem(position: Int) {
+        viewModel.items.forEachIndexed { index, item ->
+            if (item is DataNews) {
+                item.isSelect = index == position
+            }
+        }
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 
     open fun setMainContentView(body: Any) {
@@ -167,6 +206,7 @@ open class RecyclerViewBaseFragment : BaseFragment() {
                 }
             }
         }
+        listCountTextView?.text = "${getString(R.string.str_total)} ${viewModel.items.size}"
     }
 
     override fun showEmptyView() {
@@ -176,5 +216,47 @@ open class RecyclerViewBaseFragment : BaseFragment() {
             errorMsg.visibility = View.GONE
             goSeriesButton.visibility = View.GONE
         }
+    }
+
+    private fun requestSubscribe(sid: String, action: String) {
+        val api = ServerUtil.service.setNotiSelector(
+            CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+            "subscribe", sid, action, "",
+            CommonUtil.read(context, CODE.LOCAL_Android_Id, "")
+        )
+        api.enqueue(object : Callback<Default?> {
+            override fun onResponse(
+                call: Call<Default?>,
+                response: Response<Default?>
+            ) {
+                try {
+                    if (response.isSuccessful) {
+                        val item = response.body()
+                        if ("00" == item!!.retcode) {
+
+                        } else if ("202" == item.retcode) {
+                            goCoinAlert(context)
+                        } else {
+                            if ("" != item.msg) {
+                                CommonUtil.showToast(item.msg, context)
+                            }
+                        }
+                        hideProgress()
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                    hideProgress()
+                }
+            }
+
+            override fun onFailure(call: Call<Default?>, t: Throwable) {
+                hideProgress()
+                try {
+//                    checkNetworkConnection(context, t, errorView)
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
     }
 }

@@ -242,7 +242,7 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
                     bannerRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                     bannerRecyclerView.adapter = ViewerBannerAdapter(bannerItems, R.layout.item_viewer_banner, context)
                     (bannerRecyclerView.adapter as ViewerBannerAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-                        override fun onItemClick(item: Any?) {
+                        override fun onItemClick(item: Any?, position: Int) {
                             if (item is DataBanner) {
                                 setBannerAction(item)
                             }

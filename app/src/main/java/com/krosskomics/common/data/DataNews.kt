@@ -26,6 +26,5 @@ class DataNews : Serializable {
     var subject: String? = null
 
     // 삭제
-    var isChecked = false
-    var isCheckVisible = false
+    var isSelect = false
 }

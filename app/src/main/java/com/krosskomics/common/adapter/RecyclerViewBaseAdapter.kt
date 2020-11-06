@@ -18,11 +18,13 @@ import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.viewer.activity.ViewerActivity
 import kotlinx.android.synthetic.main.item_coin.view.*
 import kotlinx.android.synthetic.main.item_download_ep.view.*
-import kotlinx.android.synthetic.main.item_genre_detail.view.*
-import kotlinx.android.synthetic.main.item_genre_detail.view.deleteView
+import kotlinx.android.synthetic.main.item_more.view.*
+import kotlinx.android.synthetic.main.item_more.view.deleteView
 import kotlinx.android.synthetic.main.item_gift.view.*
 import kotlinx.android.synthetic.main.item_mynews.view.*
+import kotlinx.android.synthetic.main.item_mynews.view.newsTextView
 import kotlinx.android.synthetic.main.item_mynews.view.remainTimeTextView
+import kotlinx.android.synthetic.main.item_notice.view.*
 import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
@@ -33,6 +35,7 @@ import kotlinx.android.synthetic.main.item_series.view.*
 import kotlinx.android.synthetic.main.item_series.view.img_ep_title
 import kotlinx.android.synthetic.main.item_series.view.txt_ep_title
 import kotlinx.android.synthetic.main.item_series_grid.view.*
+import kotlinx.android.synthetic.main.view_content_like.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 import kotlinx.android.synthetic.main.view_dim.view.*
 import kotlinx.android.synthetic.main.view_ticket.view.*
@@ -83,7 +86,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
         override fun setData(item: Any?, position: Int) {
             itemView.apply {
                 setOnClickListener {
-                    onClickListener?.onItemClick(item)
+                    onClickListener?.onItemClick(item, position)
                 }
                 if (item is DataBook) {
                     mainImageView?.let {
@@ -95,7 +98,12 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     titleTextView?.text = item.title
                     writerTextView?.text = item.writer1
                     genreTextView?.text = item.genre1
-                    likeCountTextView?.text = item.like_cnt
+                    if (item.like_cnt.isNullOrEmpty()) {
+                        contentLikeView?.visibility = View.GONE
+                    } else {
+                        contentLikeView?.visibility = View.VISIBLE
+                        likeCountTextView?.text = item.like_cnt
+                    }
                     // ranking
                     if (context is RankingDetailActivity) {
                         when(position) {
@@ -265,13 +273,18 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                 } else if (item is DataNews) {
                     newsTextView.text = item.title
                     remainTimeTextView.text = item.writer1
+                    if (item.isSelect) {
+                        expandView?.visibility = View.VISIBLE
+                    } else {
+                        expandView?.visibility = View.GONE
+                    }
                 }
             }
         }
     }
 
     interface OnItemClickListener {
-        fun onItemClick(item: Any?)
+        fun onItemClick(item: Any?, position: Int)
     }
 
     interface OnDeleteItemClickListener {

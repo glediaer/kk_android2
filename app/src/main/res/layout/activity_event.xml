@@ -38,7 +38,7 @@
                 android:singleLine="true"
                 android:hint="@string/str_promotion_hint"
                 android:background="@null"/>
-            
+
             <TextView
                 android:id="@+id/registerTextView"
                 android:layout_width="87dp"

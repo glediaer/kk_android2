@@ -48,8 +48,16 @@ class LibraryFragment : RecyclerViewBaseFragment() {
         }).get(LibraryViewModel::class.java)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (currentCategory == 2) {
+            viewModel.items.clear()
+            getDownloadedData()
+        }
+    }
+
     override fun getLayoutId(): Int {
-        recyclerViewItemLayoutId = R.layout.item_genre_detail
+        recyclerViewItemLayoutId = R.layout.item_more
         return R.layout.fragment_library
     }
 
@@ -275,7 +283,7 @@ class LibraryFragment : RecyclerViewBaseFragment() {
             )
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-                override fun onItemClick(item: Any?) {
+                override fun onItemClick(item: Any?, position: Int) {
                     if (item is DataBook) {
                         var intent: Intent
                         if (currentCategory == 2) {     // download
@@ -325,7 +333,6 @@ class LibraryFragment : RecyclerViewBaseFragment() {
                             }
                             2 -> {
                                 removeFile()
-                                requestDeleteFile()
                             }
                         }
                     }
@@ -338,26 +345,23 @@ class LibraryFragment : RecyclerViewBaseFragment() {
      * 파일 삭제
      */
     private fun removeFile() {
-        for (i in viewModel.items.indices.reversed()) {
-            val item = viewModel.items as DataBook
-            item.isCheckVisible = false
-            if (item.isChecked) {
-                FileUtils.deleteDir(item.filePath)
-                viewModel.items.removeAt(i)
+        viewModel.items.forEach {
+            if (it is DataBook) {
+                it.isCheckVisible = false
+                if (it.isChecked) {
+                    FileUtils.deleteDir(it.filePath)
+                    viewModel.items.remove(it)
+                }
             }
         }
         if (viewModel.items.size > 0) {
-//            actBinding.flEmptyDataView.visibility = View.GONE
-//            actBinding.flDefaultView.visibility = View.VISIBLE
-//            actBinding.ivEdit.visibility = View.VISIBLE
+            getDownloadedData()
         } else {
             viewModel.mFile.delete()
-//            actBinding.flEmptyDataView.visibility = View.VISIBLE
-//            actBinding.flDefaultView.visibility = View.GONE
-//            actBinding.ivEdit.visibility = View.GONE
         }
         recyclerView.adapter?.notifyDataSetChanged()
 
+        requestDeleteFile()
         removeThumbnailFile()
     }
 
@@ -435,6 +439,7 @@ class LibraryFragment : RecyclerViewBaseFragment() {
                         CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en")
                 mFile = File(mPath)
                 if (mFile.length() == 0L) {
+                    showEmptyView()
                     return
                 }
                 mFile.listFiles().forEach { it ->

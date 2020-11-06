@@ -25,7 +25,6 @@ import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.ServerUtil
-import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.activity_main_content.errorView
 import kotlinx.android.synthetic.main.activity_main_content.nestedScrollView
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
@@ -220,7 +219,6 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 if (!recyclerView.canScrollVertically(1)) {
-                    //TODO 화면이 바닥에 닿을때 처리
                     if (viewModel.page < viewModel.totalPage) {
                         viewModel.page++
                         requestServer()
@@ -244,7 +242,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
 
         if (viewModel.tabIndex != 4) {
             (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-                override fun onItemClick(item: Any?) {
+                override fun onItemClick(item: Any?, position: Int) {
                     if (item is DataBook) {
                         val intent = Intent(context, SeriesActivity::class.java).apply {
                             putExtra("sid", item.sid)

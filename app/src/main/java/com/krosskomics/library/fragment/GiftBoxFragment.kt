@@ -41,7 +41,7 @@ class GiftBoxFragment : RecyclerViewBaseFragment() {
         super.initRecyclerViewAdapter()
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-                override fun onItemClick(item: Any?) {
+                override fun onItemClick(item: Any?, position: Int) {
                     if (item is DataGift) {
                         requestGetGift(item.seq)
                     }

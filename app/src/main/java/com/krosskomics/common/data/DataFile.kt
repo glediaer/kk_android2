@@ -1,8 +1,5 @@
 package com.krosskomics.common.data
 
-/**
- * Created by eunholee on 16. 3. 2..
- */
 class DataFile {
     var title: String? = null
     var showSeq: String? = null

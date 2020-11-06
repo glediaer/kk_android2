@@ -169,7 +169,7 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
         recyclerView.adapter = CoinAdapter(viewModel.items, recyclerViewItemLayoutId)
         (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object :
             RecyclerViewBaseAdapter.OnItemClickListener {
-            override fun onItemClick(item: Any?) {
+            override fun onItemClick(item: Any?, position: Int) {
                 if (item is DataCoin) {
                     if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
                         skuDetailItems.forEach {

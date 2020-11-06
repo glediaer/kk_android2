@@ -725,7 +725,7 @@ class SeriesActivity : ToolbarTitleActivity() {
         recyclerView.adapter = SeriesAdapter(viewModel.items, recyclerViewItemLayoutId, context)
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-            override fun onItemClick(item: Any?) {
+            override fun onItemClick(item: Any?, position: Int) {
                 if (item is DataEpisode) {
                     if (viewModel.isSelectDownload) {
                         return

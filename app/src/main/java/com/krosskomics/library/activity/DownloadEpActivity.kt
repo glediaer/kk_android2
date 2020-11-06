@@ -6,16 +6,21 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
+import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataFile
 import com.krosskomics.common.model.Default
 import com.krosskomics.library.viewmodel.DownloadViewModel
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
+import com.krosskomics.util.FileUtils
 import com.krosskomics.util.ServerUtil
 import kotlinx.android.synthetic.main.activity_download_ep.*
+import kotlinx.android.synthetic.main.activity_download_ep.recyclerView
+import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -67,6 +72,8 @@ class DownloadEpActivity : ToolbarTitleActivity() {
             viewModel.mSid = extras?.getString("sid") ?: ""
         }
     }
+
+    override fun requestServer() {}
 
     private fun setHeaderView() {
         toolbarTrash?.setOnClickListener { _ ->
@@ -133,7 +140,7 @@ class DownloadEpActivity : ToolbarTitleActivity() {
         super.initRecyclerViewAdapter()
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-                override fun onItemClick(item: Any?) {
+                override fun onItemClick(item: Any?, position: Int) {
                     if (item is DataFile) {
                         // show episode
                         val intent = Intent(context, DownloadViewerActivity::class.java)
@@ -160,14 +167,9 @@ class DownloadEpActivity : ToolbarTitleActivity() {
                             CommonUtil.showToast(getString(R.string.msg_disable_remove_file), context)
                             return
                         }
-                        if (item.isChecked) {
-                            item.isChecked = false;
-                            viewModel.mEpList.remove(item.eid)
-                        } else {
-                            item.isChecked = true;
-                            viewModel.mEpList.add(item.eid ?: "")
-                        }
-                        requestDeleteFile()
+                        item.isChecked = true;
+                        viewModel.mEpList.add(item.eid ?: "")
+                        removeFile()
                     }
                 }
             })
@@ -217,5 +219,38 @@ class DownloadEpActivity : ToolbarTitleActivity() {
                     }
                 }
             })
+    }
+
+    /**
+     * 파일 삭제
+     */
+    private fun removeFile() {
+        viewModel.items.forEach {
+            if (it is DataFile) {
+                it.isCheckVisible = false
+                if (it.isChecked) {
+                    FileUtils.deleteDir(it.filePath)
+                    viewModel.items.remove(it)
+                }
+            }
+        }
+        if (viewModel.items.size > 0) {
+            getDownloadedData()
+        } else {
+            viewModel.mFile.delete()
+            finish()
+        }
+        recyclerView.adapter?.notifyDataSetChanged()
+
+        requestDeleteFile()
+        removeThumbnailFile()
+    }
+
+    private fun removeThumbnailFile() {
+        var epThumbPath = viewModel.mThumbnail
+        viewModel.mEpList.forEach {
+            epThumbPath = epThumbPath + it + ".png"
+            FileUtils.deleteFile(epThumbPath)
+        }
     }
 }

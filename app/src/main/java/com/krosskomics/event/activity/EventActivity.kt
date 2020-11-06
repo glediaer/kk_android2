@@ -62,7 +62,7 @@ class EventActivity : ToolbarTitleActivity() {
     override fun initRecyclerViewAdapter() {
         recyclerView.adapter = EventAdapter(viewModel.items, recyclerViewItemLayoutId)
         (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-            override fun onItemClick(item: Any?) {
+            override fun onItemClick(item: Any?, position: Int) {
                 if (item is DataBook) {
                     val intent = Intent(context, SeriesActivity::class.java).apply {
                         putExtra("sid", item.sid)

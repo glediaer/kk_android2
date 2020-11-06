@@ -66,6 +66,8 @@ class DownloadViewerActivity : ToolbarTitleActivity() {
         initBottomView()
     }
 
+    override fun requestServer() {}
+
     private fun initBottomView() {
         footerView.visibility = View.GONE
     }

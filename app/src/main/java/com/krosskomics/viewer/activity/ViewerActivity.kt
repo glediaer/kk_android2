@@ -222,7 +222,7 @@ class ViewerActivity : ToolbarTitleActivity() {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             it.adapter = EpListAdapter(viewModel.arr_episode, R.layout.item_view_episode, context)
             (it.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-                override fun onItemClick(item: Any?) {
+                override fun onItemClick(item: Any?, position: Int) {
                     if (item is DataEpisode) {
                         loadEpCheck(item.eid)
                     }

@@ -7,6 +7,7 @@ import com.krosskomics.common.fragment.RecyclerViewBaseFragment
 import com.krosskomics.notice.viewmodel.NoticeViewModel
 
 class NoticeFragment : RecyclerViewBaseFragment() {
+    private val TAG = "NoticeFragment"
 
     override val viewModel: NoticeViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -17,11 +18,7 @@ class NoticeFragment : RecyclerViewBaseFragment() {
     }
 
     override fun getLayoutId(): Int {
-        recyclerViewItemLayoutId = R.layout.item_mynews
+        recyclerViewItemLayoutId = R.layout.item_notice
         return R.layout.fragment_notice
-    }
-
-    override fun requestServer() {
-        viewModel.requestMain()
     }
 }

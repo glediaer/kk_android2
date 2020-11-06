@@ -196,6 +196,9 @@
     <string name="str_my_downloaded_komics">My Downloaded KOMICS</string>
 
     <string name="str_loading">Loading…</string>
+    <string name="str_all_ranking">All Ranking</string>
+    <string name="str_female_ranking">Female Ranking</string>
+    <string name="str_male_ranking">Male Ranking</string>
 
     <!-- msg -->
     <string name="msg_fail_login">Failed to log in. Please check your ID or password.</string>
