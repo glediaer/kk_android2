@@ -156,13 +156,9 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
         // Process the result.
     }
 
-    override fun onChanged(t: Any?) {
-        if (t is Coin) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-                initInApp()
-            }
-        }
+    override fun setMainContentView(body: Any) {
+        super.setMainContentView(body)
+        initInApp()
     }
 
     override fun initRecyclerViewAdapter() {

@@ -275,6 +275,9 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         bottomViewClose.setOnClickListener {
             bottomBannerView.visibility = View.GONE
         }
+        topImageView.setOnClickListener {
+            nestedScrollView?.scrollTo(0, 0)
+        }
     }
 
     override fun initToolbar() {
@@ -353,8 +356,8 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         items?.let {
             nestedScrollView.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
                 if (BuildConfig.DEBUG) {
-                    Log.e(TAG, "scrollY : " + scrollY)
-                    Log.e(TAG, "oldScrollY : " + oldScrollY)
+//                    Log.e(TAG, "scrollY : " + scrollY)
+//                    Log.e(TAG, "oldScrollY : " + oldScrollY)
                     if (scrollY >= 1777) {
                         mainStickyTabView.visibility = View.VISIBLE
                     } else {
@@ -380,11 +383,14 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             (adapter as ChangeLanguageAdapter).setOnItemClickListener(object : ChangeLanguageAdapter.OnItemClickListener {
                 override fun onItemClick(view: View, position: Int) {
                     items.forEachIndexed { index, dataLanguage ->
-                        dataLanguage.isSelect = position == index
-                        write(context, CODE.CURRENT_LANGUAGE, dataLanguage.lang)
-
-                        requestSetLanguage(dataLanguage.lang)
-                        requestServer()
+                        if (position == index) {
+                            dataLanguage.isSelect = true
+                            write(context, CODE.CURRENT_LANGUAGE, dataLanguage.lang)
+                            requestSetLanguage(dataLanguage.lang)
+                            requestServer()
+                        } else {
+                            dataLanguage.isSelect = false
+                        }
                     }
                     adapter?.notifyDataSetChanged()
                 }
@@ -616,7 +622,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     private fun requestSetLanguage(newLanguage: String) {
-        val api = ServerUtil.service.setLanguage(CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+        val api = service.setLanguage(CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
             "change_language", newLanguage)
         api.enqueue(object : retrofit2.Callback<Default> {
             override fun onResponse(call: Call<Default>, response: Response<Default>) {

@@ -29,7 +29,7 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingViewHolder {
         context = parent.context
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_main_content, parent, false)
+        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_main_content_a, parent, false)
         when (viewType) {
             VIEW_TYPE.VIEW_TYPE_A.ordinal -> {
                 view = LayoutInflater.from(parent.context)
@@ -67,7 +67,7 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
         if (null != list && 0 < list.size) {
             for (i in list.indices) {
                 val item = list[i]
-                val view = inflater.inflate(R.layout.item_main_type2, null) as LinearLayout
+                val view = inflater.inflate(R.layout.item_main_type_c, null) as LinearLayout
 
                 val mainImageView = view.findViewById<SimpleDraweeView>(R.id.iv_main)
 

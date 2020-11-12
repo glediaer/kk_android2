@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <RelativeLayout
+            android:layout_width="135dp"
+            android:layout_height="193dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:layout_marginLeft="7dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/iv_main"
+                android:layout_width="135dp"
+                android:layout_height="193dp"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="fitXY"
+                fresco:actualImageScaleType="fitXY"
+                fresco:placeholderImage="@drawable/kk_placeholder"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="7dp"
+                android:background="@drawable/kk_genre_item_bottom_rect"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:singleLine="true"
+                    android:textColor="#ffffff"
+                    android:textStyle="bold"
+                    tools:text="Miss Unfit" />
+
+                <TextView
+                    android:id="@+id/tv_writer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="9dp"
+                    android:singleLine="true"
+                    android:textColor="#ffffff"
+                    tools:text="Aaasssdt" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <include
+            layout="@layout/view_content_tag"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>
