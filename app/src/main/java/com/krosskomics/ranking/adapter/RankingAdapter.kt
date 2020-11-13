@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
-import com.krosskomics.ranking.activity.RankingActivity
 
 class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int, private val context: Context) :
     RecyclerViewBaseAdapter(items, layoutRes) {
 
     enum class VIEW_TYPE {
-        VIEW_TYPE_A, VIEW_TYPE_B, VIEW_TYPE_C
+        VIEW_TYPE_A, VIEW_TYPE_B
     }
 
     private var onClickListener: OnItemClickListener? = null
@@ -19,9 +18,7 @@ class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewBaseAdapter.BaseItemHolder {
         return when(viewType) {
             VIEW_TYPE.VIEW_TYPE_A.ordinal ->
-                BaseItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_ranking_first, parent, false))
-            VIEW_TYPE.VIEW_TYPE_C.ordinal ->
-                BaseItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_ranking_detail, parent, false))
+                BaseItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_ranking_a, parent, false))
             else ->
                 BaseItemHolder(LayoutInflater.from(parent.context).inflate(layoutRes, parent, false))
         }
@@ -36,14 +33,8 @@ class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (context is RankingActivity) {
-            if (position == 0) {
-                return VIEW_TYPE.VIEW_TYPE_A.ordinal
-            }
-        } else {
-            if (position < 3) {
-                return VIEW_TYPE.VIEW_TYPE_C.ordinal
-            }
+        if (position < 3) {
+            return VIEW_TYPE.VIEW_TYPE_A.ordinal
         }
         return VIEW_TYPE.VIEW_TYPE_B.ordinal
     }

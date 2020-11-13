@@ -29,14 +29,40 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp">
 
-                <include
-                    layout="@layout/view_title_section_ranking"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textSize="18dp"
+                        android:textColor="#000000"
+                        android:text="@string/str_top_ranking" />
+
+                    <TextView
+                        android:id="@+id/filterTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:paddingLeft="14dp"
+                        android:paddingRight="14dp"
+                        android:background="@drawable/kk_rect_trans_green_r10"
+                        android:textSize="14dp"
+                        android:textColor="@color/green"
+                        android:textStyle="bold"
+                        android:text="@string/str_all" />
+
+                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="30dp"/>
 
             </LinearLayout>
 
@@ -44,15 +70,35 @@
 
     </LinearLayout>
 
-    <include
-        layout="@layout/view_topbutton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:visibility="visible"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/view_topbutton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="gone"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"/>
+
+        <ImageView
+            android:id="@+id/sortImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:visibility="visible"
+            android:src="@drawable/kk_rect_switch_track_on"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"/>
+
+    </LinearLayout>
+
+    <include
+        android:visibility="gone"
+        layout="@layout/view_ranking_floating_dim"/>
 
     <include
         android:id="@+id/errorView"

@@ -1,7 +1,9 @@
 package com.krosskomics.common.activity
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -197,11 +199,22 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
 
     open fun initMainView() {
         recyclerView?.let { initRecyclerView() }
-        if (nestedScrollView != null) {
-            nestedScrollView.scrollTo(0, 0)
-        } else {
-            topButton?.setOnClickListener {
+        nestedScrollView?.let { initNestedScrollView() }
+        topButton?.setOnClickListener {
+            if (nestedScrollView != null) {
+                nestedScrollView.scrollTo(0, 0)
+            } else {
                 recyclerView?.layoutManager?.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun initNestedScrollView() {
+        nestedScrollView?.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            if (scrollY > CODE.VISIBLE_NESTEDSCROLL_TOPBUTTON_Y) {
+                topButton?.visibility = View.VISIBLE
+            } else {
+                topButton?.visibility = View.GONE
             }
         }
     }

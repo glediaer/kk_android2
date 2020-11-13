@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.*
 import com.krosskomics.common.holder.BaseItemViewHolder
-import com.krosskomics.ranking.activity.RankingDetailActivity
+import com.krosskomics.ranking.activity.RankingActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.item_download_ep.view.*
 import kotlinx.android.synthetic.main.item_more.view.*
 import kotlinx.android.synthetic.main.item_more.view.deleteView
 import kotlinx.android.synthetic.main.item_gift.view.*
-import kotlinx.android.synthetic.main.item_mynews.view.*
 import kotlinx.android.synthetic.main.item_mynews.view.newsTextView
 import kotlinx.android.synthetic.main.item_mynews.view.remainTimeTextView
 import kotlinx.android.synthetic.main.item_notice.view.*
@@ -30,7 +29,7 @@ import kotlinx.android.synthetic.main.item_ongoing.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.writerTextView
 import kotlinx.android.synthetic.main.item_ranking.view.*
-import kotlinx.android.synthetic.main.item_ranking_detail.view.*
+import kotlinx.android.synthetic.main.item_ranking_a.view.*
 import kotlinx.android.synthetic.main.item_series.view.*
 import kotlinx.android.synthetic.main.item_series.view.img_ep_title
 import kotlinx.android.synthetic.main.item_series.view.txt_ep_title
@@ -103,15 +102,15 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     } else {
                         contentLikeView?.visibility = View.VISIBLE
                         likeCountTextView?.text = item.like_cnt
+                        tv_like_count?.text = item.like_cnt
                     }
                     // ranking
-                    if (context is RankingDetailActivity) {
+                    if (context is RankingActivity) {
                         when(position) {
                             0 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_1)
                             1 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_2)
                             2 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_3)
                         }
-                    } else {
                         rankingTextView?.text = (position + 1).toString()
                     }
                     // genre
