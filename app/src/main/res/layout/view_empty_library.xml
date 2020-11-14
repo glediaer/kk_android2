@@ -5,8 +5,19 @@
     android:layout_height="match_parent"
     android:paddingLeft="60dp"
     android:paddingRight="60dp"
+    android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical">
+
+    <include
+        android:id="@+id/emptyNetworkStateView"
+        layout="@layout/view_network_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="165dp"

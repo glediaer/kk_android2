@@ -14,6 +14,7 @@ import java.util.ArrayList
 class NoticeViewModel(context: Context): FragmentBaseViewModel(context) {
     private val repository = NoticeRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
+    var tag = ""
 
     override fun requestMain() {
         repository.requestMain(context, page)

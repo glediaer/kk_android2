@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="15dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:paddingTop="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,43 +11,60 @@
 
         <include
             android:id="@+id/categoryView"
-            layout="@layout/view_mytoon_category"/>
+            layout="@layout/view_mytoon_category"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/mainView"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/mainView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
 
-                <include
-                    android:id="@+id/filterView"
-                    layout="@layout/view_mytoon_filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="27dp"/>
-
-                <include
-                    android:id="@+id/networkStateView"
-                    layout="@layout/view_network_state"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="gone"
-                    android:layout_centerHorizontal="true" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="6dp" />
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <include
+                        android:id="@+id/filterView"
+                        layout="@layout/view_mytoon_filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="27dp"/>
 
-        </androidx.core.widget.NestedScrollView>
+                    <include
+                        android:id="@+id/networkStateView"
+                        layout="@layout/view_network_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="gone"
+                        android:layout_centerHorizontal="true" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="6dp" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <include
+                android:id="@+id/emptyView"
+                layout="@layout/view_empty_library"
+                android:visibility="gone"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -63,11 +77,6 @@
         android:visibility="gone"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"/>
-
-    <include
-        android:id="@+id/emptyView"
-        layout="@layout/view_empty_library"
-        android:visibility="gone"/>
 
     <include
         android:id="@+id/loadingView"

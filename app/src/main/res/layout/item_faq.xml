@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="27dp"
+        android:background="@color/div_line_default"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dp">
+
+        <ImageView
+            android:id="@+id/ovalImageView"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="21dp"
+            android:src="@drawable/kk_div_oval"/>
+
+        <LinearLayout
+            android:id="@+id/faqView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="1dp"
+            android:paddingTop="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="18dp"
+            android:background="@drawable/kk_rect_trans_gray_r5"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/titleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="2"
+                    android:textSize="14dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    tools:text="A Chance for Romance Sale!Check it out!" />
+
+                <ImageView
+                    android:id="@+id/arrowImageView"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/kk_selector_notice_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/expandView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="gone"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/expandTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="expandText"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

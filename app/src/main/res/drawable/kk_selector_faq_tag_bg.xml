@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_selected="true"
+        android:drawable="@drawable/kk_rect_trans_black_2d_r15" />
+    <item
+        android:state_selected="false"
+        android:drawable="@drawable/kk_rect_trans_c6c6c6_r15" />
+</selector>

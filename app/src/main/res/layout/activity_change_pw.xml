@@ -19,8 +19,9 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:paddingTop="7dp"
                 android:paddingBottom="7dp"
                 android:paddingLeft="20dp"
@@ -57,11 +58,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:hint="@string/str_minimum_nickname"
-                        android:paddingLeft="20dp"
+                        android:paddingLeft="15dp"
                         android:textSize="16dp"
                         android:inputType="textPassword"
                         android:paddingRight="20dp"
-                        android:background="@drawable/kk_bottomsheet_edittext_rect" />
+                        android:background="@drawable/kk_rect_common_edittext" />
 
                     <ImageView
                         android:id="@+id/hideImageView"
@@ -88,10 +89,10 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:inputType="textPassword"
-                    android:paddingLeft="20dp"
+                    android:paddingLeft="15dp"
                     android:textSize="16dp"
                     android:paddingRight="20dp"
-                    android:background="@drawable/kk_bottomsheet_edittext_rect" />
+                    android:background="@drawable/kk_rect_common_edittext" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -108,10 +109,10 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:inputType="textPassword"
-                    android:paddingLeft="20dp"
+                    android:paddingLeft="15dp"
                     android:textSize="16dp"
                     android:paddingRight="20dp"
-                    android:background="@drawable/kk_bottomsheet_edittext_rect" />
+                    android:background="@drawable/kk_rect_common_edittext" />
 
 
                 <Button
@@ -120,7 +121,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="25dp"
                     android:enabled="false"
-                    android:background="@drawable/kk_selector_bottomsheet_login_btn"
+                    android:background="@drawable/kk_selector_common_confirm"
                     android:textSize="16dp"
                     android:textColor="#ffffff"
                     android:textAllCaps="false"

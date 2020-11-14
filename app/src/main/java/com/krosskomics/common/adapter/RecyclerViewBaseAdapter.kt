@@ -272,6 +272,11 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                 } else if (item is DataNews) {
                     newsTextView.text = item.title
                     remainTimeTextView.text = item.writer1
+                } else if (item is DataNotice) {
+                    itemView.isSelected = position == 0
+                    titleTextView.text = item.title
+                    dateTextView?.text = item.writer1
+                    arrowImageView?.isSelected = item.isSelect
                     if (item.isSelect) {
                         expandView?.visibility = View.VISIBLE
                     } else {

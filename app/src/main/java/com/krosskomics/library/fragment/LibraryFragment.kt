@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.view_empty_library.view.*
 import kotlinx.android.synthetic.main.view_mytoon_category.*
 import kotlinx.android.synthetic.main.view_mytoon_filter.*
+import kotlinx.android.synthetic.main.view_network_state.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
 import retrofit2.Call
@@ -108,6 +109,7 @@ class LibraryFragment : RecyclerViewBaseFragment() {
                     try {
                         if (response.isSuccessful) {
                             if ("00" == response.body()!!.retcode) {
+                                viewModel.page = 1
                                 viewModel.isRefresh = true
                                 viewModel.mSeriesList.clear()
                                 requestServer()
@@ -256,6 +258,7 @@ class LibraryFragment : RecyclerViewBaseFragment() {
             activity?.toolbarDone?.visibility = View.GONE
             activity?.toolbarTrash?.visibility = View.VISIBLE
             filterView.visibility = View.GONE
+            networkStateView.visibility = View.VISIBLE
             currentCategory = 2
 
             if (CommonUtil.getNetworkInfo(requireContext()) != null) {
@@ -380,21 +383,27 @@ class LibraryFragment : RecyclerViewBaseFragment() {
         emptyView?.apply {
             when(currentCategory) {
                 0 -> {
+                    emptyNetworkStateView.visibility = View.GONE
                     errorTitle.text = getString(R.string.msg_empty_series)
                     errorMsg.visibility = View.GONE
                     goSeriesButton.text = getString(R.string.str_go_to_series)
+                    goSeriesButton.visibility = View.VISIBLE
                 }
                 1 -> {
+                    emptyNetworkStateView.visibility = View.GONE
                     errorTitle.text = getString(R.string.msg_empty_unlock_ep)
                     errorMsg.text = getString(R.string.msg_empty_unlock_ep2)
                     errorMsg.visibility = View.VISIBLE
                     goSeriesButton.text = getString(R.string.str_go_to_series)
+                    goSeriesButton.visibility = View.VISIBLE
                 }
                 2 -> {
+                    emptyNetworkStateView?.visibility = View.VISIBLE
                     errorTitle.text = getString(R.string.msg_empty_download)
                     errorMsg.text = getString(R.string.msg_empty_download2)
                     errorMsg.visibility = View.VISIBLE
                     goSeriesButton.text = getString(R.string.str_go_to_download)
+                    goSeriesButton.visibility = View.VISIBLE
                 }
             }
         }

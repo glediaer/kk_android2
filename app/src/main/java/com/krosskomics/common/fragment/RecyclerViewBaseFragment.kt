@@ -2,6 +2,7 @@ package com.krosskomics.common.fragment
 
 import android.content.Intent
 import android.view.View
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,16 +12,16 @@ import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataNews
-import com.krosskomics.common.model.Default
-import com.krosskomics.common.model.Gift
-import com.krosskomics.common.model.More
-import com.krosskomics.common.model.News
+import com.krosskomics.common.data.DataNotice
+import com.krosskomics.common.model.*
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.ServerUtil
+import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.fragment_genre.*
+import kotlinx.android.synthetic.main.fragment_genre.nestedScrollView
 import kotlinx.android.synthetic.main.fragment_genre.recyclerView
 import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.view_empty_library.view.*
@@ -80,16 +81,35 @@ open class RecyclerViewBaseFragment : BaseFragment() {
                     CommonUtil.showToast(it, context)
                 }
             }
+        } else if (t is Notice) {
+            if ("00" == t.retcode) {
+                setMainContentView(t)
+            } else {
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
+            }
         }
     }
 
     open fun initMainView() {
-        initRecyclerView()
-        if (nestedScrollView != null) {
-            nestedScrollView.scrollTo(0, 0)
-        } else {
-            topButton?.setOnClickListener {
+        recyclerView?.let { initRecyclerView() }
+        nestedScrollView?.let { initNestedScrollView() }
+        topButton?.setOnClickListener {
+            if (nestedScrollView != null) {
+                nestedScrollView.scrollTo(0, 0)
+            } else {
                 recyclerView?.layoutManager?.scrollToPosition(0)
+            }
+        }
+    }
+
+    private fun initNestedScrollView() {
+        nestedScrollView?.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            if (scrollY > CODE.VISIBLE_NESTEDSCROLL_TOPBUTTON_Y) {
+                topButton?.visibility = View.VISIBLE
+            } else {
+                topButton?.visibility = View.GONE
             }
         }
     }
@@ -134,7 +154,7 @@ open class RecyclerViewBaseFragment : BaseFragment() {
                             }
                             startActivity(intent)
                         }
-                        is DataNews -> {
+                        is DataNotice -> {
                             expandNoticeItem(position)
                         }
                     }
@@ -167,7 +187,7 @@ open class RecyclerViewBaseFragment : BaseFragment() {
 
     private fun expandNoticeItem(position: Int) {
         viewModel.items.forEachIndexed { index, item ->
-            if (item is DataNews) {
+            if (item is DataNotice) {
                 item.isSelect = index == position
             }
         }
@@ -180,6 +200,10 @@ open class RecyclerViewBaseFragment : BaseFragment() {
         }
         when (body) {
             is More -> {
+                if (body.list.isNullOrEmpty()) {
+                    showEmptyView()
+                    return
+                }
                 viewModel.totalPage = body.tot_pages
                 body.list?.let {
                     showMainView()
@@ -199,6 +223,21 @@ open class RecyclerViewBaseFragment : BaseFragment() {
                 }
             }
             is News -> {
+                if (body.list.isNullOrEmpty()) {
+                    showEmptyView()
+                    return
+                }
+                viewModel.totalPage = body.tot_pages
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+            }
+            is Notice -> {
+                if (body.list.isNullOrEmpty()) {
+                    showEmptyView()
+                    return
+                }
                 viewModel.totalPage = body.tot_pages
                 body.list?.let {
                     viewModel.items.addAll(it)

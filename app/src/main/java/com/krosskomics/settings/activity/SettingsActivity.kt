@@ -71,11 +71,12 @@ class SettingsActivity : ToolbarTitleActivity() {
         spannableString.setSpan(UnderlineSpan(), 0, spannableString.length, 0)
         currentVerTextView.text = spannableString
 
-        if (LATEST_APP_VERSION_CODE > CommonUtil.getVersionCode(context)) {
-            latestVerTextView.setOnClickListener {
-                // 팝업띄움
-                showUpdateAlert()
+        latestVerTextView.setOnClickListener {
+            if (LATEST_APP_VERSION_CODE == CommonUtil.getVersionCode(context)) {
+                return@setOnClickListener
             }
+            // 팝업띄움
+            showUpdateAlert()
         }
     }
 

@@ -30,21 +30,35 @@
 
         </FrameLayout>
 
-        <include
-            android:id="@+id/networkStateView"
-            layout="@layout/view_network_state"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:visibility="visible"
-            android:layout_centerHorizontal="true" />
+            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/networkStateView"
+                    layout="@layout/view_network_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="visible"
+                    android:layout_centerHorizontal="true" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"/>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

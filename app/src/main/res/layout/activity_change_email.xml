@@ -19,8 +19,9 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:paddingTop="7dp"
                 android:paddingBottom="7dp"
                 android:paddingLeft="20dp"
@@ -53,9 +54,9 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:maxLength="20"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:background="@drawable/kk_bottomsheet_edittext_rect" />
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:background="@drawable/kk_rect_common_edittext" />
 
                 <Button
                     android:id="@+id/confirmButton"
@@ -63,7 +64,7 @@
                     android:layout_height="40dp"
                     android:layout_marginTop="25dp"
                     android:enabled="false"
-                    android:background="@drawable/kk_selector_bottomsheet_login_btn"
+                    android:background="@drawable/kk_selector_common_confirm"
                     android:textSize="16dp"
                     android:textColor="#ffffff"
                     android:textAllCaps="false"

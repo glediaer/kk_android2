@@ -16,4 +16,7 @@
     <color name="purple">#6236ff</color>
     <color name="green">#b9d511</color>
 
+    <color name="div_line_default">#f4f4f4</color>
+    <color name="div_line_another">#e5e5e5</color>
+
 </resources>

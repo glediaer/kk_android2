@@ -24,7 +24,7 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
     lateinit var context: Context
 
     enum class VIEW_TYPE {
-        VIEW_TYPE_A, VIEW_TYPE_B, VIEW_TYPE_C, VIEW_TYPE_D, VIEW_TYPE_LINE, VIEW_TYPE_FOOTER
+        VIEW_TYPE_A, VIEW_TYPE_LINE
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RankingViewHolder {
@@ -74,23 +74,23 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
                 val titleTextView = view.findViewById<TextView>(R.id.tv_title)
                 val writerTextView = view.findViewById<TextView>(R.id.tv_writer)
                 val likeCountTextView = view.findViewById<TextView>(R.id.tv_like_count)
+                val contentTagView = view.findViewById<View>(R.id.contentTagView)
 
-                titleTextView.setText(item.title)
-                writerTextView.setText(item.writer1)
-                likeCountTextView.setText(item.like_cnt)
+                titleTextView.text = item.title
+                if (item.like_cnt.isNullOrEmpty()) {
+                    contentTagView.visibility = View.GONE
+                } else {
+                    contentTagView.visibility = View.VISIBLE
+                    likeCountTextView.text = item.like_cnt
+                }
+                if (item.writer1.isNullOrEmpty()) {
+                    writerTextView.visibility = View.GONE
+                } else {
+                    writerTextView.text = item.writer1
+                    writerTextView.visibility = View.VISIBLE
+                }
 
                 mainImageView.setController(CommonUtil.getDraweeController(context, item.image, 200, 200))
-
-//                if (item.isupdate == "1") {
-//                    upImaegeView.setVisibility(View.VISIBLE)
-//                } else {
-//                    upImaegeView.setVisibility(View.GONE)
-//                }
-//                if (item.isnew.equals("1")) {
-//                    newImaegView.setVisibility(View.VISIBLE)
-//                } else {
-//                    newImaegView.setVisibility(View.GONE)
-//                }
 
                 layout.addView(view)
 
