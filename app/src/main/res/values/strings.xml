@@ -199,6 +199,14 @@
     <string name="str_all_ranking">All Ranking</string>
     <string name="str_female_ranking">Female Ranking</string>
     <string name="str_male_ranking">Male Ranking</string>
+    <string name="str_dont_open_today">Don’t open today</string>
+    <string name="str_waitfree_info">-  If you wait for this comic’s period of\n
+   time, one free ticket will be generated\n
+   again.\n\n
+-  The latest 10 episodes don’t apply to\n
+   free ticket. Only pay!\n\n
+-  This free ticket could be used one\n
+   episode and expired after 3 days.</string>
 
     <!-- msg -->
     <string name="msg_fail_login">Failed to log in. Please check your ID or password.</string>

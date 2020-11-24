@@ -5,9 +5,12 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Process
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +26,7 @@ import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Episode
 import com.krosskomics.common.model.PurchaseEpisode
+import com.krosskomics.common.model.Version
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.series.adapter.SeriesAdapter
 import com.krosskomics.series.viewmodel.SeriesViewModel
@@ -86,6 +90,7 @@ class SeriesActivity : ToolbarTitleActivity() {
             setHomeAsUpIndicator(R.drawable.kk_icon_back_white)
         }
         toolbar.apply {
+            setBackgroundColor(Color.parseColor("#33000000"))
             actionItem.visibility = View.VISIBLE
             actionItem.giftboxImageView.visibility = View.GONE
             actionItem.searchImageView.visibility = View.GONE
@@ -551,9 +556,16 @@ class SeriesActivity : ToolbarTitleActivity() {
                     descTextView.visibility = View.GONE
                 }
             }
+            progressBar.progress = 40
+            waitTextView.setOnClickListener {
+                showWaitFreeInfoAlert()
+            }
+            progressTextView.setOnClickListener {
+                showWaitFreeInfoAlert()
+            }
             // permanent
-            permanentCntTextView.text = it.sticket.toString()
-            permanentCntTextView.isSelected = it.sticket > 0
+//            permanentCntTextView.text = it.sticket.toString()
+//            permanentCntTextView.isSelected = it.sticket > 0
             rentalCntTextView.text = it.rticket.toString()
             rentalCntTextView.isSelected = it.rticket > 0
             // ep desc
@@ -967,6 +979,21 @@ class SeriesActivity : ToolbarTitleActivity() {
 
             epPurchaseCountTextView.text = "${viewModel.allbuy_count}"
             return it.allbuy_coin
+        }
+    }
+
+    private fun showWaitFreeInfoAlert() {
+        try {
+            val innerView: View =
+                layoutInflater.inflate(R.layout.dialog_wait_free, null)
+            val dialog = initDialog(innerView)
+            val btnConfirm =
+                innerView.findViewById<Button>(R.id.btn_confirm)
+            btnConfirm.setOnClickListener {
+                dialog.dismiss()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

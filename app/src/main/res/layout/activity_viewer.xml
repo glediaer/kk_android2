@@ -147,4 +147,11 @@
         layout="@layout/view_loading"
         android:visibility="gone"/>
 
+    <View
+        android:id="@+id/darkModeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#4cffbe78"/>
+
 </RelativeLayout>

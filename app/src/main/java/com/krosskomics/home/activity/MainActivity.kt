@@ -188,7 +188,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                 // 오늘 날짜 데이터
                 val handler = Handler()
                 handler.postDelayed({
-                    val intent = Intent(context, EventActivity::class.java)
+                    val intent = Intent(context, HomePopupActivity::class.java)
                     val curDate = Date()
                     val curMillis = curDate.time
                     var diffDay = 2

@@ -2,11 +2,12 @@ package com.krosskomics.comment.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import com.krosskomics.comment.repository.CommentRepository
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.mynews.repository.MyNewsRepository
 
 class CommentViewModel(application: Application): BaseViewModel(application) {
-    private val repository = MyNewsRepository()
+    private val repository = CommentRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
 
     override fun requestMain() {

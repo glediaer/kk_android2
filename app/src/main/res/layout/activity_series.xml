@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:gravity="center_horizontal">
 
     <androidx.core.widget.NestedScrollView
@@ -77,7 +78,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="7dp"
                                 android:textSize="12dp"
-                                android:textColor="@color/purple"
+                                android:textColor="@color/kk_selector_color_purple_red"
                                 tools:text="Free every 5 days" />
 
                         </LinearLayout>
@@ -155,79 +156,162 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="49dp"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/kk_rect_seris_permanent">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_weight="1">
-                        
+                        android:gravity="center_vertical"
+                        android:paddingTop="14dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="47dp"
+                        android:background="@drawable/kk_gradient_series_wait_info_rect">
+
                         <ImageView
                             android:layout_width="20dp"
-                            android:layout_height="13dp"
-                            android:src="@drawable/kk_permanent_ticket"/>
+                            android:layout_height="20dp"
+                            android:src="@drawable/kk_ic_wait_or_pay_white"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/waitTextView"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textSize="12dp"
                             android:layout_marginLeft="7dp"
-                            android:textSize="14dp"
-                            android:textColor="@color/red"
-                            android:text="@string/str_permanent" />
+                            android:textColor="#ffffff"
+                            tools:text="FREE every 5 days" />
 
-                        <TextView
-                            android:id="@+id/permanentCntTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="14dp"
-                            android:layout_marginLeft="7dp"
-                            android:textColor="@color/kk_selector_color_gray_red"
-                            tools:text="0"/>
-                        
+                        <FrameLayout
+                            android:layout_width="130dp"
+                            android:layout_height="20dp">
+
+                            <ProgressBar
+                                android:id="@+id/progressBar"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:progressDrawable="@drawable/kk_rect_series_progressbar"
+                                style="?android:attr/progressBarStyleHorizontal"
+                                android:max="100"
+                                android:progress="20" />
+
+                            <TextView
+                                android:id="@+id/progressTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textSize="10dp"
+                                android:textColor="#80ffffff"
+                                android:gravity="center"
+                                tools:text="23 hours 3 days" />
+
+                        </FrameLayout>
+
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="10dp"
-                        android:background="#e5e5e5"/>
-
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_weight="1">
-
+                        android:layout_width="match_parent"
+                        android:layout_height="47dp"
+                        android:layout_marginTop="47dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/kk_rect_seris_permanent">
+                        
                         <ImageView
                             android:layout_width="20dp"
-                            android:layout_height="13dp"
-                            android:src="@drawable/kk_rental_ticket"/>
+                            android:layout_height="20dp"
+                            android:src="@drawable/kk_ic_rental_ticket"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:layout_marginLeft="7dp"
-                            android:textSize="14dp"
-                            android:textColor="@color/yellow"
-                            android:text="@string/str_rental" />
+                            android:textSize="12dp"
+                            android:textColor="#0c0036"
+                            tools:text="RENTAL Ticket" />
 
                         <TextView
                             android:id="@+id/rentalCntTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="14dp"
                             android:layout_marginLeft="7dp"
-                            android:textColor="@color/kk_selector_color_gray_yellow"
-                            tools:text="0"/>
+                            android:textSize="16dp"
+                            android:textColor="#4c0c0036"
+                            tools:text="0 ticket" />
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_weight="1">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="20dp"-->
+<!--                                android:layout_height="13dp"-->
+<!--                                android:src="@drawable/kk_permanent_ticket"/>-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginLeft="7dp"-->
+<!--                                android:textSize="14dp"-->
+<!--                                android:textColor="@color/red"-->
+<!--                                android:text="@string/str_permanent" />-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/permanentCntTextView"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:textSize="14dp"-->
+<!--                                android:layout_marginLeft="7dp"-->
+<!--                                android:textColor="@color/kk_selector_color_gray_red"-->
+<!--                                tools:text="0"/>-->
+
+<!--                        </LinearLayout>-->
+
+<!--                        <View-->
+<!--                            android:layout_width="1dp"-->
+<!--                            android:layout_height="10dp"-->
+<!--                            android:background="#e5e5e5"/>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="0dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center"-->
+<!--                            android:layout_weight="1">-->
+
+<!--                            <ImageView-->
+<!--                                android:layout_width="20dp"-->
+<!--                                android:layout_height="13dp"-->
+<!--                                android:src="@drawable/kk_rental_ticket"/>-->
+
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginLeft="7dp"-->
+<!--                                android:textSize="14dp"-->
+<!--                                android:textColor="@color/yellow"-->
+<!--                                android:text="@string/str_rental" />-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/rentalCntTextView"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:textSize="14dp"-->
+<!--                                android:layout_marginLeft="7dp"-->
+<!--                                android:textColor="@color/kk_selector_color_gray_yellow"-->
+<!--                                tools:text="0"/>-->
+
+<!--                        </LinearLayout>-->
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </FrameLayout>
 
                 <include
                     layout="@layout/item_underbar"/>
@@ -272,7 +356,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:paddingRight="19dp"
                 android:layout_below="@id/epInfoView" />
 
             <include
@@ -328,7 +412,7 @@
             android:layout_width="13dp"
             android:layout_height="13dp"
             android:layout_marginLeft="7dp"
-            android:src="@drawable/kk_next_yellow"/>
+            android:src="@drawable/kk_ic_next_white"/>
 
     </LinearLayout>
 

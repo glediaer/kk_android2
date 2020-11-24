@@ -122,10 +122,7 @@ class ViewerActivity : ToolbarTitleActivity() {
             settingBottomView.visibility = View.GONE
         }
         nightSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-
-        }
-        autoNextSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-
+            darkModeView.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
         settingSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
