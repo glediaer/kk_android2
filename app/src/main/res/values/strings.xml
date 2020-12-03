@@ -35,7 +35,8 @@
     <string name="str_sat">SAT</string>
     <string name="str_sun">SUN</string>
 
-    <string name="str_my_keys">MY KEYS</string>
+    <string name="str_my_cash">MY CASH</string>
+    <string name="str_my_bonus_cash">MY BONUS CASH</string>
     <string name="str_keys">KEYS</string>
     <string name="str_keyshop">KEY Shop</string>
     <string name="str_library">Library</string>

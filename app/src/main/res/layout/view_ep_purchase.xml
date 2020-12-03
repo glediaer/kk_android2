@@ -22,10 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:paddingTop="17dp"
+            android:paddingTop="13dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingBottom="30dp"
+            android:paddingBottom="20dp"
             android:background="@drawable/kk_rect_ep_purchase"
             android:orientation="vertical">
 
@@ -59,8 +59,53 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="20dp"
+            android:background="@drawable/kk_rect_ep_purchase_waitfree">
+
+            <TextView
+                android:id="@+id/purchaseWaitTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="12dp"
+                android:layout_marginLeft="7dp"
+                android:textColor="#ffffff"
+                tools:text="FREE every 5 days" />
+
+            <FrameLayout
+                android:layout_width="130dp"
+                android:layout_height="20dp">
+
+                <ProgressBar
+                    android:id="@+id/purchaseProgressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:progressDrawable="@drawable/kk_rect_series_progressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:max="100"
+                    android:progress="20" />
+
+                <TextView
+                    android:id="@+id/purchaseProgressTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="10dp"
+                    android:textColor="#80ffffff"
+                    android:gravity="center"
+                    tools:text="23 hours 3 days" />
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="20dp"
-            android:layout_marginTop="59dp"
+            android:layout_marginTop="90dp"
             android:orientation="vertical"
             android:background="@drawable/kk_rect_ep_purchase_white">
 
@@ -99,13 +144,13 @@
                 layout="@layout/item_underline_1dp"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
+                android:layout_marginBottom="9dp"
                 android:layout_height="1dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="15dp">
+                android:gravity="center_vertical">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -113,31 +158,24 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="#828282"
-                        android:gravity="center_horizontal"
-                        android:text="@string/str_my_keys" />
 
                     <TextView
                         android:id="@+id/myKeyTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        android:textColor="#2e2e2e"
-                        android:gravity="center_horizontal"
-                        tools:text="4" />
-                </LinearLayout>
+                        android:textSize="16dp"
+                        android:textColor="#000000"
+                        tools:text="600" />
 
-                <include
-                    layout="@layout/item_vline"
-                    android:layout_width="1dp"
-                    android:layout_height="33dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:textSize="12dp"
+                        android:textColor="#828282"
+                        android:text="@string/str_my_cash" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -145,60 +183,78 @@
                     android:orientation="vertical"
                     android:gravity="center"
                     android:layout_weight="1">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="#e02020"
-                        android:gravity="center_horizontal"
-                        android:text="@string/str_discount_rate" />
 
                     <TextView
                         android:id="@+id/discountRateTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        android:textColor="#e02020"
-                        android:gravity="center_horizontal"
-                        tools:text="0 %" />
-                </LinearLayout>
-
-                <include
-                    layout="@layout/item_vline"
-                    android:layout_width="1dp"
-                    android:layout_height="33dp"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1">
+                        android:textSize="16dp"
+                        android:textColor="#000000"
+                        tools:text="200" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:textSize="12dp"
                         android:textColor="#828282"
-                        android:gravity="center_horizontal"
-                        android:text="@string/str_total" />
-
-                    <TextView
-                        android:id="@+id/totalTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        android:textColor="#2e2e2e"
-                        android:gravity="center_horizontal"
-                        tools:text="0" />
+                        android:text="@string/str_my_bonus_cash" />
                 </LinearLayout>
 
             </LinearLayout>
+
+            <include
+                layout="@layout/item_underline_1dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="9dp"
+                android:layout_height="1dp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textColor="#e02020"
+                    android:text="Save" />
+
+                <TextView
+                    android:id="@+id/savePurchaseTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textSize="14dp"
+                    android:textColor="#e02020"
+                    android:text="20% OFF" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="#000000"
+                    android:text="Total" />
+
+                <TextView
+                    android:id="@+id/totalTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:textSize="18dp"
+                    android:textColor="#000000"
+                    android:text="4,640 CASH" />
+
+            </FrameLayout>
 
             <Button
                 android:id="@+id/unlockButton"

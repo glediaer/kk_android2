@@ -6,8 +6,10 @@ import android.content.Intent.createChooser
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Message
+import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.SeekBar
@@ -40,6 +42,7 @@ import com.krosskomics.util.PreCachingLayoutManager
 import com.krosskomics.util.ServerUtil
 import com.krosskomics.util.ServerUtil.service
 import com.krosskomics.viewer.adapter.EpListAdapter
+import com.krosskomics.viewer.adapter.SnapPagerScrollListener
 import com.krosskomics.viewer.adapter.ViewerAdapter
 import com.krosskomics.viewer.viewmodel.ViewerViewModel
 import kotlinx.android.synthetic.main.activity_viewer.*
@@ -124,17 +127,18 @@ class ViewerActivity : ToolbarTitleActivity() {
         nightSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             darkModeView.visibility = if (isChecked) View.VISIBLE else View.GONE
         }
-        settingSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener{
+
+         // 화면 정보 불러오기
+        val windowParams = window.attributes
+        settingSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                if (progress < 10) {
-                    seekBar.progress = 10
+                if (BuildConfig.DEBUG) {
+                    Log.e(TAG, "progress : " +progress)
                 }
-                val params = window.attributes;
-
-                params.screenBrightness = (progress / 100).toFloat()
-
-                window.attributes = params;
+                windowParams.screenBrightness = (progress.toFloat() / 100)
+                window.attributes = windowParams
             }
+
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
@@ -187,7 +191,7 @@ class ViewerActivity : ToolbarTitleActivity() {
                 heightToScroll = 50
             }
         }
-//        hideToggleToolBar()
+        toggleToolBar()
         recyclerView.post {
             autoScrollTimer = object : CountDownTimer(totalScrollTime, scrollPeriod) {
                 override fun onTick(millisUntilFinished: Long) {
@@ -206,6 +210,7 @@ class ViewerActivity : ToolbarTitleActivity() {
     private fun autoScrollCancel() {
         try {
             autoScrollTimer?.cancel()
+            autoScrollTimer = null
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
@@ -218,7 +223,8 @@ class ViewerActivity : ToolbarTitleActivity() {
         epRecyclerView?.let {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             it.adapter = EpListAdapter(viewModel.arr_episode, R.layout.item_view_episode, context)
-            (it.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
+            (it.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object :
+                RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?, position: Int) {
                     if (item is DataEpisode) {
                         loadEpCheck(item.eid)
@@ -278,34 +284,6 @@ class ViewerActivity : ToolbarTitleActivity() {
     }
 
     private fun refreshViewer() {
-//        if ("1" == viewModel.item.vviewer) {
-//            vScrollImageView.visibility = View.VISIBLE
-//            hScrollImageView.visibility = View.GONE
-//        } else {
-//            vScrollImageView.visibility = View.GONE
-//            hScrollImageView.visibility = View.VISIBLE
-//            if ("L" == viewModel.item.hviewer) {
-//                viewModel.revPager = false
-//            } else if ("R" == viewModel.item.hviewer) {
-//                viewModel.revPager = true
-//            }
-//        }
-
-//        val handler: Handler = @SuppressLint("HandlerLeak")
-//        object : Handler() {
-//            override fun handleMessage(msg: Message) {
-//                val fadeOutAni =
-//                    AnimationUtils.loadAnimation(
-//                        context,
-//                        R.anim.fadeout
-//                    )
-//                vScrollImageView.animation = fadeOutAni
-//                vScrollImageView.visibility = View.GONE
-//                hScrollImageView.animation = fadeOutAni
-//                hScrollImageView.visibility = View.GONE
-//            }
-//        }
-//        handler.sendEmptyMessageDelayed(0, 3000) // ms, 3초후 종료시킴
         viewModel.apply {
             items.clear()
             epList.clear()
@@ -313,8 +291,6 @@ class ViewerActivity : ToolbarTitleActivity() {
             viewPosition = 0
         }
     }
-
-
 
     override fun requestServer() {
         viewModel.requestMain()
@@ -392,7 +368,10 @@ class ViewerActivity : ToolbarTitleActivity() {
         if (TextUtils.isEmpty(viewModel.item.sid)) return
         val api = service.setImageIndex(
             read(context, CODE.CURRENT_LANGUAGE, "en"),
-            "save_img_index", viewModel.item.sid, viewModel.item.eid, visibleItemPosition.toString(),
+            "save_img_index",
+            viewModel.item.sid,
+            viewModel.item.eid,
+            visibleItemPosition.toString(),
             viewModel.item.ep_view_id
         )
         api.enqueue(object : Callback<Default> {
@@ -459,7 +438,7 @@ class ViewerActivity : ToolbarTitleActivity() {
                     }
                 }
                 BaseViewModel.REQUEST_TYPE.REQUEST_TYPE_B -> {
-                    when(t.retcode) {
+                    when (t.retcode) {
                         "00" -> showEp(t.episode?.eid!!)
                         "201" -> goLoginAlert(context)
                         "202" -> goCoinAlert(context)
@@ -567,11 +546,33 @@ class ViewerActivity : ToolbarTitleActivity() {
 
     override fun initRecyclerViewAdapter() {
         recyclerView.adapter = ViewerAdapter(viewModel.items, recyclerViewItemLayoutId, context)
-        (recyclerView.adapter as ViewerAdapter).setOnItemClickListener(object : ViewerAdapter.OnItemClickListener {
-            override fun onItemClick(item: Any?) {
-                autoScrollCancel()
+        recyclerView.setOnTouchListener { v, event ->
+            Log.e(TAG, "setOnTouchListener")
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    if (toolbar.isShown) {
+                        toggleToolBar()
+                    }
+                    if (autoScrollTimer != null) {
+                        autoScrollCancel()
+                    }
+                }
             }
-        })
+//            if (event.action == MotionEvent.ACTION_UP){
+////                if (!toolbar.isShown) {
+//                    toggleToolBar()
+////                    autoScrollCancel()
+////                }
+//                return@setOnTouchListener true
+//            }
+            return@setOnTouchListener false
+        }
+//        (recyclerView.adapter as ViewerAdapter).setOnItemClickListener(object :
+//            ViewerAdapter.OnItemClickListener {
+//            override fun onItemClick(item: Any?) {
+//                autoScrollCancel()
+//            }
+//        })
         recyclerView.addOnScrollListener(onScrollListener)
     }
 
@@ -634,115 +635,65 @@ class ViewerActivity : ToolbarTitleActivity() {
                 recyclerView?.apply {
                     layoutManager = PreCachingLayoutManager(context)
                     (layoutManager as PreCachingLayoutManager).orientation = LinearLayoutManager.VERTICAL
-                    (layoutManager as PreCachingLayoutManager).setExtraLayoutSpace(getScreenHeight(context))
+                    (layoutManager as PreCachingLayoutManager).setExtraLayoutSpace(
+                        getScreenHeight(
+                            context
+                        )
+                    )
 
-                    recyclerView.adapter = ViewerAdapter(viewModel.items, recyclerViewItemLayoutId, context)
+                    recyclerView.adapter = ViewerAdapter(
+                        viewModel.items,
+                        recyclerViewItemLayoutId,
+                        context
+                    )
                     (recyclerView.adapter as ViewerAdapter).setFooterBannerData(viewModel.listBanner)
                 }
-//                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-
-//                actBinding.pagerView.setVisibility(View.GONE)
-//                actBinding.layProgress.setVisibility(View.GONE)
-//                actBinding.ivAuto.setVisibility(View.VISIBLE)
-
-                //recyclerview
-//                if (isReload) {
-//                    (recyclerView.adapter as ViewerAdapter).addRange(arr_url, viewPosition)
-//                } else {
-//                    webtoonAdapter.addAll(arr_url)
-//                }
-//                recyclerView.layoutManager = PreCachingLayoutManager(context)
-//                layoutManager.setOrientation(LinearLayoutManager.VERTICAL)
-//                layoutManager.setExtraLayoutSpace(getScreenHeight(this))
-//                actBinding.listViewRecycler.getRecycledViewPool().clear()
-//                actBinding.listViewRecycler.setLayoutManager(layoutManager)
-//                actBinding.listViewRecycler.setAdapter(webtoonAdapter)
-//                actBinding.listViewRecycler.setVisibility(View.VISIBLE)
-//                // 이전에 webtoon 보던곳으로 스크롤
-//                if (0 != viewPosition) {
-//                    layoutManager.scrollToPositionWithOffset(
-//                        if (revPager) com.krosskomics.page.ShowActivity.arr_pics.size - viewPosition - 1 else viewPosition,
-//                        0
-//                    )
-//                }
+                hPageCountView.visibility = View.GONE
             } else {
                 recyclerView?.apply {
                     layoutManager = PreCachingLayoutManager(context)
                     (layoutManager as PreCachingLayoutManager).orientation = LinearLayoutManager.HORIZONTAL
-                    (layoutManager as PreCachingLayoutManager).setExtraLayoutSpace(getScreenHeight(context))
+                    (layoutManager as PreCachingLayoutManager).setExtraLayoutSpace(
+                        getScreenHeight(
+                            context
+                        )
+                    )
 
-                    recyclerView.adapter = ViewerAdapter(viewModel.items, R.layout.item_viewer_comic, context)
+                    recyclerView.adapter = ViewerAdapter(
+                        viewModel.items,
+                        R.layout.item_viewer_comic,
+                        context
+                    )
                     (recyclerView.adapter as ViewerAdapter).setFooterBannerData(viewModel.listBanner)
                     val snapHelper = PagerSnapHelper()
                     snapHelper.attachToRecyclerView(recyclerView)
+                    val listener = SnapPagerScrollListener(
+                        snapHelper,
+                        SnapPagerScrollListener.ON_SCROLL,
+                        true,
+                        object : SnapPagerScrollListener.OnChangeListener {
+                            override fun onSnapped(position: Int) {
+                                currentPageNoTextView.text = (position + 1).toString()
+                            }
+                        }
+                    )
+                    recyclerView.addOnScrollListener(listener)
+                    currentPageNoTextView.text = "1"
+                    totalPageNoTextView.text = viewModel.items.size.toString()
+                    hPageCountView.visibility = View.VISIBLE
                 }
-//                if (revPager) {
-//                    com.krosskomics.page.ShowActivity.arr_pics.add(0, arr_url[0])
-//                } else {
-//                    com.krosskomics.page.ShowActivity.arr_pics.add(arr_url[0]) // 마지막 페이지 강제 생성
-//                }
-//                val adapter = ShowListBookAdapter(
-//                    this,
-//                    com.krosskomics.page.ShowActivity.arr_pics,
-//                    revPager,
-//                    reloadInterface
-//                )
-//                actBinding.pagerView.setAdapter(adapter)
-//                actBinding.listViewRecycler.setVisibility(View.GONE)
-//                actBinding.pagerView.setVisibility(View.VISIBLE)
-//                actBinding.ivAuto.setVisibility(View.GONE)
-//                actBinding.pagerView.setOnTouchListener(OnTouchListener { v, event -> false })
-//                actBinding.layProgress.setVisibility(View.VISIBLE)
-//                if (revPager) {
-//                    actBinding.pagerView.setCurrentItem(com.krosskomics.page.ShowActivity.arr_pics.size - 1)
-//                    actBinding.progress.setRotation(180)
-//                }
-//                actBinding.txtProgress.setText("1/" + com.krosskomics.page.ShowActivity.arr_pics.size)
-//                actBinding.progress.setMax(com.krosskomics.page.ShowActivity.arr_pics.size)
-//                actBinding.progress.setProgress(1)
-//                actBinding.progress.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
-//                    override fun onStopTrackingTouch(seekBar: SeekBar) {
-//                        // TODO Auto-generated method stub
-//                    }
-//
-//                    override fun onStartTrackingTouch(seekBar: SeekBar) {
-//                        // TODO Auto-generated method stub
-//                    }
-//
-//                    override fun onProgressChanged(
-//                        seekBar: SeekBar,
-//                        progress: Int,
-//                        fromUser: Boolean
-//                    ) {
-//                        scroll_txt = "up"
-//                        var pos = progress
-//                        if (revPager) {
-//                            //오른쪽으로 슬라이딩
-//                            pos = com.krosskomics.page.ShowActivity.arr_pics.size - progress
-//                            actBinding.pagerView.setCurrentItem(pos)
-//                            scroll_txt = "right"
-//                        } else {
-//                            //왼쪽 슬라이딩
-//                            actBinding.pagerView.setCurrentItem(progress - 1)
-//                            scroll_txt = "left"
-//                        }
-//                    }
-//                })
-//
-//                // webtoon -> comic 보던곳으로 스크롤
-//                if (viewPosition != 0) {
-//                    if (revPager) {
-//                        actBinding.pagerView.setCurrentItem(com.krosskomics.page.ShowActivity.arr_pics.size - viewPosition - 1)
-//                    } else {
-//                        actBinding.pagerView.setCurrentItem(viewPosition)
-//                    }
-//                }
             }
         } catch (e: java.lang.Exception) {
             e.stackTrace
         }
 
-//        recyclerView?.adapter?.notifyDataSetChanged()
+        (recyclerView.adapter as ViewerAdapter).setOnItemClickListener(object :
+            ViewerAdapter.OnItemClickListener {
+            override fun onItemClick(item: Any?) {
+                toggleToolBar()
+                autoScrollCancel()
+            }
+        })
     }
 
     private fun showPurchaseRentDialog(episode: DataEpisode?) {
@@ -959,9 +910,26 @@ class ViewerActivity : ToolbarTitleActivity() {
                         scrollTime = tempTime
                         showToast(
                             getString(R.string.msg_scroll_end_next_view),
-                            context)
+                            context
+                        )
                     }
                 }
+            }
+        }
+    }
+
+    fun toggleToolBar() {
+        if (toolbar.isShown) {
+            toolbar.visibility = View.GONE
+            footerView.visibility = View.GONE
+            if ("1" != viewModel.item.vviewer) {
+                hPageCountView.visibility = View.GONE
+            }
+        } else {
+            toolbar.visibility = View.VISIBLE
+            footerView.visibility = View.VISIBLE
+            if ("1" != viewModel.item.vviewer) {
+                hPageCountView.visibility = View.VISIBLE
             }
         }
     }

@@ -36,6 +36,7 @@ import com.krosskomics.util.CommonUtil.goLoginAlert
 import com.krosskomics.util.CommonUtil.moveBrowserChrome
 import com.krosskomics.util.CommonUtil.moveSignUp
 import com.krosskomics.util.CommonUtil.read
+import com.krosskomics.viewer.activity.ViewerActivity
 import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.item_footer_viewer.view.*
 import kotlinx.android.synthetic.main.item_viewer.view.*
@@ -90,6 +91,9 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
             VIEW_TYPE.TYPE_ITEM.ordinal ->
                 holder.itemView.apply {
                     items[position].let { item ->
+                        holder.itemView.setOnClickListener {
+                            onClickListener?.onItemClick(item)
+                        }
                         if (item is String) {
                             val controllerListener: ControllerListener<ImageInfo> = object :
                                 BaseControllerListener<ImageInfo>() {
@@ -198,8 +202,6 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
                                         .build()
 
                                 draweeview.controller = controller
-//                            holder.itemView.setOnClickListener { (context as ShowActivity).toggleToolBar() }
-//                            (context as ShowActivity).hideProgress()
                             } else {
                                 if (zoomDraweeView is ZoomableDraweeView) {
                                     (zoomDraweeView as ZoomableDraweeView).setAllowTouchInterceptionWhileZoomed(true)

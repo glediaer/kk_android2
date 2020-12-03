@@ -138,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10dp"
                 android:textColor="#828282"
-                android:text="@string/str_my_keys" />
+                android:text="@string/str_my_cash" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

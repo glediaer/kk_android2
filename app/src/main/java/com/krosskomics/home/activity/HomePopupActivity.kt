@@ -10,6 +10,8 @@ import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
 import com.krosskomics.common.data.DataBanner
 import com.krosskomics.home.adapter.EventPagerAdapter
+import com.krosskomics.util.CODE
+import com.krosskomics.util.CommonUtil.write
 import kotlinx.android.synthetic.main.activity_event_popup.*
 import java.util.*
 
@@ -43,12 +45,8 @@ class HomePopupActivity : BaseActivity() {
                     eventList.add(data)
                 }
                 when (eventList.size) {
-                    0 -> {
-                        finish()
-                    }
-                    1 -> {
-                        progressBar.visibility = View.GONE
-                    }
+                    0 -> finish()
+                    1 -> progressBar.visibility = View.GONE
                     else -> {
                         progressBar.visibility = View.VISIBLE
                         progressBar.progress = eventList.size
@@ -63,6 +61,18 @@ class HomePopupActivity : BaseActivity() {
     }
 
     override fun initLayout() {
+        dontShowTextView.setOnClickListener {
+            // 하루 안보기
+            // 오늘 날짜 데이터
+            val curDate = Date()
+            val curMillis = curDate.time
+
+            write(context, CODE.FLOATING_BANNER_CLOSE_TIME, curMillis.toString())
+            finish()
+        }
+        closeButton.setOnClickListener {
+            finish()
+        }
         setPager()
     }
 
@@ -83,6 +93,9 @@ class HomePopupActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
+                if (position < 4) {
+                    progressBar.progress = position + 1
+                }
             }
 
             override fun onPageScrollStateChanged(state: Int) {

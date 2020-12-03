@@ -5,26 +5,13 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="5dp" />
 
-        <include layout="@layout/view_toolbar_viewer" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp" />
-
-        </FrameLayout>
-
-    </LinearLayout>
+    <include layout="@layout/view_toolbar_viewer" />
 
     <include
         layout="@layout/view_topbutton"
@@ -33,7 +20,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="70dp"
         android:visibility="visible" />
 
     <FrameLayout
@@ -74,6 +61,59 @@
         android:layout_centerInParent="true"
         android:src="@drawable/kk_coach_mark_hor_scroll"
         android:visibility="gone" />
+    
+    <LinearLayout
+        android:id="@+id/hPageCountView"
+        android:layout_width="97dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="83dp"
+        android:background="@drawable/kk_rect_b3000000_b_828282_r13"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:src="@drawable/kk_ic_hviewer_arrow_prev"/>
+
+        <TextView
+            android:id="@+id/currentPageNoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="9dp"
+            android:textSize="14dp"
+            android:textColor="#ffffff"
+            tools:text="3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="14dp"
+            android:textColor="#c6c6c6"
+            android:text="/" />
+
+        <TextView
+            android:id="@+id/totalPageNoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textSize="14dp"
+            android:textColor="#c6c6c6"
+            tools:text="3" />
+
+        <ImageView
+            android:layout_width="11dp"
+            android:layout_height="11dp"
+            android:layout_marginLeft="9dp"
+            android:src="@drawable/kk_ic_hviewer_arrow_next"/>
+
+
+    </LinearLayout>
 
     <include
         android:id="@+id/footerView"

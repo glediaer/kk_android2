@@ -55,7 +55,7 @@ import kotlinx.android.synthetic.main.activity_series.nestedScrollView
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_content_like_white.*
 import kotlinx.android.synthetic.main.view_ep_purchase.*
-import kotlinx.android.synthetic.main.view_toolbar.toolbar
+import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -107,6 +107,7 @@ class SeriesActivity : ToolbarTitleActivity() {
             }
 
             toolbarTitle.visibility = View.VISIBLE
+            toolbarTitle.setTextColor(Color.WHITE)
             toolbarTitle.text = ""
         }
     }
@@ -763,6 +764,9 @@ class SeriesActivity : ToolbarTitleActivity() {
                             recyclerView.adapter?.notifyDataSetChanged()
                         }
                     }
+                    if (viewModel.epList.isNotEmpty()) {
+                        toolbar.toolbarTitle.text = getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
+                    }
                 }
             } })
             setOnDownloadClickListener(object : RecyclerViewBaseAdapter.OnDownloadClickListener {
@@ -926,6 +930,13 @@ class SeriesActivity : ToolbarTitleActivity() {
             unlockButton.isEnabled = it.allbuy_count > 0
 
             epPurchaseCountTextView.text = "${viewModel.allbuy_count}"
+
+            if (viewModel.epList.isNotEmpty()) {
+                toolbar.toolbarTitle.text = getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
+            } else {
+                toolbar.toolbarTitle.text = ""
+            }
+
             return it.allbuy_coin
         }
     }
@@ -978,6 +989,13 @@ class SeriesActivity : ToolbarTitleActivity() {
             unlockButton.isEnabled = it.allbuy_count > 0
 
             epPurchaseCountTextView.text = "${viewModel.allbuy_count}"
+
+            if (viewModel.epList.isNotEmpty()) {
+                toolbar.toolbarTitle.text = getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
+            } else {
+                toolbar.toolbarTitle.text = ""
+            }
+
             return it.allbuy_coin
         }
     }

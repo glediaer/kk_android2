@@ -9,7 +9,7 @@
     </style>
 
     <style name="CommonSwitch" parent="Widget.AppCompat.CompoundButton.Switch">
-        <item name="android:thumb">@drawable/kk_circle_switch_thumb</item>
+        <item name="android:thumb">@drawable/kk_selector_switch_thumb</item>
         <item name="android:track">@drawable/kk_selector_switch_track</item>
     </style>
 

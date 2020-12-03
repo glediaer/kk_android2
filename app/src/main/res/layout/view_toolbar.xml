@@ -20,13 +20,14 @@
         <TextView
             android:id="@+id/toolbarTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginRight="70dp"
             android:visibility="gone"
+            tools:visibility="visible"
             android:textSize="18dp"
             android:textColor="#000000"
             android:textStyle="bold"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             tools:text="My News" />
 
     </FrameLayout>
