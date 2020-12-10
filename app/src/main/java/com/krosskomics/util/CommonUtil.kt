@@ -28,6 +28,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
+import com.appsflyer.AppsFlyerLib
 import com.facebook.AccessToken
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.interfaces.DraweeController
@@ -37,10 +38,13 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.facebook.login.LoginManager
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
+import com.krosskomics.coin.activity.CoinActivity
+import com.krosskomics.common.data.DataBanner
 import com.krosskomics.home.activity.MainActivity
 import com.krosskomics.login.activity.LoginActivity
 import com.krosskomics.login.activity.LoginIntroActivity
 import com.krosskomics.series.activity.SeriesActivity
+import com.krosskomics.webview.WebViewActivity
 import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -768,6 +772,56 @@ object CommonUtil {
         return intent
     }
 
+    fun setBannerAction(context: Context, item: DataBanner) {
+        val intent: Intent
+        when (item.atype) {
+            "M" -> {
+            }
+            "H" -> {
+                intent = Intent(context, SeriesActivity::class.java)
+                val b = Bundle()
+                b.putString("cid", item.sid)
+                b.putString("title", item.title)
+                intent.putExtras(b)
+
+                val eventName = "af_content_view"
+                val eventValue: MutableMap<String, Any?> =
+                    HashMap()
+                eventValue["af_content"] = item.title.toString() + " (" + read(
+                    context,
+                    CODE.CURRENT_LANGUAGE,
+                    "en"
+                ) + ")"
+                eventValue["af_content_id"] = item.sid
+                setAppsFlyerEvent(context, eventName, eventValue)
+
+                context.startActivity(intent)
+            }
+            "C" -> if (read(context, CODE.LOCAL_loginYn, "N")
+                    .equals("Y", ignoreCase = true)
+            ) {
+                intent = Intent(context, CoinActivity::class.java)
+                context.startActivity(intent)
+            } else {
+                goLoginAlert(context)
+            }
+            "W" -> if ("" != item.link) {
+                intent = Intent(context, WebViewActivity::class.java)
+                intent.putExtra("title", item.subject)
+                intent.putExtra("url", item.link)
+                context.startActivity(intent)
+            }
+            "B" -> if ("" != item.link) {
+                moveBrowserChrome(context, item.link)
+            }
+            "S" -> if (!read(context, CODE.LOCAL_loginYn, "N")
+                    .equals("Y", ignoreCase = true)
+            ) {
+                moveSignUp(context)
+            }
+        }
+    }
+
     fun getDayWeek(): Int {
         val calendar = Calendar.getInstance()
         // 1: 일요일, 7: 토요일
@@ -784,5 +838,27 @@ object CommonUtil {
 
             context.startActivity(this)
         }
+    }
+
+    fun setAppsFlyerEvent(
+        context: Context?,
+        eventName: String,
+        eventValue: MutableMap<String, Any?>
+    ) {
+        eventValue["language"] = read(context, CODE.CURRENT_LANGUAGE, "en")
+        AppsFlyerLib.getInstance().trackEvent(context, eventName, eventValue)
+    }
+
+    fun convertEpQuantity(quantity: Int): String? {
+        var count = 0
+        val builder = StringBuilder()
+        while (count < quantity) {
+            builder.append("1")
+            if (count < quantity - 1) {
+                builder.append(",")
+            }
+            count++
+        }
+        return builder.toString()
     }
 }

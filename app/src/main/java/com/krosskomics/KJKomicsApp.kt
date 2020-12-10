@@ -5,7 +5,10 @@ import android.app.Application
 import android.content.Context
 import android.os.Environment
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.WindowManager
+import com.appsflyer.AppsFlyerConversionListener
+import com.appsflyer.AppsFlyerLib
 import com.facebook.FacebookSdk
 import com.facebook.LoggingBehavior
 import com.facebook.cache.disk.DiskCacheConfig
@@ -95,6 +98,8 @@ class KJKomicsApp : Application() {
         var MAIN_CONTENTS: ArrayList<DataMainContents> = arrayListOf()
         var LATEST_APP_VERSION: String = ""
         var LATEST_APP_VERSION_CODE: Int = 0
+
+        private const val AF_DEV_KEY = "YGvwqLaSWhoFCXDypHQLZ4"
     }
 
     enum class TrackerName {
@@ -121,35 +126,36 @@ class KJKomicsApp : Application() {
         instance = this
         FacebookSdk.setApplicationId(getString(R.string.facebook_app_id))
         FacebookSdk.sdkInitialize(applicationContext)
-            try {
-                val diskCacheConfig: DiskCacheConfig = DiskCacheConfig.newBuilder(this)
-                    .setBaseDirectoryPath(File(FILE_ROOT_PATH, "cache"))
-                    .setBaseDirectoryName("cache")
-                    .setMaxCacheSize(200 * 1024 * 1024) //200MB
-                    .build()
+        try {
+            val diskCacheConfig: DiskCacheConfig = DiskCacheConfig.newBuilder(this)
+                .setBaseDirectoryPath(File(FILE_ROOT_PATH, "cache"))
+                .setBaseDirectoryName("cache")
+                .setMaxCacheSize(200 * 1024 * 1024) //200MB
+                .build()
 
-                //fresco log
-                val requestListeners: MutableSet<RequestListener> =
-                    HashSet<RequestListener>()
-                requestListeners.add(RequestLoggingListener())
-                val wm =
-                    getSystemService(Context.WINDOW_SERVICE) as WindowManager
-                val dm = DisplayMetrics()
-                wm.defaultDisplay.getMetrics(dm)
-                val builder: ImagePipelineConfig.Builder = ImagePipelineConfig.newBuilder(this)
-                builder.setMainDiskCacheConfig(diskCacheConfig)
-                if (dm.widthPixels < 720) {
-                    builder.setDownsampleEnabled(true)
-                }
-                val imagePipelineConfig: ImagePipelineConfig = builder.build()
-                Fresco.initialize(this, imagePipelineConfig)
-                setRetrofitServer(this)
-                if (BuildConfig.DEBUG) {
-                    Stetho.initializeWithDefaults(this)
-                    FacebookSdk.setIsDebugEnabled(true)
-                    FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS)
-                }
+            //fresco log
+            val requestListeners: MutableSet<RequestListener> =
+                HashSet<RequestListener>()
+            requestListeners.add(RequestLoggingListener())
+            val wm =
+                getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val dm = DisplayMetrics()
+            wm.defaultDisplay.getMetrics(dm)
+            val builder: ImagePipelineConfig.Builder = ImagePipelineConfig.newBuilder(this)
+            builder.setMainDiskCacheConfig(diskCacheConfig)
+            if (dm.widthPixels < 720) {
+                builder.setDownsampleEnabled(true)
+            }
+            val imagePipelineConfig: ImagePipelineConfig = builder.build()
+            Fresco.initialize(this, imagePipelineConfig)
+            setRetrofitServer(this)
+            if (BuildConfig.DEBUG) {
+                Stetho.initializeWithDefaults(this)
+                FacebookSdk.setIsDebugEnabled(true)
+                FacebookSdk.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS)
+            }
             setCrashlytics()
+            initAppsFlyer()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -170,7 +176,6 @@ class KJKomicsApp : Application() {
     }
 
 
-
     private fun setCrashlytics() {
         // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = Firebase.analytics
@@ -178,5 +183,37 @@ class KJKomicsApp : Application() {
 //            .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
 //            .build()
 //        Fabric.with(this, crashlyticsKit)
+    }
+
+    private fun initAppsFlyer() {
+        val conversionListener: AppsFlyerConversionListener = object : AppsFlyerConversionListener {
+            override fun onConversionDataSuccess(conversionData: Map<String, Any>) {
+                for (attrName in conversionData.keys) {
+                    Log.d(
+                        "LOG_TAG",
+                        "attribute: " + attrName + " = " + conversionData[attrName]
+                    )
+                }
+            }
+
+            override fun onConversionDataFail(errorMessage: String) {
+                Log.d("LOG_TAG", "error getting conversion data: $errorMessage")
+            }
+
+            override fun onAppOpenAttribution(attributionData: Map<String, String>) {
+                for (attrName in attributionData.keys) {
+                    Log.d(
+                        "LOG_TAG",
+                        "attribute: " + attrName + " = " + attributionData[attrName]
+                    )
+                }
+            }
+
+            override fun onAttributionFailure(errorMessage: String) {
+                Log.d("LOG_TAG", "error onAttributionFailure : $errorMessage")
+            }
+        }
+        AppsFlyerLib.getInstance().init(AF_DEV_KEY, conversionListener, this)
+        AppsFlyerLib.getInstance().startTracking(this)
     }
 }

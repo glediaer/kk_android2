@@ -630,6 +630,9 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                     if (response.isSuccessful) {
                         val item = response.body()
                         if ("00" == item!!.retcode) {
+                            var eventName = "af_switch_lang_$newLanguage"
+                            val eventValue: MutableMap<String, Any?> = HashMap()
+                            CommonUtil.setAppsFlyerEvent(context, eventName, eventValue)
                         } else if ("203" == item.retcode) {
                             goLoginAlert(context)
                         } else {

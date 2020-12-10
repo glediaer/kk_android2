@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -39,6 +40,7 @@ import com.krosskomics.login.viewmodel.LoginViewModel
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.emailCheck
+import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil.setRetrofitServer
@@ -55,6 +57,7 @@ import kotlinx.android.synthetic.main.view_signup_info_language.view.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.*
 
 
 class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
@@ -137,9 +140,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
         initMainView()
     }
 
-    override fun requestServer() {
-
-    }
+    override fun requestServer() {}
 
     override fun initTracker() {
         setTracker(getString(R.string.str_login))
@@ -194,7 +195,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
 
                             FirebaseAnalytics.getInstance(context)
                                 .logEvent(FirebaseAnalytics.Event.LOGIN, Bundle())
-
+                            val eventValue: MutableMap<String, Any?> =
+                                HashMap()
+                            setAppsFlyerEvent(this, "af_login", eventValue)
                             // 메인으로 이동
                             runBlocking {
                                 launch {
@@ -246,6 +249,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         bundle.putString(FirebaseAnalytics.Param.SIGN_UP_METHOD, gaLogMethod)
                         FirebaseAnalytics.getInstance(context)
                             .logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle)
+
+                        val eventValue: MutableMap<String, Any?> =
+                            HashMap()
+                        eventValue["af_registration_method"] = gaLogMethod
+                        setAppsFlyerEvent(
+                            context,
+                            "af_complete_registration",
+                            eventValue
+                        )
                     } else -> {
                         if (!t.msg.isNullOrEmpty()) {
                             showToast(t.msg, this@LoginActivity)
@@ -291,9 +303,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
     }
 
     private fun showBottomSheet(view: Int) {
-//        if (datePicker.getParent() != null)
-//    ((ViewGroup) datePicker.getParent()).removeView(datePicker);
-//builder.setView(datePicker);
         if (::dialogView.isInitialized) {
             (dialogView.parent as ViewGroup).removeView(dialogView)
         }
@@ -355,12 +364,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         override fun afterTextChanged(s: Editable) {
                             if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
                                 goLoginButton.isEnabled =
-                                    !("" == passwordEditTextView.text.toString() ||
-                                            !emailCheck(emailEditTextView.text.toString()))
+                                    !("" == passwordEditTextView.text.toString().trim() ||
+                                            !emailCheck(emailEditTextView.text.toString().trim()))
                             } else {
                                 goNextButton.isEnabled =
-                                    !("" == passwordEditTextView.text.toString() ||
-                                            !emailCheck(emailEditTextView.text.toString()))
+                                    !("" == passwordEditTextView.text.toString().trim() ||
+                                            !emailCheck(emailEditTextView.text.toString().trim()))
                                             && termsImageView.isSelected
                             }
                         }
@@ -380,6 +389,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                     googleView.setOnClickListener {
                         // google login
                         requestGoogleLogin()
+                    }
+
+                    hideImageView.setOnClickListener {
+                        it.isSelected = !it.isSelected
+                        if (it.isSelected) {
+                            passwordEditTextView.inputType = InputType.TYPE_CLASS_TEXT
+                        } else {
+                            passwordEditTextView.inputType =
+                                InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                        }
                     }
                 }
             }
@@ -404,7 +423,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         }
 
                         override fun afterTextChanged(s: Editable) {
-                            sendLinkButton.isEnabled = !emailCheck(s.toString())
+                            sendLinkButton.isEnabled = emailCheck(s.toString())
                         }
                     })
                     sendLinkButton.setOnClickListener {
@@ -768,7 +787,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                 termsView.isSelected = true
                 termsView.setOnClickListener {
                     it.isSelected = !it.isSelected
-                    goNextButton.isEnabled = it.isSelected
+                    goNextButton.isEnabled =
+                        !("" == passwordEditTextView.text.toString().trim() ||
+                                !emailCheck(emailEditTextView.text.toString().trim()))
+                                && termsImageView.isSelected
                 }
                 termsTextView.setOnClickListener {
                     val intent =
@@ -779,7 +801,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                             )
                         }
                     startActivity(intent)
-                    bottomSheetDialog.dismiss()
+//                    bottomSheetDialog.dismiss()
                 }
                 privacyTextView.setOnClickListener {
                     val intent =
@@ -790,7 +812,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                             )
                         }
                     startActivity(intent)
-                    bottomSheetDialog.dismiss()
+//                    bottomSheetDialog.dismiss()
                 }
 
                 goLoginButton.visibility = View.GONE

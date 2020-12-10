@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.appsflyer:oaid:5.4.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2c916f553ae43d2135f397711c3ee9e4/jetified-oaid-5.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2c916f553ae43d2135f397711c3ee9e4/jetified-oaid-5.4.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2c916f553ae43d2135f397711c3ee9e4/jetified-oaid-5.4.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.appsflyer/oaid/5.4.0/78c9c18b84f28c1eb25ddd481367180f1d907e47/oaid-5.4.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

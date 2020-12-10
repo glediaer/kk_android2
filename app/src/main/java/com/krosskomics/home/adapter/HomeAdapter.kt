@@ -301,9 +301,14 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                                 b.putString("sid", item.sid)
                                 b.putString("title", item.title)
                                 intent.putExtras(b)
+
+                                val eventName = "af_content_view"
+                                val eventValue: MutableMap<String, Any?> = HashMap()
+                                eventValue["af_content"] = item.title.toString() + " (" + CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en") + ")"
+                                eventValue["af_content_id"] = item.sid
+                                CommonUtil.setAppsFlyerEvent(context, eventName, eventValue)
+
                                 context.startActivity(intent)
-//                                val activity = BookActivity.activity
-//                                activity?.finish()
                             }
                             "C" -> if (CommonUtil.read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
                                 intent = Intent(context, CoinActivity::class.java)

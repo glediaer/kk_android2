@@ -3,10 +3,10 @@ package com.krosskomics.viewer.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.Intent.createChooser
+import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Message
-import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.view.MotionEvent
@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
@@ -36,6 +37,7 @@ import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getScreenHeight
 import com.krosskomics.util.CommonUtil.read
+import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.PreCachingLayoutManager
@@ -92,6 +94,16 @@ class ViewerActivity : ToolbarTitleActivity() {
                 putExtra(Intent.EXTRA_TEXT, viewModel.item.share_url)
                 createChooser(this, "공유하기")
                 startActivity(this)
+
+                val eventValue: MutableMap<String, Any?> =
+                    HashMap()
+                eventValue["af_content"] = viewModel.item.title.toString() + " (" + read(
+                    context,
+                    CODE.CURRENT_LANGUAGE,
+                    "en"
+                ) + ")"
+                eventValue["af_content_id"] = viewModel.item.sid
+                setAppsFlyerEvent(context, "af_share", eventValue)
             }
         }
     }
@@ -99,6 +111,7 @@ class ViewerActivity : ToolbarTitleActivity() {
     override fun initModel() {
         intent?.apply {
             toolbarTitleString = extras?.getString("title").toString()
+            viewModel.item.title = toolbarTitleString
             viewModel.item.eid = extras?.getString("eid").toString()
             viewModel.isVerticalView = extras?.getBoolean("isVerticalView") ?: true
             viewModel.revPager = extras?.getBoolean("revPager") ?: false
@@ -322,6 +335,31 @@ class ViewerActivity : ToolbarTitleActivity() {
 
                         response.body()?.let {
                             if ("00" == it.retcode) {
+                                var eventName = "af_unlock_rent"
+                                val eventValue: MutableMap<String, Any?> =
+                                    HashMap()
+                                eventValue["af_content"] = viewModel.item.title.toString() + " (" + read(
+                                    context,
+                                    CODE.CURRENT_LANGUAGE,
+                                    "en"
+                                ) + ")"
+                                eventValue["af_content_id"] = viewModel.item.sid
+                                eventValue["af_episode"] =
+                                    viewModel.item.title.toString() + " - " + viewModel.item.ep_title + " (" + read(
+                                        context,
+                                        CODE.CURRENT_LANGUAGE,
+                                        "en"
+                                    ) + ")"
+                                eventValue["af_episode_id"] = viewModel.item.eid
+                                eventValue["af_quantity"] = 1
+                                if ("store" == unlockType) {
+                                    eventName = "af_unlock_permanent"
+                                    eventValue["af_price"] = viewModel.item.ep_store_price
+                                } else {
+                                    eventName = "af_unlock_rent"
+                                    eventValue["af_price"] = viewModel.item.ep_rent_price
+                                }
+                                setAppsFlyerEvent(context, eventName, eventValue)
                                 requestServer()
                                 if ("" != it.user_coin) {
                                     write(context, CODE.LOCAL_coin, it.user_coin)
@@ -334,7 +372,6 @@ class ViewerActivity : ToolbarTitleActivity() {
                                 }
                             }
                         }
-
                     }
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
@@ -539,6 +576,7 @@ class ViewerActivity : ToolbarTitleActivity() {
                 }
                 epRecyclerView.adapter?.notifyDataSetChanged()
 
+                setGALog()
                 viewModel.isFirstRequest = false
             }
         }
@@ -594,6 +632,22 @@ class ViewerActivity : ToolbarTitleActivity() {
                         response.body()?.let {
                             if ("00" == it.retcode) {
                                 toolbar.toolbarLike.isSelected = !toolbar.toolbarLike.isSelected
+                                val eventValue: MutableMap<String, Any?> =
+                                    HashMap()
+                                eventValue["af_content"] = viewModel.item.title.toString() + " (" + read(
+                                    context,
+                                    CODE.CURRENT_LANGUAGE,
+                                    "en"
+                                ) + ")"
+                                eventValue["af_content_id"] = viewModel.item.sid
+                                eventValue["af_episode"] =
+                                    viewModel.item.title.toString() + " - " + viewModel.item.ep_title + " (" + read(
+                                        context,
+                                        CODE.CURRENT_LANGUAGE,
+                                        "en"
+                                    ) + ")"
+                                eventValue["af_episode_id"] = viewModel.item.eid
+                                setAppsFlyerEvent(context, "af_like", eventValue)
                             } else if ("201" == it.retcode) {
                                 goLoginAlert(context)
                             }
@@ -932,5 +986,29 @@ class ViewerActivity : ToolbarTitleActivity() {
                 hPageCountView.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun setGALog() {
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "episode")
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, viewModel.item.title)
+        FirebaseAnalytics.getInstance(context)
+            .logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+        val eventValue: MutableMap<String, Any?> =
+            HashMap()
+        eventValue["af_content"] = viewModel.item.title.toString() + " (" + read(
+            context,
+            CODE.CURRENT_LANGUAGE,
+            "en"
+        ) + ")"
+        eventValue["af_content_id"] = viewModel.item.sid
+        eventValue["af_episode"] =
+            viewModel.item.title.toString() + " - " + viewModel.item.ep_title + " (" + read(
+                context,
+                CODE.CURRENT_LANGUAGE,
+                "en"
+            ) + ")"
+        eventValue["af_episode_id"] = viewModel.item.eid
+        setAppsFlyerEvent(this, "af_episode_view", eventValue)
     }
 }

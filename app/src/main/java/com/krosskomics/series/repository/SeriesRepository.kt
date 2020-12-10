@@ -35,7 +35,7 @@ class SeriesRepository : CommonRepository() {
         api.enqueue(object : Callback<Episode> {
             override fun onResponse(call: Call<Episode>, response: Response<Episode>) {
                 if (response.body() != null) {
-                    mainLiveData.postValue(response.body());
+                    mainLiveData.postValue(response.body())
                 }
             }
 

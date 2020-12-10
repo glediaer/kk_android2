@@ -85,7 +85,6 @@ class WebViewActivity : ToolbarTitleActivity() {
             headers["device"] = "google"
             webView.loadUrl(webUrl, headers)
         }
-
     }
 
     private inner class WebViewClientClass : WebViewClient() {

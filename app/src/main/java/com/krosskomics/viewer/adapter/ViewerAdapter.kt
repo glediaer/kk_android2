@@ -31,6 +31,7 @@ import com.krosskomics.common.data.DataImage
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
+import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getDeviceWidth
 import com.krosskomics.util.CommonUtil.goLoginAlert
 import com.krosskomics.util.CommonUtil.moveBrowserChrome
@@ -317,42 +318,7 @@ class ViewerAdapter(private val items: ArrayList<*>, private val layoutRes: Int,
     }
 
     private fun setBannerAction(item: DataBanner) {
-        // M:메인, H:작품홈, C:충전(인앱), W:웹뷰, B:브라우저, N:없슴
-        val intent: Intent
-        when (item.atype) {
-            "M" -> {
-            }
-            "H" -> {
-                intent = Intent(context, SeriesActivity::class.java)
-                val b = Bundle()
-                b.putString("sid", item.sid)
-                b.putString("title", item.title)
-                intent.putExtras(b)
-                context.startActivity(intent)
-            }
-            "C" -> if (read(context, CODE.LOCAL_loginYn, "N")
-                    .equals("Y", ignoreCase = true)
-            ) {
-                intent = Intent(context, CoinActivity::class.java)
-                context.startActivity(intent)
-            } else {
-                goLoginAlert(context)
-            }
-            "W" -> if ("" != item.link) {
-                intent = Intent(context, WebViewActivity::class.java)
-                intent.putExtra("title", item.subject)
-                intent.putExtra("url", item.link)
-                context.startActivity(intent)
-            }
-            "B" -> if ("" != item.link) {
-                moveBrowserChrome(context, item.link)
-            }
-            "S" -> if (!read(context, CODE.LOCAL_loginYn, "N")
-                    .equals("Y", ignoreCase = true)
-            ) {
-                moveSignUp(context)
-            }
-        }
+        CommonUtil.setBannerAction(context, item)
     }
 
     interface OnItemClickListener {

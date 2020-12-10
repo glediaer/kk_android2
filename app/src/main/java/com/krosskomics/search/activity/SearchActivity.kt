@@ -19,9 +19,11 @@ import com.krosskomics.search.adapter.SearchTagAdapter
 import com.krosskomics.search.viewmodel.SearchViewModel
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CommonUtil
+import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
+import java.util.*
 
 class SearchActivity : ToolbarTitleActivity() {
     private val TAG = "SearchActivity"
@@ -60,6 +62,11 @@ class SearchActivity : ToolbarTitleActivity() {
             viewModel.keyword = searchEditText.text.toString()
             viewModel.isRefresh = true
             requestServer()
+
+            val eventValue: MutableMap<String, Any?> =
+                HashMap()
+            eventValue["af_search_string"] = viewModel.keyword
+            setAppsFlyerEvent(this, "af_search", eventValue)
         }
     }
 
@@ -160,6 +167,11 @@ class SearchActivity : ToolbarTitleActivity() {
             setOnItemClickListener(object : SearchTagAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?) {
                     if (item is String) {
+                        val eventValue: MutableMap<String, Any?> =
+                            HashMap()
+                        eventValue["af_search_string"] = viewModel.keyword
+                        setAppsFlyerEvent(context, "af_search", eventValue)
+
                         viewModel.keyword = item
                         viewModel.isRefresh = true
                         requestServer()

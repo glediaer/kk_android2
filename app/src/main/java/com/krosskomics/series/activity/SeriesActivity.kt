@@ -5,12 +5,10 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
-import android.os.Process
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -26,7 +24,6 @@ import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Episode
 import com.krosskomics.common.model.PurchaseEpisode
-import com.krosskomics.common.model.Version
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.series.adapter.SeriesAdapter
 import com.krosskomics.series.viewmodel.SeriesViewModel
@@ -34,6 +31,7 @@ import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.convertUno
 import com.krosskomics.util.CommonUtil.read
+import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.FileUtils
@@ -61,6 +59,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.util.*
 
 class SeriesActivity : ToolbarTitleActivity() {
     private val TAG = "SeriesActivity"
@@ -128,6 +127,17 @@ class SeriesActivity : ToolbarTitleActivity() {
                         val item = response.body()
                         if ("00" == item!!.retcode) {
                             toolbar.actionItem.scribeImageView.isSelected = "C" != viewModel.mAction
+                            if ("S" == viewModel.mAction) {
+                                val eventValue: MutableMap<String, Any?> =
+                                    HashMap()
+                                eventValue["af_content"] = viewModel.seriesItem.title + " (" + read(
+                                    context,
+                                    CODE.CURRENT_LANGUAGE,
+                                    "en"
+                                ) + ")"
+                                eventValue["af_content_id"] = viewModel.seriesItem.sid
+                                setAppsFlyerEvent(context, "af_subscribe", eventValue)
+                            }
                         } else if ("202" == item.retcode) {
                             goCoinAlert(context)
                         } else {
@@ -228,6 +238,16 @@ class SeriesActivity : ToolbarTitleActivity() {
                                 }
                             }
                         }
+
+                        val eventValue: MutableMap<String, Any?> =
+                            HashMap()
+                        eventValue["af_content"] = viewModel.seriesItem.title.toString() + " (" + read(
+                            context,
+                            CODE.CURRENT_LANGUAGE,
+                            "en"
+                        ) + ")"
+                        eventValue["af_content_id"] = viewModel.seriesItem.sid
+                        setAppsFlyerEvent(context, "af_content_view", eventValue)
                     }
                 }
 
@@ -635,6 +655,13 @@ class SeriesActivity : ToolbarTitleActivity() {
             totalTextView.text = "${it.ep_rent_price}"
 
             viewModel.epList.add(episode.eid)
+            viewModel.epTitleList.add(
+                viewModel.seriesItem.title.toString() + " - " + episode.ep_title + " (" + read(
+                    context,
+                    CODE.CURRENT_LANGUAGE,
+                    "en"
+                ) + ")"
+            )
 
             viewModel.itemViewMode = 1
             viewModel.items.forEach { item ->
@@ -756,9 +783,23 @@ class SeriesActivity : ToolbarTitleActivity() {
                             if (item.isChecked) {
                                 item.isChecked = false
                                 viewModel.epList.remove(item.eid)
+                                viewModel.epTitleList.remove(
+                                    viewModel.seriesItem.title.toString() + " - " + item.ep_title + " (" + read(
+                                        context,
+                                        CODE.CURRENT_LANGUAGE,
+                                        "en"
+                                    ) + ")"
+                                )
                             } else {
                                 item.isChecked = true
                                 viewModel.epList.add(item.eid)
+                                viewModel.epTitleList.add(
+                                    viewModel.seriesItem.title.toString() + " - " + item.ep_title + " (" + read(
+                                        context,
+                                        CODE.CURRENT_LANGUAGE,
+                                        "en"
+                                    ) + ")"
+                                )
                             }
                             allBuyCal()
                             recyclerView.adapter?.notifyDataSetChanged()
@@ -783,6 +824,24 @@ class SeriesActivity : ToolbarTitleActivity() {
                             it.selectedDownloadIndex = position
                             it.isSelectDownload = true
                             requestImageUrl()
+
+                            val eventName = "af_download"
+                            val eventValue: MutableMap<String, Any?> =
+                                HashMap()
+                            eventValue["af_content"] = viewModel.seriesItem.title.toString() + " (" + read(
+                                context,
+                                CODE.CURRENT_LANGUAGE,
+                                "en"
+                            ) + ")"
+                            eventValue["af_content_id"] = viewModel.seriesItem.sid
+                            eventValue["af_episode"] =
+                                viewModel.seriesItem.title.toString() + " - " + item.ep_title + " (" + read(
+                                    context,
+                                    CODE.CURRENT_LANGUAGE,
+                                    "en"
+                                ) + ")"
+                            eventValue["af_episode_id"] = item.eid
+                            setAppsFlyerEvent(context, eventName, eventValue)
                         }
                     }
                 }
@@ -805,9 +864,13 @@ class SeriesActivity : ToolbarTitleActivity() {
 
     //에피소드 선택구매 요청
     private fun requestEpisodeSelectPurchase(unlockType: String) {
-            var ep_list: String = viewModel.epList.toString()
-            ep_list = ep_list.trim { it <= ' ' }.replace(" ", "")
-            ep_list = ep_list.substring(1, ep_list.length - 1)
+        var ep_list: String = viewModel.epList.toString()
+        ep_list = ep_list.trim { it <= ' ' }.replace(" ", "")
+        ep_list = ep_list.substring(1, ep_list.length - 1)
+
+        var epTitle_list = viewModel.epTitleList.toString()
+        epTitle_list = epTitle_list.replace(", ", ",")
+        epTitle_list = epTitle_list.substring(1, epTitle_list.length - 1)
             val setPurchaseEpisode: Call<PurchaseEpisode> =
                 service.setPurchaseSelectEpisode(
                     read(context, CODE.CURRENT_LANGUAGE, "en"),
@@ -820,11 +883,35 @@ class SeriesActivity : ToolbarTitleActivity() {
                 ) {
                     try {
                         if (response.isSuccessful) {
-                            viewModel.epList.clear()
-                            epPurchaseDialog.visibility = View.GONE
-
                             response.body()?.let {
                                 if ("00" == it.retcode) {
+                                    var eventName = "af_unlock_rent"
+                                    val eventValue: MutableMap<String, Any?> =
+                                        HashMap()
+                                    eventValue["af_content"] =
+                                        viewModel.seriesItem.title.toString() + " (" + read(
+                                            context,
+                                            CODE.CURRENT_LANGUAGE,
+                                            "en"
+                                        ) + ")"
+                                    eventValue["af_content_id"] = viewModel.seriesItem.sid
+                                    eventValue["af_episode"] = epTitle_list
+                                    eventValue["af_episode_id"] = ep_list
+                                    eventValue["af_quantity"] =
+                                        CommonUtil.convertEpQuantity(viewModel.allbuy_count)
+                                    if ("store" == unlockType) {
+                                        eventName = "af_unlock_permanent"
+                                        eventValue["af_price"] = viewModel.allbuy_coin
+                                    } else {
+                                        eventName = "af_unlock_rent"
+                                        eventValue["af_price"] = viewModel.allbuyRentCoin
+                                    }
+                                    setAppsFlyerEvent(context, eventName, eventValue)
+
+                                    viewModel.epList.clear()
+                                    viewModel.epTitleList.clear()
+                                    epPurchaseDialog.visibility = View.GONE
+
                                     requestServer()
                                     if ("" != it.user_coin) {
                                         write(context, CODE.LOCAL_coin, it.user_coin)

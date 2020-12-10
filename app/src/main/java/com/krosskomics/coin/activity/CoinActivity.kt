@@ -15,6 +15,7 @@ import com.krosskomics.common.model.Coin
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.read
+import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
 import com.krosskomics.util.CommonUtil.toNumFormat
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil.service
@@ -24,6 +25,9 @@ import kotlinx.android.synthetic.main.view_toolbar_trans.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.set
 
 
 class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
@@ -248,12 +252,21 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
                 .setPurchaseToken(purchase.getPurchaseToken())
                 .build()
 
-        billingClient.consumeAsync(consumeParams, { billingResult, outToken ->
+        billingClient.consumeAsync(consumeParams) { billingResult, outToken ->
             if (billingResult.responseCode == OK) {
                 // Handle the success of the consume operation.
                 savePayment(purchase)
+            } else {
+                var eventName = "af_purchase_fail"
+                val eventValue: MutableMap<String, Any?> =
+                    HashMap()
+                eventValue["af_item_id"] = productID
+                when (billingResult.responseCode) {
+                    USER_CANCELED -> eventName = "af_purchase_cancel"
+                }
+                setAppsFlyerEvent(context, eventName, eventValue)
             }
-        })
+        }
     }
 
     private fun savePayment(purchase: Purchase?) {
@@ -270,8 +283,8 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
                 purchase.purchaseTime, purchase.purchaseState, ""
 //                , purchase.getToken()
             )
-            api.enqueue(object : Callback<Coin?> {
-                override fun onResponse(call: Call<Coin?>, response: Response<Coin?>) {
+            api.enqueue(object : Callback<Coin> {
+                override fun onResponse(call: Call<Coin>, response: Response<Coin>) {
                     try {
                         if (response.isSuccessful) {
                             val body = response.body()
@@ -286,7 +299,19 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
                                     keyTextView.text =
                                         numFormatCoin + " " + getString(R.string.str_coins)
                                 }
-                                //                                requestServer();
+                                var eventName = "af_purchase"
+                                val eventValue: MutableMap<String, Any?> =
+                                    HashMap()
+                                eventValue["af_revenue"] = body.price
+                                eventValue["af_currency"] = body.currency
+                                eventValue["af_item_id"] = productID
+                                eventValue["af_order_id"] = body.order_id
+                                if ("1" == body.first_order) { // 첫구매
+                                    eventName = "first_purchase"
+                                }
+                                setAppsFlyerEvent(context, eventName, eventValue)
+
+                                requestServer()
                             } else {
 //                                logger.error("구매 성공, 코인 충전 실패했습니다. 리턴코드는 : " + body.retcode + "입니다.");
                             }

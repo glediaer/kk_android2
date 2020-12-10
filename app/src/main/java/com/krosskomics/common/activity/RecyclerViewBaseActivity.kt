@@ -1,7 +1,6 @@
 package com.krosskomics.common.activity
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
@@ -25,6 +24,8 @@ import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getNetworkInfo
+import com.krosskomics.util.CommonUtil.read
+import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.ServerUtil
 import kotlinx.android.synthetic.main.activity_main_content.errorView
@@ -38,6 +39,7 @@ import kotlinx.android.synthetic.main.view_topbutton.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
     private val TAG = "RecyclerViewBaseActivity"
@@ -274,7 +276,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                         } else {
                             "C"
                         }
-                        requestSubscribe(item.sid ?: "", action)
+                        requestSubscribe(item.title, item.sid ?: "", action)
                     }
                 }
             })
@@ -303,7 +305,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
         genreButton?.isSelected = false
     }
 
-    private fun requestSubscribe(sid: String, action: String) {
+    private fun requestSubscribe(title: String?, sid: String, action: String) {
         val api = ServerUtil.service.setNotiSelector(
             CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
             "subscribe", sid, action, "",
@@ -318,7 +320,17 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     if (response.isSuccessful) {
                         val item = response.body()
                         if ("00" == item!!.retcode) {
-
+                            if ("S" == action) {
+                                val eventValue: MutableMap<String, Any?> =
+                                    HashMap()
+                                eventValue["af_content"] = title + " (" + read(
+                                    context,
+                                    CODE.CURRENT_LANGUAGE,
+                                    "en"
+                                ) + ")"
+                                eventValue["af_content_id"] = sid
+                                setAppsFlyerEvent(context, "af_subscribe", eventValue)
+                            }
                         } else if ("202" == item.retcode) {
                             goCoinAlert(context)
                         } else {

@@ -44,6 +44,7 @@ class SeriesViewModel(application: Application): BaseViewModel(application) {
     var allbuyRentCoin = 0
     var allbuy_possibility_count = 0
     var epList = ArrayList<String>()
+    var epTitleList = ArrayList<String>()
 
     // download
     var seriesDownloadEpList = ArrayList<String>()

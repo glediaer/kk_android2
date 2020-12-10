@@ -22,7 +22,9 @@
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="5dp"
+        android:progressDrawable="@drawable/kk_rect_signup_info_progressbar"
         style="?android:attr/progressBarStyleHorizontal"
         android:max="5"
         android:progress="1" />
