@@ -49,6 +49,7 @@
                             android:id="@+id/titleTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="23dp"
                             android:textStyle="bold"
                             android:singleLine="true"
                             android:textSize="14dp"
@@ -85,11 +86,11 @@
                     </LinearLayout>
 
                     <include
-                        layout="@layout/view_ranking_content_tag"
+                        layout="@layout/view_remain_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginTop="8dp" />
+                        android:layout_marginTop="6dp" />
 
                 </RelativeLayout>
 

@@ -36,9 +36,11 @@
     <string name="str_sun">SUN</string>
 
     <string name="str_my_cash">MY CASH</string>
+    <string name="str_cash_shop">CASH SHOP</string>
+    <string name="str_cash_history">Cash History</string>
+    <string name="str_ticket_history">Ticket History</string>
     <string name="str_my_bonus_cash">MY BONUS CASH</string>
-    <string name="str_keys">KEYS</string>
-    <string name="str_keyshop">KEY Shop</string>
+    <string name="str_cash">CASH</string>
     <string name="str_library">Library</string>
     <string name="str_event">Event</string>
     <string name="str_notice">Notice</string>
@@ -46,6 +48,9 @@
     <string name="str_charge">Charge</string>
     <string name="str_terms_policies">Terms &amp; Polices</string>
     <string name="str_logout">Logout</string>
+    <string name="str_cash_detail">Cash : </string>
+    <string name="str_bonus_cash_detail">Bonus cash : </string>
+    <string name="str_popular">Popular</string>
 
     <string name="str_welcome_login">Welcome to the\nKross Komics!</string>
     <string name="str_welcome_login2">Start Your Joyful Journey!</string>
@@ -183,10 +188,7 @@
     <string name="str_coin_info_notice5">str_key_mean</string>
     <string name="str_buy">Buy</string>
     <string name="str_history">History</string>
-    <string name="str_whatkey1">What does</string>
-    <string name="str_whatkey2">‘KEY’</string>
-    <string name="str_whatkey3">mean?</string>
-    <string name="str_whatkey_desc">‘KEY’ is a coin system used to unlock episodes.</string>
+    <string name="str_whatkey1">Please read before purchasing !</string>
 
     <string name="str_search_hint">Title, Author, Genre</string>
     <string name="str_recent">Recent</string>

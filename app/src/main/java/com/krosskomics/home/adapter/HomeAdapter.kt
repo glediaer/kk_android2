@@ -100,27 +100,26 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
 
                 val titleTextView = view.findViewById<TextView>(R.id.tv_title)
                 val genreTextView = view.findViewById<TextView>(R.id.tv_genre)
-                val likeCountTextView = view.findViewById<TextView>(R.id.tv_like_count)
+                val upTagImageView = view.findViewById<ImageView>(R.id.upTagImageView)
+                val newTagImageView = view.findViewById<ImageView>(R.id.newTagImageView)
 
                 titleTextView.text = item.title
                 genreTextView.text = item.genre1
-                likeCountTextView.text = item.like_cnt
 
                 mainImageView.controller =
                     CommonUtil.getDraweeController(context, item.image, 200, 200)
 
-//                if (item.isupdate == "1") {
-//                    upImaegeView.setVisibility(View.VISIBLE)
-//                } else {
-//                    upImaegeView.setVisibility(View.GONE)
-//                }
-//                if (item.isnew.equals("1")) {
-//                    newImaegView.setVisibility(View.VISIBLE)
-//                } else {
-//                    newImaegView.setVisibility(View.GONE)
-//                }
-
-                layout.addView(view)
+                if (item.isnew.equals("1")) {
+                    newTagImageView.visibility = View.VISIBLE
+                    upTagImageView.visibility = View.GONE
+                } else {
+                    newTagImageView.visibility = View.GONE
+                    if (item.isupdate == "1") {
+                        upTagImageView.visibility = View.VISIBLE
+                    } else {
+                        upTagImageView.visibility = View.GONE
+                    }
+                }
 
                 view.setOnClickListener {
                     val intent = Intent(context, SeriesActivity::class.java)
@@ -130,6 +129,8 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                     intent.putExtras(b)
                     context.startActivity(intent)
                 }
+
+                layout.addView(view)
             }
         }
     }
@@ -145,11 +146,11 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
 
                 val titleTextView = view.findViewById<TextView>(R.id.tv_title)
 
-                val likeCountTextView = view.findViewById<TextView>(R.id.tv_like_count)
                 val writerTextView = view.findViewById<TextView>(R.id.tv_writer)
+                val upTagImageView = view.findViewById<ImageView>(R.id.upTagImageView)
+                val newTagImageView = view.findViewById<ImageView>(R.id.newTagImageView)
 
                 titleTextView.text = item.title
-                likeCountTextView?.text = item.like_cnt
 
                 mainImageView.controller =
                     CommonUtil.getDraweeController(context, item.image, 200, 200)
@@ -161,18 +162,17 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                     writerTextView.visibility = View.VISIBLE
                 }
 
-                if (item.isupdate == "1") {
-//                    upImaegeView.setVisibility(View.VISIBLE)
+                if (item.isnew.equals("1")) {
+                    newTagImageView.visibility = View.VISIBLE
+                    upTagImageView.visibility = View.GONE
                 } else {
-//                    upImaegeView.setVisibility(View.GONE)
+                    newTagImageView.visibility = View.GONE
+                    if (item.isupdate == "1") {
+                        upTagImageView.visibility = View.VISIBLE
+                    } else {
+                        upTagImageView.visibility = View.GONE
+                    }
                 }
-//                if (item.isnew.equals("1")) {
-//                    newImaegView.setVisibility(View.VISIBLE)
-//                } else {
-//                    newImaegView.setVisibility(View.GONE)
-//                }
-
-                layout.addView(view)
 
                 view.setOnClickListener {
                     val intent = Intent(context, SeriesActivity::class.java)
@@ -182,6 +182,8 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                     intent.putExtras(b)
                     context.startActivity(intent)
                 }
+
+                layout.addView(view)
             }
         }
     }

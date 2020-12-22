@@ -418,6 +418,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                 startActivity(Intent(context, MyNewsActivity::class.java))
                 dl_main_drawer_root.closeDrawers() }
             if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
+                headerView.isSelected = true
                 alarmImageView.visibility = View.VISIBLE
                 loginView.visibility = View.VISIBLE
                 keysView.visibility = View.VISIBLE
@@ -444,6 +445,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
                 logoutTextView.text = getString(R.string.str_logout)
             } else {
+                headerView.isSelected = false
                 alarmImageView.visibility = View.GONE
                 loginView.visibility = View.GONE
                 keysView.visibility = View.GONE

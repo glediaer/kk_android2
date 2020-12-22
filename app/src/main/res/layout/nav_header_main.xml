@@ -3,17 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#262626"
     android:paddingBottom="20dp">
 
     <LinearLayout
         android:id="@+id/headerView"
         android:layout_width="match_parent"
-        android:layout_height="156dp"
-        android:paddingTop="20dp"
+        android:layout_height="285dp"
+        android:background="@drawable/kk_selector_drawer_header"
+        android:orientation="vertical"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:background="@drawable/kk_gradient_drawer_rect"
-        android:orientation="vertical">
+        android:paddingTop="20dp"
+        android:paddingRight="16dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -23,7 +24,7 @@
                 android:id="@+id/closeImageView"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/kk_ic_drawer_close"/>
+                android:src="@drawable/kk_ic_drawer_close" />
 
             <ImageView
                 android:id="@+id/alarmImageView"
@@ -34,307 +35,407 @@
 
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/loginView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <FrameLayout
+                        android:id="@+id/profileView"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/kk_drawer_circle_profile">
+
+                        <ImageView
+                            android:id="@+id/profileImageView"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/kk_logo_symbol" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/nicknameTextView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_toRightOf="@+id/profileView"
+                        android:layout_weight="1"
+                        android:maxLines="2"
+                        android:textColor="#ffffff"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        tools:text="Forky Toy" />
+
+                    <ImageView
+                        android:id="@+id/editImageView"
+                        android:layout_width="47dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/kk_ic_edit" />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/keysView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/kk_drawer_info_rect"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:paddingLeft="14dp"
+                    android:paddingTop="9dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_my_cash"
+                            android:textColor="#828282"
+                            android:textSize="10dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/coinTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#2e2e2e"
+                                android:textSize="28dp"
+                                tools:text="500" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:text="@string/str_cash"
+                                android:textColor="#828282"
+                                android:textSize="16dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/chargeTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/kk_drawer_charge_rect"
+                        android:paddingLeft="15dp"
+                        android:paddingTop="3dp"
+                        android:paddingRight="15dp"
+                        android:paddingBottom="3dp"
+                        android:text="@string/str_charge"
+                        android:textColor="#ffd900"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <include
+                android:id="@+id/logoutView"
+                android:visibility="gone"
+                layout="@layout/view_drawer_logout"/>
+
+        </FrameLayout>
+
         <LinearLayout
-            android:id="@+id/loginView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:visibility="gone"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:gravity="center">
 
-            <FrameLayout
-                android:id="@+id/profileView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/kk_drawer_circle_profile">
-
-                <ImageView
-                    android:id="@+id/profileImageView"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/kk_logo_symbol" />
-
-            </FrameLayout>
-
-            <TextView
-                android:id="@+id/nicknameTextView"
+            <LinearLayout
+                android:id="@+id/shopView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:maxLines="2"
-                android:layout_toRightOf="@+id/profileView"
-                android:textSize="16dp"
-                android:textColor="#ffffff"
-                android:textStyle="bold"
-                tools:text="Forky Toy" />
-
-            <ImageView
-                android:id="@+id/editImageView"
-                android:layout_width="47dp"
-                android:layout_height="15dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/kk_ic_edit"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/logoutView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="168dp"
-                android:layout_height="33dp"
-                android:background="@drawable/kk_drawer_login_rect"
-                android:gravity="center"
-                android:textSize="14dp"
-                android:textColor="#828282"
-                android:text="@string/str_login"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textSize="12dp"
-                android:textColor="#ffffff"
                 android:gravity="center_horizontal"
-                android:text="@string/str_login_required" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/kk_ic_shop" />
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/str_cash_shop"
+                    android:textColor="#ffffff"
+                    android:textSize="10dp" />
 
-    <FrameLayout
-        android:id="@+id/keysView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:paddingTop="9dp"
-        android:paddingLeft="14dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="8dp"
-        android:background="@drawable/kk_drawer_info_rect"
-        android:orientation="vertical">
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="10dp"
-                android:textColor="#828282"
-                android:text="@string/str_my_cash" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:background="#4DFFFFFF"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:id="@+id/libraryView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/kk_ic_library"/>
 
                 <TextView
-                    android:id="@+id/coinTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="28dp"
-                    android:textColor="#2e2e2e"
-                    tools:text="500" />
+                    android:textSize="10dp"
+                    android:textColor="#ffffff"
+                    android:text="@string/str_library" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:background="#4DFFFFFF"/>
+
+            <LinearLayout
+                android:id="@+id/eventView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@drawable/kk_ic_event"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="16dp"
-                    android:textColor="#828282"
-                    android:text="@string/str_keys" />
+                    android:textSize="10dp"
+                    android:textColor="#ffffff"
+                    android:text="@string/str_event" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/chargeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:paddingTop="3dp"
-            android:paddingBottom="3dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:background="@drawable/kk_drawer_charge_rect"
-            android:layout_gravity="right|bottom"
-            android:textSize="12dp"
-            android:textColor="#ffd900"
-            android:textStyle="bold"
-            android:text="@string/str_charge" />
-
-    </FrameLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/headerView"
-        android:paddingTop="75dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="20dp"
-        android:visibility="visible"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="17dp"
+        android:visibility="visible">
 
-        <LinearLayout
-            android:id="@+id/shopView"
+        <FrameLayout
+            android:id="@+id/cashHistoryView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:paddingLeft="30dp"
+            android:paddingRight="20dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/kk_ic_shop"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="33dp"
-                android:textSize="14dp"
-                android:textColor="#828282"
-                android:text="@string/str_keyshop" />
+                android:gravity="center_vertical">
 
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/kk_ic_cash_history" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="33dp"
+                    android:textSize="12dp"
+                    android:textColor="#c6c6c6"
+                    android:text="@string/str_cash_history" />
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/kk_ic_next"/>
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/kk_ic_next" />
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/libraryView"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="16dp"
+            android:background="#333333"/>
+
+        <FrameLayout
+            android:id="@+id/ticketHistoryView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="34dp">
+            android:layout_marginTop="16dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="20dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/kk_ic_library"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="33dp"
-                android:layout_weight="1"
-                android:textSize="14dp"
-                android:textColor="#828282"
-                android:text="@string/str_library" />
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/kk_ic_ticket_history" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="33dp"
+                    android:textSize="12dp"
+                    android:textColor="#c6c6c6"
+                    android:text="@string/str_ticket_history" />
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/kk_ic_next"/>
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/kk_ic_next" />
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
-            android:id="@+id/eventView"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="34dp">
+            android:layout_height="0.5dp"
+            android:layout_marginTop="16dp"
+            android:background="#333333"/>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/kk_ic_event"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="33dp"
-                android:textSize="14dp"
-                android:textColor="#828282"
-                android:text="@string/str_event" />
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/kk_ic_next"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/noticeView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="34dp">
+            android:layout_marginTop="16dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="20dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/kk_ic_notice"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="33dp"
-                android:textSize="14dp"
-                android:textColor="#828282"
-                android:text="@string/str_notice" />
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/kk_ic_notice" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="33dp"
+                    android:textSize="12dp"
+                    android:textColor="#c6c6c6"
+                    android:text="@string/str_notice" />
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/kk_ic_next"/>
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/kk_ic_next" />
 
-        </LinearLayout>
+        </FrameLayout>
 
-        <LinearLayout
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="16dp"
+            android:background="#333333"/>
+
+        <FrameLayout
             android:id="@+id/settingsView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="34dp">
+            android:layout_marginTop="16dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="20dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/kk_ic_settings"/>
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="33dp"
-                android:textSize="14dp"
-                android:textColor="#828282"
-                android:text="@string/str_settings" />
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/kk_ic_settings" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="33dp"
+                    android:textSize="12dp"
+                    android:textColor="#c6c6c6"
+                    android:text="@string/str_settings" />
+
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/kk_ic_next"/>
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/kk_ic_next" />
 
-        </LinearLayout>
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="16dp"
+            android:background="#333333"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="250dp"
             android:gravity="center_vertical">
 
         </LinearLayout>
@@ -344,40 +445,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:layout_alignParentBottom="true"
         android:gravity="center_horizontal"
-        android:layout_alignParentBottom="true">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:id="@+id/termsTextView"
             android:layout_width="116dp"
             android:layout_height="35dp"
             android:background="@drawable/kk_drawer_terms_rect"
-            android:paddingTop="9dp"
-            android:paddingBottom="9dp"
-            android:paddingLeft="13dp"
-            android:paddingRight="13dp"
-            android:textSize="12dp"
-            android:textColor="#c6c6c6"
             android:gravity="center_horizontal"
-            android:text="@string/str_terms_policies" />
+            android:paddingLeft="13dp"
+            android:paddingTop="9dp"
+            android:paddingRight="13dp"
+            android:paddingBottom="9dp"
+            android:text="@string/str_terms_policies"
+            android:textColor="#c6c6c6"
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/logoutTextView"
             android:layout_width="116dp"
             android:layout_height="35dp"
-            android:background="@drawable/kk_drawer_terms_rect"
             android:layout_gravity="right"
             android:layout_marginLeft="20dp"
-            android:paddingTop="9dp"
-            android:paddingBottom="9dp"
-            android:paddingLeft="13dp"
-            android:paddingRight="13dp"
-            android:textSize="12dp"
-            android:textColor="#c6c6c6"
+            android:background="@drawable/kk_drawer_terms_rect"
             android:gravity="center_horizontal"
-            android:text="@string/str_logout" />
+            android:paddingLeft="13dp"
+            android:paddingTop="9dp"
+            android:paddingRight="13dp"
+            android:paddingBottom="9dp"
+            android:text="@string/str_logout"
+            android:textColor="#c6c6c6"
+            android:textSize="12dp" />
 
     </LinearLayout>
 

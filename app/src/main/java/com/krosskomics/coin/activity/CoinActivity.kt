@@ -1,6 +1,8 @@
 package com.krosskomics.coin.activity
 
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.android.billingclient.api.*
@@ -20,8 +22,14 @@ import com.krosskomics.util.CommonUtil.toNumFormat
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil.service
 import kotlinx.android.synthetic.main.activity_coin.*
+import kotlinx.android.synthetic.main.activity_coin.errorView
+import kotlinx.android.synthetic.main.activity_coin.nestedScrollView
+import kotlinx.android.synthetic.main.activity_coin.recyclerView
+import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_toolbar_trans.*
+import kotlinx.android.synthetic.main.view_toolbar_trans.toolbar
 import kotlinx.android.synthetic.main.view_toolbar_trans.view.*
+import kotlinx.android.synthetic.main.view_topbutton.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,11 +65,11 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
     }
 
     override fun initTracker() {
-        setTracker(getString(R.string.str_keyshop))
+        setTracker(getString(R.string.str_cash_shop))
     }
 
     override fun initLayout() {
-        toolbarTitleString = getString(R.string.str_keyshop)
+        toolbarTitleString = getString(R.string.str_cash_shop)
         super.initLayout()
         initHeaderView()
         initFooterView()
@@ -76,22 +84,8 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
     override fun initMainView() {
         super.initMainView()
 
+        initNestedScrollView()
         initInfoView()
-        buyButton.isSelected = true
-        buyButton.setOnClickListener {
-            it.isSelected = true
-            historyButton.isSelected = false
-            recyclerView.visibility = View.VISIBLE
-            historyWebView.visibility = View.GONE
-        }
-
-        historyButton.setOnClickListener {
-            it.isSelected = true
-            buyButton.isSelected = false
-            historyWebView.visibility = View.VISIBLE
-            recyclerView.visibility = View.GONE
-        }
-
     }
 
     private fun initInfoView() {
@@ -118,6 +112,16 @@ class CoinActivity : ToolbarTitleActivity(), PurchasesUpdatedListener {
                 coinInfoView.visibility = View.GONE
             } else {
                 coinInfoView.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun initNestedScrollView() {
+        nestedScrollView?.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+            if (scrollY > 0) {
+                toolbar?.setBackgroundColor(ContextCompat.getColor(context, R.color.black))
+            } else {
+                toolbar?.setBackgroundColor(ContextCompat.getColor(context, R.color.trans))
             }
         }
     }

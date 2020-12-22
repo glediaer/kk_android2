@@ -37,6 +37,7 @@ import kotlinx.android.synthetic.main.item_series_grid.view.*
 import kotlinx.android.synthetic.main.view_content_like.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 import kotlinx.android.synthetic.main.view_dim.view.*
+import kotlinx.android.synthetic.main.view_new_up_tag.view.*
 import kotlinx.android.synthetic.main.view_ticket.view.*
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
@@ -103,6 +104,17 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         contentLikeView?.visibility = View.VISIBLE
                         likeCountTextView?.text = item.like_cnt
                         tv_like_count?.text = item.like_cnt
+                    }
+                    if (item.isnew.equals("1")) {
+                        newTagImageView?.visibility = View.VISIBLE
+                        upTagImageView?.visibility = View.GONE
+                    } else {
+                        newTagImageView?.visibility = View.GONE
+                        if (item.isupdate == "1") {
+                            upTagImageView?.visibility = View.VISIBLE
+                        } else {
+                            upTagImageView?.visibility = View.GONE
+                        }
                     }
                     // ranking
                     if (context is RankingActivity) {

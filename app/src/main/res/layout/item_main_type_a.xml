@@ -6,27 +6,33 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="208dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="208dp"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_marginLeft="7dp">
+            android:orientation="vertical">
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/iv_main"
-                android:layout_width="208dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="297dp"
-                android:background="@drawable/kk_content_image_rect"
-                android:src="@mipmap/ic_launcher"
-                android:scaleType="fitXY"
-                fresco:actualImageScaleType="fitXY"
-                fresco:placeholderImage="@drawable/kk_placeholder"/>
+                fresco:cardCornerRadius="10dp"
+                android:background="@drawable/kk_content_image_rect">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    fresco:actualImageScaleType="fitXY"
+                    fresco:placeholderImage="@drawable/kk_placeholder"/>
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/tv_title"
@@ -50,12 +56,22 @@
 
         </LinearLayout>
 
-        <include
-            layout="@layout/view_content_tag"
-            android:layout_marginTop="12dp"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="20dp" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
 
+            <include
+                layout="@layout/view_new_up_tag"/>
+
+            <include
+                layout="@layout/view_remain_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

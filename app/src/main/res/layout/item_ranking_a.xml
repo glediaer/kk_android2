@@ -23,7 +23,7 @@
             android:background="@drawable/kk_gradient_ranking_item">
 
             <include
-                layout="@layout/view_ranking_content_tag"
+                layout="@layout/view_remain_tag"
                 android:layout_gravity="right|center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

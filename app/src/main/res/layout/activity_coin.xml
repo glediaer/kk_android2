@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#262626"
     android:gravity="center_horizontal">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -16,7 +18,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="266dp"
+                android:layout_height="164dp"
                 android:background="@drawable/kk_coin_bg">
 
                 <FrameLayout
@@ -25,71 +27,147 @@
                     android:background="#B3000000">
 
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="118dp"
+                            android:layout_height="34dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="76dp"
+                            android:background="@drawable/kk_rect_trans_white_1d_r17"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="11dp"
+                            android:paddingRight="15dp">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/kk_ic_one_coin" />
+
+                            <TextView
+                                android:id="@+id/totalCashTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:text="200"
+                                android:textColor="#ffffff"
+                                android:textSize="20dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:layout_marginTop="3dp"
+                                android:text="@string/str_cash"
+                                android:textColor="#ffffff"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/detailCashView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="@string/str_cash_detail"
+                                android:textColor="#c6c6c6"
+                                android:textSize="12dp" />
+
+                            <TextView
+                                android:id="@+id/originCashTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="100"
+                                android:textColor="#c6c6c6"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/plusTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text=" + "
+                                android:textColor="#c6c6c6"
+                                android:textSize="14dp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="@string/str_bonus_cash_detail"
+                                android:textColor="#c6c6c6"
+                                android:textSize="12dp" />
+
+                            <TextView
+                                android:id="@+id/bonusCashTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="100"
+                                android:textColor="#c6c6c6"
+                                android:textSize="12dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_marginTop="25dp"
+                            android:background="#3a3a3a" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="120dp"
                         android:layout_height="120dp"
-                        android:layout_marginTop="68dp"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="68dp"
                         android:background="@drawable/kk_circle_trans_yellow"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/str_my_cash"
-                            android:textSize="12dp"
-                            android:textColor="@color/yellow" />
+                            android:textColor="@color/yellow"
+                            android:textSize="12dp" />
 
                         <TextView
                             android:id="@+id/keyTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="32dp"
                             android:textColor="@color/white"
+                            android:textSize="32dp"
                             android:textStyle="bold"
                             tools:text="2" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="16dp"
-                            android:text="@string/str_keys"
-                            android:textColor="@color/white" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_gravity="bottom">
-
-                        <Button
-                            android:id="@+id/buyButton"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/kk_selector_coin_tab"
-                            android:textColor="@color/kk_selector_color_gray_black"
-                            android:text="@string/str_buy"
-                            android:textStyle="bold"
-                            android:textSize="16dp"
-                            android:layout_weight="1" />
-
-                        <Button
-                            android:id="@+id/historyButton"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:text="@string/str_history"
-                            android:textStyle="bold"
-                            android:textSize="16dp"
-                            android:background="@drawable/kk_selector_coin_tab"
-                            android:textColor="@color/kk_selector_color_gray_black"
-
-                            android:layout_weight="1" />
+                            android:text="@string/str_cash"
+                            android:textColor="@color/white"
+                            android:textSize="16dp" />
 
                     </LinearLayout>
 
                 </FrameLayout>
-
 
             </RelativeLayout>
 
@@ -119,39 +197,33 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/kk_gradient_coin_footer"
                     android:gravity="center"
-                    android:paddingTop="30dp"
-                    android:paddingBottom="39dp"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="36dp"
-                        android:src="@drawable/kk_bundle_coin" />
+                    android:orientation="vertical"
+                    android:paddingTop="60dp"
+                    android:paddingBottom="30dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
-                        android:textSize="12dp"
+                        android:text="@string/str_coin_footer_noti"
                         android:textColor="#828282"
-                        android:text="@string/str_coin_footer_noti" />
+                        android:textSize="12dp" />
 
                     <TextView
                         android:id="@+id/emailTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:textSize="12dp"
+                        android:text="@string/str_kk_email"
                         android:textColor="@color/white"
-                        android:text="@string/str_kk_email" />
+                        android:textSize="12dp" />
 
                     <include
-                        android:layout_marginTop="20dp"
                         layout="@layout/item_underline_828282"
                         android:layout_width="20dp"
-                        android:layout_height="1dp"/>
+                        android:layout_height="1dp"
+                        android:layout_marginTop="20dp" />
 
                 </LinearLayout>
 
@@ -161,129 +233,79 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <include
-        layout="@layout/view_toolbar_trans" />
+    <include layout="@layout/view_toolbar_trans" />
 
     <LinearLayout
         android:id="@+id/coinInfoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ccffffff"
-        tools:visibility="gone"
-        android:visibility="gone">
+        android:background="#cc000000"
+        android:visibility="gone"
+        tools:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#e6000000"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
             android:paddingTop="16dp"
             android:paddingRight="16dp"
-            android:paddingLeft="20dp"
-            android:paddingBottom="30dp"
-            android:orientation="vertical">
+            android:paddingBottom="30dp">
 
-            <ImageView
-                android:id="@+id/closeInfoImageView"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="right"
-                android:src="@drawable/kk_viewer_ep_close"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="7sp"
+                    android:text="@string/str_whatkey1"
+                    android:textColor="#ffd200"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/closeInfoImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="right"
+                    android:src="@drawable/kk_viewer_ep_close" />
+
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/kk_what_s_key" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="14dp"
-                                android:textColor="#ffffff"
-                                android:text="@string/str_whatkey1" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="7dp"
-                                android:textSize="14dp"
-                                android:textColor="@color/yellow"
-                                android:textStyle="bold"
-                                android:text="@string/str_whatkey2" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="7dp"
-                                android:textSize="14dp"
-                                android:textColor="#ffffff"
-                                android:text="@string/str_whatkey3" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="12dp"
-                            android:textColor="#e5e5e5"
-                            android:text="@string/str_whatkey_desc" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <include
-                    android:layout_marginTop="20dp"
-                    layout="@layout/item_underline_2e2e2e"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-
-                <include
-                    android:layout_marginTop="2dp"
-                    layout="@layout/item_underline_2e2e2e"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
+                android:layout_marginTop="15dp"
+                android:background="@drawable/kk_rect_trans_bffd200_r5"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="17dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="17dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="29dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="12dp"
+                        android:text="@string/str_key_mean"
                         android:textColor="@color/yellow"
-                        android:text="@string/str_key_mean" />
+                        android:textSize="12dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:lineSpacingExtra="9sp"
-                        android:textSize="12dp"
+                        android:text="@string/str_key_mean_answer"
                         android:textColor="#e5e5e5"
-                        android:text="@string/str_key_mean_answer" />
+                        android:textSize="12dp" />
 
                 </LinearLayout>
 
@@ -307,11 +329,11 @@
     <include
         android:id="@+id/errorView"
         layout="@layout/view_network_error"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <include
         android:id="@+id/loadingView"
         layout="@layout/view_loading"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -5,13 +5,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/iv_event"
+    <androidx.cardview.widget.CardView
         android:layout_width="240dp"
         android:layout_height="120dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        fresco:actualImageScaleType="fitXY"
-        fresco:placeholderImage="@drawable/kk_placeholder"/>
+        android:layout_marginLeft="20dp"
+        fresco:cardCornerRadius="5dp"
+        android:background="@drawable/kk_content_image_rect_r5">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_event"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            fresco:actualImageScaleType="fitXY"
+            fresco:placeholderImage="@drawable/kk_placeholder"/>
+
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
