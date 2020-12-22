@@ -27,6 +27,7 @@ import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.KJKomicsApp.Companion.MAIN_CONTENTS
 import com.krosskomics.R
+import com.krosskomics.coin.activity.CashHistoryActivity
 import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.activity.BaseActivity
 import com.krosskomics.common.data.DataBanner
@@ -484,6 +485,14 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             }
             settingsView.setOnClickListener {
                 startActivity(Intent(context, SettingsActivity::class.java))
+                dl_main_drawer_root.closeDrawers()
+            }
+            cashHistoryView.setOnClickListener {
+                startActivity(Intent(context, CashHistoryActivity::class.java))
+                dl_main_drawer_root.closeDrawers()
+            }
+            cashHistoryView.setOnClickListener {
+                startActivity(Intent(context, CashHistoryActivity::class.java))
                 dl_main_drawer_root.closeDrawers()
             }
 

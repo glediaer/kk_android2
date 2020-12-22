@@ -110,6 +110,10 @@
     <string name="str_done">Done</string>
     <string name="str_go_to_series">Go to Series</string>
     <string name="str_go_to_download">Download series</string>
+    <string name="str_charged">Charged</string>
+    <string name="str_used">Used</string>
+    <string name="str_my_cash2">MY CASH :</string>
+    <string name="str_my_cash_format">%s CASH</string>
 
     <string name="str_promotion_hint">Enter your promotion code</string>
     <string name="str_register">Register</string>

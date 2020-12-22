@@ -90,6 +90,10 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".coin.activity.CashHistoryActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".library.activity.LibraryActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
