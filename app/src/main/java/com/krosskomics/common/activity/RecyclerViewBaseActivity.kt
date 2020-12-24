@@ -12,9 +12,13 @@ import com.google.android.gms.analytics.GoogleAnalytics
 import com.google.android.gms.analytics.HitBuilders
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
+import com.krosskomics.comment.activity.CommentActivity
+import com.krosskomics.comment.activity.CommentReportActivity
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
+import com.krosskomics.common.data.DataComment
+import com.krosskomics.common.data.DataReport
 import com.krosskomics.common.model.*
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.adapter.GenreAdapter
@@ -159,6 +163,14 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     CommonUtil.showToast(it, context)
                 }
             }
+        } else if (t is Comment) {
+            if ("00" == t.retcode) {
+                setMainContentView(t)
+            } else {
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
+            }
         }
         hideProgress()
     }
@@ -195,6 +207,14 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
+            }
+            is Comment -> {
+                viewModel.totalPage = body.tot_pages
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+                (context as CommentActivity).initHeaderView()
             }
         }
     }
@@ -264,6 +284,8 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                             putExtra("title", item.title)
                         }
                         startActivity(intent)
+                    } else if (item is DataReport) {
+                        resetReportSelect(position)
                     }
                 }
             })
@@ -277,6 +299,15 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                             "C"
                         }
                         requestSubscribe(item.title, item.sid ?: "", action)
+                    }
+                }
+            })
+
+            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnCommentReportClickListener(object : RecyclerViewBaseAdapter.OnCommentReportClickListener {
+                override fun onItemClick(item: Any, position: Int) {
+                    if (item is DataComment) {
+                        val intent = Intent(context, CommentReportActivity::class.java)
+                        startActivity(intent)
                     }
                 }
             })
@@ -355,5 +386,15 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                 }
             }
         })
+    }
+
+    fun resetReportSelect(position: Int) {
+        viewModel.items.forEachIndexed { index, item ->
+            if (item is DataReport) {
+                item.isSelect = index == position
+            }
+        }
+        (recyclerView?.adapter as RecyclerViewBaseAdapter).notifyDataSetChanged()
+        (context as CommentReportActivity).checkVisibleReportEditText(position == viewModel.items.size - 1)
     }
 }

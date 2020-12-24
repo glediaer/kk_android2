@@ -17,7 +17,7 @@
                 android:id="@+id/profileImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                tools:src="@mipmap/ic_launcher"/>
+                tools:src="@drawable/kk_logo_symbol"/>
 
             <ImageView
                 android:id="@+id/bestTagImageView"
@@ -51,19 +51,16 @@
                     android:textColor="#000000"
                     tools:text="smshin" />
 
-                <TextView
-                    android:id="@+id/timeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="12dp"
-                    android:textColor="#c6c6c6"
-                    tools:text="12h" />
+                <ImageView
+                    android:id="@+id/reportImageView"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/kk_ic_report"/>
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/commentTextView"
+                android:id="@+id/newsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

@@ -25,7 +25,7 @@ class CommentActivity : ToolbarTitleActivity() {
     }
 
     override fun getLayoutId(): Int {
-        recyclerViewItemLayoutId = R.layout.item_mynews
+        recyclerViewItemLayoutId = R.layout.item_comment
         return R.layout.activity_comment
     }
 
@@ -78,7 +78,10 @@ class CommentActivity : ToolbarTitleActivity() {
         }
     }
 
-    private fun initHeaderView() {
+    fun initHeaderView() {
         commentsCount.text = "(${viewModel.items.size})"
+        sortView.setOnClickListener {
+            // 정렬 리퀘스트
+        }
     }
 }

@@ -143,6 +143,10 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".comment.activity.CommentReportActivity"
+            android:configChanges="screenSize|orientation"
+            android:screenOrientation="portrait"/>
+
         <activity android:name=".more.activity.MoreActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>

@@ -122,6 +122,15 @@ interface InterfaceRestful {
         @Field("page") page: Int
     ): Call<News>
 
+    // comment 리스트
+    @FormUrlEncoded
+    @POST("app/google/37/list")
+    fun getCommentList(
+        @Field("lang") lang: String?,
+        @Field("param") param: String?,
+        @Field("page") page: Int
+    ): Call<Comment>
+
     @FormUrlEncoded
     @POST("app/google/37/list")
     fun getNoticeList(

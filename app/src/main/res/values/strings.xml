@@ -174,12 +174,14 @@
     <string name="str_1x">1x"</string>
     <string name="str_2x">2x"</string>
     <string name="str_3x">3x"</string>
+    <string name="str_report">Report"</string>
+    <string name="str_report_type">Select Report type"</string>
+    <string name="str_report_notice">※ If it is a false report, the reporters app activities may be restricted, so please be careful when reporting it.</string>
     <string name="str_comments">Comments"</string>
     <string name="str_comment_here">Write your comment here.."</string>
     <string name="str_delete">Delete</string>
     <string name="str_downloaded">Downloaded</string>
     <string name="str_download_viewer">Download Viewer</string>
-
     <string name="str_coin_footer_noti">For more assistance, reach out to us at</string>
     <string name="str_best">BEST</string>
     <string name="str_key_mean">Please read before purchasing :</string>
@@ -194,6 +196,12 @@
     <string name="str_history">History</string>
     <string name="str_whatkey1">Please read before purchasing !</string>
 
+    <string name="str_report1">Sexual explicit content</string>
+    <string name="str_report2">Discrimination, Offensive content</string>
+    <string name="str_report3">Abusive Content</string>
+    <string name="str_report4">Spam</string>
+    <string name="str_report5">Others</string>
+
     <string name="str_search_hint">Title, Author, Genre</string>
     <string name="str_recent">Recent</string>
     <string name="str_recommend_keywords">#_Recommend Keywords</string>
@@ -201,6 +209,7 @@
     <string name="str_refresh">Refresh</string>
     <string name="str_no_network">Please checkyour network connection</string>
     <string name="str_my_downloaded_komics">My Downloaded KOMICS</string>
+    <string name="str_report_other_notice">Write directly report type (Maximum 300 digits)</string>
 
     <string name="str_loading">Loading…</string>
     <string name="str_all_ranking">All Ranking</string>
@@ -238,7 +247,8 @@
     <string name="msg_empty_download">Oops..\nNo Downloaded episodes</string>
     <string name="msg_empty_download2">Episodes you’ve downloaded will appear here.</string>
     <string name="msg_empty_gift">Oops..\nNo message in gifts</string>
-    <string name="msg_not_available_sns">This option is not available when signed in with a Facebook account</string>\
+    <string name="msg_not_available_sns">This option is not available when signed in with a Facebook account</string>
+    \
     <string name="msg_check_network">Check network</string>
     <string name="msg_disable_remove_file">You can only delete the downloaded series on online.</string>
     <string name="msg_copied">copied</string>

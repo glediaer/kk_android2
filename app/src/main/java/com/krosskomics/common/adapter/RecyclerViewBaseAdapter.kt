@@ -1,5 +1,6 @@
 package com.krosskomics.common.adapter
 
+import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.krosskomics.R
+import com.krosskomics.comment.activity.CommentReportActivity
 import com.krosskomics.common.data.*
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.ranking.activity.RankingActivity
@@ -17,6 +19,8 @@ import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.viewer.activity.ViewerActivity
 import kotlinx.android.synthetic.main.item_coin.view.*
+import kotlinx.android.synthetic.main.item_comment.view.*
+import kotlinx.android.synthetic.main.item_comment_report.view.*
 import kotlinx.android.synthetic.main.item_download_ep.view.*
 import kotlinx.android.synthetic.main.item_more.view.*
 import kotlinx.android.synthetic.main.item_more.view.deleteView
@@ -48,6 +52,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
     private var onDownloadClickListener: OnDownloadClickListener? = null
     private var onDownloadCancelClickListener: OnDownloadCancelClickListener? = null
     private var onSubscribeClickListener: OnSubscribeClickListener? = null
+    private var onCommentReportClickListener: OnCommentReportClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseItemHolder {
         val view = LayoutInflater.from(parent.context).inflate(layoutRes, parent, false)
@@ -80,6 +85,10 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
 
     fun setOnSubscribeClickListener(onItemClickListener: OnSubscribeClickListener) {
         this.onSubscribeClickListener = onItemClickListener
+    }
+
+    fun setOnCommentReportClickListener(onItemClickListener: OnCommentReportClickListener) {
+        this.onCommentReportClickListener = onItemClickListener
     }
 
     inner class BaseItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
@@ -294,6 +303,20 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     } else {
                         expandView?.visibility = View.GONE
                     }
+                } else if (item is DataComment) {
+                    newsTextView?.text = item.title
+                    remainTimeTextView?.text = item.writer1
+                    reportImageView?.setOnClickListener {
+                        onCommentReportClickListener?.onItemClick(item, position)
+                    }
+                } else if (item is DataReport) {
+                    ReportTextView?.text = item.title
+                    isSelected = item.isSelect
+                    if (position < itemCount - 1) {
+                        underLineView.visibility = View.VISIBLE
+                    } else {
+                        underLineView.visibility = View.GONE
+                    }
                 }
             }
         }
@@ -317,5 +340,9 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
 
     interface OnSubscribeClickListener {
         fun onItemClick(item: Any, position: Int, selected: Boolean)
+    }
+
+    interface OnCommentReportClickListener {
+        fun onItemClick(item: Any, position: Int)
     }
 }
