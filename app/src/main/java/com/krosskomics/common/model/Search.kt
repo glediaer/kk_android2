@@ -9,7 +9,7 @@ class Search {
     var msg: String? = null
     var retcode: String? = null
     var tag: DataTag? = null
-    var banner: ArrayList<DataRecentSearch>? = null
+//    var banner: ArrayList<DataRecentSearch>? = null
 
     // result
     var list_title: String? = null

@@ -11,6 +11,7 @@ import com.krosskomics.util.CommonUtil.getAppVersion
 import com.krosskomics.util.CommonUtil.getRandomString
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.write
+import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -47,6 +48,7 @@ object ServerUtil {
                 .build()
             chain.proceed(request)
         }
+        okHttpBuilder.addInterceptor(ChuckInterceptor(context))
         val okHttpClient = okHttpBuilder.build()
         val retrofit: Retrofit = Retrofit.Builder()
             .client(okHttpClient)
@@ -78,6 +80,7 @@ object ServerUtil {
                 .build()
             chain.proceed(request)
         }
+        okHttpBuilder.addInterceptor(ChuckInterceptor(context))
         val okHttpClient = okHttpBuilder.build()
         val retrofit: Retrofit = Retrofit.Builder()
             .client(okHttpClient)

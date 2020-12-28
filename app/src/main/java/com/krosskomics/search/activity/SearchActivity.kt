@@ -18,6 +18,7 @@ import com.krosskomics.common.model.Search
 import com.krosskomics.search.adapter.SearchTagAdapter
 import com.krosskomics.search.viewmodel.SearchViewModel
 import com.krosskomics.series.activity.SeriesActivity
+import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
 import kotlinx.android.synthetic.main.activity_search.*
@@ -43,6 +44,7 @@ class SearchActivity : ToolbarTitleActivity() {
 
     override fun initModel() {
         viewModel.getMainResponseLiveData().observe(this, this)
+        viewModel.recentItems = CommonUtil.getStringArrayPref(this, CODE.RECENT_SEARCH)
     }
 
     override fun initTracker() {
@@ -57,16 +59,34 @@ class SearchActivity : ToolbarTitleActivity() {
 
     private fun initHeaderView() {
         searchImageView.setOnClickListener {
-            if (searchEditText.text.toString().isNullOrEmpty()) return@setOnClickListener
+            if (it.isSelected) {
+                viewModel.keyword = ""
+            } else {
+                if (searchEditText.text.toString().isNullOrEmpty()) return@setOnClickListener
 
-            viewModel.keyword = searchEditText.text.toString()
+                viewModel.keyword = searchEditText.text.toString()
+
+                if (viewModel.recentItems.size >= 5) {
+                    viewModel.recentItems.removeAt(0)
+                }
+                viewModel.recentItems.add(viewModel.keyword)
+                CommonUtil.setStringArrayPref(context, CODE.RECENT_SEARCH, viewModel.recentItems)
+
+                val eventValue: MutableMap<String, Any?> =
+                    HashMap()
+                eventValue["af_search_string"] = viewModel.keyword
+                setAppsFlyerEvent(this, "af_search", eventValue)
+
+                CommonUtil.downKeyboard(this, searchEditText)
+            }
             viewModel.isRefresh = true
             requestServer()
+        }
 
-            val eventValue: MutableMap<String, Any?> =
-                HashMap()
-            eventValue["af_search_string"] = viewModel.keyword
-            setAppsFlyerEvent(this, "af_search", eventValue)
+        deleteAllImageView.setOnClickListener {
+            viewModel.recentItems.clear()
+            CommonUtil.setStringArrayPref(context, CODE.RECENT_SEARCH, viewModel.recentItems)
+            recentRecyclerView.adapter?.notifyDataSetChanged()
         }
     }
 
@@ -95,16 +115,28 @@ class SearchActivity : ToolbarTitleActivity() {
     override fun setMainContentView(body: Any) {
         if (viewModel.isRefresh) {
             viewModel.items.clear()
+            viewModel.tagItems.clear()
         }
         when (body) {
             is Search -> {
-                body.banner?.let {
-                    viewModel.items.addAll(it)
+                viewModel.recentItems.let {
                     recentRecyclerView.adapter?.notifyDataSetChanged()
                     defaultView.visibility = View.VISIBLE
                     resultView.visibility = View.GONE
 
-                    searchView.layoutParams.height = CommonUtil.dpToPx(context, 100)
+                    searchView.layoutParams.height = CommonUtil.dpToPx(context, 203)
+                    searchView.setPadding(
+                        CommonUtil.dpToPx(context, 20),
+                        CommonUtil.dpToPx(context, 60),
+                        CommonUtil.dpToPx(context, 20),
+                        CommonUtil.dpToPx(context, 20)
+                    )
+                    searchImageView.isSelected = false
+                    if (it.size > 0) {
+                        recentView.visibility = View.VISIBLE
+                    } else {
+                        recentView.visibility = View.GONE
+                    }
                 }
                 body.tag?.let {
                     viewModel.tagItems.addAll(it.tag_text!!)
@@ -117,7 +149,23 @@ class SearchActivity : ToolbarTitleActivity() {
                     resultView.visibility = View.VISIBLE
                     searchEditText.setText(viewModel.keyword)
 
-                    searchView.layoutParams.height = CommonUtil.dpToPx(context, 30)
+                    searchView.layoutParams.height = CommonUtil.dpToPx(context, 60)
+                    searchView.setPadding(
+                        CommonUtil.dpToPx(context, 20),
+                        CommonUtil.dpToPx(context, 0),
+                        CommonUtil.dpToPx(context, 20),
+                        CommonUtil.dpToPx(context, 0)
+                    )
+                    searchImageView.isSelected = true
+                    if (it.isNullOrEmpty()) {
+                        recyclerView.visibility = View.GONE
+                        emptyDataTextView.text =
+                            getString(R.string.msg_empty_search_data_format, viewModel.keyword)
+                        emptyDataTextView.visibility = View.VISIBLE
+                    } else {
+                        recyclerView.visibility = View.VISIBLE
+                        emptyDataTextView.visibility = View.GONE
+                    }
                 }
 
                 recyclerView?.adapter?.notifyDataSetChanged()
@@ -138,7 +186,7 @@ class SearchActivity : ToolbarTitleActivity() {
     override fun initRecyclerViewAdapter() {
         recentRecyclerView.adapter =
             CommonRecyclerViewAdapter(
-                viewModel.items,
+                viewModel.recentItems,
                 recyclerViewItemLayoutId
             )
 
@@ -156,8 +204,42 @@ class SearchActivity : ToolbarTitleActivity() {
         (recentRecyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnDelteItemClickListener(object : RecyclerViewBaseAdapter.OnDeleteItemClickListener {
                 override fun onItemClick(item: Any) {
-                    if (item is DataRecentSearch) {
-                        Log.e(TAG, "onItemClick")
+                    if (item is String) {
+                        viewModel.recentItems.remove(item)
+                        CommonUtil.setStringArrayPref(
+                            context,
+                            CODE.RECENT_SEARCH,
+                            viewModel.recentItems
+                        )
+                    }
+                    notifyDataSetChanged()
+                }
+            })
+        }
+
+        (recentRecyclerView.adapter as RecyclerViewBaseAdapter).apply {
+            setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
+                override fun onItemClick(item: Any?, position: Int) {
+                    if (item is String) {
+                        val eventValue: MutableMap<String, Any?> =
+                            HashMap()
+                        eventValue["af_search_string"] = viewModel.keyword
+                        setAppsFlyerEvent(context, "af_search", eventValue)
+
+                        viewModel.keyword = item
+                        viewModel.isRefresh = true
+
+                        if (viewModel.recentItems.size >= 5) {
+                            viewModel.recentItems.removeAt(0)
+                        }
+                        viewModel.recentItems.add(viewModel.keyword)
+                        CommonUtil.setStringArrayPref(
+                            context,
+                            CODE.RECENT_SEARCH,
+                            viewModel.recentItems
+                        )
+
+                        requestServer()
                     }
                 }
             })
@@ -174,13 +256,25 @@ class SearchActivity : ToolbarTitleActivity() {
 
                         viewModel.keyword = item
                         viewModel.isRefresh = true
+
+                        if (viewModel.recentItems.size >= 5) {
+                            viewModel.recentItems.removeAt(0)
+                        }
+                        viewModel.recentItems.add(viewModel.keyword)
+                        CommonUtil.setStringArrayPref(
+                            context,
+                            CODE.RECENT_SEARCH,
+                            viewModel.recentItems
+                        )
+
                         requestServer()
                     }
                 }
             })
         }
 
-        (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
+        (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object :
+            RecyclerViewBaseAdapter.OnItemClickListener {
             override fun onItemClick(item: Any?, position: Int) {
                 if (item is DataBook) {
                     val intent = Intent(context, SeriesActivity::class.java).apply {

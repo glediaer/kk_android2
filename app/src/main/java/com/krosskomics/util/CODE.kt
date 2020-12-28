@@ -56,6 +56,9 @@ object CODE {
     // floating banner 기간
     var FLOATING_BANNER_CLOSE_TIME = "floating_banner_close_time"
 
+    // 최근 검색
+    val RECENT_SEARCH = "recent_search"
+
     // 앱 최초실행 체크
     var IS_RUN_FIRST_APP = "is_run_first_app"
 

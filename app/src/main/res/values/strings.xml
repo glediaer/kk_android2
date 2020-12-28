@@ -215,6 +215,7 @@
     <string name="str_all_ranking">All Ranking</string>
     <string name="str_female_ranking">Female Ranking</string>
     <string name="str_male_ranking">Male Ranking</string>
+    <string name="str_success1">Success!</string>
     <string name="str_dont_open_today">Don’t open today</string>
     <string name="str_waitfree_info">-  If you wait for this comic’s period of\n
    time, one free ticket will be generated\n
@@ -261,6 +262,7 @@
     <string name="msg_fail_password_length">Password must be a minimum of 6 characters.</string>
     <string name="msg_success_login">Log in normally</string>
     <string name="msg_push_not_support_device">This device does not provide any push alert system.</string>
+    <string name="msg_empty_search_data_format">There is no result for\n“%s”</string>
 
 
 </resources>

@@ -425,6 +425,14 @@
         android:layout_height="wrap_content" />
 
     <include
+        android:id="@+id/epPurchaseSuceesDialog"
+        layout="@layout/view_ep_purchase_success"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
         android:id="@+id/errorView"
         layout="@layout/view_network_error"
         android:visibility="gone"/>

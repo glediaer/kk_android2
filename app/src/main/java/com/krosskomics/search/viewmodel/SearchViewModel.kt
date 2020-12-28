@@ -12,6 +12,7 @@ class SearchViewModel(application: Application): BaseViewModel(application) {
     private val mainResponseLiveData = repository.getMainResponseLiveData()
 
     var tagItems: ArrayList<String> = arrayListOf()
+    var recentItems: ArrayList<String> = arrayListOf()
 
     var keyword = ""
 

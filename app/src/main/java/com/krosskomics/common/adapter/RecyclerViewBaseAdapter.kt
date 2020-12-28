@@ -1,6 +1,5 @@
 package com.krosskomics.common.adapter
 
-import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.krosskomics.R
-import com.krosskomics.comment.activity.CommentReportActivity
 import com.krosskomics.common.data.*
 import com.krosskomics.common.holder.BaseItemViewHolder
 import com.krosskomics.ranking.activity.RankingActivity
@@ -34,6 +32,7 @@ import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.writerTextView
 import kotlinx.android.synthetic.main.item_ranking.view.*
 import kotlinx.android.synthetic.main.item_ranking_a.view.*
+import kotlinx.android.synthetic.main.item_search_recent.view.*
 import kotlinx.android.synthetic.main.item_series.view.*
 import kotlinx.android.synthetic.main.item_series.view.img_ep_title
 import kotlinx.android.synthetic.main.item_series.view.txt_ep_title
@@ -267,11 +266,6 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     txt_ep_title?.text = item.ep_title
 //                    tv_show_date?.text = item.ep_show_date
                     tv_expire_date?.text = item.expireDate
-//                } else if (item is DataRecentSearch) {    // search recent
-//                    titleTextView.text = item.subject
-//                    deleteImageView.setOnClickListener {
-//                        onDeleteClickListener?.onItemClick(item)
-//                    }
                 } else if (item is DataGift) {
                     mainImageView?.let {
                         Glide.with(itemView.context)
@@ -316,6 +310,11 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         underLineView.visibility = View.VISIBLE
                     } else {
                         underLineView.visibility = View.GONE
+                    }
+                } else if (item is String) {    // recent tag
+                    titleTextView?.text = item
+                    deleteImageView.setOnClickListener {
+                        onDeleteClickListener?.onItemClick(item)
                     }
                 }
             }

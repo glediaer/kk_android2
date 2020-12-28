@@ -5,10 +5,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.app.ActivityManager.RunningTaskInfo
 import android.app.AlertDialog
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -45,6 +42,8 @@ import com.krosskomics.login.activity.LoginActivity
 import com.krosskomics.login.activity.LoginIntroActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.webview.WebViewActivity
+import org.json.JSONArray
+import org.json.JSONException
 import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -833,7 +832,10 @@ object CommonUtil {
             type = "plain/Text"
             putExtra(Intent.EXTRA_EMAIL, context.getString(R.string.str_kk_email))
             putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.str_faq))
-            putExtra(Intent.EXTRA_TEXT, "앱 버전 (AppVersion):" + CommonUtil.getAppVersion(context) + "\n기기명 (Device):\n안드로이드 OS (Android OS):\n내용 (Content)")
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "앱 버전 (AppVersion):" + CommonUtil.getAppVersion(context) + "\n기기명 (Device):\n안드로이드 OS (Android OS):\n내용 (Content)"
+            )
             type = "message/rfc822"
 
             context.startActivity(this)
@@ -860,5 +862,45 @@ object CommonUtil {
             count++
         }
         return builder.toString()
+    }
+
+    fun setStringArrayPref(
+        context: Context,
+        key: String,
+        values: ArrayList<String>
+    ) {
+        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val editor: SharedPreferences.Editor = prefs.edit()
+        val a = JSONArray()
+        for (i in 0 until values.size) {
+            a.put(values[i])
+        }
+        if (values.isNotEmpty()) {
+            editor.putString(key, a.toString())
+        } else {
+            editor.putString(key, null)
+        }
+        editor.apply()
+    }
+
+    fun getStringArrayPref(
+        context: Context,
+        key: String
+    ): ArrayList<String> {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val json = prefs.getString(key, null)
+        val urls = ArrayList<String>()
+        if (json != null) {
+            try {
+                val a = JSONArray(json)
+                for (i in 0 until a.length()) {
+                    val url = a.optString(i)
+                    urls.add(url)
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+        return urls
     }
 }

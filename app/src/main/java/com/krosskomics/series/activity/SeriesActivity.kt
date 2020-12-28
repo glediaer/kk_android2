@@ -49,10 +49,13 @@ import com.krosskomics.viewer.activity.ViewerActivity
 import com.scottyab.aescrypt.AESCrypt
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.activity_series.*
+import kotlinx.android.synthetic.main.activity_series.mainImageView
 import kotlinx.android.synthetic.main.activity_series.nestedScrollView
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_content_like_white.*
 import kotlinx.android.synthetic.main.view_ep_purchase.*
+import kotlinx.android.synthetic.main.view_ep_purchase.unlockButton
+import kotlinx.android.synthetic.main.view_ep_purchase_success.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 import retrofit2.Call
@@ -912,7 +915,9 @@ class SeriesActivity : ToolbarTitleActivity() {
                                     viewModel.epTitleList.clear()
                                     epPurchaseDialog.visibility = View.GONE
 
-                                    requestServer()
+                                    initEpPurchaseSuccesDialog()
+
+//                                    requestServer()
                                     if ("" != it.user_coin) {
                                         write(context, CODE.LOCAL_coin, it.user_coin)
                                     }
@@ -947,6 +952,22 @@ class SeriesActivity : ToolbarTitleActivity() {
                     }
                 }
             })
+    }
+
+    private fun initEpPurchaseSuccesDialog() {
+        epPurchaseSuceesDialog.apply {
+            visibility = View.VISIBLE
+            successTitleTextView.text = viewModel.seriesItem.title
+//            successEpCountTextView.text = getString(R.string.str_episodes_seq_format1, t.list?.size)
+//            successRemainTime.text
+//            successTime.text
+            setOnClickListener {  }
+            doneButton.setOnClickListener {
+                showEp()
+                requestServer()
+                doneButton.visibility = View.GONE
+            }
+        }
     }
 
     /**
