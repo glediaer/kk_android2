@@ -1,8 +1,11 @@
 package com.krosskomics.common.data
 
+import java.util.ArrayList
+
 class DataGenre {
-    var image: String? = null
-    var genre: String? = null
-    var genre_text: String? = null
-    var isSelect = false
+//    "dp_genre": "Romance",			표시 장르
+//    "p_genre": "romance",			파라메터 장르
+    var dp_genre: String? = null
+    var p_genre: String? = null
+    var genre_list: ArrayList<DataBook>? = null
 }

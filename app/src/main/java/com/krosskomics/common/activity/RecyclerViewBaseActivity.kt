@@ -21,9 +21,11 @@ import com.krosskomics.common.data.DataComment
 import com.krosskomics.common.data.DataReport
 import com.krosskomics.common.model.*
 import com.krosskomics.common.viewmodel.BaseViewModel
-import com.krosskomics.genre.adapter.GenreAdapter
+import com.krosskomics.mainmenu.adapter.GenreAdapter
 import com.krosskomics.library.activity.LibraryActivity
-import com.krosskomics.ranking.adapter.RankingAdapter
+import com.krosskomics.mainmenu.activity.WaitFreeActivity
+import com.krosskomics.mainmenu.viewmodel.MainMenuViewModel
+import com.krosskomics.mainmenu.adapter.RankingAdapter
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -171,6 +173,14 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     CommonUtil.showToast(it, context)
                 }
             }
+        } else if (t is Genre) {
+            if ("00" == t.retcode) {
+                setMainContentView(t)
+            } else {
+                t.msg?.let {
+                    CommonUtil.showToast(it, context)
+                }
+            }
         }
         hideProgress()
     }
@@ -187,7 +197,19 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
 
-                totalCountTextView?.text = getString(R.string.str_total) + " ${viewModel.items.count()}"
+                totalCountTextView?.text =
+                    getString(R.string.str_total) + " ${viewModel.items.count()}"
+
+                // 기다무
+                if (viewModel.isRefresh) return
+                body.wop_term?.let {
+                    if (viewModel is MainMenuViewModel) {
+                        (viewModel as MainMenuViewModel).waitFreeTermItems = it
+                        if (context is WaitFreeActivity) {
+                            (context as WaitFreeActivity).initWaitFreeTermRecyclerView()
+                        }
+                    }
+                }
             }
             is Episode -> {
                 body.list?.let {
@@ -215,6 +237,12 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
                 (context as CommentActivity).initHeaderView()
+            }
+            is Genre -> {
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
             }
         }
     }
@@ -266,9 +294,13 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
 
     open fun initRecyclerViewAdapter() {
         recyclerView?.adapter =
-            when(viewModel.tabIndex) {
-                3 -> RankingAdapter(viewModel.items, recyclerViewItemLayoutId, context)
-                4 -> GenreAdapter(KJKomicsApp.MAIN_CONTENTS)
+            when (viewModel.tabIndex) {
+                3 -> RankingAdapter(
+                    viewModel.items,
+                    recyclerViewItemLayoutId,
+                    context
+                )
+                4 -> GenreAdapter(viewModel.items)
                 else -> CommonRecyclerViewAdapter(
                     viewModel.items,
                     recyclerViewItemLayoutId
@@ -276,7 +308,8 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
             }
 
         if (viewModel.tabIndex != 4) {
-            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
+            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object :
+                RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?, position: Int) {
                     if (item is DataBook) {
                         val intent = Intent(context, SeriesActivity::class.java).apply {
@@ -290,7 +323,8 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                 }
             })
 
-            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnSubscribeClickListener(object : RecyclerViewBaseAdapter.OnSubscribeClickListener {
+            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnSubscribeClickListener(object :
+                RecyclerViewBaseAdapter.OnSubscribeClickListener {
                 override fun onItemClick(item: Any, position: Int, selected: Boolean) {
                     if (item is DataBook) {
                         var action = if (selected) {
@@ -303,20 +337,21 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                 }
             })
 
-            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnCommentReportClickListener(object : RecyclerViewBaseAdapter.OnCommentReportClickListener {
-                override fun onItemClick(item: Any, position: Int) {
-                    if (item is DataComment) {
-                        val intent = Intent(context, CommentReportActivity::class.java)
-                        startActivity(intent)
+            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnCommentReportClickListener(
+                object : RecyclerViewBaseAdapter.OnCommentReportClickListener {
+                    override fun onItemClick(item: Any, position: Int) {
+                        if (item is DataComment) {
+                            val intent = Intent(context, CommentReportActivity::class.java)
+                            startActivity(intent)
+                        }
                     }
-                }
-            })
+                })
         }
     }
 
     private fun initTabView() {
         resetTabState()
-        when(viewModel.tabIndex) {
+        when (viewModel.tabIndex) {
             1 -> onGoingButton?.isSelected = true
             2 -> waitButton?.isSelected = true
             3 -> rankingButton?.isSelected = true

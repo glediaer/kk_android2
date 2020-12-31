@@ -48,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:paddingRight="12dp"
                 android:layout_marginTop="32dp">
 
                 <TextView
@@ -62,14 +63,20 @@
                     tools:text="Girlsgeneration" />
 
                 <include
-                    layout="@layout/view_content_tag_right"
-                    android:layout_gravity="right"
+                    layout="@layout/view_content_like"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp" />
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <include
+            layout="@layout/view_remain_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|right"
+            android:layout_marginTop="6dp" />
 
     </androidx.cardview.widget.CardView>
     
@@ -89,6 +96,7 @@
 
         <include
             android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             layout="@layout/view_new_up_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.*
 import com.krosskomics.common.holder.BaseItemViewHolder
-import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.mainmenu.activity.RankingActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -41,6 +41,7 @@ import kotlinx.android.synthetic.main.view_content_like.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 import kotlinx.android.synthetic.main.view_dim.view.*
 import kotlinx.android.synthetic.main.view_new_up_tag.view.*
+import kotlinx.android.synthetic.main.view_remain_tag.view.*
 import kotlinx.android.synthetic.main.view_ticket.view.*
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
@@ -113,7 +114,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         likeCountTextView?.text = item.like_cnt
                         tv_like_count?.text = item.like_cnt
                     }
-                    if (item.isnew.equals("1")) {
+                    if (item.isnew == "1") {
                         newTagImageView?.visibility = View.VISIBLE
                         upTagImageView?.visibility = View.GONE
                     } else {
@@ -122,6 +123,20 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                             upTagImageView?.visibility = View.VISIBLE
                         } else {
                             upTagImageView?.visibility = View.GONE
+                        }
+                    }
+                    // 기다무
+                    if (item.iswop == "1") {
+                        remainTagView?.visibility = View.VISIBLE
+                        remainTagView?.isSelected = false
+                        remainTagTextView?.text = item.dp_wop_term
+                    } else {
+                        if (item.dp_pub_day.isNullOrEmpty()) {
+                            remainTagView.visibility = View.GONE
+                        } else {
+                            remainTagView?.isSelected = true
+                            remainTagTextView?.text = item.dp_pub_day
+                            remainTagView.visibility = View.VISIBLE
                         }
                     }
                     // ranking

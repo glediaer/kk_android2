@@ -23,6 +23,7 @@
                 tools:src="@mipmap/ic_launcher"/>
 
             <include
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
                 layout="@layout/view_new_up_tag"
                 android:layout_width="wrap_content"

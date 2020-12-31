@@ -39,7 +39,7 @@ import com.krosskomics.common.model.Main
 import com.krosskomics.common.view.SpanningLinearLayoutManager
 import com.krosskomics.data.DataLanguage
 import com.krosskomics.event.activity.EventActivity
-import com.krosskomics.genre.activity.GenreActivity
+import com.krosskomics.mainmenu.activity.GenreActivity
 import com.krosskomics.home.adapter.ChangeLanguageAdapter
 import com.krosskomics.home.adapter.HomeAdapter
 import com.krosskomics.home.adapter.MainBannerPagerAdapter
@@ -47,8 +47,8 @@ import com.krosskomics.home.viewmodel.MainViewModel
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.mynews.activity.MyNewsActivity
 import com.krosskomics.notice.activity.NoticeActivity
-import com.krosskomics.ongoing.activity.OnGoingActivity
-import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.mainmenu.activity.OnGoingActivity
+import com.krosskomics.mainmenu.activity.RankingActivity
 import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.settings.activity.SettingsActivity
@@ -60,7 +60,7 @@ import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil
 import com.krosskomics.util.ServerUtil.service
-import com.krosskomics.waitfree.activity.WaitFreeActivity
+import com.krosskomics.mainmenu.activity.WaitFreeActivity
 import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_content.*

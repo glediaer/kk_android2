@@ -104,6 +104,15 @@ interface InterfaceRestful {
     @POST("app/google/39/main")
     fun getMain(@Field("lang") lang: String?): Call<Main>
 
+    // seriesmenu
+    @FormUrlEncoded
+    @POST("/app/google/50/seriesmunu.php")
+    fun getSeriesMenu(@Field("m") m: String, @Field("p") p: String?): Call<More>
+
+    @FormUrlEncoded
+    @POST("/app/google/50/seriesmunu.php")
+    fun getSeriesGenre(@Field("m") m: String, @Field("p") p: String?): Call<Genre>
+
     // more 리스트
     @FormUrlEncoded
     @POST("app/google/37/list")

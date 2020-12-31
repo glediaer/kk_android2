@@ -25,11 +25,9 @@ import kotlinx.android.synthetic.main.activity_coin.*
 import kotlinx.android.synthetic.main.activity_coin.errorView
 import kotlinx.android.synthetic.main.activity_coin.nestedScrollView
 import kotlinx.android.synthetic.main.activity_coin.recyclerView
-import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_toolbar_trans.*
 import kotlinx.android.synthetic.main.view_toolbar_trans.toolbar
 import kotlinx.android.synthetic.main.view_toolbar_trans.view.*
-import kotlinx.android.synthetic.main.view_topbutton.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

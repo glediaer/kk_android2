@@ -1,10 +1,8 @@
 package com.krosskomics.viewer.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.drawable.Animatable
 import android.net.Uri
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,21 +22,12 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder
 import com.facebook.samples.zoomable.DoubleTapGestureListener
 import com.facebook.samples.zoomable.ZoomableDraweeView
 import com.krosskomics.R
-import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBanner
 import com.krosskomics.common.data.DataImage
 import com.krosskomics.common.holder.BaseItemViewHolder
-import com.krosskomics.series.activity.SeriesActivity
-import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getDeviceWidth
-import com.krosskomics.util.CommonUtil.goLoginAlert
-import com.krosskomics.util.CommonUtil.moveBrowserChrome
-import com.krosskomics.util.CommonUtil.moveSignUp
-import com.krosskomics.util.CommonUtil.read
-import com.krosskomics.viewer.activity.ViewerActivity
-import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.item_footer_viewer.view.*
 import kotlinx.android.synthetic.main.item_viewer.view.*
 import kotlinx.android.synthetic.main.item_viewer_comic.view.*

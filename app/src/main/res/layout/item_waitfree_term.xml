@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="94dp"
+    android:layout_height="42dp"
+    android:background="@drawable/kk_selector_waitfree_date">
+
+    <TextView
+        android:id="@+id/waitFreeTermTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:duplicateParentState="true"
+        android:gravity="center"
+        android:textColor="@color/kk_selector_color_darkgray_white"
+        android:textSize="14dp"
+        tools:text="12hours" />
+
+</FrameLayout>

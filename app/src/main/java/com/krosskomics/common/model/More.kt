@@ -1,6 +1,7 @@
 package com.krosskomics.common.model
 
 import com.krosskomics.common.data.DataBook
+import com.krosskomics.common.data.DataWaitFreeTerm
 import java.util.*
 
 class More {
@@ -13,4 +14,7 @@ class More {
     var page = 0
     var tot_pages = 0
     var list: ArrayList<DataBook>? = null
+
+    var today: String? = null
+    var wop_term: ArrayList<DataWaitFreeTerm>? = null   //기다무 주기 구분 리스트
 }

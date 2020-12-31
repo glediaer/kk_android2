@@ -83,14 +83,14 @@
             android:layout_height="50dp"
             android:visibility="gone"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="15dp"/>
 
         <ImageView
             android:id="@+id/sortImageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:visibility="visible"
-            android:src="@drawable/kk_rect_switch_track_on"
+            android:src="@drawable/kk_ic_ranking_filter"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"/>
 

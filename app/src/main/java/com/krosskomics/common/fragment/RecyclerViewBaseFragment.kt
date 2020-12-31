@@ -11,7 +11,6 @@ import com.krosskomics.R
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
-import com.krosskomics.common.data.DataNews
 import com.krosskomics.common.data.DataNotice
 import com.krosskomics.common.model.*
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
@@ -19,7 +18,6 @@ import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.ServerUtil
-import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.fragment_genre.nestedScrollView
 import kotlinx.android.synthetic.main.fragment_genre.recyclerView

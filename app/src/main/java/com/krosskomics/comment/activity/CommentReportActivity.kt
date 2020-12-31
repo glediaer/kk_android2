@@ -9,7 +9,6 @@ import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.data.DataReport
 import kotlinx.android.synthetic.main.activity_comment_report.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
-import kotlinx.android.synthetic.main.view_toolbar_black.view.*
 
 class CommentReportActivity : ToolbarTitleActivity() {
     private val TAG = "CommentReportActivity"

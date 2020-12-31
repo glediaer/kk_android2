@@ -6,11 +6,9 @@ import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
-import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.data.DataFile
 import com.krosskomics.common.model.Default
 import com.krosskomics.library.viewmodel.DownloadViewModel
@@ -20,7 +18,6 @@ import com.krosskomics.util.FileUtils
 import com.krosskomics.util.ServerUtil
 import kotlinx.android.synthetic.main.activity_download_ep.*
 import kotlinx.android.synthetic.main.activity_download_ep.recyclerView
-import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import retrofit2.Call
 import retrofit2.Callback

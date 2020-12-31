@@ -2,8 +2,8 @@
 <selector  xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:state_selected="true"
-        android:drawable="@drawable/kk_pw_see" />
+        android:drawable="@drawable/kk_pw_hide" />
     <item
         android:state_selected="false"
-        android:drawable="@drawable/kk_pw_hide" />
+        android:drawable="@drawable/kk_pw_see" />
 </selector>

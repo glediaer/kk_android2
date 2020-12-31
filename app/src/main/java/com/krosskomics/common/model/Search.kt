@@ -1,7 +1,6 @@
 package com.krosskomics.common.model
 
 import com.krosskomics.common.data.DataBook
-import com.krosskomics.common.data.DataRecentSearch
 import com.krosskomics.common.data.DataTag
 import java.util.*
 

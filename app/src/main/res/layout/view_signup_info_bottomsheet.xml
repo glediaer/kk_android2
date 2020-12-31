@@ -28,89 +28,100 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:max="5"
         android:progress="1" />
-
-    <FrameLayout
+    
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="493dp"
-        android:layout_marginTop="15dp"
-        android:padding="20dp"
-        android:background="@drawable/kk_bottomsheet_info_rect">
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="493dp"
+            android:layout_marginTop="15dp"
+            android:padding="20dp">
 
-            <TextView
-                android:id="@+id/infoTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                android:text="@string/str_nickname_title" />
-
-            <!-- nickname -->
-            <EditText
-                android:id="@+id/infoEmailEditTextView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="25dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:singleLine="true"
-                android:maxLength="20"
-                android:textSize="14dp"
-                android:textColor="#c6c6c6"
-                android:background="@drawable/kk_bottomsheet_info_edittext_rect"
-                android:hint="@string/str_minimum_nickname"/>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <!-- genre -->
+                <TextView
+                    android:id="@+id/infoTitleTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:text="@string/str_nickname_title" />
+
+                <!-- nickname -->
+                <EditText
+                    android:id="@+id/infoEmailEditTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="25dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:singleLine="true"
+                    android:maxLength="20"
+                    android:textSize="14dp"
+                    android:textColor="#c6c6c6"
+                    android:background="@drawable/kk_bottomsheet_info_edittext_rect"
+                    android:hint="@string/str_minimum_nickname"/>
+
+                <!-- genre -->
+                <include
+                    android:id="@+id/genreView"
+                    layout="@layout/view_signup_info_genre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <!-- gender -->
             <include
-                android:id="@+id/genreView"
-                layout="@layout/view_signup_info_genre"
+                android:id="@+id/genderView"
+                layout="@layout/view_signup_info_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
                 android:visibility="gone"
                 android:layout_gravity="center" />
 
-        </LinearLayout>
+            <!-- age -->
+            <include
+                android:id="@+id/ageView"
+                layout="@layout/view_signup_info_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center"/>
 
-        <!-- gender -->
-        <include
-            android:id="@+id/genderView"
-            layout="@layout/view_signup_info_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_gravity="center" />
+            <include
+                android:id="@+id/languageView"
+                layout="@layout/view_signup_info_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center" />
 
-        <!-- age -->
-        <include
-            android:id="@+id/ageView"
-            layout="@layout/view_signup_info_age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_gravity="center"/>
+            <ImageView
+                android:id="@+id/nextImageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="right|bottom"
+                android:src="@drawable/kk_selector_bottomsheet_info_next"/>
 
-        <include
-            android:id="@+id/languageView"
-            layout="@layout/view_signup_info_language"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_gravity="center" />
+        </FrameLayout>
 
-        <ImageView
-            android:id="@+id/nextImageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="right|bottom"
-            android:src="@drawable/kk_selector_bottomsheet_info_next"/>
+    </androidx.cardview.widget.CardView>
 
-    </FrameLayout>
+
 
 </LinearLayout>

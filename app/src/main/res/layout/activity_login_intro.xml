@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#262626"
     android:orientation="vertical"
     tools:context=".login.activity.LoginActivity">
 
-    <include
-        layout="@layout/view_base_toolbar"/>
+    <include layout="@layout/view_base_toolbar" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -16,77 +16,76 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/default_screen_margin"
-
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="28dp"
-                android:textColor="#000000"
-                android:lineSpacingExtra="7sp"
-                android:textStyle="bold"
-                android:text="@string/str_welcome_login" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textSize="18dp"
-                android:textColor="#000000"
-                tools:text="@string/str_welcome_login2" />
+            android:layout_marginTop="@dimen/default_screen_margin"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/default_screen_margin"
+            android:paddingBottom="@dimen/default_screen_margin">
 
             <ImageView
+                android:id="@+id/loginImageView"
                 android:layout_width="match_parent"
                 android:layout_height="233dp"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/kk_login_main_img"/>
+                android:layout_marginLeft="27dp"
+                android:layout_marginTop="4dp"
+                android:src="@drawable/kk_main_key" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="129dp"
+                android:text="@string/str_welcome_login"
+                android:textColor="#ffffff"
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/signupButton"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginTop="47dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/kk_gradient_signup_rect"
-                android:textSize="21dp"
-                android:textColor="#ffffff"
+                android:text="@string/str_signup"
                 android:textAllCaps="false"
-                android:text="@string/str_signup"/>
+                android:textColor="#ffffff"
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/kk_login_rect"
-                android:textSize="21dp"
-                android:textColor="#000000"
+                android:text="@string/str_login"
                 android:textAllCaps="false"
-                android:text="@string/str_login"/>
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center_horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColor="#828282"
-                    android:text="@string/str_login_invite" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp">
 
                 <TextView
                     android:id="@+id/inviteTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:textSize="14dp"
-                    android:textColor="#000000"
+                    android:text="@string/str_invite"
                     android:textStyle="bold"
-                    android:text="@string/str_invite" />
+                    android:textSize="12dp"
+                    android:textColor="#ffffff" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/str_login_invite"
+                    android:textSize="12sp"
+                    android:textColor="#828282" />
 
             </LinearLayout>
 

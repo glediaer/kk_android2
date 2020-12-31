@@ -16,12 +16,12 @@ import com.google.android.gms.analytics.HitBuilders
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
-import com.krosskomics.genre.activity.GenreActivity
+import com.krosskomics.mainmenu.activity.GenreActivity
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.login.activity.LoginActivity
 import com.krosskomics.login.activity.LoginIntroActivity
-import com.krosskomics.ongoing.activity.OnGoingActivity
-import com.krosskomics.ranking.activity.RankingActivity
+import com.krosskomics.mainmenu.activity.OnGoingActivity
+import com.krosskomics.mainmenu.activity.RankingActivity
 import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.splash.SplashActivity
 import com.krosskomics.util.CODE
@@ -30,7 +30,7 @@ import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.hideErrorView
 import com.krosskomics.util.CommonUtil.showErrorView
 import com.krosskomics.util.CommonUtil.showToast
-import com.krosskomics.waitfree.activity.WaitFreeActivity
+import com.krosskomics.mainmenu.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.view_main_action_item.*
 import kotlinx.android.synthetic.main.view_toolbar.*

@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="402dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="@dimen/default_screen_margin"
         android:layout_marginLeft="@dimen/default_screen_margin"
         android:layout_marginRight="@dimen/default_screen_margin"
         android:src="@drawable/kk_login_bg"/>

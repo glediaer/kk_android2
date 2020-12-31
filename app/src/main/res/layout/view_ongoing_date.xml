@@ -10,7 +10,7 @@
         android:id="@+id/monView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:tag="0"
+        android:tag="mon"
         android:layout_weight="1"
         android:background="@drawable/kk_selector_ongoing_date">
 
@@ -41,7 +41,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:tag="1"
+        android:tag="tue"
         android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
@@ -71,7 +71,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:tag="2"
+        android:tag="wed"
         android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
@@ -101,7 +101,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:tag="3"
+        android:tag="thu"
         android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
@@ -131,7 +131,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:tag="4"
+        android:tag="fri"
         android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
@@ -161,7 +161,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:tag="5"
+        android:tag="sat"
         android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView
@@ -191,7 +191,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp"
-        android:tag="6"
+        android:tag="sun"
         android:background="@drawable/kk_selector_ongoing_date">
 
         <TextView

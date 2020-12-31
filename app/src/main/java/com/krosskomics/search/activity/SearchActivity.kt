@@ -1,7 +1,6 @@
 package com.krosskomics.search.activity
 
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +12,6 @@ import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
-import com.krosskomics.common.data.DataRecentSearch
 import com.krosskomics.common.model.Search
 import com.krosskomics.search.adapter.SearchTagAdapter
 import com.krosskomics.search.viewmodel.SearchViewModel

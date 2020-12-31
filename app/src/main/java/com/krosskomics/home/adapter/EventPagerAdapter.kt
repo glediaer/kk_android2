@@ -1,24 +1,14 @@
 package com.krosskomics.home.adapter
 
-import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.facebook.drawee.view.SimpleDraweeView
 import com.krosskomics.R
-import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.data.DataBanner
 import com.krosskomics.home.activity.HomePopupActivity
-import com.krosskomics.series.activity.SeriesActivity
-import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
-import com.krosskomics.util.CommonUtil.goLoginAlert
-import com.krosskomics.util.CommonUtil.moveBrowserChrome
-import com.krosskomics.util.CommonUtil.moveSignUp
-import com.krosskomics.util.CommonUtil.read
-import com.krosskomics.webview.WebViewActivity
 
 class EventPagerAdapter(val eventList: ArrayList<DataBanner>) : PagerAdapter() {
     override fun getCount(): Int {

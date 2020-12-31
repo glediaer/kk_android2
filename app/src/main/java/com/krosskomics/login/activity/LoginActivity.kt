@@ -30,7 +30,7 @@ import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.common.activity.BaseActivity
 import com.krosskomics.common.data.DataAge
-import com.krosskomics.common.data.DataGenre
+import com.krosskomics.common.data.DataLoginGenre
 import com.krosskomics.common.data.DataLogin
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Login
@@ -337,10 +337,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         override fun afterTextChanged(s: Editable) {
                             if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
                                 goLoginButton.isEnabled =
-                                    !("" == passwordEditTextView.text.toString() || !emailCheck(s.toString()))
+                                    !(passwordEditTextView.text.toString().trim().isEmpty() &&
+                                            passwordEditTextView.text.toString().trim().length < 6 ||
+                                            !emailCheck(s.toString()))
                             } else {
                                 goNextButton.isEnabled =
-                                    !("" == passwordEditTextView.text.toString() || !emailCheck(s.toString()))
+                                    !(passwordEditTextView.text.toString().trim().isEmpty() &&
+                                            passwordEditTextView.text.toString().trim().length < 6 ||
+                                            !emailCheck(emailEditTextView.text.toString().trim()))
+                                            && termsImageView.isSelected
                             }
                         }
                     })
@@ -364,11 +369,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         override fun afterTextChanged(s: Editable) {
                             if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
                                 goLoginButton.isEnabled =
-                                    !("" == passwordEditTextView.text.toString().trim() ||
+                                    !(passwordEditTextView.text.toString().trim().isEmpty() &&
+                                            passwordEditTextView.text.toString().trim().length < 6 ||
                                             !emailCheck(emailEditTextView.text.toString().trim()))
                             } else {
                                 goNextButton.isEnabled =
-                                    !("" == passwordEditTextView.text.toString().trim() ||
+                                    !(passwordEditTextView.text.toString().trim().isEmpty() &&
+                                            passwordEditTextView.text.toString().trim().length < 6 ||
                                             !emailCheck(emailEditTextView.text.toString().trim()))
                                             && termsImageView.isSelected
                             }
@@ -608,12 +615,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                     KJKomicsApp.LOGIN_DATA?.genres = arrayListOf()
                 }
                 dialogView.nextImageView.isEnabled = KJKomicsApp.LOGIN_DATA?.genres?.size!! >= 3
-                KJKomicsApp.INIT_SET.genre_img_list?.let {
+                KJKomicsApp.INIT_SET.loginGenre_img_list?.let {
                     recyclerView.adapter = InfoGenreAdapter(it)
                     recyclerView.addItemDecoration(GenreDecoration(context))
                     (recyclerView.adapter as InfoGenreAdapter).setOnItemClickListener(object : InfoGenreAdapter.OnItemClickListener {
                         override fun onItemClick(item: Any?) {
-                            if (item is DataGenre) {
+                            if (item is DataLoginGenre) {
                                 if (KJKomicsApp.LOGIN_DATA?.genres == null) {
                                     KJKomicsApp.LOGIN_DATA?.genres = arrayListOf()
                                 }

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.krosskomics.R
-import com.krosskomics.common.data.DataGenre
+import com.krosskomics.common.data.DataLoginGenre
 import com.krosskomics.common.holder.BaseItemViewHolder
 import kotlinx.android.synthetic.main.item_info_genre.view.*
 
@@ -35,7 +35,7 @@ class InfoGenreAdapter(private val items: ArrayList<*>) :
     inner class CustomItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
         override fun setData(item: Any?, position: Int) {
             item?.let {
-                if (it is DataGenre) {
+                if (it is DataLoginGenre) {
                     itemView.apply {
                         Glide.with(itemView.context)
                             .load(it.image)

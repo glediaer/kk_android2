@@ -54,7 +54,7 @@
 
     <string name="str_welcome_login">Welcome to the\nKross Komics!</string>
     <string name="str_welcome_login2">Start Your Joyful Journey!</string>
-    <string name="str_signup">Sign Up</string>
+    <string name="str_signup">Signup</string>
     <string name="str_login">Login</string>
     <string name="str_login_invite">With friends, Get benefits!</string>
     <string name="str_invite"><u>Invite</u></string>
@@ -150,11 +150,6 @@
 
     <string name="str_coin_shop">Coin Shop</string>
     <string name="str_later">Later</string>
-    <string name="str_12hours">"12\nhours"</string>
-    <string name="str_1day">"1\nday"</string>
-    <string name="str_3day">"3\ndays"</string>
-    <string name="str_5day">"5\ndays"</string>
-    <string name="str_7day">"7\ndays"</string>
 
     <string name="str_description">Description</string>
     <string name="str_permanent">Permanent</string>

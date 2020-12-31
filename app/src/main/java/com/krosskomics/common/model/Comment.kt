@@ -1,7 +1,6 @@
 package com.krosskomics.common.model
 
 import com.krosskomics.common.data.DataComment
-import com.krosskomics.common.data.DataNews
 import java.util.*
 
 class Comment {

@@ -28,7 +28,6 @@ import kotlinx.android.synthetic.main.fragment_library.*
 import kotlinx.android.synthetic.main.view_empty_library.view.*
 import kotlinx.android.synthetic.main.view_mytoon_category.*
 import kotlinx.android.synthetic.main.view_mytoon_filter.*
-import kotlinx.android.synthetic.main.view_network_state.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
 import retrofit2.Call

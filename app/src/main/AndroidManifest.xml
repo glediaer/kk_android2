@@ -48,22 +48,22 @@
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ongoing.activity.OnGoingActivity"
+        <activity android:name=".mainmenu.activity.OnGoingActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".waitfree.activity.WaitFreeActivity"
+        <activity android:name=".mainmenu.activity.WaitFreeActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".ranking.activity.RankingActivity"
+        <activity android:name=".mainmenu.activity.RankingActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".genre.activity.GenreActivity"
+        <activity android:name=".mainmenu.activity.GenreActivity"
             android:configChanges="screenSize|orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
