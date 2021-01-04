@@ -40,12 +40,8 @@ class ViewerRepository : CommonRepository() {
         })
     }
 
-    fun requestCheckEp(context: Context, eid: String?) {
-        val api: Call<Episode> = ServerUtil.service.checkEpisode(
-            read(context, CODE.CURRENT_LANGUAGE, "en"),
-            eid,
-            read(context, CODE.LOCAL_Android_Id, "")
-        )
+    fun requestCheckEp(eid: String?) {
+        val api: Call<Episode> = ServerUtil.service.checkEpisode(eid)
         api.enqueue(object : Callback<Episode> {
             override fun onResponse(call: Call<Episode>, response: Response<Episode>) {
                 if (response.body() != null) {

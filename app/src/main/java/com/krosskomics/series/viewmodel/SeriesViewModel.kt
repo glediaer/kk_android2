@@ -53,28 +53,40 @@ class SeriesViewModel(application: Application): BaseViewModel(application) {
     // 구독
     var mAction = "S"
 
+    var sort = "n"   //n : 최신, f : 첫화
+
     private val repository = SeriesRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
+    private val epListResponseLiveData = repository.getEpListResponseLiveData()
     private val checkResponseLiveData = repository.getCheckEpResponseLiveData()
     private val imageUrlResponseLiveData = repository.getImageUrlResponseLiveData()
 
     override fun requestMain() {
         requestType = REQUEST_TYPE.REQUEST_TYPE_A
-        repository.requestMain(getApplication(), sid)
+        repository.requestMain(sid)
     }
 
     override fun getMainResponseLiveData(): LiveData<Any> {
         return mainResponseLiveData
     }
 
-    fun requestCheckEp() {
+    fun requestEpList() {
         requestType = REQUEST_TYPE.REQUEST_TYPE_B
+        repository.requestEpList(sid, sort, page)
+    }
+
+    fun requestCheckEp() {
+        requestType = REQUEST_TYPE.REQUEST_TYPE_C
         repository.requestCheckEp(getApplication(), selectEpItem.eid)
     }
 
     fun requestImageUrl() {
-        requestType = REQUEST_TYPE.REQUEST_TYPE_C
+        requestType = REQUEST_TYPE.REQUEST_TYPE_D
         repository.requestImageUrl(getApplication(), downloadEpEid)
+    }
+
+    fun getEpListResponseLiveData(): LiveData<Any> {
+        return epListResponseLiveData
     }
 
     fun getCheckEpResponseLiveData(): LiveData<Any> {

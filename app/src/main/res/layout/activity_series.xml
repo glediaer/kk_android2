@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:gravity="center_horizontal">
 
@@ -24,7 +24,7 @@
                     android:id="@+id/mainImageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:placeholderImage="@drawable/kk_placeholder"/>
+                    app:placeholderImage="@drawable/kk_placeholder" />
 
                 <View
                     android:layout_width="match_parent"
@@ -37,7 +37,7 @@
                     android:layout_height="19dp"
                     android:layout_gravity="right|bottom"
                     android:layout_marginRight="20dp"
-                    android:layout_marginBottom="40dp"/>
+                    android:layout_marginBottom="40dp" />
 
             </FrameLayout>
 
@@ -45,100 +45,263 @@
                 android:id="@+id/infoView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:background="@drawable/kk_gradient_series_info_rect"
                 android:layout_marginTop="170dp"
-                android:orientation="vertical">
+                android:background="@drawable/kk_gradient_series_info_rect"
+                android:orientation="vertical"
+                android:paddingTop="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:orientation="vertical">
+                    android:paddingRight="20dp">
 
-                    <FrameLayout
+                    <LinearLayout
+                        android:id="@+id/optionView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <LinearLayout
-                            android:id="@+id/optionView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:id="@+id/wopView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
 
                             <ImageView
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:duplicateParentState="true"
-                                android:src="@drawable/kk_selector_series_option"/>
+                                android:src="@drawable/kk_selector_series_option" />
 
                             <TextView
                                 android:id="@+id/optionTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="7dp"
-                                android:textSize="12dp"
+                                android:singleLine="true"
                                 android:textColor="@color/kk_selector_color_purple_red"
+                                android:textSize="12dp"
                                 tools:text="Free every 5 days" />
 
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/genreTextView"
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="20dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:textSize="10dp"
-                            android:textColor="#c6c6c6"
-                            android:layout_gravity="right"
-                            android:gravity="center"
-                            android:background="@drawable/kk_rect_seris_genre"
-                            tools:text="Drama" />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right">
 
-                    </FrameLayout>
+                            <TextView
+                                android:id="@+id/genre1TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="20dp"
+                                android:background="@drawable/kk_rect_seris_genre"
+                                android:gravity="center"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textColor="#c6c6c6"
+                                android:textSize="10dp"
+                                android:visibility="gone"
+                                tools:text="Drama"
+                                tools:visibility="visible" />
+
+                            <TextView
+                                android:id="@+id/genre2TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:background="@drawable/kk_rect_seris_genre"
+                                android:gravity="center"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textColor="#c6c6c6"
+                                android:textSize="10dp"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                tools:text="Drama" />
+
+                            <TextView
+                                android:id="@+id/genre3TextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:background="@drawable/kk_rect_seris_genre"
+                                android:gravity="center"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:textColor="#c6c6c6"
+                                android:textSize="10dp"
+                                android:visibility="gone"
+                                tools:visibility="visible"
+                                tools:text="Drama" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/contentTitleTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="20dp"
                         android:layout_marginTop="10dp"
-                        android:textStyle="bold"
                         android:textColor="#ffffff"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
                         tools:text="The Last Print" />
 
-                    <TextView
-                        android:id="@+id/writerTextView"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:textSize="14dp"
-                        android:textColor="#828282"
-                        tools:text="Luri Kim" />
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/writerTextView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#828282"
+                            android:textSize="14dp"
+                            tools:text="Luri Kim" />
+
+                        <LinearLayout
+                            android:id="@+id/commentView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/kk_comment" />
+
+                            <TextView
+                                android:id="@+id/commentTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:textColor="@color/div_line_another"
+                                android:textSize="12dp"
+                                tools:text="98" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="15dp"
+                        android:background="#262626" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/optionFreeEpView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/kk_ic_free_series" />
+
+                            <TextView
+                                android:id="@+id/optionFreeEpTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/div_line_another"
+                                android:textSize="12dp"
+                                tools:text="First 5 episodes for Free" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/optionWopView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/kk_waitfree_color" />
+
+                            <TextView
+                                android:id="@+id/optionWopTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/div_line_another"
+                                android:textSize="12dp"
+                                tools:text="Next 7 episodes for Wait or Pay" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/optionNoticeView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/kk_ic_news" />
+
+                            <TextView
+                                android:id="@+id/optionNoticeTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:textColor="@color/div_line_another"
+                                android:textSize="12dp"
+                                tools:text="Ongoing schedule changed to Monday" />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/descButton"
                         android:layout_width="match_parent"
                         android:layout_height="37dp"
                         android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        android:background="@drawable/kk_rect_series_desc_btn">
+                        android:background="@drawable/kk_rect_series_desc_btn"
+                        android:gravity="center">
 
                         <TextView
                             android:id="@+id/descTitleTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="14dp"
+                            android:text="@string/str_description"
                             android:textColor="#ffffff"
-                            android:text="@string/str_description" />
+                            android:textSize="14dp" />
 
                         <ImageView
                             android:layout_width="13dp"
                             android:layout_height="13dp"
                             android:layout_marginLeft="7dp"
                             android:duplicateParentState="true"
-                            android:src="@drawable/kk_selector_up_down"/>
+                            android:src="@drawable/kk_selector_up_down" />
 
                     </LinearLayout>
 
@@ -146,13 +309,13 @@
                         android:id="@+id/descTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="19dp"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        android:textSize="14dp"
-                        android:textColor="#c6c6c6"
                         android:lineSpacingExtra="7sp"
-                        tools:text="An evil witch rises to power through a random girl every ten years to cause destruction to the world. Agni, a feisty girl, sets out to make her own team to trace the origin of the witch and put an end to her for good." />
+                        android:paddingTop="19dp"
+                        android:textColor="#c6c6c6"
+                        android:textSize="14dp"
+                        android:visibility="gone"
+                        tools:text="An evil witch rises to power through a random girl every ten years to cause destruction to the world. Agni, a feisty girl, sets out to make her own team to trace the origin of the witch and put an end to her for good."
+                        tools:visibility="visible" />
 
                 </LinearLayout>
 
@@ -162,50 +325,70 @@
                     android:layout_marginTop="30dp">
 
                     <LinearLayout
+                        android:id="@+id/listHeaderWaitView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/kk_gradient_series_wait_info_rect"
                         android:gravity="center_vertical"
-                        android:paddingTop="14dp"
                         android:paddingLeft="20dp"
+                        android:paddingTop="14dp"
                         android:paddingRight="20dp"
                         android:paddingBottom="47dp"
-                        android:background="@drawable/kk_gradient_series_wait_info_rect">
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/kk_ic_wait_or_pay_white"/>
+                            android:src="@drawable/kk_ic_wait_or_pay_white" />
 
-                        <TextView
-                            android:id="@+id/waitTextView"
+                        <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textSize="12dp"
-                            android:layout_marginLeft="7dp"
-                            android:textColor="#ffffff"
-                            tools:text="FREE every 5 days" />
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/waitTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:textColor="#ffffff"
+                                android:textSize="12dp"
+                                tools:text="FREE every 5 days" />
+
+                            <ImageView
+                                android:id="@+id/waitGuessImageView"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_marginLeft="3dp"
+                                android:src="@drawable/kk_ic_guess" />
+
+                        </LinearLayout>
 
                         <FrameLayout
+                            android:id="@+id/progressView"
                             android:layout_width="130dp"
-                            android:layout_height="20dp">
+                            android:layout_height="20dp"
+                            android:visibility="gone"
+                            tools:visibility="visible">
 
                             <ProgressBar
                                 android:id="@+id/progressBar"
+                                style="?android:attr/progressBarStyleHorizontal"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:progressDrawable="@drawable/kk_rect_series_progressbar"
-                                style="?android:attr/progressBarStyleHorizontal"
                                 android:max="100"
-                                android:progress="20" />
+                                android:progress="20"
+                                android:progressDrawable="@drawable/kk_rect_series_progressbar" />
 
                             <TextView
                                 android:id="@+id/progressTextView"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:textSize="10dp"
-                                android:textColor="#80ffffff"
                                 android:gravity="center"
+                                android:textColor="#80ffffff"
+                                android:textSize="10dp"
                                 tools:text="23 hours 3 days" />
 
                         </FrameLayout>
@@ -213,108 +396,108 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/rentalView"
                         android:layout_width="match_parent"
                         android:layout_height="47dp"
                         android:layout_marginTop="47dp"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
+                        android:background="@drawable/kk_rect_seris_permanent"
                         android:gravity="center_vertical"
-                        android:background="@drawable/kk_rect_seris_permanent">
-                        
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp">
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/kk_ic_rental_ticket"/>
+                            android:src="@drawable/kk_ic_rental_ticket" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginLeft="7dp"
-                            android:textSize="12dp"
+                            android:layout_weight="1"
                             android:textColor="#0c0036"
-                            tools:text="RENTAL Ticket" />
+                            android:textSize="12dp"
+                            android:text="@string/str_rental_ticket" />
 
                         <TextView
                             android:id="@+id/rentalCntTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="7dp"
+                            android:textColor="@color/kk_selector_color_rental_count"
                             android:textSize="16dp"
-                            android:textColor="#4c0c0036"
                             tools:text="0 ticket" />
 
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:gravity="center"-->
-<!--                            android:layout_weight="1">-->
+                        <!--                        <LinearLayout-->
+                        <!--                            android:layout_width="0dp"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:gravity="center"-->
+                        <!--                            android:layout_weight="1">-->
 
-<!--                            <ImageView-->
-<!--                                android:layout_width="20dp"-->
-<!--                                android:layout_height="13dp"-->
-<!--                                android:src="@drawable/kk_permanent_ticket"/>-->
+                        <!--                            <ImageView-->
+                        <!--                                android:layout_width="20dp"-->
+                        <!--                                android:layout_height="13dp"-->
+                        <!--                                android:src="@drawable/kk_permanent_ticket"/>-->
 
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginLeft="7dp"-->
-<!--                                android:textSize="14dp"-->
-<!--                                android:textColor="@color/red"-->
-<!--                                android:text="@string/str_permanent" />-->
+                        <!--                            <TextView-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:layout_marginLeft="7dp"-->
+                        <!--                                android:textSize="14dp"-->
+                        <!--                                android:textColor="@color/red"-->
+                        <!--                                android:text="@string/str_permanent" />-->
 
-<!--                            <TextView-->
-<!--                                android:id="@+id/permanentCntTextView"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:textSize="14dp"-->
-<!--                                android:layout_marginLeft="7dp"-->
-<!--                                android:textColor="@color/kk_selector_color_gray_red"-->
-<!--                                tools:text="0"/>-->
+                        <!--                            <TextView-->
+                        <!--                                android:id="@+id/permanentCntTextView"-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:textSize="14dp"-->
+                        <!--                                android:layout_marginLeft="7dp"-->
+                        <!--                                android:textColor="@color/kk_selector_color_gray_red"-->
+                        <!--                                tools:text="0"/>-->
 
-<!--                        </LinearLayout>-->
+                        <!--                        </LinearLayout>-->
 
-<!--                        <View-->
-<!--                            android:layout_width="1dp"-->
-<!--                            android:layout_height="10dp"-->
-<!--                            android:background="#e5e5e5"/>-->
+                        <!--                        <View-->
+                        <!--                            android:layout_width="1dp"-->
+                        <!--                            android:layout_height="10dp"-->
+                        <!--                            android:background="#e5e5e5"/>-->
 
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:gravity="center"-->
-<!--                            android:layout_weight="1">-->
+                        <!--                        <LinearLayout-->
+                        <!--                            android:layout_width="0dp"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:gravity="center"-->
+                        <!--                            android:layout_weight="1">-->
 
-<!--                            <ImageView-->
-<!--                                android:layout_width="20dp"-->
-<!--                                android:layout_height="13dp"-->
-<!--                                android:src="@drawable/kk_rental_ticket"/>-->
+                        <!--                            <ImageView-->
+                        <!--                                android:layout_width="20dp"-->
+                        <!--                                android:layout_height="13dp"-->
+                        <!--                                android:src="@drawable/kk_rental_ticket"/>-->
 
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:layout_marginLeft="7dp"-->
-<!--                                android:textSize="14dp"-->
-<!--                                android:textColor="@color/yellow"-->
-<!--                                android:text="@string/str_rental" />-->
+                        <!--                            <TextView-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:layout_marginLeft="7dp"-->
+                        <!--                                android:textSize="14dp"-->
+                        <!--                                android:textColor="@color/yellow"-->
+                        <!--                                android:text="@string/str_rental" />-->
 
-<!--                            <TextView-->
-<!--                                android:id="@+id/rentalCntTextView"-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:textSize="14dp"-->
-<!--                                android:layout_marginLeft="7dp"-->
-<!--                                android:textColor="@color/kk_selector_color_gray_yellow"-->
-<!--                                tools:text="0"/>-->
+                        <!--                            <TextView-->
+                        <!--                                android:id="@+id/rentalCntTextView"-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:textSize="14dp"-->
+                        <!--                                android:layout_marginLeft="7dp"-->
+                        <!--                                android:textColor="@color/kk_selector_color_gray_yellow"-->
+                        <!--                                tools:text="0"/>-->
 
-<!--                        </LinearLayout>-->
+                        <!--                        </LinearLayout>-->
 
                     </LinearLayout>
 
                 </FrameLayout>
 
-                <include
-                    layout="@layout/item_underbar"/>
+                <include layout="@layout/item_underbar" />
 
             </LinearLayout>
 
@@ -322,32 +505,33 @@
                 android:id="@+id/epInfoView"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:layout_below="@id/infoView"
                 android:gravity="center_vertical"
-                android:layout_below="@id/infoView">
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
 
                 <ImageView
                     android:id="@+id/listTypeImageView"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/kk_selector_series_list_type"/>
+                    android:src="@drawable/kk_selector_series_list_type" />
 
                 <TextView
                     android:id="@+id/epCountTextView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="14dp"
-                    android:textColor="#2e2e2e"
                     android:gravity="center_horizontal"
+                    android:textColor="#2e2e2e"
+                    android:textSize="14dp"
                     tools:text="15 episodes" />
 
                 <ImageView
                     android:id="@+id/listOrderImageView"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/kk_selector_series_order"/>
+                    android:tag="n"
+                    android:src="@drawable/kk_selector_series_order" />
 
             </LinearLayout>
 
@@ -355,17 +539,17 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@id/epInfoView"
                 android:paddingLeft="20dp"
-                android:paddingRight="19dp"
-                android:layout_below="@id/epInfoView" />
+                android:paddingRight="19dp" />
 
             <include
                 android:id="@+id/underLineView"
                 layout="@layout/item_underline_1dp"
-                android:layout_marginTop="14dp"
                 android:layout_width="match_parent"
+                android:layout_height="1dp"
                 android:layout_below="@id/recyclerView"
-                android:layout_height="1dp" />
+                android:layout_marginTop="14dp" />
 
             <FrameLayout
                 android:id="@+id/moveTopView"
@@ -377,7 +561,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/kk_ic_move_top"/>
+                    android:src="@drawable/kk_ic_move_top" />
 
             </FrameLayout>
 
@@ -385,61 +569,60 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <include
-        layout="@layout/view_toolbar"/>
+    <include layout="@layout/view_toolbar" />
 
     <LinearLayout
         android:id="@+id/firstContinueEpView"
         android:layout_width="158dp"
         android:layout_height="45dp"
-        android:visibility="gone"
-        tools:visibility="visible"
-        android:background="@drawable/kk_rect_series_first_continue"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
-        android:gravity="center">
+        android:background="@drawable/kk_rect_series_first_continue"
+        android:gravity="center"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/firstContinueEpTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16dp"
+            android:text="@string/str_first_ep"
             android:textColor="#ffffff"
-            android:text="@string/str_first_ep" />
-        
+            android:textSize="16dp" />
+
         <ImageView
             android:layout_width="13dp"
             android:layout_height="13dp"
             android:layout_marginLeft="7dp"
-            android:src="@drawable/kk_ic_next_white"/>
+            android:src="@drawable/kk_ic_next_white" />
 
     </LinearLayout>
 
     <include
         android:id="@+id/epPurchaseDialog"
         layout="@layout/view_ep_purchase"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
 
     <include
         android:id="@+id/epPurchaseSuceesDialog"
         layout="@layout/view_ep_purchase_success"
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone" />
 
     <include
         android:id="@+id/errorView"
         layout="@layout/view_network_error"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <include
         android:id="@+id/loadingView"
         layout="@layout/view_loading"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </RelativeLayout>

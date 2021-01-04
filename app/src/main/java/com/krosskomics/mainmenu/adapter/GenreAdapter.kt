@@ -151,7 +151,8 @@ class GenreAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<Genre
                     moreButton?.visibility = View.VISIBLE
                     moreButton?.setOnClickListener {
                         val intent = Intent(itemView.context, GenreDetailActivity::class.java)
-//                        intent.putExtra("more_param", item.more_param)
+                        intent.putExtra("more_param", item.p_genre)
+                        intent.putExtra("listType", "genre")
                         context.startActivity(intent)
                     }
 //                } else {

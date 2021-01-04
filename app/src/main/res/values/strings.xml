@@ -114,6 +114,8 @@
     <string name="str_used">Used</string>
     <string name="str_my_cash2">MY CASH :</string>
     <string name="str_my_cash_format">%s CASH</string>
+    <string name="str_ticket_format">%d ticket</string>
+    <string name="str_rental_ticket">RENTAL Ticket</string>
 
     <string name="str_promotion_hint">Enter your promotion code</string>
     <string name="str_register">Register</string>

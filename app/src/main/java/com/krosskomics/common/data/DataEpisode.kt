@@ -4,47 +4,20 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 class DataEpisode {
-    @SerializedName("eid")
     var eid: String = ""
-
-    @SerializedName("ep_seq")
     var ep_seq = 0
-
-    @SerializedName("ep_title")
     var ep_title: String = ""
-
-    @SerializedName("ep_show_date")
     var ep_show_date: String = ""
-
-    @SerializedName("isupdate")
     var isupdate: String? = null
-
-    @SerializedName("ep_store_price")
     var ep_store_price = 0
-
-    @SerializedName("ep_rent_price")
     var ep_rent_price = 0
-
-    @SerializedName("image")
     var image: String? = null
-
-    @SerializedName("isunlocked")
-    var isunlocked: String? = null
-
-    @SerializedName("str_type")
+    var isunlocked: String? = null  //unlock 여부 (구매시 0 인것만 구매가능)
     var str_type // B: black, O: orange
             : String? = null
-
-    @SerializedName("show_str")
     var show_str: String? = null
-
-    @SerializedName("ep_view_type")
     var ep_view_type: String? = null
-
-    @SerializedName("ep_rating")
     var ep_rating: String? = null
-
-    @SerializedName("ep_rent_term")
     var ep_rent_term: String? = null
     var isdownload: String? = "0"
     var isChecked = false
@@ -52,73 +25,48 @@ class DataEpisode {
     var possibility_allbuy = false
 
     // episode check
-    @SerializedName("sid")
     var sid: String? = null
-
-    @SerializedName("allow_store")
     var allow_store: String? = null
-
-    @SerializedName("allow_rent")
     var allow_rent: String? = null
-
-    @SerializedName("except_ep_seq")
     var except_ep_seq = 0
-
-    @SerializedName("sticket")
     var sticket = 0
-
-    @SerializedName("rticket")
     var rticket = 0
-
-    @SerializedName("able_store")
     var able_store: String? = null
-
-    @SerializedName("able_rent")
     var able_rent: String? = null
-
-    @SerializedName("rent_text")
     var rent_text: String? = null
-
-    @SerializedName("store_text")
     var store_text: String? = null
-
-    @SerializedName("coin")
     var coin: String? = null
     var download_progress = 0
     var download_max = 0
 
+    // check ep
+    var isexcept_ep = "0" //"0",				기다무 / 티켓 사용 제외 여부(0:제외아님(사용가능), 1:제외(사용불가))
+    var dp_except_ep: String? = null //"Latest 10 episodes do not apply for Wait or Pay.",				기다무 / 티켓 사용불가시 표시
+    var iswop = "0" //"1",				기다무 여부 (0: 기다무 아님, 1:기다무)
+    var reset_wop: String? = null //"11hours",				기다무 리셋 표시
+    var reset_wop_ratio = 0 //99,				기다무 리셋 남은기간 백분율
+    var user_cash = "0" //0,				cash
+    var user_bonus_cash = "0" //"0"				bonus cash
+
+//    "isexcept_ep": "0",				기다무 / 티켓 사용 제외 여부(0:제외아님(사용가능), 1:제외(사용불가))
+//    "dp_except_ep": "Latest 10 episodes do not apply for Wait or Pay.",				기다무 / 티켓 사용불가시 표시
+//    "iswop": "1",				기다무 여부 (0: 기다무 아님, 1:기다무)
+//    "reset_wop": "11hours",				기다무 리셋 표시
+//    "reset_wop_ratio": 99,				기다무 리셋 남은기간 백분율
+//    "user_cash": 0,				cash
+//    "user_bonus_cash": "0"				bonus cash
+
     // viewer
-    @SerializedName("ep_contents_domain")
     var ep_contents_domain: String? = null
-
-    @SerializedName("ep_contents_path")
     var ep_contents_path: String? = null
-
-    @SerializedName("ep_contents")
     var ep_contents: String = ""
-
-    @SerializedName("vviewer")
     var vviewer: String? = null
-
-    @SerializedName("hviewer")
     var hviewer: String? = null
-
-    @SerializedName("allow_comment")
     var allow_comment: String? = null
-
-    @SerializedName("title")
     var title: String? = null
-
-    @SerializedName("pre_eid")
     var pre_eid: String? = null
-
-    @SerializedName("next_eid")
     var next_eid: String? = null
-
-    @SerializedName("able_like")
     var able_like: String? = null
-
-    @SerializedName("comment_url")
     var comment_url: String? = null
     var read_ep_img_index: String? = null
     var share_url: String? = null
@@ -127,6 +75,11 @@ class DataEpisode {
     var ep_view_id: String? = null
     var download_expire: String = ""
     var isEpSelect = false
+
+    var isread: String? = null  //    "isread": "0",										에피소드 뷰 여부 (0:안봄, 1:봄)
+    var ep_type: String? = null  //    "F",										에피소드 구분 (F: 무료, W:기다리면 무료, C:유료)
+    var dp_list_txt: String? = null  //   "December 01, 2019",										리스트 형일때 표시
+    var dp_tile_txt: String? = null  //   "12.01.2019"										타일 형일때 표시
 
     companion object {
         var seq = Comparator<DataEpisode> { s1, s2 ->

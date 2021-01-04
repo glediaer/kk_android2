@@ -115,10 +115,10 @@ interface InterfaceRestful {
 
     // more 리스트
     @FormUrlEncoded
-    @POST("app/google/37/list")
+    @POST("/app/google/50/serieslist.php")
     fun getMoreList(
-        @Field("lang") lang: String?,
-        @Field("param") param: String?,
+        @Field("t") t: String?,
+        @Field("p") p: String?,
         @Field("page") page: Int
     ): Call<More>
 
@@ -148,21 +148,27 @@ interface InterfaceRestful {
         @Field("page") page: Int
     ): Call<Notice>
 
-    // 에피소드 목록 호출
+    // 시리즈 데이터 호출
     @FormUrlEncoded
-    @POST("app/google/37/series")
-    fun getEpisodeList(
-        @Field("lang") lang: String?,
+    @POST("app/google/50/series.php")
+    fun getSeriesData(
         @Field("sid") sid: String?
     ): Call<Episode>
 
+    // ep 데이터 호출
+    @FormUrlEncoded
+    @POST("/app/google/50/episode.php")
+    fun getEpList(
+        @Field("sid") sid: String?,
+        @Field("s") s: String?,
+        @Field("page") page: Int
+    ): Call<EpisodeMore>
+
     // 에피소드 소장체크
     @FormUrlEncoded
-    @POST("app/google/37/checkepisode")
+    @POST("/app/google/50/checkepisode.php")
     fun checkEpisode(
-        @Field("lang") lang: String?,
-        @Field("eid") eid: String?,
-        @Field("deviceid") deviceid: String?
+        @Field("eid") eid: String?
     ): Call<Episode>
 
     //에피소드 선택구매

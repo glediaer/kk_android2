@@ -12,10 +12,10 @@ import retrofit2.Response
 
 
 class MoreRepository : CommonRepository(){
-    fun requestMain(context: Context, page: Int) {
+    fun requestMain(listType: String, param2: String?, page: Int) {
         val api: Call<More> = ServerUtil.service.getMoreList(
-            CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
-            "1",
+            listType,
+            param2,
             page
         )
         api.enqueue(object : Callback<More> {

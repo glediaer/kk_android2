@@ -8,15 +8,6 @@ import kotlinx.android.synthetic.main.activity_genre_detail.*
 abstract class ToolbarViewPagerActivity : ToolbarTitleActivity() {
     private val TAG = "GenreDetailActivity"
 
-
-//    private val viewModel: RankingViewModel by lazy {
-//        ViewModelProvider(this, object : ViewModelProvider.Factory {
-//            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                return RankingViewModel(application) as T
-//            }
-//        }).get(RankingViewModel::class.java)
-//    }
-
     var adapterType = 0     // 0: 장르상세, 1: 라이브러리, 3: notice
     lateinit var tabItems: List<String>
     open var tabIndex = 0
@@ -33,7 +24,7 @@ abstract class ToolbarViewPagerActivity : ToolbarTitleActivity() {
         initTabPosition()
     }
 
-    protected fun initViewPager() {
+    protected open fun initViewPager() {
         viewPager.adapter = CommonPagerAdapter(
             this,
             tabItems.size,
@@ -44,7 +35,7 @@ abstract class ToolbarViewPagerActivity : ToolbarTitleActivity() {
         }.attach()
     }
 
-    private fun initTabPosition() {
+    fun initTabPosition() {
         viewPager.currentItem = tabIndex
     }
 

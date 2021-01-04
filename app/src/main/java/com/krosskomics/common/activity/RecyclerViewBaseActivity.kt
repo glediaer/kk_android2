@@ -21,6 +21,7 @@ import com.krosskomics.common.data.DataComment
 import com.krosskomics.common.data.DataReport
 import com.krosskomics.common.model.*
 import com.krosskomics.common.viewmodel.BaseViewModel
+import com.krosskomics.genre.activity.GenreDetailActivity
 import com.krosskomics.mainmenu.adapter.GenreAdapter
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.mainmenu.activity.WaitFreeActivity
@@ -41,6 +42,10 @@ import kotlinx.android.synthetic.main.activity_more.*
 import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_network_error.view.*
+import kotlinx.android.synthetic.main.view_toolbar.*
+import kotlinx.android.synthetic.main.view_toolbar.actionItem
+import kotlinx.android.synthetic.main.view_toolbar.toolbarTitle
+import kotlinx.android.synthetic.main.view_toolbar.view.*
 import kotlinx.android.synthetic.main.view_topbutton.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -199,6 +204,15 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
 
                 totalCountTextView?.text =
                     getString(R.string.str_total) + " ${viewModel.items.count()}"
+                if (body.list_title?.isNotEmpty() == true) {
+                    toolbar.toolbarTitle.text = toolbarTitleString
+                }
+
+                if (body.genre?.isNotEmpty() == true) {
+                    if (context is GenreDetailActivity) {
+                        (context as GenreDetailActivity).initTabItems(body.genre)
+                    }
+                }
 
                 // 기다무
                 if (viewModel.isRefresh) return
@@ -212,11 +226,19 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                 }
             }
             is Episode -> {
-                body.list?.let {
+                body.list?.list?.let {
                     viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
             }
+
+            is EpisodeMore -> {
+                body.list.let {
+//                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+            }
+
             is Coin -> {
                 body.product_list?.let {
                     viewModel.items.addAll(it)

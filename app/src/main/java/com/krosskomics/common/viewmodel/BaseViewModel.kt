@@ -12,6 +12,8 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     var isRefresh = false
     var tabIndex = 0
     var requestType = REQUEST_TYPE.REQUEST_TYPE_A
+    var listType = "more"
+    var param2: String? = null
 
     enum class REQUEST_TYPE {
         REQUEST_TYPE_A, REQUEST_TYPE_B, REQUEST_TYPE_C, REQUEST_TYPE_D
@@ -21,7 +23,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     private val mainResponseLiveData = repository.getMainResponseLiveData()
 
     open fun requestMain() {
-        repository.requestMain(getApplication(), page)
+        repository.requestMain(listType, param2, page)
     }
 
     open fun getMainResponseLiveData(): LiveData<Any> {

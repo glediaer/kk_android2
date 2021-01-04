@@ -1,5 +1,6 @@
 package com.krosskomics.common.adapter
 
+import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
@@ -42,6 +43,7 @@ import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 import kotlinx.android.synthetic.main.view_dim.view.*
 import kotlinx.android.synthetic.main.view_new_up_tag.view.*
 import kotlinx.android.synthetic.main.view_remain_tag.view.*
+import kotlinx.android.synthetic.main.view_series_wop_tag.view.*
 import kotlinx.android.synthetic.main.view_ticket.view.*
 
 open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
@@ -149,10 +151,17 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         rankingTextView?.text = (position + 1).toString()
                     }
                     // genre
-                    subscribeImageView?.setOnClickListener {
-                        subscribeImageView.isSelected = !it.isSelected
-                        onSubscribeClickListener?.onItemClick(item, position, subscribeImageView.isSelected)
+                    if (item.issub.isNullOrEmpty()) {
+                        subscribeImageView?.visibility = View.GONE
+                    } else {
+                        subscribeImageView?.visibility = View.VISIBLE
+                        subscribeImageView.isSelected = item.issub != "0"
+                        subscribeImageView?.setOnClickListener {
+                            subscribeImageView.isSelected = !it.isSelected
+                            onSubscribeClickListener?.onItemClick(item, position, subscribeImageView.isSelected)
+                        }
                     }
+
                     // library
                     if (item.isCheckVisible) {
                         deleteView?.visibility = View.VISIBLE
@@ -169,7 +178,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         200, 200
                     )
                     txt_ep_title?.text = item.ep_title
-                    txt_update?.text = item.ep_show_date
+//                    txt_update?.text = item.ep_show_date
                     txt_showDate?.text = item.show_str
                     if (itemView.context is SeriesActivity) {
                         val viewModel = (itemView.context as SeriesActivity).viewModel
@@ -177,7 +186,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         if ("1" == item.isunlocked) {
                             dimView?.visibility = View.GONE
                             ticketImageView?.visibility = View.GONE
-                            if (viewModel.listViewType == 1) {
+                            if (viewModel.listViewType == 1) {  // list type
                                 if (read(context, CODE.LOCAL_loginYn, "N").equals(
                                         "Y",
                                         ignoreCase = true
@@ -240,6 +249,37 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                                 selectView?.visibility = View.GONE
                             }
                         }
+                        when (viewModel.listViewType) {
+                            0 -> {
+                                txt_update.text = item.dp_tile_txt
+                                if (item.isread == "0") {
+                                    epGridContentView.setBackgroundColor(Color.TRANSPARENT)
+                                } else {
+                                    epGridContentView.setBackgroundColor(Color.parseColor("#0c000000"))
+                                }
+                            }
+                            1 -> {
+                                txt_update.text = item.dp_list_txt
+                                epListContentView.isSelected = item.isread != "0"
+                            }
+                        }
+
+                        when (item.ep_type) {   // F: 무료, W:기다리면 무료, C:유료
+                            "F" -> {
+                                wopImageView.visibility = View.GONE
+                                freeTagImageView.visibility = View.VISIBLE
+                            }
+                            "W" -> {
+                                wopImageView.visibility = View.VISIBLE
+                                freeTagImageView.visibility = View.GONE
+                            }
+                            "C" -> {
+                                wopImageView.visibility = View.GONE
+                                freeTagImageView.visibility = View.GONE
+                            }
+                        }
+
+
                     } else if (itemView.context is ViewerActivity) {
                         txt_ep_title.isSelected = item.isEpSelect
                         img_ep_title.isSelected = item.isEpSelect

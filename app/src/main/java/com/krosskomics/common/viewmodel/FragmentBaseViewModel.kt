@@ -11,12 +11,14 @@ open class FragmentBaseViewModel(val context: Context) : ViewModel() {
     var totalPage = 1
     var isRefresh = false
     var tabIndex = 0
+    var listType = "more"
+    var param2: String? = null
 
     private val repository = MoreRepository()
     private var mainResponseLiveData = repository.getMainResponseLiveData()
 
     open fun requestMain() {
-        repository.requestMain(context, page)
+        repository.requestMain(listType, param2, page)
     }
 
     open fun getMainResponseLiveData(): LiveData<Any> {

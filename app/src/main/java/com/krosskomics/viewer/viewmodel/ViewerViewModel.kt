@@ -40,7 +40,7 @@ class ViewerViewModel(application: Application): BaseViewModel(application) {
 
     fun requestCheckEp(eid: String?) {
         requestType = REQUEST_TYPE.REQUEST_TYPE_B
-        repository.requestCheckEp(getApplication(), eid)
+        repository.requestCheckEp(eid)
     }
 
     fun getCheckEpResponseLiveData(): LiveData<Any> {

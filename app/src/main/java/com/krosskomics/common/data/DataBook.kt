@@ -29,6 +29,7 @@ class DataBook : Serializable {
     var iswop: String? = null   //  "iswop": "1",			기다무 여부
     var dp_wop_term: String? = null //"dp_wop_term": "12hours"			기다무 주기 표시
     var wop_term: String? = null //"wop_term": 12,			기다무 주기
+    var issub: String? = null //"issub": "0",					구독 여부 (0:구독 아님, 1: 구독)
 
     // 삭제
     var isChecked = false

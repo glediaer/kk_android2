@@ -60,18 +60,5 @@ class WaitFreeActivity : RecyclerViewBaseActivity() {
                 }
             })
         }
-//        dateViewItems = arrayListOf(oneDateTextView, twoDateTextView, threeDateTextView,
-//            fourDateTextView, fiveDateTextView)
-//        dateViewItems.forEach { dateView ->
-//            dateView.setOnClickListener {
-//                resetDateViewItems()
-//                it.isSelected = true
-//                requestServer()
-//            }
-//        }
-    }
-
-    private fun resetDateViewItems() {
-        dateViewItems.forEach { it.isSelected = false }
     }
 }

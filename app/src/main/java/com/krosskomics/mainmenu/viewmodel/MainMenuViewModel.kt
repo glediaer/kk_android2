@@ -12,7 +12,6 @@ class MainMenuViewModel(application: Application): BaseViewModel(application) {
     private val mainResponseLiveData = repository.getMainResponseLiveData()
 
     var param1: String = ""
-    var param2: String? = null
 
     lateinit var waitFreeTermItems: ArrayList<DataWaitFreeTerm>
 

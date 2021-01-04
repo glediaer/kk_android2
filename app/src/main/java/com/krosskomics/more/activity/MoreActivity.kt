@@ -16,7 +16,11 @@ class MoreActivity : ToolbarTitleActivity() {
     }
 
     override fun initModel() {
-        toolbarTitleString = intent?.extras?.getString("title").toString()
+        intent?.extras?.apply {
+            toolbarTitleString = getString("title").toString()
+            viewModel.listType = getString("listType").toString()
+            viewModel.param2 = getString("more_param").toString()
+        }
         super.initModel()
     }
 }

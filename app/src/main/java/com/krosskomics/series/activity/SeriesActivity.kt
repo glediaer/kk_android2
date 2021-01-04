@@ -9,6 +9,7 @@ import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -18,11 +19,13 @@ import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
+import com.krosskomics.comment.activity.CommentActivity
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.model.Default
 import com.krosskomics.common.model.Episode
+import com.krosskomics.common.model.EpisodeMore
 import com.krosskomics.common.model.PurchaseEpisode
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.series.adapter.SeriesAdapter
@@ -54,7 +57,6 @@ import kotlinx.android.synthetic.main.activity_series.nestedScrollView
 import kotlinx.android.synthetic.main.view_action_item.view.*
 import kotlinx.android.synthetic.main.view_content_like_white.*
 import kotlinx.android.synthetic.main.view_ep_purchase.*
-import kotlinx.android.synthetic.main.view_ep_purchase.unlockButton
 import kotlinx.android.synthetic.main.view_ep_purchase_success.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
@@ -112,6 +114,10 @@ class SeriesActivity : ToolbarTitleActivity() {
             toolbarTitle.setTextColor(Color.WHITE)
             toolbarTitle.text = ""
         }
+    }
+
+    private fun requestSeriesEp() {
+        viewModel.requestEpList()
     }
 
     private fun requestSubscribe() {
@@ -177,6 +183,7 @@ class SeriesActivity : ToolbarTitleActivity() {
             viewModel.sid = extras?.getString("sid").toString()
         }
         super.initModel()
+        viewModel.getEpListResponseLiveData().observe(this, this)
         viewModel.getCheckEpResponseLiveData().observe(this, this)
         viewModel.getImageUrlResponseLiveData().observe(this, this)
     }
@@ -213,12 +220,12 @@ class SeriesActivity : ToolbarTitleActivity() {
 
     override fun onChanged(t: Any?) {
         if (t is Episode) {
-            when(viewModel.requestType) {
+            when (viewModel.requestType) {
                 BaseViewModel.REQUEST_TYPE.REQUEST_TYPE_A -> {
                     if ("00" == t.retcode) {
                         viewModel.seriesItem = t.series!!
-                        viewModel.arr_episode = t.list
-                        viewModel.items.addAll(t.list)
+                        viewModel.arr_episode = t.list?.list!!
+                        viewModel.items.addAll(t.list?.list!!)
                         setMainContentView(t)
                         setHeaderContentView(t)
 
@@ -244,18 +251,19 @@ class SeriesActivity : ToolbarTitleActivity() {
 
                         val eventValue: MutableMap<String, Any?> =
                             HashMap()
-                        eventValue["af_content"] = viewModel.seriesItem.title.toString() + " (" + read(
-                            context,
-                            CODE.CURRENT_LANGUAGE,
-                            "en"
-                        ) + ")"
+                        eventValue["af_content"] =
+                            viewModel.seriesItem.title.toString() + " (" + read(
+                                context,
+                                CODE.CURRENT_LANGUAGE,
+                                "en"
+                            ) + ")"
                         eventValue["af_content_id"] = viewModel.seriesItem.sid
                         setAppsFlyerEvent(context, "af_content_view", eventValue)
                     }
                 }
 
-                BaseViewModel.REQUEST_TYPE.REQUEST_TYPE_B -> {
-                    when(t.retcode) {
+                BaseViewModel.REQUEST_TYPE.REQUEST_TYPE_C -> {
+                    when (t.retcode) {
                         "00" -> showEp()
                         "201" -> goLoginAlert(context)
                         "202" -> goCoinAlert(context)
@@ -273,8 +281,8 @@ class SeriesActivity : ToolbarTitleActivity() {
                     }
                 }
 
-                BaseViewModel.REQUEST_TYPE.REQUEST_TYPE_C -> {
-                    when(t.retcode) {
+                BaseViewModel.REQUEST_TYPE.REQUEST_TYPE_D -> {
+                    when (t.retcode) {
                         "00" -> goDownload(t)
                         "201" -> goLoginAlert(context)
                         "202" -> goCoinAlert(context)
@@ -287,6 +295,35 @@ class SeriesActivity : ToolbarTitleActivity() {
                         else -> {
                             t.msg?.let {
                                 showToast(it, context)
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (t is EpisodeMore) {
+            if ("00" == t.retcode) {
+                viewModel.arr_episode.addAll(t.list)
+                viewModel.items.addAll(t.list)
+                viewModel.page = t.page
+                viewModel.totalPage = t.tot_pages
+                setMainContentView(t)
+//                        setHeaderContentView(t)
+
+//                        checkViewerType()
+                getSeriesDownloadedFile()
+                // 전체구매
+                viewModel.arr_episode.forEach { item ->
+                    if ("0" == item.isunlocked) {
+                        item.isChecked = true
+                        item.isCheckVisible = false
+                        item.possibility_allbuy = true
+                        viewModel.allbuy_possibility_count++
+//                                mLockedEpisodeCount++
+                    } else {
+                        item.isdownload = "0"
+                        for (epDownloadedEid in viewModel.seriesDownloadEpList) {
+                            if (epDownloadedEid == item.eid) {
+                                item.isdownload = "1"
                             }
                         }
                     }
@@ -321,6 +358,7 @@ class SeriesActivity : ToolbarTitleActivity() {
             viewModel.revPager = "R" == viewModel.seriesItem.hviewer
         }
     }
+
     private fun getSeriesDownloadedFile() {
         // download
         viewModel.let {
@@ -366,7 +404,8 @@ class SeriesActivity : ToolbarTitleActivity() {
         override fun onPreExecute() {
             super.onPreExecute()
             viewModel.arr_pics.clear()
-            viewModel.arr_episode[viewModel.selectedDownloadIndex].download_max = viewModel.arr_url.size
+            viewModel.arr_episode[viewModel.selectedDownloadIndex].download_max =
+                viewModel.arr_url.size
         }
 
         override fun onCancelled() {
@@ -469,7 +508,8 @@ class SeriesActivity : ToolbarTitleActivity() {
                         fileName,
                         imgIncode
                     )
-                    val progress =  (KJKomicsApp.DOWNLOAD_COUNT.toDouble().div(viewModel.arr_url.size) * 100).toInt()
+                    val progress = (KJKomicsApp.DOWNLOAD_COUNT.toDouble()
+                        .div(viewModel.arr_url.size) * 100).toInt()
                     publishProgress("" + progress)
                 }
             } catch (e: Exception) {
@@ -486,7 +526,8 @@ class SeriesActivity : ToolbarTitleActivity() {
          */
         override fun onProgressUpdate(vararg progress: String?) {
             // setting progress percentage
-            viewModel.arr_episode[viewModel.selectedDownloadIndex].download_progress = progress[0]!!.toInt()
+            viewModel.arr_episode[viewModel.selectedDownloadIndex].download_progress =
+                progress[0]!!.toInt()
             recyclerView.adapter?.notifyDataSetChanged()
         }
 
@@ -549,7 +590,7 @@ class SeriesActivity : ToolbarTitleActivity() {
     }
 
     private fun setHeaderContentView(t: Episode) {
-        nestedScrollView.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
+        nestedScrollView.setOnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
             if (BuildConfig.DEBUG) {
                 Log.e(TAG, "scrollY : " + scrollY)
                 Log.e(TAG, "oldScrollY : " + oldScrollY)
@@ -559,6 +600,13 @@ class SeriesActivity : ToolbarTitleActivity() {
             } else {
                 toolbar.setBackgroundColor(Color.TRANSPARENT)
             }
+            if (scrollY == (v.getChildAt(0).measuredHeight - v.measuredHeight)) {
+                Log.e(TAG, "nestedScrollView 바닥 : " + scrollY)
+                if (viewModel.page < viewModel.totalPage) {
+                    viewModel.page++
+                    requestSeriesEp()
+                }
+            }
         }
         t.series?.let {
             toolbar.actionItem.scribeImageView.isSelected = it.issubscribed != "0"
@@ -566,9 +614,57 @@ class SeriesActivity : ToolbarTitleActivity() {
             tv_like_count.text = it.like_cnt
 
             // info
-            genreTextView.text = it.genre1
+            // 기다무 or 연재
+            if (it.iswop == "1") {
+                optionView.visibility = View.VISIBLE
+                wopView.isSelected = false
+                optionTextView.text = it.dp_waitorpay_txt
+            } else {
+                if (it.dp_pub_day?.isNotEmpty() == true) {
+                    optionView.visibility = View.VISIBLE
+                    wopView.isSelected = true
+                    optionTextView.text = it.dp_pub_day
+                } else {
+                    optionView.visibility = View.GONE
+                }
+            }
+
+            if (it.genre1?.isNotEmpty() == true) {
+                genre1TextView.text = it.genre1
+                genre1TextView.visibility = View.VISIBLE
+            }
+            if (it.genre2?.isNotEmpty() == true) {
+                genre2TextView.text = it.genre2
+                genre2TextView.visibility = View.VISIBLE
+            }
+            if (it.genre3?.isNotEmpty() == true) {
+                genre3TextView.text = it.genre3
+                genre3TextView.visibility = View.VISIBLE
+            }
+
             contentTitleTextView.text = it.title
-            writerTextView.text = it.writer1
+            writerTextView.text = getString(R.string.str_writer_format, it.writer1, it.writer2, it.writer3)
+            if (it.allow_comment == "1") {
+                commentView.visibility = View.VISIBLE
+                commentTextView.text = it.comment_cnt
+                commentView.setOnClickListener {
+                    startActivity(Intent(context, CommentActivity::class.java))
+                }
+            }
+
+            if (it.dp_free_txt?.isNotEmpty() == true) {
+                optionFreeEpView.visibility = View.VISIBLE
+                optionFreeEpTextView.text = it.dp_free_txt
+            }
+            if (it.dp_waitorpay_txt?.isNotEmpty() == true) {
+                optionWopView.visibility = View.VISIBLE
+                optionWopTextView.text = it.dp_waitorpay_txt
+            }
+//            if (it.dp_waitorpay_txt?.isNotEmpty() == true) {
+//                optionWopView.visibility = View.VISIBLE
+//                optionWopTextView.text = it.dp_waitorpay_txt
+//            }
+
             descTextView.text = it.long_desc
             descButton.setOnClickListener { view ->
                 view.isSelected = !view.isSelected
@@ -580,17 +676,26 @@ class SeriesActivity : ToolbarTitleActivity() {
                     descTextView.visibility = View.GONE
                 }
             }
-            progressBar.progress = 40
-            waitTextView.setOnClickListener {
-                showWaitFreeInfoAlert()
+
+            if (it.dp_wop_term?.isNotEmpty() == true) {
+                listHeaderWaitView.visibility = View.VISIBLE
+                waitTextView.text = it.dp_wop_term
+                waitGuessImageView.setOnClickListener { view ->
+                    // 기다무 팝업
+                    showWaitFreeInfoAlert(it.dp_wop_desc)
+                }
             }
-            progressTextView.setOnClickListener {
-                showWaitFreeInfoAlert()
+
+            if (it.reset_wop_ratio > 0) {
+                progressView.visibility = View.VISIBLE
+                progressBar.progress = it.reset_wop_ratio
+                progressTextView.text = it.dp_reset_wop
+                progressTextView.setOnClickListener {view ->
+                    showWaitFreeInfoAlert(it.dp_wop_desc)
+                }
             }
             // permanent
-//            permanentCntTextView.text = it.sticket.toString()
-//            permanentCntTextView.isSelected = it.sticket > 0
-            rentalCntTextView.text = it.rticket.toString()
+            rentalCntTextView.text = getString(R.string.str_ticket_format, it.rticket)
             rentalCntTextView.isSelected = it.rticket > 0
             // ep desc
             listTypeImageView.setOnClickListener { view ->
@@ -605,14 +710,18 @@ class SeriesActivity : ToolbarTitleActivity() {
                 }
                 initRecyclerViewAdapter()
             }
-            epCountTextView.text = getString(R.string.str_episodes_seq_format1, t.list?.size)
+            epCountTextView.text = getString(R.string.str_episodes_seq_format1, t.list?.list?.size)
             listOrderImageView.setOnClickListener { view ->
                 view.isSelected = !view.isSelected
-                viewModel.items.reverse()
-                recyclerView.adapter?.notifyDataSetChanged()
+//                viewModel.items.reverse()
+//                recyclerView.adapter?.notifyDataSetChanged()
+                viewModel.sort = if (view.tag == "n") "f" else "n"
+                viewModel.isRefresh = true
+                requestSeriesEp()
             }
             if ("0" == it.read_next_ep_seq || read(context, CODE.LOCAL_loginYn, "N")
-                    .equals("N", ignoreCase = true)) {
+                    .equals("N", ignoreCase = true)
+            ) {
                 // 첫화보기
                 firstContinueEpView.visibility = View.VISIBLE
                 firstContinueEpTextView.text = getString(R.string.str_first_ep)
@@ -634,7 +743,7 @@ class SeriesActivity : ToolbarTitleActivity() {
                     viewModel.nextEp = it.first_ep ?: ""
                 }
                 // 이어서 보여주기, 아니면 첫화보기
-                t.list?.forEach {item ->
+                t.list?.list?.forEach { item ->
                     if (item.eid == viewModel.nextEp) {
                         // 현재 선택한 회차부터 구매가능한 회차까지 계산
                         viewModel.selectBuyPosibilityCount = 0
@@ -768,51 +877,53 @@ class SeriesActivity : ToolbarTitleActivity() {
         recyclerView.adapter = SeriesAdapter(viewModel.items, recyclerViewItemLayoutId, context)
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {
             setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-            override fun onItemClick(item: Any?, position: Int) {
-                if (item is DataEpisode) {
-                    if (viewModel.isSelectDownload) {
-                        return
-                    }
-                    viewModel.selectEpItem = item
-                    if (viewModel.itemViewMode == 0) {  // 일반모드
-                        KJKomicsApp.DATA_EPISODE = item
+                override fun onItemClick(item: Any?, position: Int) {
+                    if (item is DataEpisode) {
+                        if (viewModel.isSelectDownload) {
+                            return
+                        }
+                        viewModel.selectEpItem = item
+                        if (viewModel.itemViewMode == 0) {  // 일반모드
+                            KJKomicsApp.DATA_EPISODE = item
 
-                        // 현재 선택한 회차부터 구매가능한 회차까지 계산
-                        viewModel.selectBuyPosibilityCount = 0
-                        calcPurchaseCurrentToLastEp(item.ep_seq)
-                        loadEpCheck()
-                    } else {
-                        if (item.possibility_allbuy) {
-                            if (item.isChecked) {
-                                item.isChecked = false
-                                viewModel.epList.remove(item.eid)
-                                viewModel.epTitleList.remove(
-                                    viewModel.seriesItem.title.toString() + " - " + item.ep_title + " (" + read(
-                                        context,
-                                        CODE.CURRENT_LANGUAGE,
-                                        "en"
-                                    ) + ")"
-                                )
-                            } else {
-                                item.isChecked = true
-                                viewModel.epList.add(item.eid)
-                                viewModel.epTitleList.add(
-                                    viewModel.seriesItem.title.toString() + " - " + item.ep_title + " (" + read(
-                                        context,
-                                        CODE.CURRENT_LANGUAGE,
-                                        "en"
-                                    ) + ")"
-                                )
+                            // 현재 선택한 회차부터 구매가능한 회차까지 계산
+                            viewModel.selectBuyPosibilityCount = 0
+                            calcPurchaseCurrentToLastEp(item.ep_seq)
+                            loadEpCheck()
+                        } else {
+                            if (item.possibility_allbuy) {
+                                if (item.isChecked) {
+                                    item.isChecked = false
+                                    viewModel.epList.remove(item.eid)
+                                    viewModel.epTitleList.remove(
+                                        viewModel.seriesItem.title.toString() + " - " + item.ep_title + " (" + read(
+                                            context,
+                                            CODE.CURRENT_LANGUAGE,
+                                            "en"
+                                        ) + ")"
+                                    )
+                                } else {
+                                    item.isChecked = true
+                                    viewModel.epList.add(item.eid)
+                                    viewModel.epTitleList.add(
+                                        viewModel.seriesItem.title.toString() + " - " + item.ep_title + " (" + read(
+                                            context,
+                                            CODE.CURRENT_LANGUAGE,
+                                            "en"
+                                        ) + ")"
+                                    )
+                                }
+                                allBuyCal()
+                                recyclerView.adapter?.notifyDataSetChanged()
                             }
-                            allBuyCal()
-                            recyclerView.adapter?.notifyDataSetChanged()
+                        }
+                        if (viewModel.epList.isNotEmpty()) {
+                            toolbar.toolbarTitle.text =
+                                getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
                         }
                     }
-                    if (viewModel.epList.isNotEmpty()) {
-                        toolbar.toolbarTitle.text = getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
-                    }
                 }
-            } })
+            })
             setOnDownloadClickListener(object : RecyclerViewBaseAdapter.OnDownloadClickListener {
                 override fun onItemClick(item: Any, position: Int) {
                     if (item is DataEpisode) {
@@ -831,11 +942,12 @@ class SeriesActivity : ToolbarTitleActivity() {
                             val eventName = "af_download"
                             val eventValue: MutableMap<String, Any?> =
                                 HashMap()
-                            eventValue["af_content"] = viewModel.seriesItem.title.toString() + " (" + read(
-                                context,
-                                CODE.CURRENT_LANGUAGE,
-                                "en"
-                            ) + ")"
+                            eventValue["af_content"] =
+                                viewModel.seriesItem.title.toString() + " (" + read(
+                                    context,
+                                    CODE.CURRENT_LANGUAGE,
+                                    "en"
+                                ) + ")"
                             eventValue["af_content_id"] = viewModel.seriesItem.sid
                             eventValue["af_episode"] =
                                 viewModel.seriesItem.title.toString() + " - " + item.ep_title + " (" + read(
@@ -850,7 +962,8 @@ class SeriesActivity : ToolbarTitleActivity() {
                 }
             })
 
-            setOnDownloadCancelClickListener(object : RecyclerViewBaseAdapter.OnDownloadCancelClickListener {
+            setOnDownloadCancelClickListener(object :
+                RecyclerViewBaseAdapter.OnDownloadCancelClickListener {
                 override fun onItemClick(item: Any, position: Int) {
                     if (::downLoadAsyncTask.isInitialized && !downLoadAsyncTask.isCancelled) {
                         viewModel.isDownloadException = true
@@ -874,84 +987,84 @@ class SeriesActivity : ToolbarTitleActivity() {
         var epTitle_list = viewModel.epTitleList.toString()
         epTitle_list = epTitle_list.replace(", ", ",")
         epTitle_list = epTitle_list.substring(1, epTitle_list.length - 1)
-            val setPurchaseEpisode: Call<PurchaseEpisode> =
-                service.setPurchaseSelectEpisode(
-                    read(context, CODE.CURRENT_LANGUAGE, "en"),
-                    ep_list, unlockType
-                )
-            setPurchaseEpisode.enqueue(object : Callback<PurchaseEpisode?> {
-                override fun onResponse(
-                    call: Call<PurchaseEpisode?>,
-                    response: Response<PurchaseEpisode?>
-                ) {
-                    try {
-                        if (response.isSuccessful) {
-                            response.body()?.let {
-                                if ("00" == it.retcode) {
-                                    var eventName = "af_unlock_rent"
-                                    val eventValue: MutableMap<String, Any?> =
-                                        HashMap()
-                                    eventValue["af_content"] =
-                                        viewModel.seriesItem.title.toString() + " (" + read(
-                                            context,
-                                            CODE.CURRENT_LANGUAGE,
-                                            "en"
-                                        ) + ")"
-                                    eventValue["af_content_id"] = viewModel.seriesItem.sid
-                                    eventValue["af_episode"] = epTitle_list
-                                    eventValue["af_episode_id"] = ep_list
-                                    eventValue["af_quantity"] =
-                                        CommonUtil.convertEpQuantity(viewModel.allbuy_count)
-                                    if ("store" == unlockType) {
-                                        eventName = "af_unlock_permanent"
-                                        eventValue["af_price"] = viewModel.allbuy_coin
-                                    } else {
-                                        eventName = "af_unlock_rent"
-                                        eventValue["af_price"] = viewModel.allbuyRentCoin
-                                    }
-                                    setAppsFlyerEvent(context, eventName, eventValue)
+        val setPurchaseEpisode: Call<PurchaseEpisode> =
+            service.setPurchaseSelectEpisode(
+                read(context, CODE.CURRENT_LANGUAGE, "en"),
+                ep_list, unlockType
+            )
+        setPurchaseEpisode.enqueue(object : Callback<PurchaseEpisode?> {
+            override fun onResponse(
+                call: Call<PurchaseEpisode?>,
+                response: Response<PurchaseEpisode?>
+            ) {
+                try {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            if ("00" == it.retcode) {
+                                var eventName = "af_unlock_rent"
+                                val eventValue: MutableMap<String, Any?> =
+                                    HashMap()
+                                eventValue["af_content"] =
+                                    viewModel.seriesItem.title.toString() + " (" + read(
+                                        context,
+                                        CODE.CURRENT_LANGUAGE,
+                                        "en"
+                                    ) + ")"
+                                eventValue["af_content_id"] = viewModel.seriesItem.sid
+                                eventValue["af_episode"] = epTitle_list
+                                eventValue["af_episode_id"] = ep_list
+                                eventValue["af_quantity"] =
+                                    CommonUtil.convertEpQuantity(viewModel.allbuy_count)
+                                if ("store" == unlockType) {
+                                    eventName = "af_unlock_permanent"
+                                    eventValue["af_price"] = viewModel.allbuy_coin
+                                } else {
+                                    eventName = "af_unlock_rent"
+                                    eventValue["af_price"] = viewModel.allbuyRentCoin
+                                }
+                                setAppsFlyerEvent(context, eventName, eventValue)
 
-                                    viewModel.epList.clear()
-                                    viewModel.epTitleList.clear()
-                                    epPurchaseDialog.visibility = View.GONE
+                                viewModel.epList.clear()
+                                viewModel.epTitleList.clear()
+                                epPurchaseDialog.visibility = View.GONE
 
-                                    initEpPurchaseSuccesDialog()
+                                initEpPurchaseSuccesDialog()
 
 //                                    requestServer()
-                                    if ("" != it.user_coin) {
-                                        write(context, CODE.LOCAL_coin, it.user_coin)
-                                    }
-                                } else if ("202" == it.retcode) {
-                                    startActivity(Intent(context, CoinActivity::class.java))
-                                } else {
-                                    if ("" != it.msg) {
-                                        showToast(it.msg, context)
-                                    }
+                                if ("" != it.user_coin) {
+                                    write(context, CODE.LOCAL_coin, it.user_coin)
+                                }
+                            } else if ("202" == it.retcode) {
+                                startActivity(Intent(context, CoinActivity::class.java))
+                            } else {
+                                if ("" != it.msg) {
+                                    showToast(it.msg, context)
                                 }
                             }
-
                         }
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-                    }
-                }
 
-                override fun onFailure(
-                    call: Call<PurchaseEpisode?>,
-                    t: Throwable
-                ) {
+                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onFailure(
+                call: Call<PurchaseEpisode?>,
+                t: Throwable
+            ) {
 //                    hideProgress()
-                    try {
+                try {
 //                        checkNetworkConnection(
 //                            context,
 //                            t,
 //                            viewError
 //                        )
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-                    }
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
                 }
-            })
+            }
+        })
     }
 
     private fun initEpPurchaseSuccesDialog() {
@@ -961,7 +1074,7 @@ class SeriesActivity : ToolbarTitleActivity() {
 //            successEpCountTextView.text = getString(R.string.str_episodes_seq_format1, t.list?.size)
 //            successRemainTime.text
 //            successTime.text
-            setOnClickListener {  }
+            setOnClickListener { }
             doneButton.setOnClickListener {
                 showEp()
                 requestServer()
@@ -1024,7 +1137,8 @@ class SeriesActivity : ToolbarTitleActivity() {
             }
             it.allbuy_coin = it.allbuy_coin - Math.round(it.allbuy_coin * it.allbuySaveRate)
 
-            it.allbuyRentCoin = it.allbuyRentCoin - Math.round(it.allbuyRentCoin * it.allbuySaveRate)
+            it.allbuyRentCoin =
+                it.allbuyRentCoin - Math.round(it.allbuyRentCoin * it.allbuySaveRate)
 
             discountRateTextView.text = "${(it.allbuySaveRate * 100).toInt()} %"
 
@@ -1040,7 +1154,8 @@ class SeriesActivity : ToolbarTitleActivity() {
             epPurchaseCountTextView.text = "${viewModel.allbuy_count}"
 
             if (viewModel.epList.isNotEmpty()) {
-                toolbar.toolbarTitle.text = getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
+                toolbar.toolbarTitle.text =
+                    getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
             } else {
                 toolbar.toolbarTitle.text = ""
             }
@@ -1084,7 +1199,8 @@ class SeriesActivity : ToolbarTitleActivity() {
             }
             it.allbuy_coin = it.allbuy_coin - Math.round(it.allbuy_coin * it.allbuySaveRate)
 
-            it.allbuyRentCoin = it.allbuyRentCoin - Math.round(it.allbuyRentCoin * it.allbuySaveRate)
+            it.allbuyRentCoin =
+                it.allbuyRentCoin - Math.round(it.allbuyRentCoin * it.allbuySaveRate)
 
             discountRateTextView.text = "${(it.allbuySaveRate * 100).toInt()} %"
 
@@ -1099,7 +1215,8 @@ class SeriesActivity : ToolbarTitleActivity() {
             epPurchaseCountTextView.text = "${viewModel.allbuy_count}"
 
             if (viewModel.epList.isNotEmpty()) {
-                toolbar.toolbarTitle.text = getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
+                toolbar.toolbarTitle.text =
+                    getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
             } else {
                 toolbar.toolbarTitle.text = ""
             }
@@ -1108,11 +1225,13 @@ class SeriesActivity : ToolbarTitleActivity() {
         }
     }
 
-    private fun showWaitFreeInfoAlert() {
+    private fun showWaitFreeInfoAlert(msg: String?) {
         try {
             val innerView: View =
                 layoutInflater.inflate(R.layout.dialog_wait_free, null)
             val dialog = initDialog(innerView)
+            val msgTextView = innerView.findViewById<TextView>(R.id.msgTextView)
+            msgTextView.text = msg
             val btnConfirm =
                 innerView.findViewById<Button>(R.id.btn_confirm)
             btnConfirm.setOnClickListener {

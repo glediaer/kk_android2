@@ -352,6 +352,7 @@ class HomeAdapter(private val items: ArrayList<*>) : RecyclerView.Adapter<HomeAd
                         val intent = Intent(itemView.context, MoreActivity::class.java)
                         intent.putExtra("title", item.layout_title)
                         intent.putExtra("more_param", item.more_param)
+                        intent.putExtra("listType", "more")
                         context.startActivity(intent)
                     }
                 } else {
