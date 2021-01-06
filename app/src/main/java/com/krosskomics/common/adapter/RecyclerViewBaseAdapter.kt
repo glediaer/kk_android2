@@ -41,6 +41,9 @@ import kotlinx.android.synthetic.main.item_series_grid.view.*
 import kotlinx.android.synthetic.main.view_content_like.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 import kotlinx.android.synthetic.main.view_dim.view.*
+import kotlinx.android.synthetic.main.view_ep_free_tag.view.*
+import kotlinx.android.synthetic.main.view_ep_lock_tag.view.*
+import kotlinx.android.synthetic.main.view_ep_purchase_select.view.*
 import kotlinx.android.synthetic.main.view_new_up_tag.view.*
 import kotlinx.android.synthetic.main.view_remain_tag.view.*
 import kotlinx.android.synthetic.main.view_series_wop_tag.view.*
@@ -143,7 +146,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     }
                     // ranking
                     if (context is RankingActivity) {
-                        when(position) {
+                        when (position) {
                             0 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_1)
                             1 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_2)
                             2 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_3)
@@ -158,7 +161,11 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         subscribeImageView.isSelected = item.issub != "0"
                         subscribeImageView?.setOnClickListener {
                             subscribeImageView.isSelected = !it.isSelected
-                            onSubscribeClickListener?.onItemClick(item, position, subscribeImageView.isSelected)
+                            onSubscribeClickListener?.onItemClick(
+                                item,
+                                position,
+                                subscribeImageView.isSelected
+                            )
                         }
                     }
 
@@ -179,18 +186,20 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     )
                     txt_ep_title?.text = item.ep_title
 //                    txt_update?.text = item.ep_show_date
-                    txt_showDate?.text = item.show_str
+//                    txt_showDate?.text = item.show_str
                     if (itemView.context is SeriesActivity) {
                         val viewModel = (itemView.context as SeriesActivity).viewModel
 
                         if ("1" == item.isunlocked) {
-                            dimView?.visibility = View.GONE
+//                            dimView?.visibility = View.GONE
+                            lockImageView?.visibility = View.GONE
                             ticketImageView?.visibility = View.GONE
                             if (viewModel.listViewType == 1) {  // list type
                                 if (read(context, CODE.LOCAL_loginYn, "N").equals(
                                         "Y",
                                         ignoreCase = true
-                                    )) {
+                                    )
+                                ) {
                                     downloadImageView?.isSelected = "0" != item.isdownload
                                     downloadImageView?.visibility = View.VISIBLE
                                     downloadImageView?.setOnClickListener(View.OnClickListener {
@@ -200,10 +209,16 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                                         downloadImageView?.visibility = View.GONE
 //                                        circleView.max = item.download_max
                                         circleView.visibility = View.VISIBLE
-                                        Log.e("Adapter", "download_progress : " + item.download_progress)
+                                        Log.e(
+                                            "Adapter",
+                                            "download_progress : " + item.download_progress
+                                        )
                                         circleView.progress = item.download_progress
                                         circleView.setOnClickListener(View.OnClickListener {
-                                            onDownloadCancelClickListener?.onItemClick(item, position)
+                                            onDownloadCancelClickListener?.onItemClick(
+                                                item,
+                                                position
+                                            )
                                         })
                                     } else {
                                         circleView.setVisibility(View.GONE)
@@ -212,7 +227,8 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                                 }
                             }
                         } else {
-                            dimView?.visibility = View.VISIBLE
+//                            dimView?.visibility = View.VISIBLE
+                            lockImageView?.visibility = View.VISIBLE
                             // 티켓
                             if (itemView.context is SeriesActivity) {
                                 if (viewModel.selectEpItem.rticket > 0) {
@@ -237,7 +253,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                             }
                             // 구매
                             if (item.isCheckVisible) {
-                                dimView?.visibility = View.GONE
+//                                dimView?.visibility = View.GONE
                                 selectView?.visibility = View.VISIBLE
                                 if (item.isChecked) {
                                     checkImageView?.visibility = View.VISIBLE
@@ -245,13 +261,13 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                                     checkImageView?.visibility = View.GONE
                                 }
                             } else {
-                                dimView?.visibility = View.VISIBLE
+//                                dimView?.visibility = View.VISIBLE
                                 selectView?.visibility = View.GONE
                             }
                         }
                         when (viewModel.listViewType) {
                             0 -> {
-                                txt_update.text = item.dp_tile_txt
+                                txt_update?.text = item.dp_tile_txt
                                 if (item.isread == "0") {
                                     epGridContentView.setBackgroundColor(Color.TRANSPARENT)
                                 } else {
@@ -259,8 +275,12 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                                 }
                             }
                             1 -> {
-                                txt_update.text = item.dp_list_txt
-                                epListContentView.isSelected = item.isread != "0"
+                                txt_showDate?.text = item.dp_list_txt
+                                if (item.isread == "0") {
+                                    epListContentView.setBackgroundColor(Color.TRANSPARENT)
+                                } else {
+                                    epListContentView.setBackgroundColor(Color.parseColor("#07000000"))
+                                }
                             }
                         }
 
@@ -279,7 +299,6 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                             }
                         }
 
-
                     } else if (itemView.context is ViewerActivity) {
                         txt_ep_title.isSelected = item.isEpSelect
                         img_ep_title.isSelected = item.isEpSelect
@@ -290,7 +309,8 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     val totalCoin: Int = item.coin + item.bonus_coin
                     tv_bonus_coin.text = item.coin.toString() + " + " +
                             item.bonus_coin + " " + itemView.context.getString(R.string.str_bonus) + " = "
-                    tv_total_coin.text = totalCoin.toString() + " " + itemView.context.getString(R.string.str_coins)
+                    tv_total_coin.text =
+                        totalCoin.toString() + " " + itemView.context.getString(R.string.str_coins)
 
                     tv_won.text = item.sale_price.toString() + " " + item.currency
                     if (TextUtils.isEmpty(item.product_text)) {

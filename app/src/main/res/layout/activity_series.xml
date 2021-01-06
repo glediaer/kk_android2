@@ -539,9 +539,7 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/epInfoView"
-                android:paddingLeft="20dp"
-                android:paddingRight="19dp" />
+                android:layout_below="@id/epInfoView" />
 
             <include
                 android:id="@+id/underLineView"
@@ -555,6 +553,7 @@
                 android:id="@+id/moveTopView"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
+                android:background="#f7f8fa"
                 android:layout_below="@+id/underLineView">
 
                 <ImageView
@@ -580,7 +579,6 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/kk_rect_series_first_continue"
         android:gravity="center"
-        android:visibility="gone"
         tools:visibility="visible">
 
         <TextView

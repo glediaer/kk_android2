@@ -7,12 +7,6 @@
     android:paddingTop="0dp"
     android:background="#e6ffffff"
     android:gravity="center_horizontal">
-    
-    <ImageView
-        android:id="@+id/totalPurchaseImageView"
-        android:layout_width="143dp"
-        android:layout_height="53dp"
-        android:src="@drawable/kk_purchase_img"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -57,6 +51,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/purchaseWopView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
@@ -72,12 +67,17 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textSize="12dp"
+                android:singleLine="true"
                 android:layout_marginLeft="7dp"
                 android:textColor="#ffffff"
                 tools:text="FREE every 5 days" />
 
             <FrameLayout
+                android:id="@+id/purcaseProgressView"
                 android:layout_width="130dp"
+                android:visibility="gone"
+                android:layout_marginLeft="30dp"
+                tools:visibility="visible"
                 android:layout_height="20dp">
 
                 <ProgressBar
@@ -123,7 +123,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/kk_selector_color_gray_white"
-                    android:text="@string/str_7_days_rental"/>
+                    tools:text="rental"/>
 
                 <TextView
                     android:id="@+id/purchaseButton"
@@ -136,7 +136,7 @@
                     android:textSize="14dp"
                     android:textStyle="bold"
                     android:textColor="@color/kk_selector_color_gray_white"
-                    android:text="@string/str_permanent"/>
+                    tools:text="@string/str_permanent"/>
 
             </LinearLayout>
 
@@ -229,7 +229,7 @@
                     android:layout_gravity="right"
                     android:textSize="14dp"
                     android:textColor="#e02020"
-                    android:text="20% OFF" />
+                    tools:text="20% OFF" />
 
             </FrameLayout>
 
@@ -245,14 +245,29 @@
                     android:textColor="#000000"
                     android:text="Total" />
 
-                <TextView
-                    android:id="@+id/totalTextView"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:textSize="18dp"
-                    android:textColor="#000000"
-                    android:text="4,640 CASH" />
+                    >
+
+                    <TextView
+                        android:id="@+id/totalTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textColor="#000000"
+                        android:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="12dp"
+                        android:textColor="#000000"
+                        android:text="@string/str_cash" />
+
+                </LinearLayout>
 
             </FrameLayout>
 
@@ -266,7 +281,7 @@
                 android:textSize="18dp"
                 android:textColor="#ffffff"
                 android:textAllCaps="false"
-                android:text="@string/str_unlock"/>
+                android:text="@string/str_buy"/>
 
         </LinearLayout>
 

@@ -234,7 +234,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
 
             is EpisodeMore -> {
                 body.list.let {
-//                    viewModel.items.addAll(it)
+                    viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
             }

@@ -51,7 +51,8 @@ class SeriesViewModel(application: Application): BaseViewModel(application) {
     var seriesDonwnloadedFile: File? = null
 
     // 구독
-    var mAction = "S"
+    var subscribeAction = "S"
+    var pushAction = "S"
 
     var sort = "n"   //n : 최신, f : 첫화
 

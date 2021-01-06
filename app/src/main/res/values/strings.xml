@@ -116,6 +116,7 @@
     <string name="str_my_cash_format">%s CASH</string>
     <string name="str_ticket_format">%d ticket</string>
     <string name="str_rental_ticket">RENTAL Ticket</string>
+    <string name="str_purchase_save_rate_format">%s OFF</string>
 
     <string name="str_promotion_hint">Enter your promotion code</string>
     <string name="str_register">Register</string>
@@ -161,7 +162,6 @@
     <string name="str_continue">Continue</string>
     <string name="str_writer_format">%s %s %s</string>
     <string name="str_discount_rate">Discount rate</string>
-    <string name="str_7_days_rental">7 days rental"</string>
     <string name="str_night_mode">Night Mode"</string>
     <string name="str_night_mode_desc">Reducing eye strain"</string>
     <string name="str_auto_next">Auto Next"</string>

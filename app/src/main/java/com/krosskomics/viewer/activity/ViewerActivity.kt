@@ -759,8 +759,6 @@ class ViewerActivity : ToolbarTitleActivity() {
             discountRateTextView.text = "0 %"
             totalTextView.text = "${it.ep_rent_price}"
 
-            totalPurchaseImageView.visibility = View.GONE
-
             viewModel.items.forEach { item ->
                 if (item is DataEpisode) {
                     item.isCheckVisible = true
@@ -794,17 +792,7 @@ class ViewerActivity : ToolbarTitleActivity() {
 
                 allBuyCal()
             }
-            totalPurchaseImageView.setOnClickListener { view ->
-                // 전체구매
-                view.visibility = View.GONE
-                viewModel.items.forEach { item ->
-                    if (item is DataEpisode) {
-                        item.isCheckVisible = true
-                        item.isChecked = true
-                    }
-                }
-                allBuyAll()
-            }
+
             unlockButton.setOnClickListener {
                 if ("1" == episode.allow_rent) {
                     if (viewModel.allbuyRentCoin > read(context, CODE.LOCAL_coin, "0")!!.toInt()) {

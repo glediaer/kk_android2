@@ -1,5 +1,4 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:paddingRight="16dp">
@@ -10,35 +9,69 @@
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:visibility="visible"
-        android:src="@drawable/kk_ic_gift"/>
+        android:src="@drawable/kk_ic_gift"
+        android:visibility="visible" />
 
     <ImageView
         android:id="@+id/searchImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginRight="25dp"
         android:layout_centerVertical="true"
-        android:visibility="visible"
+        android:layout_marginRight="25dp"
         android:layout_toLeftOf="@+id/giftboxImageView"
-        android:src="@drawable/kk_ic_search"/>
-    
+        android:src="@drawable/kk_ic_search"
+        android:visibility="visible" />
+
     <ImageView
         android:id="@+id/contactImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:visibility="gone"
-        android:src="@drawable/kk_ic_contact"/>
+        android:layout_centerVertical="true"
+        android:src="@drawable/kk_ic_contact"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/scribeImageView"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/kk_selector_subscribe"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/pushImageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="12dp"
+        android:layout_toLeftOf="@+id/scribeImageView"
+        android:src="@drawable/kk_selector_push"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/allCheckView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:visibility="gone"
-        android:src="@drawable/kk_selector_subscribe"/>
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:duplicateParentState="true"
+            android:src="@drawable/kk_selector_all_check" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:text="@string/str_all"
+            android:textColor="#ffffff"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 </RelativeLayout>

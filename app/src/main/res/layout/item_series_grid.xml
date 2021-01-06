@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/kk_rect_trans_gray_half"
-    android:layout_marginRight="1dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginRight="1dp"
+    android:background="@drawable/kk_rect_trans_gray_half">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,16 +21,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="88dp"
                 fresco:actualImageScaleType="fitXY"
-                fresco:placeholderImage="@drawable/kk_placeholder"/>
+                fresco:placeholderImage="@drawable/kk_placeholder" />
 
             <include
                 layout="@layout/view_ticket"
-                android:layout_gravity="right|bottom"
                 android:layout_width="33dp"
-                android:layout_height="33dp"/>
+                android:layout_height="33dp"
+                android:layout_gravity="right|bottom" />
 
-            <include
-                layout="@layout/view_series_wop_tag"/>
+            <include layout="@layout/view_series_wop_tag" />
         </FrameLayout>
 
         <LinearLayout
@@ -40,15 +39,26 @@
             android:orientation="vertical"
             android:padding="7dp">
 
-            <TextView
-                android:id="@+id/txt_ep_title"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:includeFontPadding="false"
-                android:singleLine="true"
-                android:textColor="#000000"
-                android:textSize="12dp"
-                tools:text="Determinant Error" />
+                android:gravity="center_vertical">
+
+                <include layout="@layout/view_ep_lock_tag" />
+
+                <TextView
+                    android:id="@+id/txt_ep_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:includeFontPadding="false"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="12dp"
+                    tools:text="Determinant Error" />
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -56,12 +66,8 @@
                 android:layout_marginTop="1dp"
                 android:gravity="center_vertical">
 
-                <ImageView
-                    android:id="@+id/freeTagImageView"
-                    android:layout_width="28dp"
-                    android:layout_height="12dp"
-                    android:layout_marginRight="3dp"
-                    android:src="@drawable/kk_tag_box_free"/>
+                <include
+                    layout="@layout/view_ep_free_tag"/>
 
                 <TextView
                     android:id="@+id/txt_update"
@@ -80,23 +86,14 @@
     <include
         layout="@layout/view_dim"
         android:layout_width="match_parent"
-        android:layout_height="88dp"/>
+        android:layout_height="88dp"
+        android:visibility="gone"/>
 
-    <FrameLayout
-        android:id="@+id/selectView"
+    <include
         android:layout_width="match_parent"
         android:layout_height="88dp"
         android:visibility="gone"
         tools:visibility="gone"
-        android:background="#99ffd900">
-
-        <ImageView
-            android:id="@+id/checkImageView"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/kk_ic_select_on"
-            android:layout_gravity="center"/>
-
-    </FrameLayout>
+        layout="@layout/view_ep_purchase_select"/>
 
 </RelativeLayout>

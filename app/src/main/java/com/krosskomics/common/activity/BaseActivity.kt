@@ -6,7 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.transition.Slide
 import android.view.*
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
@@ -43,6 +45,15 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     private var mProgressDialog: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+//        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            with(window) {
+//                requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+//                // set an slide transition
+//                enterTransition = Slide(Gravity.END)
+//                exitTransition = Slide(Gravity.START)
+//            }
+//        }
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         super.onCreate(savedInstanceState)
         context = this@BaseActivity
         setContentView(getLayoutId())

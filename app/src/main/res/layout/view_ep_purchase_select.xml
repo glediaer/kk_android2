@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/selectView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#99ffd900">
+
+    <ImageView
+        android:id="@+id/checkImageView"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
+        android:src="@drawable/kk_ic_select_on" />
+
+</FrameLayout>
