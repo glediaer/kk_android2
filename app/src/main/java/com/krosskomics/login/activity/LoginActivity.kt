@@ -2,13 +2,17 @@ package com.krosskomics.login.activity
 
 import android.content.Intent
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
+import android.transition.Slide
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -80,6 +84,18 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
         }).get(LoginViewModel::class.java)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+//        overridePendingTransition(R.anim.slide_up, R.anim.stay)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            with(window) {
+                requestFeature(Window.FEATURE_CONTENT_TRANSITIONS)
+                // set an slide transition
+                enterTransition = Slide(Gravity.BOTTOM)
+                exitTransition = Slide(Gravity.TOP)
+            }
+        }
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onActivityResult(
         requestCode: Int,
@@ -89,7 +105,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
 
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (::callbackManager.isInitialized) callbackManager.onActivityResult(requestCode, resultCode, data)
+        if (::callbackManager.isInitialized) callbackManager.onActivityResult(
+            requestCode,
+            resultCode,
+            data
+        )
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -159,7 +179,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
         }
         if (t is Login) {
             if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
-                when(t.retcode) {
+                when (t.retcode) {
                     CODE.SUCCESS, "104" -> {
                         t.user?.let { user ->
                             //내부 저장소에 정보를 기록
@@ -212,7 +232,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                         // 소셜로그인으로 로그인 추가 데이터 입력 처리
                         //                // 추가 데이터 수집
                         if (CODE.LOGIN_TYPE_FACEBOOK == viewModel.repository.loginType
-                            || CODE.LOGIN_TYPE_GOOGLE == viewModel.repository.loginType) {
+                            || CODE.LOGIN_TYPE_GOOGLE == viewModel.repository.loginType
+                        ) {
                             KJKomicsApp.LOGIN_DATA = DataLogin()
                             viewModel.repository.pageType = CODE.SIGNUP_MODE
                             // 회원 정보 요청
@@ -231,7 +252,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                     }
                 }
             } else {
-                when(t.retcode) {
+                when (t.retcode) {
                     CODE.SUCCESS -> {
                         viewModel.repository.pageType = CODE.SIGNUP_MODE
                         requestLogin()
@@ -258,7 +279,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                             "af_complete_registration",
                             eventValue
                         )
-                    } else -> {
+                    }
+                    else -> {
                         if (!t.msg.isNullOrEmpty()) {
                             showToast(t.msg, this@LoginActivity)
                         }
@@ -266,7 +288,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                 }
             }
         } else if (t is Default) {
-            when(t.retcode) {
+            when (t.retcode) {
                 CODE.SUCCESS -> {
                     dialogView.apply {
                         defaultView.visibility = View.GONE
@@ -312,7 +334,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
         bottomSheetDialog.setContentView(dialogView)
         bottomSheetDialog.show()
 
-        when(view) {
+        when (view) {
             R.layout.view_login_bottomsheet -> {
                 dialogView.apply {
                     setLoginViewType()
@@ -338,12 +360,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                             if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
                                 goLoginButton.isEnabled =
                                     !(passwordEditTextView.text.toString().trim().isEmpty() &&
-                                            passwordEditTextView.text.toString().trim().length < 6 ||
+                                            passwordEditTextView.text.toString()
+                                                .trim().length < 6 ||
                                             !emailCheck(s.toString()))
                             } else {
                                 goNextButton.isEnabled =
                                     !(passwordEditTextView.text.toString().trim().isEmpty() &&
-                                            passwordEditTextView.text.toString().trim().length < 6 ||
+                                            passwordEditTextView.text.toString()
+                                                .trim().length < 6 ||
                                             !emailCheck(emailEditTextView.text.toString().trim()))
                                             && termsImageView.isSelected
                             }
@@ -370,12 +394,14 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                             if (viewModel.repository.pageType == CODE.LOGIN_MODE) {
                                 goLoginButton.isEnabled =
                                     !(passwordEditTextView.text.toString().trim().isEmpty() &&
-                                            passwordEditTextView.text.toString().trim().length < 6 ||
+                                            passwordEditTextView.text.toString()
+                                                .trim().length < 6 ||
                                             !emailCheck(emailEditTextView.text.toString().trim()))
                             } else {
                                 goNextButton.isEnabled =
                                     !(passwordEditTextView.text.toString().trim().isEmpty() &&
-                                            passwordEditTextView.text.toString().trim().length < 6 ||
+                                            passwordEditTextView.text.toString()
+                                                .trim().length < 6 ||
                                             !emailCheck(emailEditTextView.text.toString().trim()))
                                             && termsImageView.isSelected
                             }
@@ -445,19 +471,21 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                 setNickNameView()
                 dialogView.apply {
                     nextImageView.setOnClickListener {
-                        when(viewModel.repository.signOutInfoStep) {
+                        when (viewModel.repository.signOutInfoStep) {
                             1 -> {
-                                KJKomicsApp.LOGIN_DATA?.nickname = infoEmailEditTextView.text.toString()
+                                KJKomicsApp.LOGIN_DATA?.nickname =
+                                    infoEmailEditTextView.text.toString()
                                 viewModel.repository.signOutInfoStep = 2
                                 nextImageView.isEnabled = false
                                 setGenderView()
                             }
                             2 -> {
-                                KJKomicsApp.LOGIN_DATA?.gender = if (genderView.maleView.isSelected) {
-                                    genderView.maleView.tag.toString()
-                                } else {
-                                    genderView.femaleView.tag.toString()
-                                }
+                                KJKomicsApp.LOGIN_DATA?.gender =
+                                    if (genderView.maleView.isSelected) {
+                                        genderView.maleView.tag.toString()
+                                    } else {
+                                        genderView.femaleView.tag.toString()
+                                    }
                                 viewModel.repository.signOutInfoStep = 3
                                 setAgeView()
                             }
@@ -476,8 +504,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                                 setLanguageView()
                             }
                             5 -> {
-                                write(context, CODE.CURRENT_LANGUAGE, viewModel.repository.language);
-                                CommonUtil.setLocale(context, CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"))
+                                write(
+                                    context,
+                                    CODE.CURRENT_LANGUAGE,
+                                    viewModel.repository.language
+                                );
+                                CommonUtil.setLocale(
+                                    context,
+                                    CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en")
+                                )
 
                                 val intent = Intent(CODE.LB_JOIN)
                                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
@@ -513,7 +548,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
     // [END signin]
 
     private fun requestFacebookLogin() {
-        LoginManager.getInstance().logInWithReadPermissions(this,
+        LoginManager.getInstance().logInWithReadPermissions(
+            this,
             listOf("public_profile", "email")
         )
         LoginManager.getInstance().registerCallback(callbackManager,
@@ -526,13 +562,17 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                             try {
                                 loginResult?.let {
                                     if (BuildConfig.DEBUG) {
-                                        Log.e(TAG, "loginResult.getAccessToken() : " +it.accessToken.token)
+                                        Log.e(
+                                            TAG,
+                                            "loginResult.getAccessToken() : " + it.accessToken.token
+                                        )
                                     }
                                     viewModel.repository.loginType = CODE.LOGIN_TYPE_FACEBOOK
                                     viewModel.repository.snsToken = it.accessToken.token
                                     viewModel.repository.id = resultObject.getString("id")
                                     if (!resultObject.isNull("email")) {
-                                        viewModel.repository.fbEmail = resultObject.getString("email")
+                                        viewModel.repository.fbEmail =
+                                            resultObject.getString("email")
                                     }
                                     viewModel.repository.fbName = resultObject.getString("name")
                                     if (viewModel.repository.fbEmail.isEmpty()) {
@@ -580,20 +620,21 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                 languageRecyclerView.layoutManager = LinearLayoutManager(context)
                 KJKomicsApp.INIT_SET.lang_list?.let {
                     languageRecyclerView.adapter = InfoLanguageAdapter(it)
-                    (languageRecyclerView.adapter as InfoLanguageAdapter).setOnItemClickListener(object :
-                        InfoLanguageAdapter.OnItemClickListener {
-                        override fun onItemClick(item: Any?, position: Int) {
-                            it.forEachIndexed { index, item ->
-                                if (index == position) {
-                                    item.isSelect = true
-                                    viewModel.repository.language = item.lang
-                                } else {
-                                    item.isSelect = false
+                    (languageRecyclerView.adapter as InfoLanguageAdapter).setOnItemClickListener(
+                        object :
+                            InfoLanguageAdapter.OnItemClickListener {
+                            override fun onItemClick(item: Any?, position: Int) {
+                                it.forEachIndexed { index, item ->
+                                    if (index == position) {
+                                        item.isSelect = true
+                                        viewModel.repository.language = item.lang
+                                    } else {
+                                        item.isSelect = false
+                                    }
                                 }
+                                (languageRecyclerView.adapter as InfoLanguageAdapter).notifyDataSetChanged()
                             }
-                            (languageRecyclerView.adapter as InfoLanguageAdapter).notifyDataSetChanged()
-                        }
-                    })
+                        })
                 }
             }
         }
@@ -618,7 +659,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                 KJKomicsApp.INIT_SET.loginGenre_img_list?.let {
                     recyclerView.adapter = InfoGenreAdapter(it)
                     recyclerView.addItemDecoration(GenreDecoration(context))
-                    (recyclerView.adapter as InfoGenreAdapter).setOnItemClickListener(object : InfoGenreAdapter.OnItemClickListener {
+                    (recyclerView.adapter as InfoGenreAdapter).setOnItemClickListener(object :
+                        InfoGenreAdapter.OnItemClickListener {
                         override fun onItemClick(item: Any?) {
                             if (item is DataLoginGenre) {
                                 if (KJKomicsApp.LOGIN_DATA?.genres == null) {
@@ -634,7 +676,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                                     KJKomicsApp.LOGIN_DATA?.genres?.remove(item.genre.toString())
                                 }
                                 (recyclerView.adapter as InfoGenreAdapter).notifyDataSetChanged()
-                                dialogView.nextImageView.isEnabled = KJKomicsApp.LOGIN_DATA?.genres?.size!! >= 3
+                                dialogView.nextImageView.isEnabled =
+                                    KJKomicsApp.LOGIN_DATA?.genres?.size!! >= 3
                             }
                         }
                     })
@@ -657,11 +700,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
                     ageRecyclerView.layoutManager = GridLayoutManager(context, 2)
                     ageRecyclerView.addItemDecoration(AgeDecoration(context))
                     ageRecyclerView.adapter = InfoAgeAdapter(it)
-                    (ageRecyclerView.adapter as InfoAgeAdapter).setOnItemClickListener(object : InfoAgeAdapter.OnItemClickListener {
+                    (ageRecyclerView.adapter as InfoAgeAdapter).setOnItemClickListener(object :
+                        InfoAgeAdapter.OnItemClickListener {
                         override fun onItemClick(item: Any?) {
                             if (item is DataAge) {
                                 KJKomicsApp.LOGIN_DATA?.age = item.age
-                                it.forEach  { ageData->
+                                it.forEach { ageData ->
                                     ageData.isSelect = false
                                 }
                                 item.isSelect = !item.isSelect
@@ -678,7 +722,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
 
     private fun setGenderView() {
         dialogView.run {
-            infoTextView.text = "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
+            infoTextView.text =
+                "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
             progressBar.progress = 2
             infoTitleTextView.text = getString(R.string.str_gender)
 
@@ -710,7 +755,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
     private fun setNickNameView() {
         dialogView.apply {
             nextImageView.isEnabled = false
-            infoTextView.text = "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
+            infoTextView.text =
+                "(${viewModel.repository.signOutInfoStep}/5) ${getString(R.string.str_sign_info_step_noti)}"
             progressBar.progress = 1
             infoEmailEditTextView.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
@@ -852,7 +898,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, Observer<Any> {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
 
         }
     }

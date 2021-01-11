@@ -1,5 +1,6 @@
 package com.krosskomics.common.activity
 
+import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -8,6 +9,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.transition.Slide
 import android.view.*
 import androidx.annotation.Nullable
@@ -53,7 +55,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
 //                exitTransition = Slide(Gravity.START)
 //            }
 //        }
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+//        overridePendingTransition(R.anim.slide_in_left, R.anim.stay)
         super.onCreate(savedInstanceState)
         context = this@BaseActivity
         setContentView(getLayoutId())
@@ -107,8 +109,13 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     open fun goLoginAlert(context: Context?) {
-        val intent = Intent(this, LoginIntroActivity::class.java)
-        startActivity(intent)
+        val intent = if ("0" == CommonUtil.read(context, CODE.IS_RUN_FIRST_LOGIN, "0")) {
+            CommonUtil.write(context, CODE.IS_RUN_FIRST_LOGIN, "1")
+            Intent(this, LoginIntroActivity::class.java)
+        } else {
+            Intent(this, LoginActivity::class.java)
+        }
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     }
 
     open fun goCoinAlert(context: Context?) {

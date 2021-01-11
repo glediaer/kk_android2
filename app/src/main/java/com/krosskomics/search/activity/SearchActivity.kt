@@ -1,6 +1,7 @@
 package com.krosskomics.search.activity
 
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +23,7 @@ import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
+import kotlinx.coroutines.*
 import java.util.*
 
 class SearchActivity : ToolbarTitleActivity() {
@@ -122,7 +124,13 @@ class SearchActivity : ToolbarTitleActivity() {
                     defaultView.visibility = View.VISIBLE
                     resultView.visibility = View.GONE
 
-                    searchView.layoutParams.height = CommonUtil.dpToPx(context, 203)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        while (searchView.layoutParams.height < CommonUtil.dpToPx(context, 203)) {
+                            searchView.layoutParams.height = searchView.layoutParams.height + 3
+                            searchView.requestLayout()
+                            delay(1)
+                        }
+                    }
                     searchView.setPadding(
                         CommonUtil.dpToPx(context, 20),
                         CommonUtil.dpToPx(context, 60),
@@ -147,7 +155,13 @@ class SearchActivity : ToolbarTitleActivity() {
                     resultView.visibility = View.VISIBLE
                     searchEditText.setText(viewModel.keyword)
 
-                    searchView.layoutParams.height = CommonUtil.dpToPx(context, 60)
+                    CoroutineScope(Dispatchers.Main).launch {
+                        while (searchView.layoutParams.height > CommonUtil.dpToPx(context, 60)) {
+                            searchView.layoutParams.height = searchView.layoutParams.height - 3
+                            searchView.requestLayout()
+                            delay(1)
+                        }
+                    }
                     searchView.setPadding(
                         CommonUtil.dpToPx(context, 20),
                         CommonUtil.dpToPx(context, 0),

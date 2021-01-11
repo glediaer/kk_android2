@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.AnimationUtils.loadAnimation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.krosskomics.R
@@ -99,6 +101,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
     inner class BaseItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
         override fun setData(item: Any?, position: Int) {
             itemView.apply {
+                animation = AnimationUtils.loadAnimation(context, R.anim.down)
                 setOnClickListener {
                     onClickListener?.onItemClick(item, position)
                 }

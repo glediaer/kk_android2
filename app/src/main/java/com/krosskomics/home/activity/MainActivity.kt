@@ -1,5 +1,6 @@
 package com.krosskomics.home.activity
 
+import android.app.ActivityOptions
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,6 +13,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.core.widget.NestedScrollView
@@ -39,16 +41,17 @@ import com.krosskomics.common.model.Main
 import com.krosskomics.common.view.SpanningLinearLayoutManager
 import com.krosskomics.data.DataLanguage
 import com.krosskomics.event.activity.EventActivity
-import com.krosskomics.mainmenu.activity.GenreActivity
 import com.krosskomics.home.adapter.ChangeLanguageAdapter
 import com.krosskomics.home.adapter.HomeAdapter
 import com.krosskomics.home.adapter.MainBannerPagerAdapter
 import com.krosskomics.home.viewmodel.MainViewModel
 import com.krosskomics.library.activity.LibraryActivity
-import com.krosskomics.mynews.activity.MyNewsActivity
-import com.krosskomics.notice.activity.NoticeActivity
+import com.krosskomics.mainmenu.activity.GenreActivity
 import com.krosskomics.mainmenu.activity.OnGoingActivity
 import com.krosskomics.mainmenu.activity.RankingActivity
+import com.krosskomics.mainmenu.activity.WaitFreeActivity
+import com.krosskomics.mynews.activity.MyNewsActivity
+import com.krosskomics.notice.activity.NoticeActivity
 import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.settings.activity.SettingsActivity
@@ -60,7 +63,6 @@ import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.CommonUtil.write
 import com.krosskomics.util.ServerUtil
 import com.krosskomics.util.ServerUtil.service
-import com.krosskomics.mainmenu.activity.WaitFreeActivity
 import com.krosskomics.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main_content.*
@@ -77,6 +79,10 @@ import java.util.*
 
 class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private val TAG = "MainActivity"
+
+    // 마지막으로 뒤로가기 버튼을 눌렀던 시간 저장
+    private var backKeyPressedTime: Long = 0
+    val DEFALT_HEADER_HEIGHT = 667
 
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -219,7 +225,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             }
         } else if (t is Main) {
             if ("00" == t.retcode) {
-//                mBannerLolling = t.banner_rolling
+                languageRecyclerView.visibility = View.GONE
                 setMainBannerView(t.main_banner, t.banner_rolling)
                 setMainContentView(t.layout_contents)
             } else if ("201" == t.retcode) {
@@ -237,14 +243,19 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        if(dl_main_drawer_root.isDrawerOpen(GravityCompat.START)) {
+        if (dl_main_drawer_root.isDrawerOpen(GravityCompat.START)) {
             dl_main_drawer_root.closeDrawer(GravityCompat.START)
         } else {
             if (!this@MainActivity.isFinishing) {
-                try {
-                    showFinishAlert();
-                } catch (e: Exception) {
-                    e.printStackTrace();
+                // 2000 milliseconds = 2 seconds
+                if (System.currentTimeMillis() > backKeyPressedTime + 2000) {
+                    backKeyPressedTime = System.currentTimeMillis()
+                    Toast.makeText(this, getString(R.string.msg_finish_app), Toast.LENGTH_SHORT)
+                        .show()
+                    return
+                }
+                if (System.currentTimeMillis() <= backKeyPressedTime + 2000) {
+                    requestAppFinishApi()
                 }
             }
         }
@@ -271,7 +282,8 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
 
         }
         floatingLibrary.setOnClickListener {
-            startActivity(Intent(context, LibraryActivity::class.java))
+            val intent = Intent(context, LibraryActivity::class.java)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this@MainActivity).toBundle())
         }
         bottomViewClose.setOnClickListener {
             bottomBannerView.visibility = View.GONE
@@ -308,10 +320,38 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
         mainStickyTabView.waitButton.isSelected = false
         mainStickyTabView.rankingButton.isSelected = false
         mainStickyTabView.genreButton.isSelected = false
-        mainStickyTabView.onGoingButton.setOnClickListener { startActivity(Intent(context, OnGoingActivity::class.java))  }
-        mainStickyTabView.waitButton.setOnClickListener { startActivity(Intent(context, WaitFreeActivity::class.java)) }
-        mainStickyTabView.rankingButton.setOnClickListener { startActivity(Intent(context, RankingActivity::class.java)) }
-        mainStickyTabView.genreButton.setOnClickListener { startActivity(Intent(context, GenreActivity::class.java)) }
+        mainStickyTabView.onGoingButton.setOnClickListener {
+            startActivity(
+                Intent(
+                    context,
+                    OnGoingActivity::class.java
+                )
+            )
+        }
+        mainStickyTabView.waitButton.setOnClickListener {
+            startActivity(
+                Intent(
+                    context,
+                    WaitFreeActivity::class.java
+                )
+            )
+        }
+        mainStickyTabView.rankingButton.setOnClickListener {
+            startActivity(
+                Intent(
+                    context,
+                    RankingActivity::class.java
+                )
+            )
+        }
+        mainStickyTabView.genreButton.setOnClickListener {
+            startActivity(
+                Intent(
+                    context,
+                    GenreActivity::class.java
+                )
+            )
+        }
     }
 
     private fun setMainBannerView(items: ArrayList<DataBanner>?, bannerLolling: Int) {
@@ -356,14 +396,10 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     private fun setMainContentView(items: ArrayList<DataMainContents>?) {
         items?.let {
             nestedScrollView.setOnScrollChangeListener { v: NestedScrollView?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
-                if (BuildConfig.DEBUG) {
-//                    Log.e(TAG, "scrollY : " + scrollY)
-//                    Log.e(TAG, "oldScrollY : " + oldScrollY)
-                    if (scrollY >= 1777) {
-                        mainStickyTabView.visibility = View.VISIBLE
-                    } else {
-                        mainStickyTabView.visibility = View.GONE
-                    }
+                if (scrollY >= dpToPx(context, DEFALT_HEADER_HEIGHT)) {
+                    mainStickyTabView.visibility = View.VISIBLE
+                } else {
+                    mainStickyTabView.visibility = View.GONE
                 }
             }
             MAIN_CONTENTS = items
@@ -373,15 +409,22 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     private fun initLanguageRecyclerView() {
-        var items = arrayListOf(DataLanguage("English", "en", true),
+        var items = arrayListOf(
+            DataLanguage("English", "en", true),
             DataLanguage("Hindi", "hi", false),
-            DataLanguage("Talua", "ta", false))
+            DataLanguage("Talua", "ta", false)
+        )
 
         languageRecyclerView?.apply {
             visibility = View.VISIBLE
             adapter = ChangeLanguageAdapter(items)
-            layoutManager = SpanningLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            (adapter as ChangeLanguageAdapter).setOnItemClickListener(object : ChangeLanguageAdapter.OnItemClickListener {
+            layoutManager = SpanningLinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            (adapter as ChangeLanguageAdapter).setOnItemClickListener(object :
+                ChangeLanguageAdapter.OnItemClickListener {
                 override fun onItemClick(view: View, position: Int) {
                     items.forEachIndexed { index, dataLanguage ->
                         if (position == index) {
@@ -417,7 +460,8 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             closeImageView.setOnClickListener { dl_main_drawer_root.closeDrawers() }
             alarmImageView.setOnClickListener {
                 startActivity(Intent(context, MyNewsActivity::class.java))
-                dl_main_drawer_root.closeDrawers() }
+                dl_main_drawer_root.closeDrawers()
+            }
             if (read(context, CODE.LOCAL_loginYn, "N").equals("Y", ignoreCase = true)) {
                 headerView.isSelected = true
                 alarmImageView.visibility = View.VISIBLE
@@ -439,7 +483,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
                 }
                 if (CODE.LOGIN_TYPE_KROSS == read(context, CODE.LOCAL_loginType, "")) {
                     nicknameTextView.text = read(context, CODE.LOCAL_email, "")
-                } else{
+                } else {
                     nicknameTextView.text = read(context, CODE.LOCAL_Nickname, "Guest")
                 }
                 coinTextView.text = read(context, CODE.LOCAL_coin, "0")
@@ -521,8 +565,14 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     private fun requestLogOutApi() {
-        val api = ServerUtil.service.postLogout(CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
-            "logout", KJKomicsApp.LOGIN_SEQ)
+        val api = ServerUtil.service.postLogout(
+            CommonUtil.read(
+                context,
+                CODE.CURRENT_LANGUAGE,
+                "en"
+            ),
+            "logout", KJKomicsApp.LOGIN_SEQ
+        )
         api.enqueue(object : retrofit2.Callback<Default> {
             override fun onResponse(call: Call<Default>, response: Response<Default>) {
                 try {
@@ -633,8 +683,10 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     private fun requestSetLanguage(newLanguage: String) {
-        val api = service.setLanguage(CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
-            "change_language", newLanguage)
+        val api = service.setLanguage(
+            CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
+            "change_language", newLanguage
+        )
         api.enqueue(object : retrofit2.Callback<Default> {
             override fun onResponse(call: Call<Default>, response: Response<Default>) {
                 try {
@@ -784,7 +836,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.logoImageView -> requestServer()
             R.id.searchImageView -> startActivity(Intent(context, SearchActivity::class.java))
             R.id.changeLangImageView -> {

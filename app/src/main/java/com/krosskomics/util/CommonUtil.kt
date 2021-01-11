@@ -640,13 +640,23 @@ object CommonUtil {
     }
 
     fun goLoginAlert(context: Context) {
-        val intent = Intent(context, LoginIntroActivity::class.java)
+        val intent = if ("0" == CommonUtil.read(context, CODE.IS_RUN_FIRST_LOGIN, "0")) {
+            write(context, CODE.IS_RUN_FIRST_LOGIN, "1")
+            Intent(context, LoginIntroActivity::class.java)
+        } else {
+            Intent(context, LoginActivity::class.java)
+        }
         intent.putExtra("pageType", "login")
         context.startActivity(intent)
     }
 
     fun moveSignUp(context: Context) {
-        val intent = Intent(context, LoginActivity::class.java)
+        val intent = if ("0" == CommonUtil.read(context, CODE.IS_RUN_FIRST_LOGIN, "0")) {
+            write(context, CODE.IS_RUN_FIRST_LOGIN, "1")
+            Intent(context, LoginIntroActivity::class.java)
+        } else {
+            Intent(context, LoginActivity::class.java)
+        }
         intent.putExtra("pageType", "signup")
         context.startActivity(intent)
     }

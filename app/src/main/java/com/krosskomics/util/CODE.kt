@@ -62,6 +62,9 @@ object CODE {
     // 앱 최초실행 체크
     var IS_RUN_FIRST_APP = "is_run_first_app"
 
+    // 로그인 페이 최초 연결 체크
+    var IS_RUN_FIRST_LOGIN = "is_run_first_login"
+
     // 1:1 문의하기 웹주소
     var CSFORM = WEB_URL + "cs/csform_google.asp"
     var IS_SHOW_AUTUSCROLL = "IS_SHOW_AUTUSCROLL"

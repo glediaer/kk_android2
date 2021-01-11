@@ -19,6 +19,7 @@ class HomePopupActivity : BaseActivity() {
     private val TAG = "HomePopupActivity"
 
     private val eventList = ArrayList<DataBanner>()
+    private var currentPage = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val layoutParams = WindowManager.LayoutParams()
@@ -46,10 +47,9 @@ class HomePopupActivity : BaseActivity() {
                 }
                 when (eventList.size) {
                     0 -> finish()
-                    1 -> progressBar.visibility = View.GONE
+                    1 -> indicatorView.visibility = View.GONE
                     else -> {
-                        progressBar.visibility = View.VISIBLE
-                        progressBar.progress = eventList.size
+                        indicatorView.visibility = View.VISIBLE
                     }
                 }
             } else {
@@ -61,6 +61,25 @@ class HomePopupActivity : BaseActivity() {
     }
 
     override fun initLayout() {
+        currentPageTextView.text = "1"
+        totalPageTextView.text = "${eventList.size}"
+        prevImageView.setOnClickListener {
+            currentPage = currentPageTextView.text.toString().toInt()
+            if (currentPage <= 1) {
+                return@setOnClickListener
+            }
+            currentPageTextView.text = currentPage--.toString()
+            pager.currentItem = currentPage - 1
+        }
+        nextImageView.setOnClickListener {
+            currentPage = currentPageTextView.text.toString().toInt()
+            if (currentPage >= eventList.size) {
+                return@setOnClickListener
+            }
+            currentPageTextView.text = currentPage++.toString()
+            pager.currentItem = currentPage - 1
+        }
+
         dontShowTextView.setOnClickListener {
             // 하루 안보기
             // 오늘 날짜 데이터
@@ -93,9 +112,6 @@ class HomePopupActivity : BaseActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                if (position < 4) {
-                    progressBar.progress = position + 1
-                }
             }
 
             override fun onPageScrollStateChanged(state: Int) {

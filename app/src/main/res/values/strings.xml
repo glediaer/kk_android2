@@ -260,6 +260,6 @@
     <string name="msg_success_login">Log in normally</string>
     <string name="msg_push_not_support_device">This device does not provide any push alert system.</string>
     <string name="msg_empty_search_data_format">There is no result for\n“%s”</string>
-
+    <string name="msg_finish_app">Please press again to exit activity.</string>
 
 </resources>
