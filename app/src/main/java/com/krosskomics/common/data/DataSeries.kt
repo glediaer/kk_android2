@@ -57,5 +57,5 @@ class DataSeries {
 //    "reset_wop_ratio": 95,										기다무 리셋 남은기간 백분율
 //    "dp_wop_desc": "- If you wait for this comic’s period of \ntime, one free ticket will be generated \nagain.\n\n- This free ticket could be used one \nepisode and expired after 3 days.",
 //    "series_notice": []										시리즈 공지 리스트
-
+    var isVideo = true
 }

@@ -101,7 +101,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
     inner class BaseItemHolder(itemView: View) : BaseItemViewHolder(itemView) {
         override fun setData(item: Any?, position: Int) {
             itemView.apply {
-                animation = AnimationUtils.loadAnimation(context, R.anim.down)
+                animation = AnimationUtils.loadAnimation(context, R.anim.list_item_slide_down)
                 setOnClickListener {
                     onClickListener?.onItemClick(item, position)
                 }

@@ -17,19 +17,52 @@
             android:layout_height="wrap_content">
 
             <FrameLayout
+                android:id="@+id/mainBannerView"
                 android:layout_width="match_parent"
-                android:layout_height="203dp">
+                android:layout_height="wrap_content">
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/mainImageView"
+                <FrameLayout
+                    android:id="@+id/mainBannerImageView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:placeholderImage="@drawable/kk_placeholder" />
+                    android:layout_height="203dp">
 
-                <View
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/mainImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:placeholderImage="@drawable/kk_placeholder" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#33000000" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/mainBannerVideoView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#33000000" />
+                    android:visibility="gone"
+                    android:layout_height="538dp">
+
+                    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                        android:id="@+id/exoPlayerView"
+                        android:layout_width="match_parent"
+                        android:visibility="visible"
+                        android:layout_height="match_parent"
+                        app:resize_mode="fill"
+                        app:use_controller="false"/>
+                    
+                    <ImageView
+                        android:id="@+id/exoPlayImageView"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="gone"
+                        android:src="@drawable/exo_icon_play"
+                        android:layout_gravity="center"/>
+
+                </FrameLayout>
+                
 
                 <include
                     layout="@layout/view_content_like_white"

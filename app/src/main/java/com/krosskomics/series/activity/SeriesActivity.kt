@@ -3,18 +3,27 @@ package com.krosskomics.series.activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.source.MediaSource
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import com.krosskomics.BuildConfig
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
@@ -67,8 +76,12 @@ import retrofit2.Response
 import java.io.File
 import java.util.*
 
+
 class SeriesActivity : ToolbarTitleActivity() {
     private val TAG = "SeriesActivity"
+
+    var player: SimpleExoPlayer? = null
+    private var playWhenReady = false
 
     lateinit var downLoadAsyncTask: DownloadFileFromURL
 
@@ -146,7 +159,8 @@ class SeriesActivity : ToolbarTitleActivity() {
                     if (response.isSuccessful) {
                         val item = response.body()
                         if ("00" == item!!.retcode) {
-                            toolbar.actionItem.scribeImageView.isSelected = "C" != viewModel.subscribeAction
+                            toolbar.actionItem.scribeImageView.isSelected =
+                                "C" != viewModel.subscribeAction
                             if ("S" == viewModel.subscribeAction) {
                                 pushImageView.visibility = View.VISIBLE
                                 pushImageView.isSelected = viewModel.seriesItem.ispush != "0"
@@ -677,7 +691,31 @@ class SeriesActivity : ToolbarTitleActivity() {
                 toolbar.actionItem.pushImageView.visibility = View.VISIBLE
                 toolbar.actionItem.pushImageView.isSelected = it.ispush != "0"
             }
-            mainImageView.setImageURI(it.image)
+
+            // 배너 체크
+            if (it.isVideo) {
+                mainBannerImageView.visibility = View.GONE
+                mainBannerVideoView.visibility = View.VISIBLE
+                initializePlayer()
+                val params = RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                params.setMargins(0, CommonUtil.dpToPx(context, 505), 0, 0)
+
+                infoView.layoutParams = params
+            } else {
+                mainBannerImageView.visibility = View.VISIBLE
+                mainImageView.setImageURI(it.image)
+                mainBannerVideoView.visibility = View.GONE
+                val params = RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                params.setMargins(0, CommonUtil.dpToPx(context, 170), 0, 0)
+
+                infoView.layoutParams = params
+            }
             tv_like_count.text = it.like_cnt
 
             // info
@@ -710,7 +748,12 @@ class SeriesActivity : ToolbarTitleActivity() {
             }
 
             contentTitleTextView.text = it.title
-            writerTextView.text = getString(R.string.str_writer_format, it.writer1, it.writer2, it.writer3)
+            writerTextView.text = getString(
+                R.string.str_writer_format,
+                it.writer1,
+                it.writer2,
+                it.writer3
+            )
             if (it.allow_comment == "1") {
                 commentView.visibility = View.VISIBLE
                 commentTextView.text = it.comment_cnt
@@ -753,7 +796,7 @@ class SeriesActivity : ToolbarTitleActivity() {
                 progressView.visibility = View.VISIBLE
                 progressBar.progress = it.reset_wop_ratio
                 progressTextView.text = it.dp_reset_wop
-                progressTextView.setOnClickListener {view ->
+                progressTextView.setOnClickListener { view ->
                     showWaitFreeInfoAlert(it.dp_wop_desc)
                 }
             }
@@ -822,6 +865,48 @@ class SeriesActivity : ToolbarTitleActivity() {
                 }
             }
         }
+    }
+
+    private fun initializePlayer() {
+        if (player == null) {
+            player = ExoPlayerFactory.newSimpleInstance(context)
+
+            //플레이어 연결
+            exoPlayerView.player = player
+        }
+        val sample =
+            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+        val mediaSource: MediaSource = buildMediaSource(Uri.parse(sample))
+
+        //prepare
+        player?.prepare(mediaSource, true, false)
+
+        if (CommonUtil.checkNetworkState(context)) {    // wifi일때만 자동재생
+            //start,stop
+            player?.playWhenReady = true
+            exoPlayImageView.visibility = View.GONE
+        } else {
+            exoPlayImageView.visibility = View.VISIBLE
+        }
+
+//        playWhenReady = CommonUtil.checkNetworkState(context)
+    }
+
+    private fun releasePlayer() {
+        if (player != null) {
+//            playbackPosition = player!!.currentPosition
+//            currentWindow = player!!.currentWindowIndex
+            playWhenReady = player!!.playWhenReady
+            exoPlayerView.player = null
+            player?.release()
+            player = null
+        }
+    }
+
+    private fun buildMediaSource(uri: Uri): MediaSource {
+        val userAgent: String = Util.getUserAgent(context, "blackJin")
+        return ExtractorMediaSource.Factory(DefaultHttpDataSourceFactory(userAgent))
+            .createMediaSource(uri)
     }
 
     private fun showPurchaseRentDialog(episode: DataEpisode?) {
@@ -985,10 +1070,20 @@ class SeriesActivity : ToolbarTitleActivity() {
         if (viewModel.listViewType == 0) {
             recyclerView?.layoutManager = GridLayoutManager(context, 3)
             // 양쪽 패딩 20dp 추가
-            recyclerView.setPadding(CommonUtil.dpToPx(context, 20), 0, CommonUtil.dpToPx(context, 20), 0)
+            recyclerView.setPadding(
+                CommonUtil.dpToPx(context, 20), 0, CommonUtil.dpToPx(
+                    context,
+                    20
+                ), 0
+            )
         } else {
             recyclerView?.layoutManager = LinearLayoutManager(context)
-            recyclerView.setPadding(CommonUtil.dpToPx(context, 0), 0, CommonUtil.dpToPx(context, 0), 0)
+            recyclerView.setPadding(
+                CommonUtil.dpToPx(context, 0),
+                0,
+                CommonUtil.dpToPx(context, 0),
+                0
+            )
         }
         recyclerView.adapter = SeriesAdapter(viewModel.items, recyclerViewItemLayoutId, context)
         (recyclerView.adapter as RecyclerViewBaseAdapter).apply {

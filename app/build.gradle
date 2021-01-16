@@ -117,6 +117,11 @@ dependencies {
     implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'androidx.preference:preference-ktx:1.1.1'
 
+    // chuck
     debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
     releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
+
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.9.6'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.9.6'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.9.6'
 }

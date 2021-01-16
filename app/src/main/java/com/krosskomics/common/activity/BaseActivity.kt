@@ -81,6 +81,11 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         super.onDestroy()
     }
 
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        overridePendingTransition(R.anim.stay, R.anim.slide_out_right)
+//    }
+
     // fragment 추가
 //    fun addFragment(fragment: Fragment) {
 //        val fragmentManager = supportFragmentManager

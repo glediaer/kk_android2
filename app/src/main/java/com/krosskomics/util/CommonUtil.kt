@@ -13,9 +13,12 @@ import android.content.res.Resources
 import android.graphics.Point
 import android.graphics.Typeface
 import android.net.ConnectivityManager
+import android.net.ConnectivityManager.TYPE_WIFI
+import android.net.NetworkCapabilities
 import android.net.NetworkInfo
 import android.net.Uri
 import android.net.wifi.WifiManager
+import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.telephony.TelephonyManager
@@ -47,6 +50,7 @@ import org.json.JSONException
 import java.text.DecimalFormat
 import java.util.*
 import java.util.regex.Pattern
+
 
 object CommonUtil {
     private const val TAG = "CommonUtil"
@@ -912,5 +916,22 @@ object CommonUtil {
             }
         }
         return urls
+    }
+
+    fun checkNetworkState(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val nw = connectivityManager.activeNetwork ?: return false
+            val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+            return when {
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                else -> false
+            }
+        } else {
+            val nwInfo = connectivityManager.activeNetworkInfo ?: return false
+            return nwInfo.isConnected
+        }
     }
 }
