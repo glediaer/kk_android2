@@ -13,11 +13,10 @@ import retrofit2.Response
 
 
 class CommentRepository : CommonRepository(){
-    fun requestMain(context: Context, page: Int) {
+    fun requestMain(type: String, sid: String, eid: String = "0", sort: String, page: Int,
+        reportType: String?, reportContent: String?) {
         val api: Call<Comment> = ServerUtil.service.getCommentList(
-            CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
-            "1",
-            page
+            type, sid, eid, sort, page, reportType, reportContent
         )
         api.enqueue(object : Callback<Comment> {
             override fun onResponse(call: Call<Comment>, response: Response<Comment>) {

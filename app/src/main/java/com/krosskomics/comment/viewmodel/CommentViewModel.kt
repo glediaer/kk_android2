@@ -9,9 +9,18 @@ import com.krosskomics.mynews.repository.MyNewsRepository
 class CommentViewModel(application: Application): BaseViewModel(application) {
     private val repository = CommentRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
+    var type = "list"
+    var sid = "0"
+    var eid = "0"
+    var sort = "t"   //t:top, r:recent
+    var comment = ""   //t:top, r:recent
+    var seq = "0"   //t:top, r:recent
+
+    var reportType = ""
+    var reportContent = ""
 
     override fun requestMain() {
-        repository.requestMain(getApplication(), page)
+        repository.requestMain(type, sid, eid, sort, page, reportType, reportContent)
     }
 
     override fun getMainResponseLiveData(): LiveData<Any> {

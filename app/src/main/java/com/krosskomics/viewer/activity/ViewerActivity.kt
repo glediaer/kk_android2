@@ -250,7 +250,11 @@ class ViewerActivity : ToolbarTitleActivity() {
     private fun initFooterView() {
         prevView.setOnClickListener { loadEpCheck(viewModel.item.pre_eid) }
         commentView.setOnClickListener {
-            startActivity(Intent(context, CommentActivity::class.java))
+            val intent = Intent(context, CommentActivity::class.java).apply {
+                putExtra("sid", viewModel.item.sid)
+                putExtra("eid", viewModel.item.eid)
+            }
+            startActivity(intent)
         }
         settingView.setOnClickListener { settingBottomView.visibility = View.VISIBLE }
         epListView.setOnClickListener { epView.visibility = View.VISIBLE }

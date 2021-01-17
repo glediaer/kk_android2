@@ -5,9 +5,7 @@ import com.krosskomics.common.data.DataGenre
 import com.krosskomics.common.data.DataWaitFreeTerm
 import java.util.*
 
-class More {
-    var msg: String? = null
-    var retcode: String? = null
+class More : Default() {
     var list_title: String? = null
     var list_type // NN 일반노페이징, NP 일반페이징, RN 랭킹노페이징,RP 랭킹페이징
             : String? = null

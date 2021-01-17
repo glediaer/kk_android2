@@ -7,11 +7,7 @@ import com.krosskomics.common.data.DataEpisode
 import com.krosskomics.common.data.DataSeries
 import java.util.*
 
-class Episode {
-    var retcode: String? = null
-
-    var msg: String? = null
-
+class Episode : Default() {
     var series: DataSeries? = null
 
 //    var list: ArrayList<DataEpisode> = arrayListOf()

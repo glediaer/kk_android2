@@ -8,9 +8,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
 import com.krosskomics.comment.viewmodel.CommentViewModel
 import com.krosskomics.common.activity.ToolbarTitleActivity
+import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
+import com.krosskomics.common.data.DataComment
+import com.krosskomics.common.model.Default
 import com.krosskomics.mynews.viewmodel.MyNewsViewModel
+import com.krosskomics.util.CommonUtil
 import kotlinx.android.synthetic.main.activity_comment.*
+import kotlinx.android.synthetic.main.activity_comment.recyclerView
+import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
+import kotlinx.android.synthetic.main.view_toolbar_black.toolbar
 import kotlinx.android.synthetic.main.view_toolbar_black.view.*
 
 class CommentActivity : ToolbarTitleActivity() {
@@ -27,6 +34,15 @@ class CommentActivity : ToolbarTitleActivity() {
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_comment
         return R.layout.activity_comment
+    }
+
+    override fun initModel() {
+        intent.extras?.apply {
+            viewModel.sid = getString("sid").toString()
+            viewModel.eid = getString("eid").toString()
+        }
+
+        super.initModel()
     }
 
     override fun initTracker() {
@@ -75,6 +91,10 @@ class CommentActivity : ToolbarTitleActivity() {
         })
         sendImageView.setOnClickListener {
             // 댓글 등록
+            viewModel.type = "reg"
+            viewModel.comment = commentEditText.text.toString()
+            requestServer()
+            CommonUtil.downKeyboard(context, commentEditText)
         }
     }
 
@@ -82,6 +102,19 @@ class CommentActivity : ToolbarTitleActivity() {
         commentsCount.text = "(${viewModel.items.size})"
         sortView.setOnClickListener {
             // 정렬 리퀘스트
+            if (viewModel.sort == "t") {
+                viewModel.sort = "r"
+            } else {
+                viewModel.sort = "t"
+            }
+            reloadRequestComment()
         }
+    }
+
+    fun reloadRequestComment() {
+        viewModel.isRefresh = true
+        viewModel.type = "list"
+        viewModel.page = 1
+        requestServer()
     }
 }

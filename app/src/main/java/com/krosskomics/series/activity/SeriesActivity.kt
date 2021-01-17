@@ -13,12 +13,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
@@ -138,6 +140,11 @@ class SeriesActivity : ToolbarTitleActivity() {
             toolbarTitle.setTextColor(Color.WHITE)
             toolbarTitle.text = ""
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        releasePlayer()
     }
 
     private fun requestSeriesEp() {
@@ -289,7 +296,7 @@ class SeriesActivity : ToolbarTitleActivity() {
                     if ("00" == t.retcode) {
                         t.list?.let {
                             viewModel.seriesItem = t.series!!
-                            viewModel.arr_episode = it.list
+                            viewModel.arr_episode.addAll(it.list)
                             viewModel.items.addAll(it.list)
                             viewModel.page = it.page
                             viewModel.totalPage = it.tot_pages
@@ -378,9 +385,6 @@ class SeriesActivity : ToolbarTitleActivity() {
                 viewModel.page = t.page
                 viewModel.totalPage = t.tot_pages
                 setMainContentView(t)
-//                        setHeaderContentView(t)
-
-//                        checkViewerType()
                 getSeriesDownloadedFile()
                 // 전체구매
                 viewModel.arr_episode.forEach { item ->
@@ -662,15 +666,15 @@ class SeriesActivity : ToolbarTitleActivity() {
 
     private fun setHeaderContentView(t: Episode) {
         nestedScrollView.setOnScrollChangeListener { v: NestedScrollView, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int ->
-            if (BuildConfig.DEBUG) {
-                Log.e(TAG, "scrollY : " + scrollY)
-                Log.e(TAG, "oldScrollY : " + oldScrollY)
-            }
             if (firstContinueEpView.isShown) {
                 firstContinueEpView.visibility = View.GONE
             }
-            if (scrollY >= 320) {
+            if (scrollY >= CommonUtil.dpToPx(context, 100)) {
                 toolbar.setBackgroundColor(Color.parseColor("#262626"))
+                if (mainBannerVideoView.isShown) {
+                    setBannerView(false)
+                    releasePlayer()
+                }
             } else {
                 toolbar.setBackgroundColor(Color.TRANSPARENT)
             }
@@ -693,29 +697,8 @@ class SeriesActivity : ToolbarTitleActivity() {
             }
 
             // 배너 체크
-            if (it.isVideo) {
-                mainBannerImageView.visibility = View.GONE
-                mainBannerVideoView.visibility = View.VISIBLE
-                initializePlayer()
-                val params = RelativeLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                params.setMargins(0, CommonUtil.dpToPx(context, 505), 0, 0)
-
-                infoView.layoutParams = params
-            } else {
-                mainBannerImageView.visibility = View.VISIBLE
-                mainImageView.setImageURI(it.image)
-                mainBannerVideoView.visibility = View.GONE
-                val params = RelativeLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                params.setMargins(0, CommonUtil.dpToPx(context, 170), 0, 0)
-
-                infoView.layoutParams = params
-            }
+            mainImageView.setImageURI(it.image)
+            setBannerView(it.isVideo)
             tv_like_count.text = it.like_cnt
 
             // info
@@ -867,12 +850,40 @@ class SeriesActivity : ToolbarTitleActivity() {
         }
     }
 
+    private fun setBannerView(isVideo: Boolean) {
+        if (isVideo) {
+            initializePlayer()
+            mainBannerImageView.visibility = View.GONE
+            mainBannerVideoView.visibility = View.VISIBLE
+
+            val params = RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(0, CommonUtil.dpToPx(context, 505), 0, 0)
+
+            infoView.layoutParams = params
+        } else {
+            mainBannerImageView.visibility = View.VISIBLE
+            mainBannerVideoView.visibility = View.GONE
+
+            val params = RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(0, CommonUtil.dpToPx(context, 170), 0, 0)
+
+            infoView.layoutParams = params
+        }
+    }
+
     private fun initializePlayer() {
         if (player == null) {
             player = ExoPlayerFactory.newSimpleInstance(context)
 
             //플레이어 연결
             exoPlayerView.player = player
+            exoPlayerView.player.addListener(eventListener)
         }
         val sample =
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
@@ -888,14 +899,19 @@ class SeriesActivity : ToolbarTitleActivity() {
         } else {
             exoPlayImageView.visibility = View.VISIBLE
         }
+    }
 
-//        playWhenReady = CommonUtil.checkNetworkState(context)
+    private val eventListener = object : Player.EventListener {
+        override fun onPlayerStateChanged(playWhenReady: Boolean, playBackState: Int) {
+            if (playBackState == Player.STATE_ENDED) {
+                setBannerView(false)
+                releasePlayer()
+            }
+        }
     }
 
     private fun releasePlayer() {
         if (player != null) {
-//            playbackPosition = player!!.currentPosition
-//            currentWindow = player!!.currentWindowIndex
             playWhenReady = player!!.playWhenReady
             exoPlayerView.player = null
             player?.release()

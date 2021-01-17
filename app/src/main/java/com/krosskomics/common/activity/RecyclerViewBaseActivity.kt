@@ -14,6 +14,7 @@ import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.comment.activity.CommentActivity
 import com.krosskomics.comment.activity.CommentReportActivity
+import com.krosskomics.comment.viewmodel.CommentViewModel
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
@@ -35,6 +36,7 @@ import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.ServerUtil
+import kotlinx.android.synthetic.main.activity_comment.*
 import kotlinx.android.synthetic.main.activity_main_content.errorView
 import kotlinx.android.synthetic.main.activity_main_content.nestedScrollView
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
@@ -130,60 +132,77 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
     }
 
     override fun onChanged(t: Any?) {
-        if (t is More) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-            } else {
-                t.msg?.let {
-                    CommonUtil.showToast(it, context)
+        when (t) {
+            is More -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
                 }
             }
-        } else if (t is Episode) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-            } else {
-                t.msg?.let {
-                    CommonUtil.showToast(it, context)
+            is Episode -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
                 }
             }
-        } else if (t is Coin) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-            } else {
-                t.msg?.let {
-                    CommonUtil.showToast(it, context)
+            is EpisodeMore -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
                 }
             }
-        } else if (t is Search) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-            } else {
-                t.msg?.let {
-                    CommonUtil.showToast(it, context)
+            is Coin -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
                 }
             }
-        } else if (t is News) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-            } else {
-                t.msg?.let {
-                    CommonUtil.showToast(it, context)
+            is Search -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
                 }
             }
-        } else if (t is Comment) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-            } else {
-                t.msg?.let {
-                    CommonUtil.showToast(it, context)
+            is News -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
                 }
             }
-        } else if (t is Genre) {
-            if ("00" == t.retcode) {
-                setMainContentView(t)
-            } else {
-                t.msg?.let {
-                    CommonUtil.showToast(it, context)
+            is Comment -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
+                }
+            }
+            is Genre -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
                 }
             }
         }
@@ -227,18 +246,16 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
             }
             is Episode -> {
                 body.list?.list?.let {
-                    viewModel.items.addAll(it)
+//                    viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
             }
-
             is EpisodeMore -> {
                 body.list.let {
-                    viewModel.items.addAll(it)
+//                    viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
             }
-
             is Coin -> {
                 body.product_list?.let {
                     viewModel.items.addAll(it)
@@ -253,6 +270,12 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                 }
             }
             is Comment -> {
+                if (body.page == 0) {   // 리스트 아닐때
+                    if (context is CommentActivity) {
+                        (context as CommentActivity).reloadRequestComment()
+                        return
+                    }
+                }
                 viewModel.totalPage = body.tot_pages
                 body.list?.let {
                     viewModel.items.addAll(it)
@@ -303,6 +326,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if ((recyclerView.tag)?.toString() == "series") return
                 if (!recyclerView.canScrollVertically(1)) {
                     if (viewModel.page < viewModel.totalPage) {
                         viewModel.page++
@@ -340,7 +364,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                         }
                         startActivity(intent)
                     } else if (item is DataReport) {
-                        resetReportSelect(position)
+                        (context as CommentReportActivity).resetReportSelect(position)
                     }
                 }
             })
@@ -363,8 +387,41 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                 object : RecyclerViewBaseAdapter.OnCommentReportClickListener {
                     override fun onItemClick(item: Any, position: Int) {
                         if (item is DataComment) {
-                            val intent = Intent(context, CommentReportActivity::class.java)
+                            val intent = Intent(context, CommentReportActivity::class.java).apply {
+                                if (viewModel is CommentViewModel) {
+                                    putExtra("sid", (viewModel as CommentViewModel).sid)
+                                    putExtra("seq", (viewModel as CommentViewModel).seq)
+                                }
+                            }
                             startActivity(intent)
+                        }
+                    }
+                })
+
+            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnDelteItemClickListener(
+                object : RecyclerViewBaseAdapter.OnDeleteItemClickListener {
+                    override fun onItemClick(item: Any) {
+                        if (item is DataComment) {
+                            // 댓글 삭제 요청
+                            if (viewModel is CommentViewModel) {
+                                (viewModel as CommentViewModel).type = "del"
+                                (viewModel as CommentViewModel).seq = item.seq ?: "0"
+                                requestServer()
+                            }
+                        }
+                    }
+                })
+
+            (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnLikeClickListener (
+                object : RecyclerViewBaseAdapter.OnLikeClickListener {
+                    override fun onItemClick(item: Any, position: Int) {
+                        if (item is DataComment) {
+                            // 좋아요 요청
+                            if (viewModel is CommentViewModel) {
+                                (viewModel as CommentViewModel).type = "like"
+                                (viewModel as CommentViewModel).seq = item.seq ?: "0"
+                                requestServer()
+                            }
                         }
                     }
                 })
@@ -443,15 +500,5 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                 }
             }
         })
-    }
-
-    fun resetReportSelect(position: Int) {
-        viewModel.items.forEachIndexed { index, item ->
-            if (item is DataReport) {
-                item.isSelect = index == position
-            }
-        }
-        (recyclerView?.adapter as RecyclerViewBaseAdapter).notifyDataSetChanged()
-        (context as CommentReportActivity).checkVisibleReportEditText(position == viewModel.items.size - 1)
     }
 }

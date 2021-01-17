@@ -10,9 +10,10 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     var page = 1
     var totalPage = 1
     var isRefresh = false
+    var isReload = false
     var tabIndex = 0
     var requestType = REQUEST_TYPE.REQUEST_TYPE_A
-    var listType = "more"
+    open var listType = "more"
     var param2: String? = null
 
     enum class REQUEST_TYPE {

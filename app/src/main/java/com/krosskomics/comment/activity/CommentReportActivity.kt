@@ -6,9 +6,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
 import com.krosskomics.comment.viewmodel.CommentViewModel
 import com.krosskomics.common.activity.ToolbarTitleActivity
+import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataReport
 import kotlinx.android.synthetic.main.activity_comment_report.*
+import kotlinx.android.synthetic.main.activity_comment_report.recyclerView
+import kotlinx.android.synthetic.main.activity_main_content.*
 import kotlinx.android.synthetic.main.view_toolbar_black.*
+import kotlinx.android.synthetic.main.view_toolbar_black.toolbar
 
 class CommentReportActivity : ToolbarTitleActivity() {
     private val TAG = "CommentReportActivity"
@@ -47,14 +51,26 @@ class CommentReportActivity : ToolbarTitleActivity() {
         super.initLayout()
 
         cancelButton.setOnClickListener { finish() }
-        doneButton.setOnClickListener { sendReportApi() }
+        doneButton.setOnClickListener {
+            if (viewModel.reportType.isNullOrEmpty()) return@setOnClickListener
+            sendReportApi()
+        }
     }
 
     private fun sendReportApi() {
         // 신고 api
+        viewModel.type = "report"
+        viewModel.reportType = "report"
+        viewModel.reportContent = otherEditTextView.text.toString()
+
+        requestServer()
     }
 
     override fun initModel() {
+        intent.extras?.apply {
+            viewModel.sid = getString("sid").toString()
+            viewModel.seq = getString("seq").toString()
+        }
         super.initModel()
         viewModel.items = arrayListOf(
             DataReport(getString(R.string.str_report1), false),
@@ -68,5 +84,18 @@ class CommentReportActivity : ToolbarTitleActivity() {
     fun checkVisibleReportEditText(isVisible: Boolean) {
         if (isVisible) otherEditTextView.visibility = View.VISIBLE
         else otherEditTextView.visibility = View.GONE
+    }
+
+    fun resetReportSelect(position: Int) {
+        viewModel.items.forEachIndexed { index, item ->
+            if (item is DataReport) {
+                item.isSelect = index == position
+                if (index == position) {
+                    viewModel.reportType = item.title
+                }
+            }
+        }
+        (recyclerView?.adapter as RecyclerViewBaseAdapter).notifyDataSetChanged()
+        (context as CommentReportActivity).checkVisibleReportEditText(position == viewModel.items.size - 1)
     }
 }

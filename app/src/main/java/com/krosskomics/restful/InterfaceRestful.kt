@@ -131,13 +131,17 @@ interface InterfaceRestful {
         @Field("page") page: Int
     ): Call<News>
 
-    // comment 리스트
+    // comment 리스트, 신고
     @FormUrlEncoded
-    @POST("app/google/37/list")
+    @POST("app/google/50/comment.php")
     fun getCommentList(
-        @Field("lang") lang: String?,
-        @Field("param") param: String?,
-        @Field("page") page: Int
+        @Field("t") t: String,
+        @Field("sid") sid: String,
+        @Field("eid") eid: String,
+        @Field("s") sort: String,
+        @Field("page") page: Int,
+        @Field("reportType") r: String?,
+        @Field("reportContent") c: String?
     ): Call<Comment>
 
     @FormUrlEncoded

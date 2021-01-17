@@ -3,27 +3,20 @@ package com.krosskomics.common.data
 import java.io.Serializable
 
 class DataComment : Serializable {
-    // kross
-    var sid: String? = null
-    var title: String? = null
-    var link: String? = null
-    var image: String? = null
+//    "seq": 1,
+//    "ep_seq": 1,
+//    "nick": "tyum",
+//    "comment": "😁 एक शर्मीली लड़की दिल दे बैठती है dsfsdfsdf 😍",
+//    "like_cnt": 0,
+//    "reg_date": "01.15.2021",
+//    "isregister": "1"
+    var seq: String? = null
+    var ep_seq: String? = null
+    var nick: String? = null
+    var comment: String? = null
     var like_cnt: String? = null
-    var sub_cnt: String? = null
-    var isnew: String? = null
-    var isupdate: String? = null
-    var bseq: String? = null
-    var atype: String? = null
-    var filePath: String? = null
-    var writer1: String? = null
-    var writer2: String? = null
-    var writer3: String? = null
-    var genre1: String? = null
-    var genre2: String? = null
-    var genre3: String? = null
-    var rank: String? = null
-    var ispush: String? = null
-    var subject: String? = null
+    var reg_date: String? = null
+    var isregister: String? = null
 
     // 삭제
     var isSelect = false
