@@ -11,7 +11,7 @@ class CommentViewModel(application: Application): BaseViewModel(application) {
     private val mainResponseLiveData = repository.getMainResponseLiveData()
     var type = "list"
     var sid = "0"
-    var eid = "0"
+    var eid = ""
     var sort = "t"   //t:top, r:recent
     var comment = ""   //t:top, r:recent
     var seq = "0"   //t:top, r:recent

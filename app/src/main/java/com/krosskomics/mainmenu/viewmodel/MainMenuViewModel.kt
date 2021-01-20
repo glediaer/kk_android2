@@ -1,12 +1,14 @@
 package com.krosskomics.mainmenu.viewmodel
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.krosskomics.common.data.DataWaitFreeTerm
 import com.krosskomics.common.viewmodel.BaseViewModel
+import com.krosskomics.common.viewmodel.FragmentBaseViewModel
 import com.krosskomics.mainmenu.repository.MainMenuRepository
 
-class MainMenuViewModel(application: Application): BaseViewModel(application) {
+class MainMenuViewModel(context: Context): FragmentBaseViewModel(context) {
     private val repository =
         MainMenuRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()

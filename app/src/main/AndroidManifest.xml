@@ -41,33 +41,17 @@
 
         <activity android:name=".login.activity.LoginIntroActivity"
             android:configChanges="screenSize|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".login.activity.LoginActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".mainmenu.activity.OnGoingActivity"
-            android:configChanges="screenSize|orientation"
+        <activity android:name=".mainmenu.activity.MainMenuActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".mainmenu.activity.WaitFreeActivity"
             android:configChanges="screenSize|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
-
-        <activity android:name=".mainmenu.activity.RankingActivity"
-            android:configChanges="screenSize|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".mainmenu.activity.GenreActivity"
-            android:configChanges="screenSize|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
-
+        
         <activity android:name=".genre.activity.GenreDetailActivity"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
@@ -77,13 +61,11 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".series.activity.SeriesActivity"
-            android:launchMode="singleTask"
             android:configChanges="screenSize|orientation"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".viewer.activity.ViewerActivity"
             android:configChanges="screenSize|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".coin.activity.CoinActivity"
@@ -104,7 +86,6 @@
 
         <activity android:name=".library.activity.DownloadViewerActivity"
             android:configChanges="screenSize|orientation"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".event.activity.EventActivity"

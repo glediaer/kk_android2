@@ -46,10 +46,7 @@ import com.krosskomics.home.adapter.HomeAdapter
 import com.krosskomics.home.adapter.MainBannerPagerAdapter
 import com.krosskomics.home.viewmodel.MainViewModel
 import com.krosskomics.library.activity.LibraryActivity
-import com.krosskomics.mainmenu.activity.GenreActivity
-import com.krosskomics.mainmenu.activity.OnGoingActivity
-import com.krosskomics.mainmenu.activity.RankingActivity
-import com.krosskomics.mainmenu.activity.WaitFreeActivity
+import com.krosskomics.mainmenu.activity.*
 import com.krosskomics.mynews.activity.MyNewsActivity
 import com.krosskomics.notice.activity.NoticeActivity
 import com.krosskomics.search.activity.SearchActivity
@@ -324,7 +321,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             startActivity(
                 Intent(
                     context,
-                    OnGoingActivity::class.java
+                    MainMenuActivity::class.java
                 )
             )
         }
@@ -332,7 +329,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             startActivity(
                 Intent(
                     context,
-                    WaitFreeActivity::class.java
+                    MainMenuActivity::class.java
                 )
             )
         }
@@ -340,7 +337,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             startActivity(
                 Intent(
                     context,
-                    RankingActivity::class.java
+                    MainMenuActivity::class.java
                 )
             )
         }
@@ -348,7 +345,7 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             startActivity(
                 Intent(
                     context,
-                    GenreActivity::class.java
+                    MainMenuActivity::class.java
                 )
             )
         }
@@ -854,10 +851,30 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             }
 
             // tabview
-            R.id.onGoingButton -> startActivity(Intent(context, OnGoingActivity::class.java))
-            R.id.waitButton -> startActivity(Intent(context, WaitFreeActivity::class.java))
-            R.id.rankingButton -> startActivity(Intent(context, RankingActivity::class.java))
-            R.id.genreButton -> startActivity(Intent(context, GenreActivity::class.java))
+            R.id.onGoingButton -> {
+                val intent = Intent(context, MainMenuActivity::class.java).apply {
+                    putExtra("tabIndex", 1)
+                }
+                startActivity(intent)
+            }
+            R.id.waitButton -> {
+                val intent = Intent(context, MainMenuActivity::class.java).apply {
+                    putExtra("tabIndex", 2)
+                }
+                startActivity(intent)
+            }
+            R.id.rankingButton -> {
+                val intent = Intent(context, MainMenuActivity::class.java).apply {
+                    putExtra("tabIndex", 3)
+                }
+                startActivity(intent)
+            }
+            R.id.genreButton -> {
+                val intent = Intent(context, MainMenuActivity::class.java).apply {
+                    putExtra("tabIndex", 4)
+                }
+                startActivity(intent)
+            }
         }
     }
 }

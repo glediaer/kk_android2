@@ -67,34 +67,39 @@ class CommentActivity : ToolbarTitleActivity() {
     }
 
     private fun initFooterView() {
-        sendImageView.isEnabled = false
-        commentEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence,
-                start: Int,
-                count: Int,
-                after: Int
-            ) {
-            }
+        if (viewModel.eid.isNullOrEmpty()) {
+            regCommentView.visibility = View.GONE
+        } else {
+            sendImageView.isEnabled = false
+            commentEditText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
 
-            override fun onTextChanged(
-                s: CharSequence,
-                start: Int,
-                before: Int,
-                count: Int
-            ) {
-            }
+                override fun onTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                }
 
-            override fun afterTextChanged(s: Editable) {
-                sendImageView.isEnabled = s.isNotEmpty()
+                override fun afterTextChanged(s: Editable) {
+                    sendImageView.isEnabled = s.isNotEmpty()
+                }
+            })
+            sendImageView.setOnClickListener {
+                // 댓글 등록
+                viewModel.type = "reg"
+                viewModel.comment = commentEditText.text.toString()
+                requestServer()
+                CommonUtil.downKeyboard(context, commentEditText)
             }
-        })
-        sendImageView.setOnClickListener {
-            // 댓글 등록
-            viewModel.type = "reg"
-            viewModel.comment = commentEditText.text.toString()
-            requestServer()
-            CommonUtil.downKeyboard(context, commentEditText)
+            regCommentView.visibility = View.VISIBLE
         }
     }
 

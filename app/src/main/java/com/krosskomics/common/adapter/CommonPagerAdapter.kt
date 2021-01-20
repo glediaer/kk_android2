@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.krosskomics.coin.fragment.CashHistoryFragment
-import com.krosskomics.genre.fragment.GenreFragment
+import com.krosskomics.genre.fragment.GenreDetailFragment
 import com.krosskomics.library.fragment.GiftBoxFragment
 import com.krosskomics.library.fragment.LibraryFragment
 import com.krosskomics.notice.fragment.FAQFragment
@@ -22,7 +22,7 @@ class CommonPagerAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return when(adapterType) {
-            0 -> GenreFragment().apply {
+            0 -> GenreDetailFragment().apply {
                 val bundle = Bundle()
                 bundle.putString("listType", "genre")
                 bundle.putInt("position", position)

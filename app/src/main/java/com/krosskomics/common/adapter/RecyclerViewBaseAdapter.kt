@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.krosskomics.R
 import com.krosskomics.common.data.*
 import com.krosskomics.common.holder.BaseItemViewHolder
-import com.krosskomics.mainmenu.activity.RankingActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -154,14 +153,14 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                             }
                         }
                         // ranking
-                        if (context is RankingActivity) {
-                            when (position) {
-                                0 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_1)
-                                1 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_2)
-                                2 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_3)
-                            }
-                            rankingTextView?.text = (position + 1).toString()
-                        }
+//                        if (context is RankingActivity) {
+//                            when (position) {
+//                                0 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_1)
+//                                1 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_2)
+//                                2 -> rankingImageView?.setImageResource(R.drawable.kk_ranking_3)
+//                            }
+//                            rankingTextView?.text = (position + 1).toString()
+//                        }
                         // genre
                         if (item.issub.isNullOrEmpty()) {
                             subscribeImageView?.visibility = View.GONE
@@ -405,6 +404,7 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         reportImageView?.setOnClickListener {
                             onCommentReportClickListener?.onItemClick(item, position)
                         }
+                        likeCountView.isSelected = item.islike == "1"
                         likeCountView?.setOnClickListener {
                             onLikeClickListener?.onItemClick(item, position)
                         }

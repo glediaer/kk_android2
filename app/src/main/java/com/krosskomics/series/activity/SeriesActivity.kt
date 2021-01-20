@@ -741,7 +741,11 @@ class SeriesActivity : ToolbarTitleActivity() {
                 commentView.visibility = View.VISIBLE
                 commentTextView.text = it.comment_cnt
                 commentView.setOnClickListener {
-                    startActivity(Intent(context, CommentActivity::class.java))
+                    val intent = Intent(context, CommentActivity::class.java).apply {
+                        putExtra("sid", viewModel.seriesItem.sid)
+                        putExtra("eid", "")
+                    }
+                    startActivity(intent)
                 }
             }
 

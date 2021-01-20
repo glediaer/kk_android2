@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.krosskomics.R
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 
-class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int, private val context: Context) :
+class RankingAdapter(private val items: ArrayList<*>, private val layoutRes: Int) :
     RecyclerViewBaseAdapter(items, layoutRes) {
 
     enum class VIEW_TYPE {

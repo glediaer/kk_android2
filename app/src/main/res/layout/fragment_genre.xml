@@ -3,37 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+<!--        <include-->
+<!--            layout="@layout/view_genre_tab"/>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="20dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent"/>
 
-            <TextView
-                android:id="@+id/listCountTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12dp"
-                android:textColor="#c6c6c6"
-                tools:text="Total 35" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="7dp" />
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 
     <include
         layout="@layout/view_topbutton"
@@ -44,6 +30,11 @@
         android:visibility="gone"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="20dp"/>
+
+    <include
+        android:id="@+id/errorView"
+        layout="@layout/view_network_error"
+        android:visibility="gone"/>
 
     <include
         android:id="@+id/loadingView"

@@ -14,18 +14,18 @@ import android.transition.Slide
 import android.view.*
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.analytics.HitBuilders
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
-import com.krosskomics.mainmenu.activity.GenreActivity
+import com.krosskomics.comment.activity.CommentActivity
 import com.krosskomics.library.activity.LibraryActivity
 import com.krosskomics.login.activity.LoginActivity
 import com.krosskomics.login.activity.LoginIntroActivity
-import com.krosskomics.mainmenu.activity.OnGoingActivity
-import com.krosskomics.mainmenu.activity.RankingActivity
+import com.krosskomics.mainmenu.activity.*
 import com.krosskomics.search.activity.SearchActivity
 import com.krosskomics.splash.SplashActivity
 import com.krosskomics.util.CODE
@@ -34,7 +34,6 @@ import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.hideErrorView
 import com.krosskomics.util.CommonUtil.showErrorView
 import com.krosskomics.util.CommonUtil.showToast
-import com.krosskomics.mainmenu.activity.WaitFreeActivity
 import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.view_main_action_item.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -87,13 +86,22 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
 //    }
 
     // fragment 추가
-//    fun addFragment(fragment: Fragment) {
-//        val fragmentManager = supportFragmentManager
-//        val fragmentTransaction = fragmentManager.beginTransaction()
-//
-//        fragmentTransaction.add(R.id.fragment_container, fragment)
-//        fragmentTransaction.commitAllowingStateLoss()
-//    }
+    fun addFragment(fragment: Fragment, fragmentId: Int) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.add(fragmentId, fragment)
+        fragmentTransaction.commitAllowingStateLoss()
+    }
+
+    fun replaceFragment(fragment: Fragment, fragmentId: Int) {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        fragmentTransaction.replace(fragmentId, fragment)
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_right, R.anim.stay)
+        fragmentTransaction.commitAllowingStateLoss()
+    }
 
     abstract fun getLayoutId(): Int
     abstract fun initModel()
@@ -232,22 +240,34 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
             }
             // tabview
             R.id.homeButton -> finish()
-            R.id.onGoingButton -> {
-                startActivity(Intent(context, OnGoingActivity::class.java))
-                finish()
-            }
-            R.id.waitButton -> {
-                startActivity(Intent(context, WaitFreeActivity::class.java))
-                finish()
-            }
-            R.id.rankingButton -> {
-                startActivity(Intent(context, RankingActivity::class.java))
-                finish()
-            }
-            R.id.genreButton -> {
-                startActivity(Intent(context, GenreActivity::class.java))
-                finish()
-            }
+//            R.id.onGoingButton -> {
+//                val intent = Intent(context, MainMenuActivity::class.java).apply {
+//                    putExtra("tabIndex", 1)
+//                }
+//                startActivity(intent)
+//                finish()
+//            }
+//            R.id.waitButton -> {
+//                val intent = Intent(context, MainMenuActivity::class.java).apply {
+//                    putExtra("tabIndex", 2)
+//                }
+//                startActivity(intent)
+//                finish()
+//            }
+//            R.id.rankingButton -> {
+//                val intent = Intent(context, MainMenuActivity::class.java).apply {
+//                    putExtra("tabIndex", 3)
+//                }
+//                startActivity(intent)
+//                finish()
+//            }
+//            R.id.genreButton -> {
+//                val intent = Intent(context, MainMenuActivity::class.java).apply {
+//                    putExtra("tabIndex", 4)
+//                }
+//                startActivity(intent)
+//                finish()
+//            }
         }
     }
 }

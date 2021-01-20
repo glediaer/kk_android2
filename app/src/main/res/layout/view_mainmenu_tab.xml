@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:id="@+id/mainMenuTabView"
+    android:background="@drawable/kk_gradient_tabmenu_ongoing_rect"
+    android:gravity="center_vertical"
+    android:layout_marginLeft="@dimen/tab_left_margin"
+    android:paddingLeft="@dimen/tab_left_padding">
+
+    <RelativeLayout
+        android:id="@+id/onGoingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ongoingImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/kk_selector_tabmenu_ongoing"/>
+
+        <TextView
+            android:id="@+id/ongoingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/ongoingImageView"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:textColor="#ffffff"
+            android:text="@string/str_ongoing" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/waitButton"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="33dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/waitImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/kk_selector_tabmenu_wait_for_free"/>
+
+        <TextView
+            android:id="@+id/waitTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/waitImageView"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:textColor="#ffffff"
+            android:text="@string/str_waitforfree" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rankingButton"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="33dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/rankingImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/kk_selector_tabmenu_top"/>
+
+        <TextView
+            android:id="@+id/rankingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/rankingImageView"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:textColor="#ffffff"
+            android:text="@string/str_ranking" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/genreButton"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="33dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/genreImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/kk_selector_tabmenu_genre"/>
+
+        <TextView
+            android:id="@+id/genreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/genreImageView"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:textColor="#ffffff"
+            android:text="@string/str_genre" />
+
+    </RelativeLayout>
+
+</LinearLayout>

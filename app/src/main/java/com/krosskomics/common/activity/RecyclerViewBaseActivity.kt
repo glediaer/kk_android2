@@ -25,7 +25,6 @@ import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.activity.GenreDetailActivity
 import com.krosskomics.mainmenu.adapter.GenreAdapter
 import com.krosskomics.library.activity.LibraryActivity
-import com.krosskomics.mainmenu.activity.WaitFreeActivity
 import com.krosskomics.mainmenu.viewmodel.MainMenuViewModel
 import com.krosskomics.mainmenu.adapter.RankingAdapter
 import com.krosskomics.series.activity.SeriesActivity
@@ -76,7 +75,7 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_ongoing
+        return R.layout.fragment_ongoing
     }
 
     override fun initModel() {
@@ -233,16 +232,16 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     }
                 }
 
-                // 기다무
-                if (viewModel.isRefresh) return
-                body.wop_term?.let {
-                    if (viewModel is MainMenuViewModel) {
-                        (viewModel as MainMenuViewModel).waitFreeTermItems = it
-                        if (context is WaitFreeActivity) {
-                            (context as WaitFreeActivity).initWaitFreeTermRecyclerView()
-                        }
-                    }
-                }
+//                // 기다무
+//                if (viewModel.isRefresh) return
+//                body.wop_term?.let {
+//                    if (viewModel is MainMenuViewModel) {
+//                        (viewModel as MainMenuViewModel).waitFreeTermItems = it
+//                        if (context is WaitFreeActivity) {
+//                            (context as WaitFreeActivity).initWaitFreeTermRecyclerView()
+//                        }
+//                    }
+//                }
             }
             is Episode -> {
                 body.list?.list?.let {
@@ -340,18 +339,10 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
 
     open fun initRecyclerViewAdapter() {
         recyclerView?.adapter =
-            when (viewModel.tabIndex) {
-                3 -> RankingAdapter(
-                    viewModel.items,
-                    recyclerViewItemLayoutId,
-                    context
-                )
-                4 -> GenreAdapter(viewModel.items)
-                else -> CommonRecyclerViewAdapter(
+            CommonRecyclerViewAdapter(
                     viewModel.items,
                     recyclerViewItemLayoutId
                 )
-            }
 
         if (viewModel.tabIndex != 4) {
             (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object :
