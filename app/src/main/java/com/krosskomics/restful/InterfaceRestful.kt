@@ -415,4 +415,12 @@ interface InterfaceRestful {
         @Field("set_type") set_type: String?,
         @Field("eid") eid: String?
     ): Call<Default>
+
+    // 캐시 히스토리
+    @FormUrlEncoded
+    @POST("app/google/50/cash.php")
+    fun getCashHistory(
+        @Field("t") type: String?,
+        @Field("page") page: Int
+    ): Call<CashHistory>
 }

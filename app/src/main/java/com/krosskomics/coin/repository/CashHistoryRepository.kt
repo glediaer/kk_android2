@@ -1,6 +1,7 @@
 package com.krosskomics.coin.repository
 
 import android.content.Context
+import com.krosskomics.common.model.CashHistory
 import com.krosskomics.common.model.More
 import com.krosskomics.common.model.News
 import com.krosskomics.common.model.Notice
@@ -14,20 +15,18 @@ import retrofit2.Response
 
 
 class CashHistoryRepository : CommonRepository(){
-    fun requestMain(context: Context, page: Int) {
-        val api: Call<Notice> = ServerUtil.service.getNoticeList(
-            CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
-            "1",
-            page
+    fun requestMain(type: String?, page: Int) {
+        val api: Call<CashHistory> = ServerUtil.service.getCashHistory(
+            type, page
         )
-        api.enqueue(object : Callback<Notice> {
-            override fun onResponse(call: Call<Notice>, response: Response<Notice>) {
+        api.enqueue(object : Callback<CashHistory> {
+            override fun onResponse(call: Call<CashHistory>, response: Response<CashHistory>) {
                 if (response.body() != null) {
                     mainLiveData.postValue(response.body());
                 }
             }
 
-            override fun onFailure(call: Call<Notice>, t: Throwable) {
+            override fun onFailure(call: Call<CashHistory>, t: Throwable) {
                 mainLiveData.postValue(null)
             }
         })

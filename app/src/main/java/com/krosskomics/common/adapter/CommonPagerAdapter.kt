@@ -36,7 +36,15 @@ class CommonPagerAdapter(
                 }
             }
             2 -> {
-                CashHistoryFragment()
+                CashHistoryFragment().apply {
+                    val bundle = Bundle()
+                    if (position == 0) {
+                        bundle.putString("listType", "charge")
+                    } else {
+                        bundle.putString("listType", "use")
+                    }
+                    arguments = bundle
+                }
             }
             else -> {
                 if (position == 0) {

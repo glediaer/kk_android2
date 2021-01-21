@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.krosskomics.R
+import com.krosskomics.coin.activity.CashHistoryActivity
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
@@ -129,6 +130,15 @@ open class RecyclerViewBaseFragment : BaseFragment() {
                 }
             }
             is Genre -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
+                }
+            }
+            is CashHistory -> {
                 if ("00" == t.retcode) {
                     setMainContentView(t)
                 } else {
@@ -318,6 +328,15 @@ open class RecyclerViewBaseFragment : BaseFragment() {
                 body.list?.let {
                     viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()
+                }
+            }
+            is CashHistory -> {
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+                if (context is CashHistoryActivity) {
+                    (context as CashHistoryActivity).setCashView(body.cash, body.bonus_cash)
                 }
             }
         }

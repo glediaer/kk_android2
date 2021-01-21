@@ -47,6 +47,8 @@
                 android:singleLine="true"
                 android:textColor="#6780a3"
                 android:textSize="10dp"
+                android:visibility="gone"
+                tools:visibility="visible"
                 tools:text="[They Say I was Born a" />
 
             <TextView
@@ -56,17 +58,47 @@
                 android:layout_marginTop="1dp"
                 android:textColor="#6780a3"
                 android:textSize="10dp"
+                android:visibility="gone"
                 tools:text="2 episodes" />
 
-            <TextView
-                android:id="@+id/remainTimeTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:textStyle="bold"
-                android:textSize="14dp"
-                android:textColor="#262626"
-                tools:text="- 400 CASH" />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/cashTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#262626"
+                        android:textSize="14dp"
+                        android:textStyle="bold"
+                        tools:text="- 400 CASH" />
+
+                    <ImageView
+                        android:id="@+id/bonusImageView"
+                        android:layout_width="42dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/kk_bonus_tag"/>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/dpTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:textColor="#828282"
+                    android:textSize="10dp"
+                    tools:text="(Expires in 0 hours)" />
+            </FrameLayout>
 
         </LinearLayout>
 

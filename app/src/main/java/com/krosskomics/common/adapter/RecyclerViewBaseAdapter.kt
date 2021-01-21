@@ -18,6 +18,7 @@ import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.viewer.activity.ViewerActivity
+import kotlinx.android.synthetic.main.item_cash_history.view.*
 import kotlinx.android.synthetic.main.item_coin.view.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.item_comment_report.view.*
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.item_gift.view.*
 import kotlinx.android.synthetic.main.item_mynews.view.newsTextView
 import kotlinx.android.synthetic.main.item_mynews.view.remainTimeTextView
 import kotlinx.android.synthetic.main.item_notice.view.*
+import kotlinx.android.synthetic.main.item_notice.view.dateTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.mainImageView
 import kotlinx.android.synthetic.main.item_ongoing.view.titleTextView
@@ -422,6 +424,22 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         titleTextView?.text = item
                         deleteImageView.setOnClickListener {
                             onDeleteClickListener?.onItemClick(item)
+                        }
+                    }
+                    is DataCashHistory -> {
+                        dateTextView?.text = item.reg_date
+                        cashTextView?.text = item.cash
+                        dpTextView?.text = item.dp_txt
+                        if (item.cashtype == "B") {
+                            bonusImageView.visibility = View.VISIBLE
+                        } else {
+                            bonusImageView.visibility = View.GONE
+                        }
+                        if (item.title.isNullOrEmpty()) {
+                            titleTextView?.visibility = View.GONE
+                        } else {
+                            titleTextView.text = item.title
+                            titleTextView?.visibility = View.VISIBLE
                         }
                     }
                 }

@@ -6,6 +6,7 @@ import com.krosskomics.R
 import com.krosskomics.coin.viewmodel.CashHistoryViewModel
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.fragment.RecyclerViewBaseFragment
+import com.krosskomics.genre.activity.GenreDetailActivity
 import kotlinx.android.synthetic.main.fragment_genre.recyclerView
 
 class CashHistoryFragment : RecyclerViewBaseFragment() {
@@ -21,6 +22,13 @@ class CashHistoryFragment : RecyclerViewBaseFragment() {
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_cash_history
         return R.layout.fragment_cash_history
+    }
+
+    override fun initModel() {
+        arguments?.let {
+            viewModel.listType = it.getString("listType").toString()
+        }
+        super.initModel()
     }
 
     override fun initLayout() {

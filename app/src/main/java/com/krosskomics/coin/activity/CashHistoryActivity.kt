@@ -48,4 +48,9 @@ class CashHistoryActivity : ToolbarViewPagerActivity() {
     override fun initTabItems() {
         tabItems = listOf(getString(R.string.str_charged), getString(R.string.str_used))
     }
+
+    fun setCashView(cash: String? = "0", bonusCash: String? = "0") {
+        cashTextView.text = " ${cash}"
+        bonusCashTextView.text = " ${bonusCash}"
+    }
 }

@@ -15,10 +15,9 @@ import java.util.ArrayList
 class CashHistoryViewModel(context: Context): FragmentBaseViewModel(context) {
     private val repository = CashHistoryRepository()
     private val mainResponseLiveData = repository.getMainResponseLiveData()
-    var tag = ""
 
     override fun requestMain() {
-        repository.requestMain(context, page)
+        repository.requestMain(listType, page)
     }
 
     override fun getMainResponseLiveData(): LiveData<Any> {
