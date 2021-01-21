@@ -12,6 +12,7 @@ import com.google.android.gms.analytics.GoogleAnalytics
 import com.google.android.gms.analytics.HitBuilders
 import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
+import com.krosskomics.coin.activity.CashHistoryActivity
 import com.krosskomics.comment.activity.CommentActivity
 import com.krosskomics.comment.activity.CommentReportActivity
 import com.krosskomics.comment.viewmodel.CommentViewModel
@@ -41,6 +42,7 @@ import kotlinx.android.synthetic.main.activity_main_content.nestedScrollView
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.activity_more.*
 import kotlinx.android.synthetic.main.activity_series.*
+import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.view_main_tab.*
 import kotlinx.android.synthetic.main.view_network_error.view.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -204,6 +206,15 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     }
                 }
             }
+            is CashHistory -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
+                }
+            }
         }
         hideProgress()
     }
@@ -231,17 +242,6 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                         (context as GenreDetailActivity).initTabItems(body.genre)
                     }
                 }
-
-//                // 기다무
-//                if (viewModel.isRefresh) return
-//                body.wop_term?.let {
-//                    if (viewModel is MainMenuViewModel) {
-//                        (viewModel as MainMenuViewModel).waitFreeTermItems = it
-//                        if (context is WaitFreeActivity) {
-//                            (context as WaitFreeActivity).initWaitFreeTermRecyclerView()
-//                        }
-//                    }
-//                }
             }
             is Episode -> {
                 body.list?.list?.let {
@@ -283,6 +283,12 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                 (context as CommentActivity).initHeaderView()
             }
             is Genre -> {
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+            }
+            is CashHistory -> {
                 body.list?.let {
                     viewModel.items.addAll(it)
                     recyclerView?.adapter?.notifyDataSetChanged()

@@ -6,14 +6,14 @@ import androidx.lifecycle.LiveData
 import com.krosskomics.more.repository.MoreRepository
 
 open class BaseViewModel(application: Application) : AndroidViewModel(application) {
-    open var items = arrayListOf<Any>()
+    var items = arrayListOf<Any>()
     var page = 1
     var totalPage = 1
     var isRefresh = false
     var isReload = false
     var tabIndex = 0
     var requestType = REQUEST_TYPE.REQUEST_TYPE_A
-    open var listType = "more"
+    var listType = "more"
     var param2: String? = null
 
     enum class REQUEST_TYPE {

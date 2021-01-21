@@ -19,6 +19,7 @@ import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.viewer.activity.ViewerActivity
 import kotlinx.android.synthetic.main.item_cash_history.view.*
+import kotlinx.android.synthetic.main.item_cash_history.view.dpTextView
 import kotlinx.android.synthetic.main.item_coin.view.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.item_comment_report.view.*
@@ -41,6 +42,7 @@ import kotlinx.android.synthetic.main.item_series.view.*
 import kotlinx.android.synthetic.main.item_series.view.img_ep_title
 import kotlinx.android.synthetic.main.item_series.view.txt_ep_title
 import kotlinx.android.synthetic.main.item_series_grid.view.*
+import kotlinx.android.synthetic.main.item_ticket_history.view.*
 import kotlinx.android.synthetic.main.view_content_like.view.*
 import kotlinx.android.synthetic.main.view_content_tag_right.view.*
 import kotlinx.android.synthetic.main.view_dim.view.*
@@ -431,15 +433,28 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                         cashTextView?.text = item.cash
                         dpTextView?.text = item.dp_txt
                         if (item.cashtype == "B") {
-                            bonusImageView.visibility = View.VISIBLE
+                            bonusImageView?.visibility = View.VISIBLE
                         } else {
-                            bonusImageView.visibility = View.GONE
+                            bonusImageView?.visibility = View.GONE
                         }
                         if (item.title.isNullOrEmpty()) {
                             titleTextView?.visibility = View.GONE
                         } else {
-                            titleTextView.text = item.title
+                            titleTextView?.text = item.title
                             titleTextView?.visibility = View.VISIBLE
+                        }
+                        // ticket history
+                        if (item.ticket.isNullOrEmpty()) {
+                            ticketTextView?.visibility = View.GONE
+                        } else {
+                            ticketTextView?.text = item.ticket
+                            ticketTextView?.visibility = View.VISIBLE
+                        }
+                        if (item.episode.isNullOrEmpty()) {
+                            epTextView?.visibility = View.GONE
+                        } else {
+                            epTextView?.text = item.episode
+                            epTextView?.visibility = View.VISIBLE
                         }
                     }
                 }

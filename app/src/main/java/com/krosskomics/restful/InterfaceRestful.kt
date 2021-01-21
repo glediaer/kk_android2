@@ -423,4 +423,12 @@ interface InterfaceRestful {
         @Field("t") type: String?,
         @Field("page") page: Int
     ): Call<CashHistory>
+
+    // 티 히스토리
+    @FormUrlEncoded
+    @POST("app/google/50/ticket.php")
+    fun getTicketHistory(
+        @Field("t") type: String?,
+        @Field("page") page: Int
+    ): Call<CashHistory>
 }

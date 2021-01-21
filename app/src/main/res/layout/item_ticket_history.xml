@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:background="@color/div_line_default" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginTop="39dp"
+        android:src="@drawable/kk_selector_gift_oval" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="60dp"
+        android:paddingTop="39dp"
+        android:paddingRight="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#828282"
+                android:textSize="10dp"
+                tools:text="24-05-2020 01:33" />
+
+            <TextView
+                android:id="@+id/ticketTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/purple"
+                android:textSize="10dp"
+                tools:text="WAIT OR PAY" />
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:singleLine="true"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="[They Say I was Born a"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/epTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:textColor="#000000"
+                android:textSize="12dp"
+                tools:text="Episode 13" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

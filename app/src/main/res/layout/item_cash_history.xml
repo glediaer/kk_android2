@@ -9,7 +9,7 @@
         android:layout_width="1dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="36dp"
-        android:background="#e5e5e5" />
+        android:background="@color/div_line_default" />
 
     <ImageView
         android:layout_width="15dp"

@@ -11,4 +11,8 @@ class DataCashHistory {
     var reg_date: String? = null
 
     var title: String? = null
+
+    // ticket
+    var ticket: String? = null
+    var episode: String? = null
 }
