@@ -12,10 +12,9 @@ import retrofit2.Response
 
 
 class MyNewsRepository : CommonRepository(){
-    fun requestMain(context: Context, page: Int) {
+    fun requestMain(type: String, page: Int) {
         val api: Call<News> = ServerUtil.service.getNewsList(
-            CommonUtil.read(context, CODE.CURRENT_LANGUAGE, "en"),
-            "1",
+            type,
             page
         )
         api.enqueue(object : Callback<News> {

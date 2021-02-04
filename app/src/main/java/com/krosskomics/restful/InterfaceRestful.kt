@@ -124,10 +124,9 @@ interface InterfaceRestful {
 
     // news 리스트
     @FormUrlEncoded
-    @POST("app/google/37/list")
+    @POST("/app/google/50/userlist.php")
     fun getNewsList(
-        @Field("lang") lang: String?,
-        @Field("param") param: String?,
+        @Field("t") t: String?,
         @Field("page") page: Int
     ): Call<News>
 

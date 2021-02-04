@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -40,7 +41,10 @@ abstract class BaseFragment : Fragment(), Observer<Any> {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(getLayoutId(),container,false)
+        val view = inflater.inflate(getLayoutId(),container,false)
+        val ani = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
+        view.animation = ani
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -135,7 +135,7 @@ class ViewerActivity : ToolbarTitleActivity() {
     private fun initSettingView() {
         initAutoScroll()
         settingCloseView.setOnClickListener {
-            settingBottomView.visibility = View.GONE
+            CommonUtil.downAnimationViewAndGone(context, settingBottomView)
         }
         nightSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             darkModeView.visibility = if (isChecked) View.VISIBLE else View.GONE
@@ -146,7 +146,7 @@ class ViewerActivity : ToolbarTitleActivity() {
         settingSeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (BuildConfig.DEBUG) {
-                    Log.e(TAG, "progress : " +progress)
+                    Log.e(TAG, "progress : " + progress)
                 }
                 windowParams.screenBrightness = (progress.toFloat() / 100)
                 window.attributes = windowParams
@@ -231,7 +231,7 @@ class ViewerActivity : ToolbarTitleActivity() {
 
     private fun initEpListView() {
         epCloseView.setOnClickListener {
-            epView.visibility = View.GONE
+            CommonUtil.downAnimationViewAndGone(context, epView)
         }
         epRecyclerView?.let {
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -240,7 +240,7 @@ class ViewerActivity : ToolbarTitleActivity() {
                 RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?, position: Int) {
                     if (item is DataEpisode) {
-                        loadEpCheck(item.eid)
+                        requestEpCheck(item.eid)
                     }
                 }
             })
@@ -248,7 +248,7 @@ class ViewerActivity : ToolbarTitleActivity() {
     }
 
     private fun initFooterView() {
-        prevView.setOnClickListener { loadEpCheck(viewModel.item.pre_eid) }
+        prevView.setOnClickListener { requestEpCheck(viewModel.item.pre_eid) }
         commentView.setOnClickListener {
             val intent = Intent(context, CommentActivity::class.java).apply {
                 putExtra("sid", viewModel.item.sid)
@@ -256,9 +256,13 @@ class ViewerActivity : ToolbarTitleActivity() {
             }
             startActivity(intent)
         }
-        settingView.setOnClickListener { settingBottomView.visibility = View.VISIBLE }
-        epListView.setOnClickListener { epView.visibility = View.VISIBLE }
-        nextView.setOnClickListener { loadEpCheck(viewModel.item.next_eid) }
+        settingView.setOnClickListener {
+            CommonUtil.upAnimationViewAndGone(context, settingBottomView)
+        }
+        epListView.setOnClickListener {
+            CommonUtil.upAnimationViewAndGone(context, epView)
+        }
+        nextView.setOnClickListener { requestEpCheck(viewModel.item.next_eid) }
     }
 
     private fun initViewer() {
@@ -313,7 +317,7 @@ class ViewerActivity : ToolbarTitleActivity() {
         viewModel.requestMain()
     }
 
-    private fun loadEpCheck(eid: String?) {
+    private fun requestEpCheck(eid: String?) {
         viewModel.requestCheckEp(eid)
     }
 
@@ -342,11 +346,12 @@ class ViewerActivity : ToolbarTitleActivity() {
                                 var eventName = "af_unlock_rent"
                                 val eventValue: MutableMap<String, Any?> =
                                     HashMap()
-                                eventValue["af_content"] = viewModel.item.title.toString() + " (" + read(
-                                    context,
-                                    CODE.CURRENT_LANGUAGE,
-                                    "en"
-                                ) + ")"
+                                eventValue["af_content"] =
+                                    viewModel.item.title.toString() + " (" + read(
+                                        context,
+                                        CODE.CURRENT_LANGUAGE,
+                                        "en"
+                                    ) + ")"
                                 eventValue["af_content_id"] = viewModel.item.sid
                                 eventValue["af_episode"] =
                                     viewModel.item.title.toString() + " - " + viewModel.item.ep_title + " (" + read(
@@ -364,6 +369,8 @@ class ViewerActivity : ToolbarTitleActivity() {
                                     eventValue["af_price"] = viewModel.item.ep_rent_price
                                 }
                                 setAppsFlyerEvent(context, eventName, eventValue)
+                                viewModel.isRefresh = true
+                                viewModel.requestType = BaseViewModel.REQUEST_TYPE.REQUEST_TYPE_A
                                 requestServer()
                                 if ("" != it.user_coin) {
                                     write(context, CODE.LOCAL_coin, it.user_coin)
@@ -531,6 +538,7 @@ class ViewerActivity : ToolbarTitleActivity() {
                         (recyclerView.adapter as ViewerAdapter).setFooterBannerData(viewModel.listBanner)
                     }
                 }
+                toolbarTitle.text = it.ep_title
                 toolbar.toolbarLike.isSelected = "0" == it.able_like
                 // 댓글
                 if ("0" == it.allow_comment) {
@@ -556,15 +564,15 @@ class ViewerActivity : ToolbarTitleActivity() {
                 body.episode_list?.forEach { epItem ->
                     viewModel.arr_episode.add(epItem)
                     //전체구매
-                    if ("0" == epItem.isunlocked) {
-                        epItem.isChecked = true
-                        epItem.isCheckVisible = false
-                        epItem.possibility_allbuy = true
-                        if (it.ep_seq < epItem.ep_seq) {
-                            viewModel.allbuy_possibility_count++
-                            viewModel.epList.add(epItem.eid)
-                        }
-                    }
+//                    if ("0" == epItem.isunlocked) {
+//                        epItem.isChecked = true
+//                        epItem.isCheckVisible = false
+//                        epItem.possibility_allbuy = true
+//                        if (it.ep_seq < epItem.ep_seq) {
+//                            viewModel.allbuy_possibility_count++
+//                            viewModel.epList.add(epItem.eid)
+//                        }
+//                    }
                     epItem.isEpSelect = it.ep_seq == epItem.ep_seq
 //                    it.adapter?.notifyDataSetChanged()
 //                    // 구매가능한 마지막 회차
@@ -582,6 +590,8 @@ class ViewerActivity : ToolbarTitleActivity() {
 
                 setGALog()
                 viewModel.isFirstRequest = false
+
+                toggleToolBar()
             }
         }
     }
@@ -638,11 +648,12 @@ class ViewerActivity : ToolbarTitleActivity() {
                                 toolbar.toolbarLike.isSelected = !toolbar.toolbarLike.isSelected
                                 val eventValue: MutableMap<String, Any?> =
                                     HashMap()
-                                eventValue["af_content"] = viewModel.item.title.toString() + " (" + read(
-                                    context,
-                                    CODE.CURRENT_LANGUAGE,
-                                    "en"
-                                ) + ")"
+                                eventValue["af_content"] =
+                                    viewModel.item.title.toString() + " (" + read(
+                                        context,
+                                        CODE.CURRENT_LANGUAGE,
+                                        "en"
+                                    ) + ")"
                                 eventValue["af_content_id"] = viewModel.item.sid
                                 eventValue["af_episode"] =
                                     viewModel.item.title.toString() + " - " + viewModel.item.ep_title + " (" + read(
@@ -756,21 +767,35 @@ class ViewerActivity : ToolbarTitleActivity() {
 
     private fun showPurchaseRentDialog(episode: DataEpisode?) {
         episode?.let {
-            epPurchaseDialog.visibility = View.VISIBLE
+            CommonUtil.upAnimationViewAndGone(context, epPurchaseDialog)
+
             titleTextView.text = viewModel.item.title
 
-            myKeyTextView.text = read(context, CODE.LOCAL_coin, "0")
-            discountRateTextView.text = "0 %"
+            if (it.iswop == "0") {
+                purchaseWopView.visibility = View.GONE
+            } else {
+                purchaseWopView.visibility = View.VISIBLE
+                purchaseWaitTextView.text = it.dp_except_ep
+            }
+
+            if (it.reset_wop_ratio > 0) {
+                purcaseProgressView.visibility = View.VISIBLE
+                purchaseProgressBar.progress = it.reset_wop_ratio
+                purchaseProgressTextView.text = it.reset_wop
+            }
+
+            myKeyTextView.text = it.user_cash
+            discountRateTextView.text = it.user_bonus_cash + " %"
             totalTextView.text = "${it.ep_rent_price}"
 
-            viewModel.items.forEach { item ->
-                if (item is DataEpisode) {
-                    item.isCheckVisible = true
-                    item.isChecked = item.ep_seq == episode.ep_seq
-//                    calcPurchaseCurrentToLastEp(item.ep_seq)
-                }
-            }
-            recyclerView.adapter?.notifyDataSetChanged()
+//            viewModel.items.forEach { item ->
+//                if (item is DataEpisode) {
+//                    item.isCheckVisible = true
+//                    item.isChecked = item.ep_seq == episode.ep_seq
+////                    calcPurchaseCurrentToLastEp(item.ep_seq)
+//                }
+//            }
+//            recyclerView.adapter?.notifyDataSetChanged()
 
             if ("1" == episode.allow_rent) {
                 rentalButton.isEnabled
@@ -780,21 +805,55 @@ class ViewerActivity : ToolbarTitleActivity() {
                 purchaseButton.isSelected = true
             }
 
-            allBuyCal()
+            epPurchaseCountTextView?.text = "ep. ${episode.ep_seq}"
+
+            if (it.iswop == "0") {
+                purchaseWopView.visibility = View.GONE
+            } else {
+                purchaseWopView.visibility = View.VISIBLE
+                purchaseWaitTextView.text = it.dp_except_ep
+            }
+
+            if (it.reset_wop_ratio > 0) {
+                purcaseProgressView.visibility = View.VISIBLE
+                purchaseProgressBar.progress = it.reset_wop_ratio
+                purchaseProgressTextView.text = it.reset_wop
+            }
+
+            totalTextView.text = "${it.ep_rent_price}"
+
+            if ("1" == it.able_rent) {
+                rentalButton.isEnabled = true
+                rentalButton.isSelected = true
+            } else {
+                rentalButton.isEnabled = false
+                rentalButton.isSelected = false
+                if ("1" == it.able_store) {
+                    purchaseButton.isEnabled = true
+                    purchaseButton.isSelected = true
+                } else {
+                    purchaseButton.isEnabled = false
+                    purchaseButton.isSelected = false
+                }
+            }
+            rentalButton.text = it.rent_text
+            purchaseButton.text = it.store_text
+
+            allBuyCal(episode)
 
             rentalButton.setOnClickListener { view ->
                 view.isSelected = true
                 purchaseButton.isSelected = false
                 unlockButton.isEnabled = true
 
-                allBuyCal()
+                allBuyCal(episode)
             }
             purchaseButton.setOnClickListener { view ->
                 view.isSelected = true
                 rentalButton.isSelected = false
                 unlockButton.isEnabled = true
 
-                allBuyCal()
+                allBuyCal(episode)
             }
 
             unlockButton.setOnClickListener {
@@ -803,6 +862,8 @@ class ViewerActivity : ToolbarTitleActivity() {
                         val intent = Intent(context, CoinActivity::class.java) //충전 페이지
                         startActivity(intent)
                     } else {
+                        viewModel.epList.add(episode.eid)
+                        viewModel.item.eid = episode.eid
                         // rent request
                         requestEpisodeSelectPurchase("rent")
                     }
@@ -811,34 +872,38 @@ class ViewerActivity : ToolbarTitleActivity() {
                         val intent = Intent(context, CoinActivity::class.java) //충전 페이지
                         startActivity(intent)
                     } else {
+                        viewModel.epList.add(episode.eid)
+                        viewModel.item.eid = episode.eid
                         // purchase request
                         requestEpisodeSelectPurchase("store")
                     }
                 }
                 resetDefaultView()
             }
-            epPurchaseDialog.setOnClickListener { epPurchaseDialog.visibility = View.GONE }
+            epPurchaseDialog.setOnClickListener {
+                CommonUtil.downAnimationViewAndGone(context, epPurchaseDialog)
+            }
         }
     }
 
     //전체구매 코인 계산
-    fun allBuyCal(): Int {
+    fun allBuyCal(episode: DataEpisode): Int {
         viewModel.let {
-            it.allbuy_possibility_count = 0
-            it.allbuy_count = 0
+            it.allbuy_possibility_count = 1
+            it.allbuy_count = 1
             it.allbuySaveRate = 0f
-            it.allbuy_coin = 0
-            it.allbuyRentCoin = 0
-            it.arr_episode.forEach { item ->
-                if (item.isChecked) {
-                    it.allbuy_coin = it.allbuy_coin + item.ep_store_price
-                    it.allbuyRentCoin = it.allbuyRentCoin + item.ep_rent_price
-                    it.allbuy_count++
-                }
-                if (item.possibility_allbuy) {
-                    it.allbuy_possibility_count++
-                }
-            }// 대여
+            it.allbuy_coin = episode.ep_store_price
+            it.allbuyRentCoin = episode.ep_rent_price
+//            it.arr_episode.forEach { item ->
+//                if (item.isChecked) {
+//                    it.allbuy_coin = it.allbuy_coin + item.ep_store_price
+//                    it.allbuyRentCoin = it.allbuyRentCoin + item.ep_rent_price
+//                    it.allbuy_count++
+//                }
+//                if (item.possibility_allbuy) {
+//                    it.allbuy_possibility_count++
+//                }
+//            }// 대여
             // 소장
             when {
                 it.allbuy_count in 2..2 -> {
@@ -858,7 +923,8 @@ class ViewerActivity : ToolbarTitleActivity() {
 
             it.allbuyRentCoin = it.allbuyRentCoin - Math.round(it.allbuyRentCoin * it.allbuySaveRate)
 
-            discountRateTextView.text = "${(it.allbuySaveRate * 100).toInt()} %"
+            val saveRate = "${(it.allbuySaveRate * 100).toInt()}%"
+            savePurchaseTextView.text = getString(R.string.str_purchase_save_rate_format, saveRate)
 
             if (purchaseButton.isSelected) {
                 totalTextView.text = "${viewModel.allbuy_coin}"
@@ -869,7 +935,6 @@ class ViewerActivity : ToolbarTitleActivity() {
 
             unlockButton.isEnabled = it.allbuy_count > 0
 
-            epPurchaseCountTextView.text = "${viewModel.allbuy_count}"
             return it.allbuy_coin
         }
     }
@@ -911,8 +976,6 @@ class ViewerActivity : ToolbarTitleActivity() {
 
             it.allbuyRentCoin = it.allbuyRentCoin - Math.round(it.allbuyRentCoin * it.allbuySaveRate)
 
-            discountRateTextView.text = "${(it.allbuySaveRate * 100).toInt()} %"
-
             if (purchaseButton.isSelected) {
                 totalTextView.text = "${viewModel.allbuy_coin}"
             }
@@ -921,13 +984,12 @@ class ViewerActivity : ToolbarTitleActivity() {
             }
             unlockButton.isEnabled = it.allbuy_count > 0
 
-            epPurchaseCountTextView.text = "${viewModel.allbuy_count}"
             return it.allbuy_coin
         }
     }
 
     private fun resetDefaultView() {
-        epPurchaseDialog.visibility = View.GONE
+        CommonUtil.downAnimationViewAndGone(context, epPurchaseDialog)
     }
 
     private val onScrollListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
@@ -950,7 +1012,7 @@ class ViewerActivity : ToolbarTitleActivity() {
                         return
                     }
                     intervalTime in 0..INTERVAL_TIME -> {
-                        loadEpCheck(viewModel.item.next_eid)
+                        requestEpCheck(viewModel.item.next_eid)
                     }
                     else -> {
                         scrollTime = tempTime
@@ -965,6 +1027,19 @@ class ViewerActivity : ToolbarTitleActivity() {
     }
 
     fun toggleToolBar() {
+        val isShown: Boolean = toolbar.isShown()
+
+        val aniBottom = if (isShown) AnimationUtils.loadAnimation(
+            context,
+            R.anim.down_to_bottom
+        ) else AnimationUtils.loadAnimation(context, R.anim.up_from_bottom)
+
+        val aniTop = if (isShown) AnimationUtils.loadAnimation(
+            context,
+            R.anim.up_to_top
+        ) else AnimationUtils.loadAnimation(context, R.anim.down_from_top)
+        toolbar.animation = aniTop
+        footerView.animation = aniBottom
         if (toolbar.isShown) {
             toolbar.visibility = View.GONE
             footerView.visibility = View.GONE

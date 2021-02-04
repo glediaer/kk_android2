@@ -27,8 +27,8 @@ import kotlinx.android.synthetic.main.item_download_ep.view.*
 import kotlinx.android.synthetic.main.item_more.view.*
 import kotlinx.android.synthetic.main.item_more.view.deleteView
 import kotlinx.android.synthetic.main.item_gift.view.*
-import kotlinx.android.synthetic.main.item_mynews.view.newsTextView
-import kotlinx.android.synthetic.main.item_mynews.view.remainTimeTextView
+import kotlinx.android.synthetic.main.item_gift.view.remainTimeTextView
+import kotlinx.android.synthetic.main.item_mynews.view.*
 import kotlinx.android.synthetic.main.item_notice.view.*
 import kotlinx.android.synthetic.main.item_notice.view.dateTextView
 import kotlinx.android.synthetic.main.item_ongoing.view.genreTextView
@@ -379,7 +379,25 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                     }
                     is DataNews -> {
                         newsTextView.text = item.title
-                        remainTimeTextView.text = item.writer1
+                        regDateTextView.text = item.reg_date
+                        itemView.isSelected = item.isview != "1"
+                        when (item.type) {
+                            "notify" -> {
+                                newsIcImageView.setImageResource(R.drawable.kk_selector_news_icon)
+                            }
+                            "ticket" -> {
+                                newsIcImageView.setImageResource(R.drawable.kk_selector_news_ticket_icon)
+                            }
+                            "cash" -> {
+                                newsIcImageView.setImageResource(R.drawable.kk_selector_news_cash_icon)
+                            }
+                            "waitorpay" -> {
+                                newsIcImageView.setImageResource(R.drawable.kk_selector_news_waitfree_icon)
+                            }
+                            else -> {
+                                newsIcImageView.setImageResource(R.drawable.kk_selector_news_icon)
+                            }
+                        }
                     }
                     is DataNotice -> {
                         itemView.isSelected = position == 0

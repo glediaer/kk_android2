@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="5dp" />
 
-    <include layout="@layout/view_toolbar_viewer" />
+    <include layout="@layout/view_toolbar_viewer"
+        android:visibility="gone"/>
 
     <include
         layout="@layout/view_topbutton"
@@ -120,6 +121,7 @@
         layout="@layout/view_viewer_footer"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="45dp" />
 

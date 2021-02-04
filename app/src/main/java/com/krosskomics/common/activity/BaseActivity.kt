@@ -65,13 +65,6 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
         initErrorView()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
-            android.R.id.home -> finish()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun onDestroy() {
         if (mProgressDialog != null && mProgressDialog!!.isShowing) {
             mProgressDialog!!.dismiss()

@@ -6,9 +6,6 @@ import androidx.lifecycle.LiveData
 import com.krosskomics.coin.repository.CashHistoryRepository
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.common.viewmodel.FragmentBaseViewModel
-import com.krosskomics.library.repository.LibraryRepository
-import com.krosskomics.mynews.repository.MyNewsRepository
-import com.krosskomics.notice.repository.NoticeRepository
 import java.io.File
 import java.util.ArrayList
 

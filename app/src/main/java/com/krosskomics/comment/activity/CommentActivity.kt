@@ -1,5 +1,6 @@
 package com.krosskomics.comment.activity
 
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -22,6 +23,11 @@ import kotlinx.android.synthetic.main.view_toolbar_black.view.*
 
 class CommentActivity : ToolbarTitleActivity() {
     private val TAG = "CommentActivity"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        overridePendingTransition(R.anim.slide_in_left, R.anim.stay)
+        super.onCreate(savedInstanceState)
+    }
 
     public override val viewModel: CommentViewModel by lazy {
         ViewModelProvider(this, object : ViewModelProvider.Factory {
@@ -68,7 +74,7 @@ class CommentActivity : ToolbarTitleActivity() {
 
     private fun initFooterView() {
         if (viewModel.eid.isNullOrEmpty()) {
-            regCommentView.visibility = View.GONE
+//            regCommentView.visibility = View.GONE
         } else {
             sendImageView.isEnabled = false
             commentEditText.addTextChangedListener(object : TextWatcher {

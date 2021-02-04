@@ -916,6 +916,7 @@ class SeriesActivity : ToolbarTitleActivity() {
 
     private fun releasePlayer() {
         if (player != null) {
+            player?.stop()
             playWhenReady = player!!.playWhenReady
             exoPlayerView.player = null
             player?.release()
@@ -1050,6 +1051,7 @@ class SeriesActivity : ToolbarTitleActivity() {
                 }
                 resetDefaultView()
             }
+            nestedScrollView.scrollY = nestedScrollView.scrollY + CommonUtil.dpToPx(context, 200)
 //            epPurchaseDialog.setOnClickListener { epPurchaseDialog.visibility = View.GONE }
         }
     }
@@ -1080,9 +1082,6 @@ class SeriesActivity : ToolbarTitleActivity() {
             }
             intent.putExtras(bundle)
             startActivity(intent)
-
-            viewModel.isRefresh = true
-            requestServer()
         }
     }
 
@@ -1253,8 +1252,6 @@ class SeriesActivity : ToolbarTitleActivity() {
                                 }
                                 setAppsFlyerEvent(context, eventName, eventValue)
 
-                                viewModel.epList.clear()
-                                viewModel.epTitleList.clear()
                                 epPurchaseDialog.visibility = View.GONE
 
                                 initEpPurchaseSuccesDialog()
@@ -1300,14 +1297,15 @@ class SeriesActivity : ToolbarTitleActivity() {
         epPurchaseSuceesDialog.apply {
             visibility = View.VISIBLE
             successTitleTextView.text = viewModel.seriesItem.title
-//            successEpCountTextView.text = getString(R.string.str_episodes_seq_format1, t.list?.size)
+            successEpCountTextView.text = getString(R.string.str_episodes_seq_format1, viewModel.epList.size)
 //            successRemainTime.text
 //            successTime.text
-            setOnClickListener { }
+//            setOnClickListener { }
+            viewModel.epList.clear()
+            viewModel.epTitleList.clear()
             doneButton.setOnClickListener {
                 showEp()
-                requestServer()
-                doneButton.visibility = View.GONE
+                epPurchaseSuceesDialog.visibility = View.GONE
             }
         }
     }

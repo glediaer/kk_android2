@@ -1,30 +1,19 @@
 package com.krosskomics.common.data
 
-import java.io.Serializable
-
-class DataNews : Serializable {
-    // kross
-    var sid: String? = null
+class DataNews {
+//    "type": "notify",		notify:알림, ticket:티켓, cash:캐시, seriesupdate:업데이트, waitorpay:기다무 구분
+//    "ntype": "UF",		읽은 처리할 param
+//    "nid": 10003,		읽은 처리할 param
+//    "title": "Swaha - A Legendary Story",
+//    "atype": "H",
+//    "sid": 918860,
+//    "isview": "0",		읽기 여부 (0:안봄, 1:봄)
+//    "reg_date": "11.01.2020"
+    var type: String? = null
+    var ntype: String? = null
+    var nid: String? = null
     var title: String? = null
-    var link: String? = null
-    var image: String? = null
-    var like_cnt: String? = null
-    var sub_cnt: String? = null
-    var isnew: String? = null
-    var isupdate: String? = null
-    var bseq: String? = null
     var atype: String? = null
-    var filePath: String? = null
-    var writer1: String? = null
-    var writer2: String? = null
-    var writer3: String? = null
-    var genre1: String? = null
-    var genre2: String? = null
-    var genre3: String? = null
-    var rank: String? = null
-    var ispush: String? = null
-    var subject: String? = null
-
-    // 삭제
-    var isSelect = false
+    var isview: String? = null
+    var reg_date: String? = null
 }

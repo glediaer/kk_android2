@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:paddingTop="0dp"
     android:background="#e6ffffff"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,12 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
-            android:paddingTop="13dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="20dp"
             android:background="@drawable/kk_rect_ep_purchase"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="13dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -31,18 +31,18 @@
                     android:id="@+id/titleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="16dp"
                     android:textColor="#ffffff"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
                     tools:text="The Last Print" />
 
                 <TextView
                     android:id="@+id/epPurchaseCountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textColor="#ffffff"
                     android:layout_gravity="right"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp"
                     android:textStyle="bold"
                     tools:text="2" />
 
@@ -55,47 +55,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:background="@drawable/kk_rect_ep_purchase_waitfree"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:paddingTop="14dp"
-            android:paddingBottom="20dp"
-            android:background="@drawable/kk_rect_ep_purchase_waitfree">
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:id="@+id/purchaseWaitTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="12dp"
-                android:singleLine="true"
                 android:layout_marginLeft="7dp"
+                android:layout_weight="1"
+                android:singleLine="true"
                 android:textColor="#ffffff"
+                android:textSize="12dp"
                 tools:text="FREE every 5 days" />
 
             <FrameLayout
                 android:id="@+id/purcaseProgressView"
                 android:layout_width="130dp"
-                android:visibility="gone"
+                android:layout_height="20dp"
                 android:layout_marginLeft="30dp"
-                tools:visibility="visible"
-                android:layout_height="20dp">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <ProgressBar
                     android:id="@+id/purchaseProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:progressDrawable="@drawable/kk_rect_series_progressbar"
-                    style="?android:attr/progressBarStyleHorizontal"
                     android:max="100"
-                    android:progress="20" />
+                    android:progress="20"
+                    android:progressDrawable="@drawable/kk_rect_series_progressbar" />
 
                 <TextView
                     android:id="@+id/purchaseProgressTextView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textSize="10dp"
-                    android:textColor="#80ffffff"
                     android:gravity="center"
+                    android:textColor="#80ffffff"
+                    android:textSize="10dp"
                     tools:text="23 hours 3 days" />
 
             </FrameLayout>
@@ -104,10 +104,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
             android:layout_marginTop="90dp"
+            android:background="@drawable/kk_rect_ep_purchase_white"
             android:orientation="vertical"
-            android:background="@drawable/kk_rect_ep_purchase_white">
+            android:padding="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,35 +117,35 @@
                     android:id="@+id/rentalButton"
                     android:layout_width="0dp"
                     android:layout_height="31dp"
-                    android:background="@drawable/kk_selector_ep_purchase_rental"
                     android:layout_weight="1"
-                    android:textSize="14dp"
+                    android:background="@drawable/kk_selector_ep_purchase_rental"
                     android:gravity="center"
-                    android:textStyle="bold"
                     android:textColor="@color/kk_selector_color_gray_white"
-                    tools:text="rental"/>
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    tools:text="rental" />
 
                 <TextView
                     android:id="@+id/purchaseButton"
                     android:layout_width="0dp"
                     android:layout_height="31dp"
-                    android:background="@drawable/kk_selector_ep_purchase_rental"
-                    android:layout_weight="1"
                     android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/kk_selector_ep_purchase_rental"
                     android:gravity="center"
+                    android:textColor="@color/kk_selector_color_gray_white"
                     android:textSize="14dp"
                     android:textStyle="bold"
-                    android:textColor="@color/kk_selector_color_gray_white"
-                    tools:text="@string/str_permanent"/>
+                    tools:text="@string/str_permanent" />
 
             </LinearLayout>
 
             <include
                 layout="@layout/item_underline_1dp"
-                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="9dp"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="9dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -155,60 +155,60 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/myKeyTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16dp"
                         android:textColor="#000000"
+                        android:textSize="16dp"
                         tools:text="600" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:textSize="12dp"
+                        android:text="@string/str_my_cash"
                         android:textColor="#828282"
-                        android:text="@string/str_my_cash" />
+                        android:textSize="12dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/discountRateTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16dp"
                         android:textColor="#000000"
+                        android:textSize="16dp"
                         tools:text="200" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:textSize="12dp"
+                        android:text="@string/str_my_bonus_cash"
                         android:textColor="#828282"
-                        android:text="@string/str_my_bonus_cash" />
+                        android:textSize="12dp" />
                 </LinearLayout>
 
             </LinearLayout>
 
             <include
                 layout="@layout/item_underline_1dp"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_marginBottom="9dp"
-                android:layout_height="1dp" />
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="9dp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -218,17 +218,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
+                    android:text="Save"
                     android:textColor="#e02020"
-                    android:text="Save" />
+                    android:textSize="12dp" />
 
                 <TextView
                     android:id="@+id/savePurchaseTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:textSize="14dp"
                     android:textColor="#e02020"
+                    android:textSize="14dp"
                     tools:text="20% OFF" />
 
             </FrameLayout>
@@ -241,31 +241,30 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14dp"
+                    android:text="Total"
                     android:textColor="#000000"
-                    android:text="Total" />
+                    android:textSize="14dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    >
+                    android:layout_gravity="right">
 
                     <TextView
                         android:id="@+id/totalTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="18dp"
+                        android:text="0"
                         android:textColor="#000000"
-                        android:text="0" />
+                        android:textSize="18dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:textSize="12dp"
+                        android:text="@string/str_cash"
                         android:textColor="#000000"
-                        android:text="@string/str_cash" />
+                        android:textSize="12dp" />
 
                 </LinearLayout>
 
@@ -276,12 +275,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="25dp"
-                android:enabled="false"
                 android:background="@drawable/kk_selector_gray_yellow"
-                android:textSize="18dp"
-                android:textColor="#ffffff"
+                android:enabled="false"
+                android:text="@string/str_buy"
                 android:textAllCaps="false"
-                android:text="@string/str_buy"/>
+                android:textColor="#ffffff"
+                android:textSize="18dp" />
 
         </LinearLayout>
 

@@ -24,6 +24,7 @@ import android.preference.PreferenceManager
 import android.telephony.TelephonyManager
 import android.view.*
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.widget.AppCompatImageView
@@ -45,6 +46,7 @@ import com.krosskomics.login.activity.LoginActivity
 import com.krosskomics.login.activity.LoginIntroActivity
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.webview.WebViewActivity
+import kotlinx.android.synthetic.main.activity_viewer.*
 import org.json.JSONArray
 import org.json.JSONException
 import java.text.DecimalFormat
@@ -933,5 +935,15 @@ object CommonUtil {
             val nwInfo = connectivityManager.activeNetworkInfo ?: return false
             return nwInfo.isConnected
         }
+    }
+
+    fun downAnimationViewAndGone(context: Context, view: View) {
+        view.animation = AnimationUtils.loadAnimation(context, R.anim.down_to_bottom)
+        view.visibility = View.GONE
+    }
+
+    fun upAnimationViewAndGone(context: Context, view: View) {
+        view.animation = AnimationUtils.loadAnimation(context, R.anim.up_from_bottom)
+        view.visibility = View.VISIBLE
     }
 }

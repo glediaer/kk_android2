@@ -10,7 +10,7 @@ class MyNewsViewModel(application: Application): BaseViewModel(application) {
     private val mainResponseLiveData = repository.getMainResponseLiveData()
 
     override fun requestMain() {
-        repository.requestMain(getApplication(), page)
+        repository.requestMain(listType,page)
     }
 
     override fun getMainResponseLiveData(): LiveData<Any> {

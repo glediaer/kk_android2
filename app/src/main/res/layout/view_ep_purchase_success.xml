@@ -120,7 +120,6 @@
             android:layout_height="45dp"
             android:layout_marginTop="19dp"
             android:background="@drawable/kk_rect_yellow_r30"
-            android:enabled="false"
             android:text="@string/str_done"
             android:textAllCaps="false"
             android:textColor="#ffffff"

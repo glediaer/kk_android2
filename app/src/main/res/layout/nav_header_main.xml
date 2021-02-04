@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#262626"
     android:paddingBottom="20dp">
 
@@ -20,11 +21,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/closeImageView"
+            <FrameLayout
                 android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/kk_ic_drawer_close" />
+                android:layout_height="20dp">
+
+                <ImageView
+                    android:id="@+id/closeImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="visible"
+                    android:src="@drawable/kk_ic_drawer_close" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/closeLottieView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="false"
+                    app:lottie_fileName="kk_lottie_drawer_close.json" />
+
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/alarmImageView"

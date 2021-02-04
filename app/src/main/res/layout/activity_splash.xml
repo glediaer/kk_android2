@@ -19,7 +19,7 @@
         android:layout_marginLeft="30dp"
         android:layout_centerVertical="true"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="kk_splash_lottie.json"
+        app:lottie_fileName="kk_lottie_splash.json"
         app:lottie_loop="true"/>
 
     <TextView

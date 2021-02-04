@@ -28,6 +28,7 @@ class MyNewsActivity : ToolbarTitleActivity() {
 
     override fun initLayout() {
         toolbarTitleString = getString(R.string.str_my_news)
+        viewModel.listType = "mynews"
         super.initLayout()
     }
 }

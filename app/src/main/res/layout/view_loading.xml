@@ -9,7 +9,7 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="kk_loading_lottie.json"
+        app:lottie_fileName="kk_lottie_loading.json"
         app:lottie_loop="true"/>
 
 </RelativeLayout>

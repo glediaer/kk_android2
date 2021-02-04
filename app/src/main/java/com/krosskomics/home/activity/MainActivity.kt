@@ -10,6 +10,7 @@ import android.os.Handler
 import android.os.Process
 import android.text.TextUtils
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -126,6 +127,13 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
     override fun onStop() {
         super.onStop()
         GoogleAnalytics.getInstance(this).reportActivityStop(this)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun getLayoutId(): Int {
@@ -449,13 +457,21 @@ class MainActivity : BaseActivity(), Observer<Any>, View.OnClickListener {
             R.string.str_close
         )
         dl_main_drawer_root.addDrawerListener(drawerToggle)
+        drawerToggle.setToolbarNavigationClickListener {
+            Log.e(TAG, "setToolbarNavigationClickListener")
+        }
         refreshNaviView()
     }
 
     private fun refreshNaviView() {
         nv_main_navigation_root.getHeaderView(0)?.apply {
             // header
-            closeImageView.setOnClickListener { dl_main_drawer_root.closeDrawers() }
+            closeImageView.setOnClickListener {
+                closeImageView.visibility = View.GONE
+                closeLottieView.visibility = View.VISIBLE
+                closeLottieView.playAnimation()
+//                dl_main_drawer_root.closeDrawers()
+            }
             alarmImageView.setOnClickListener {
                 startActivity(Intent(context, MyNewsActivity::class.java))
                 dl_main_drawer_root.closeDrawers()
