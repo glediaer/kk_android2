@@ -41,6 +41,7 @@ import com.krosskomics.KJKomicsApp
 import com.krosskomics.R
 import com.krosskomics.coin.activity.CoinActivity
 import com.krosskomics.common.data.DataBanner
+import com.krosskomics.common.data.DataEvent
 import com.krosskomics.home.activity.MainActivity
 import com.krosskomics.login.activity.LoginActivity
 import com.krosskomics.login.activity.LoginIntroActivity
@@ -780,7 +781,7 @@ object CommonUtil {
             "H" -> {
                 intent = Intent(context, SeriesActivity::class.java)
                 val b = Bundle()
-                b.putString("cid", cno)
+                b.putString("sid", cno)
                 intent.putExtras(b)
             }
         }
@@ -795,7 +796,7 @@ object CommonUtil {
             "H" -> {
                 intent = Intent(context, SeriesActivity::class.java)
                 val b = Bundle()
-                b.putString("cid", item.sid)
+                b.putString("sid", item.sid)
                 b.putString("title", item.title)
                 intent.putExtras(b)
 
@@ -823,6 +824,56 @@ object CommonUtil {
             "W" -> if ("" != item.link) {
                 intent = Intent(context, WebViewActivity::class.java)
                 intent.putExtra("title", item.subject)
+                intent.putExtra("url", item.link)
+                context.startActivity(intent)
+            }
+            "B" -> if ("" != item.link) {
+                moveBrowserChrome(context, item.link)
+            }
+            "S" -> if (!read(context, CODE.LOCAL_loginYn, "N")
+                    .equals("Y", ignoreCase = true)
+            ) {
+                moveSignUp(context)
+            }
+        }
+    }
+
+    fun setEventAction(context: Context, item: DataEvent) {
+        val intent: Intent
+        when (item.atype) {
+            "M" -> {
+            }
+            "H" -> {
+                intent = Intent(context, SeriesActivity::class.java)
+                val b = Bundle()
+                b.putString("sid", item.sid)
+                b.putString("title", item.event_title)
+                intent.putExtras(b)
+
+                val eventName = "af_content_view"
+                val eventValue: MutableMap<String, Any?> =
+                    HashMap()
+                eventValue["af_content"] = item.event_title.toString() + " (" + read(
+                    context,
+                    CODE.CURRENT_LANGUAGE,
+                    "en"
+                ) + ")"
+                eventValue["af_content_id"] = item.sid
+                setAppsFlyerEvent(context, eventName, eventValue)
+
+                context.startActivity(intent)
+            }
+            "C" -> if (read(context, CODE.LOCAL_loginYn, "N")
+                    .equals("Y", ignoreCase = true)
+            ) {
+                intent = Intent(context, CoinActivity::class.java)
+                context.startActivity(intent)
+            } else {
+                goLoginAlert(context)
+            }
+            "W" -> if ("" != item.link) {
+                intent = Intent(context, WebViewActivity::class.java)
+                intent.putExtra("title", item.event_title)
                 intent.putExtra("url", item.link)
                 context.startActivity(intent)
             }

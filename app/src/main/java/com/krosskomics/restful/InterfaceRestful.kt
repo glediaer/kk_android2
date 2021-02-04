@@ -130,6 +130,14 @@ interface InterfaceRestful {
         @Field("page") page: Int
     ): Call<News>
 
+    // news 읽음처리
+    @FormUrlEncoded
+    @POST("app/google/50/setuser.php")
+    fun sendReadNews(
+        @Field("t") t: String?,
+        @Field("p") p: String
+    ): Call<Default>
+
     // comment 리스트, 신고
     @FormUrlEncoded
     @POST("app/google/50/comment.php")
@@ -430,4 +438,12 @@ interface InterfaceRestful {
         @Field("t") type: String?,
         @Field("page") page: Int
     ): Call<CashHistory>
+
+    // 이벤트
+    @FormUrlEncoded
+    @POST("/app/google/50/event.php")
+    fun getEventApi(
+        @Field("t") type: String?,
+        @Field("page") page: Int
+    ): Call<Event>
 }

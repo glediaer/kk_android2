@@ -18,9 +18,7 @@ import com.krosskomics.comment.activity.CommentReportActivity
 import com.krosskomics.comment.viewmodel.CommentViewModel
 import com.krosskomics.common.adapter.CommonRecyclerViewAdapter
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
-import com.krosskomics.common.data.DataBook
-import com.krosskomics.common.data.DataComment
-import com.krosskomics.common.data.DataReport
+import com.krosskomics.common.data.*
 import com.krosskomics.common.model.*
 import com.krosskomics.common.viewmodel.BaseViewModel
 import com.krosskomics.genre.activity.GenreDetailActivity
@@ -34,13 +32,16 @@ import com.krosskomics.util.CommonUtil
 import com.krosskomics.util.CommonUtil.getNetworkInfo
 import com.krosskomics.util.CommonUtil.read
 import com.krosskomics.util.CommonUtil.setAppsFlyerEvent
+import com.krosskomics.util.CommonUtil.showErrorView
 import com.krosskomics.util.CommonUtil.showToast
 import com.krosskomics.util.ServerUtil
 import kotlinx.android.synthetic.main.activity_comment.*
+import kotlinx.android.synthetic.main.activity_event.*
 import kotlinx.android.synthetic.main.activity_main_content.errorView
 import kotlinx.android.synthetic.main.activity_main_content.nestedScrollView
 import kotlinx.android.synthetic.main.activity_main_content.recyclerView
 import kotlinx.android.synthetic.main.activity_more.*
+import kotlinx.android.synthetic.main.activity_more.emptyView
 import kotlinx.android.synthetic.main.activity_series.*
 import kotlinx.android.synthetic.main.fragment_genre.*
 import kotlinx.android.synthetic.main.view_main_tab.*
@@ -215,6 +216,15 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     }
                 }
             }
+            is Event -> {
+                if ("00" == t.retcode) {
+                    setMainContentView(t)
+                } else {
+                    t.msg?.let {
+                        CommonUtil.showToast(it, context)
+                    }
+                }
+            }
         }
         hideProgress()
     }
@@ -294,6 +304,16 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
                     recyclerView?.adapter?.notifyDataSetChanged()
                 }
             }
+            is Event -> {
+                if (body.list.isNullOrEmpty()) {
+                    showErrorView(emptyView)
+                    return
+                }
+                body.list?.let {
+                    viewModel.items.addAll(it)
+                    recyclerView?.adapter?.notifyDataSetChanged()
+                }
+            }
         }
     }
 
@@ -354,14 +374,23 @@ open class RecyclerViewBaseActivity : BaseActivity(), Observer<Any> {
             (recyclerView?.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object :
                 RecyclerViewBaseAdapter.OnItemClickListener {
                 override fun onItemClick(item: Any?, position: Int) {
-                    if (item is DataBook) {
-                        val intent = Intent(context, SeriesActivity::class.java).apply {
-                            putExtra("sid", item.sid)
-                            putExtra("title", item.title)
+                    when (item) {
+                        is DataBook -> {
+                            val intent = Intent(context, SeriesActivity::class.java).apply {
+                                putExtra("sid", item.sid)
+                                putExtra("title", item.title)
+                            }
+                            startActivity(intent)
                         }
-                        startActivity(intent)
-                    } else if (item is DataReport) {
-                        (context as CommentReportActivity).resetReportSelect(position)
+                        is DataReport -> {
+                            (context as CommentReportActivity).resetReportSelect(position)
+                        }
+                        is DataNews -> {
+
+                        }
+                        is DataEvent -> {
+                            CommonUtil.setEventAction(context, item)
+                        }
                     }
                 }
             })

@@ -3,12 +3,16 @@ package com.krosskomics.event.activity
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
 import com.krosskomics.common.adapter.RecyclerViewBaseAdapter
 import com.krosskomics.common.data.DataBook
 import com.krosskomics.common.model.Coin
 import com.krosskomics.event.adapter.EventAdapter
+import com.krosskomics.event.viewmodel.EventViewModel
+import com.krosskomics.mynews.viewmodel.MyNewsViewModel
 import com.krosskomics.series.activity.SeriesActivity
 import com.krosskomics.util.CODE
 import com.krosskomics.util.CommonUtil
@@ -21,6 +25,14 @@ import retrofit2.Response
 class EventActivity : ToolbarTitleActivity() {
     private val TAG = "EventActivity"
 
+    public override val viewModel: EventViewModel by lazy {
+        ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return EventViewModel(application) as T
+            }
+        }).get(EventViewModel::class.java)
+    }
+
     override fun getLayoutId(): Int {
         recyclerViewItemLayoutId = R.layout.item_event
         return R.layout.activity_event
@@ -32,6 +44,7 @@ class EventActivity : ToolbarTitleActivity() {
 
     override fun initLayout() {
         toolbarTitleString = getString(R.string.str_event)
+        viewModel.listType = "list"
         super.initLayout()
         initPromotionView()
     }
@@ -57,21 +70,6 @@ class EventActivity : ToolbarTitleActivity() {
             // request server
             requestPromotionCode()
         }
-    }
-
-    override fun initRecyclerViewAdapter() {
-        recyclerView.adapter = EventAdapter(viewModel.items, recyclerViewItemLayoutId)
-        (recyclerView.adapter as RecyclerViewBaseAdapter).setOnItemClickListener(object : RecyclerViewBaseAdapter.OnItemClickListener {
-            override fun onItemClick(item: Any?, position: Int) {
-                if (item is DataBook) {
-                    val intent = Intent(context, SeriesActivity::class.java).apply {
-                        putExtra("sid", item.sid)
-                        putExtra("title", item.title)
-                    }
-                    startActivity(intent)
-                }
-            }
-        })
     }
 
     private fun requestPromotionCode() {

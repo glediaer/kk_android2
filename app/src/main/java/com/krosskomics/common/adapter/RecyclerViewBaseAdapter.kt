@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.item_coin.view.*
 import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.item_comment_report.view.*
 import kotlinx.android.synthetic.main.item_download_ep.view.*
+import kotlinx.android.synthetic.main.item_event.view.*
 import kotlinx.android.synthetic.main.item_more.view.*
 import kotlinx.android.synthetic.main.item_more.view.deleteView
 import kotlinx.android.synthetic.main.item_gift.view.*
@@ -474,6 +475,15 @@ open class RecyclerViewBaseAdapter(private val items: ArrayList<*>, private val 
                             epTextView?.text = item.episode
                             epTextView?.visibility = View.VISIBLE
                         }
+                    }
+                    is DataEvent -> {
+                        mainImageView?.let {
+                            Glide.with(itemView.context)
+                                .load(item.image)
+                                .into(it)
+                        }
+                        titleTextView.text = item.event_title
+                        eventPeriodTextView.text = "${item.start_date} ~ ${item.end_date}"
                     }
                 }
             }

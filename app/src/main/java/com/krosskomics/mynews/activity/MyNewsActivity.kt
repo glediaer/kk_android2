@@ -4,7 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.krosskomics.R
 import com.krosskomics.common.activity.ToolbarTitleActivity
+import com.krosskomics.common.model.Default
+import com.krosskomics.common.model.News
 import com.krosskomics.mynews.viewmodel.MyNewsViewModel
+import com.krosskomics.util.ServerUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MyNewsActivity : ToolbarTitleActivity() {
     private val TAG = "MyNewsActivity"
@@ -30,5 +36,25 @@ class MyNewsActivity : ToolbarTitleActivity() {
         toolbarTitleString = getString(R.string.str_my_news)
         viewModel.listType = "mynews"
         super.initLayout()
+    }
+
+    fun setReadParams(ntype: String, nid: String) {
+//        sendReadNewsApi()
+    }
+
+    fun sendReadNewsApi(type: String, param: String) {
+        val api: Call<Default> = ServerUtil.service.sendReadNews(
+            type,
+            param
+        )
+        api.enqueue(object : Callback<Default> {
+            override fun onResponse(call: Call<Default>, response: Response<Default>) {
+                if (response.body() != null) {
+                }
+            }
+
+            override fun onFailure(call: Call<Default>, t: Throwable) {
+            }
+        })
     }
 }

@@ -58,7 +58,7 @@ class MainBannerPagerAdapter(val context: Context?,
                     "H" -> {
                         intent = Intent(context, SeriesActivity::class.java)
                         val b = Bundle()
-                        b.putString("cid", item.sid)
+                        b.putString("sid", item.sid)
                         b.putString("title", item.subject)
                         intent.putExtras(b)
                         context.startActivity(intent)

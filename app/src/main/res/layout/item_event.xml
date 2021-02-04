@@ -17,6 +17,7 @@
     <LinearLayout
         android:id="@+id/eventInfoView"
         android:layout_width="match_parent"
+        android:background="@drawable/kk_info_box_copy"
         android:layout_height="67dp">
 
         <LinearLayout
@@ -32,13 +33,15 @@
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:textColor="#000000"
                 tools:text="Review Contest" />
 
             <TextView
-                android:id="@+id/eventPeriod"
+                android:id="@+id/eventPeriodTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -48,12 +51,22 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/kk_line_path_7"/>
+
+        <FrameLayout
             android:layout_width="71dp"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="32dp"
+                android:src="@drawable/kk_ic_go"
+                android:layout_gravity="center"/>
 
-        </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 
